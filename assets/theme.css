@@ -1,10 +1,10 @@
 :root {
-  --brand-900: #1f3f8f;
-  --brand-800: #2a4e9f;
-  --brand-700: #355da8;
-  --brand-100: #e8eefb;
-  --ink-900: #1f2a44;
-  --ink-700: #3b4661;
+  --brand-900: #263f85;
+  --brand-800: #2f4f9f;
+  --brand-700: #3a62b5;
+  --brand-100: #e6edfb;
+  --ink-900: #1c2c57;
+  --ink-700: #43547d;
 }
 
 body {
@@ -24,12 +24,13 @@ h1,
 h2,
 h3 {
   color: var(--brand-900) !important;
+  font-family: "Manrope", sans-serif !important;
   font-weight: 600 !important;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
 
 .font-bold {
-  font-weight: 600 !important;
+  font-weight: 500 !important;
 }
 
 .bg-primary {
@@ -52,17 +53,26 @@ h3 {
   border-color: var(--brand-900) !important;
 }
 
-/* Home hero: move away from stark white heavy text */
+/* Make hero and highlighted text readable without harsh white */
 .text-white {
-  color: #e7ecf8 !important;
+  color: #203a7c !important;
+  text-shadow: none !important;
 }
 
 .text-white\/80 {
-  color: #ced9f2 !important;
+  color: #314d93 !important;
 }
 
 .text-white\/40 {
-  color: #b6c7ea !important;
+  color: #4f67a3 !important;
+}
+
+/* Home hero readability on top of image backgrounds */
+section h1.text-white,
+section p.text-white\/80,
+section .text-white\/40 {
+  color: #eaf0fc !important;
+  text-shadow: 0 2px 10px rgba(16, 34, 77, 0.28);
 }
 
 /* Keep logo clear and clean on light nav background */
