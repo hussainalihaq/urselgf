@@ -109,6 +109,20 @@ a {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
+/* Keep icon font from being overridden by global typography */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined' !important;
+  font-weight: normal !important;
+  font-style: normal !important;
+  line-height: 1 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+}
+
 .font-bold {
   font-weight: 600 !important;
 }
@@ -171,17 +185,18 @@ main > section:first-of-type .relative.z-10 {
   }
 }
 
-main > section:first-of-type h1 {
+/* Apply light hero text ONLY on image-based hero (home page) */
+main > section:first-of-type .absolute.inset-0.bg-gradient-to-b ~ .relative.z-10 h1 {
   color: #e9f0ff !important;
   text-shadow: 0 8px 30px rgba(9, 24, 57, 0.5);
 }
 
-main > section:first-of-type p {
+main > section:first-of-type .absolute.inset-0.bg-gradient-to-b ~ .relative.z-10 p {
   color: #d4e1ff !important;
   text-shadow: 0 2px 14px rgba(11, 28, 66, 0.45);
 }
 
-main > section:first-of-type .inline-block.font-label {
+main > section:first-of-type .absolute.inset-0.bg-gradient-to-b ~ .relative.z-10 .inline-block.font-label {
   background: rgba(40, 76, 153, 0.35) !important;
   border: 1px solid rgba(184, 206, 255, 0.34) !important;
   color: #eff4ff !important;
@@ -347,5 +362,11 @@ footer {
 footer a,
 footer p,
 footer span {
+  color: var(--ink-700) !important;
+}
+
+/* Products hero readability reset */
+body .label-md,
+body .text-on-surface-variant {
   color: var(--ink-700) !important;
 }
