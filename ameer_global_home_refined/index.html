@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ameer Global | The Digital Estate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .font-display { font-family: 'Noto Serif', serif; }
+        .heritage-watermark {
+            pointer-events: none;
+            user-select: none;
+            z-index: 0;
+        }
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        .line-draw {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw 3s ease-forward forwards;
+        }
+        @keyframes draw {
+            to { stroke-dashoffset: 0; }
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-secondary-container": "#773304",
+                "primary-fixed-dim": "#bdcd94",
+                "error-container": "#ffdad6",
+                "secondary-fixed": "#ffdbca",
+                "surface-container-high": "#e9e8e4",
+                "background": "#faf9f5",
+                "on-primary": "#ffffff",
+                "outline-variant": "#c6c8b9",
+                "secondary-fixed-dim": "#ffb68f",
+                "primary": "#38451a",
+                "tertiary": "#5b363a",
+                "surface-container-lowest": "#ffffff",
+                "tertiary-fixed-dim": "#eeb9bd",
+                "on-secondary-fixed": "#331100",
+                "on-primary-fixed": "#151f00",
+                "inverse-on-surface": "#f2f1ed",
+                "tertiary-fixed": "#ffdadc",
+                "tertiary-container": "#754d51",
+                "on-secondary": "#ffffff",
+                "on-tertiary-container": "#f6c1c5",
+                "on-background": "#1b1c1a",
+                "secondary": "#944a1b",
+                "surface-tint": "#556435",
+                "outline": "#76786c",
+                "surface-container-low": "#f5f4f0",
+                "surface-container-highest": "#e3e2df",
+                "primary-container": "#4f5d2f",
+                "surface": "#faf9f5",
+                "secondary-container": "#ff9e68",
+                "inverse-surface": "#30312e",
+                "on-tertiary-fixed": "#301216",
+                "on-surface-variant": "#45483d",
+                "on-error-container": "#93000a",
+                "on-secondary-fixed-variant": "#763303",
+                "on-primary-container": "#c5d59c",
+                "on-primary-fixed-variant": "#3e4c20",
+                "surface-variant": "#e3e2df",
+                "on-error": "#ffffff",
+                "surface-bright": "#faf9f5",
+                "error": "#ba1a1a",
+                "on-surface": "#1b1c1a",
+                "primary-fixed": "#d9e9ae",
+                "inverse-primary": "#bdcd94",
+                "on-tertiary": "#ffffff",
+                "on-tertiary-fixed-variant": "#623c40",
+                "surface-container": "#efeeea",
+                "surface-dim": "#dbdad6"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "fontFamily": {
+                "headline": ["Noto Serif"],
+                "body": ["Manrope"],
+                "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-surface text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="sticky top-0 w-full z-50 bg-[#faf9f5]/70 backdrop-blur-lg dark:bg-[#1b1c1a]/70 shadow-[0_20px_50px_rgba(27,28,26,0.05)]">
+<div class="flex justify-between items-center px-12 py-6 max-w-[1920px] mx-auto">
+<div class="text-2xl font-serif font-bold tracking-tighter text-[#38451a] dark:text-[#faf9f5] uppercase">
+                Ameer Global
+            </div>
+<div class="hidden md:flex items-center gap-12 font-serif text-lg tracking-tight font-display">
+<a class="text-[#38451a] dark:text-[#faf9f5] border-b-2 border-[#38451a] dark:border-[#faf9f5] pb-1" href="#">Home</a>
+<a class="text-[#1b1c1a]/60 dark:text-[#faf9f5]/60 hover:text-[#38451a] dark:hover:text-[#faf9f5] transition-all" href="#">Products</a>
+<a class="text-[#1b1c1a]/60 dark:text-[#faf9f5]/60 hover:text-[#38451a] dark:hover:text-[#faf9f5] transition-all" href="#">About</a>
+<a class="text-[#1b1c1a]/60 dark:text-[#faf9f5]/60 hover:text-[#38451a] dark:hover:text-[#faf9f5] transition-all" href="#">Contact</a>
+</div>
+<button class="bg-primary text-on-primary px-8 py-3 rounded-lg font-label text-sm uppercase tracking-widest hover:opacity-80 transition-opacity duration-300 active:scale-95 ease-out">
+                Inquire Now
+            </button>
+</div>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="cinematic aerial view of a massive modern container ship cutting through calm deep blue sea with white wake trails behind it" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLUmH0ccxpu4ApXdQpfaG07RKKp_xWNCa6i0s-zscBT17rzpidM1GEvI9rUqFdgYosySORIikOYQjVHZjKEUzbWjh1l8R514IYyfjqfZsWEZzNn6QwI0XY2ctfbCInzgmobbHhQ_Jkxt_dXg3XvqoEFDNNOkEzLeHQn8xEB0cHVzoo4I_jE0bYtkARyBZAIAzsRLxY6Y4l0eiY4EzVaCeSeuPxO6PqffAWfNCrdyxiB8F2lOAfCAn3qiMRr2Xt0m70ZgEULHUXKvc"/>
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-surface"></div>
+</div>
+<div class="relative z-10 text-center px-6 max-w-5xl">
+<span class="inline-block font-label text-on-primary text-xs uppercase tracking-[0.4em] mb-8 bg-primary/20 backdrop-blur-md px-6 py-2 rounded-full border border-white/10">
+                    Est. 1856 • Global Logistics
+                </span>
+<h1 class="text-6xl md:text-8xl font-display font-bold text-white tracking-tighter leading-none mb-8 drop-shadow-2xl">
+                    The Art of <br/>
+<span class="italic font-normal">Global Exchange</span>
+</h1>
+<p class="text-white/80 font-body text-xl max-w-2xl mx-auto leading-relaxed mb-12">
+                    Bridging continents through a century of trust and refined commerce.
+                </p>
+<div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+<button class="w-full md:w-auto px-10 py-5 bg-primary text-on-primary rounded-lg font-semibold transition-transform hover:-translate-y-1">
+                        Explore Our Network
+                    </button>
+<button class="w-full md:w-auto px-10 py-5 bg-white/10 backdrop-blur-lg border border-white/20 text-white rounded-lg font-semibold hover:bg-white/20 transition-all">
+                        View Heritage
+                    </button>
+</div>
+</div>
+<div class="absolute bottom-12 left-12 hidden md:block">
+<div class="flex items-center gap-4 text-white/40">
+<span class="h-[1px] w-24 bg-white/20"></span>
+<span class="text-[10px] uppercase tracking-widest font-label">The Digital Estate</span>
+</div>
+</div>
+</section>
+<!-- Heritage Section (Tonal Shift) -->
+<section class="py-32 bg-surface-container-low overflow-hidden relative">
+<div class="heritage-watermark absolute -right-20 top-20 text-[20rem] font-display font-bold text-on-surface/[0.03] italic">
+                1856
+            </div>
+<div class="max-w-[1440px] mx-auto px-12 grid grid-cols-1 md:grid-cols-12 gap-20 items-center">
+<div class="md:col-span-5 relative z-10">
+<h2 class="text-4xl md:text-6xl font-display text-primary leading-tight mb-8">
+                        A Legacy <br/> 
+                        Built on <span class="italic text-secondary">Trust</span>.
+                    </h2>
+<p class="text-on-surface-variant font-body text-lg leading-relaxed mb-12">
+                        Since our inception in the mid-19th century, Ameer Global has evolved from a regional merchant house into a cornerstone of international trade. Our journey is etched in the quality of every cargo we deliver and the longevity of every partnership we nurture.
+                    </p>
+<div class="grid grid-cols-2 gap-8">
+<div>
+<div class="text-3xl font-display text-primary mb-2">168+</div>
+<div class="text-xs uppercase tracking-widest text-outline">Years of History</div>
+</div>
+<div>
+<div class="text-3xl font-display text-primary mb-2">42</div>
+<div class="text-xs uppercase tracking-widest text-outline">Trading Hubs</div>
+</div>
+</div>
+</div>
+<div class="md:col-span-7 relative">
+<div class="grid grid-cols-2 gap-6 items-start">
+<div class="pt-24">
+<img alt="monochrome vintage-style photography of a busy trading port from the early 20th century with tall ships" class="w-full aspect-[3/4] object-cover rounded-xl shadow-2xl grayscale transition-all hover:grayscale-0 duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYAfVzlRNfYYh8MUIcpNbQUJOPGaTSbMK52YYWUqZrL7u30_qLH_8E2_Effqh4aGT5myG4mJclsM7R1Ztzw2_AwsIksP6zq6JqNthPfVfKtzNBXVJo1oazZNIaIzdWVYD3QbPEZEyigRr2wKA5p5FKt_wl1C4r8qYhvxJ-NywwoV2dWeTIMy_iDetUSGqYbmjCcMd0eRsP-AQ49Ks8_tNjKVV6L-WX9IyEpDOnxJGj7cifIo7EQZDHESX-lSv7dpbvYzPy1M0Rc8k"/>
+</div>
+<div class="space-y-6">
+<img alt="close up of premium aged wood merchant desk with an antique brass compass and aged parchment map" class="w-full aspect-square object-cover rounded-xl shadow-xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXRjs1I3V2XpTqKfkAuqvq8MJZJX6AE7iJVnQVmuzpc68mcqighdPz5k20c4CTc8SfBHgscMLvWfV8LjYCzAUlluSCiy3RqjGSPEtg7ZC21_vxaU_pNc0kUr119cBCZjtZdIiph6aF1fQPAJKCIBJe5wV8FXQBSY0_OrD5EYOwsoePwg07lyUg2xHZpzoWM3gP-r9jamsgqJdDfANlbhdieWR-Vo8K3iRTMs1WGRbFWkGjCIVwBUci0eWtfWT8lOvXZIhiqUe-OM4"/>
+<div class="p-8 bg-surface-container-lowest border border-outline-variant/15 rounded-lg flex flex-col items-center justify-center min-h-[160px]">
+<!-- Minimalist Maritime Illustration -->
+<svg class="w-16 h-16 text-secondary/40 mb-2 animate-float" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
+</svg>
+<div class="w-12 h-[1px] bg-outline-variant/30 mb-4"></div>
+<p class="text-[10px] uppercase tracking-[0.3em] text-outline text-center">Seamless Logistics Architecture</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Global Network Bento Grid -->
+<section class="py-32 bg-surface">
+<div class="max-w-[1440px] mx-auto px-12">
+<div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+<div class="max-w-2xl">
+<span class="font-label text-secondary text-xs uppercase tracking-widest block mb-4">Operations</span>
+<h2 class="text-5xl font-display text-primary tracking-tight">Our Global Footprint</h2>
+</div>
+<p class="text-on-surface-variant max-w-sm font-body text-sm leading-relaxed">
+                        Strategically positioned across five continents, ensuring seamless flow and unparalleled market access.
+                    </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6 h-auto md:h-[800px]">
+<div class="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-xl">
+<img alt="vibrant sunset view of a futuristic mega-port in Singapore with neon crane lights and calm water" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqt6aVilcD4eD8IOVpl3PLKbBpo4lq6fkD4WlZ6D4De-zRf3d5iTjxWxV3qBczaJ55Jzz23qKaACXEnvwYMX3rQiif-4-tnQN79b2uHwsTjli6oBPSafQV4cakpw_I4VdVicclGacDfM2dTeGpPwwvYxJ9SzR9Us-QXp5Uuw0hZFPqVLdaFoqSDfHtBBxT4N167wkk2SqMCgagS3dRB8SW6I5M4CeKHpxg68pIMa8535mwVq7arwZAT5p9D0ekyLVg09z-rF0ga4U"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-60"></div>
+<div class="absolute bottom-10 left-10 text-white">
+<h3 class="text-2xl font-display mb-2">Asia-Pacific Hub</h3>
+<p class="text-sm opacity-80 uppercase tracking-widest">Singapore &amp; Hong Kong</p>
+</div>
+</div>
+<div class="md:col-span-2 relative group overflow-hidden rounded-xl">
+<img alt="high-end luxury office interior in London with dark oak panels and floor-to-ceiling windows overlooking the Thames" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL1au9PLeh6Gh4HBYJjvtZChTigQLzuTCx-UB6-nCDgZ-zTa4uZb0KmZjutgXGBKV1gjeql_PHz57AWh1YTMtyuBtVsdf2o4SfKS-lHxa1R6rT6rGISVGMvNaw8jF9yHppreI0L_8pisNEvliFEG_Ix938XHijvwWVvJFJlNc5NRVJL3CjeHCsukevYvTzLCNCHE-y4an1rt1qH9yTe3z-2YzO9Yg9fL9HxqjnKnR6DTVync6RCL4Y4IXkcGab9jDCavm5G2UG_ZE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-secondary/80 via-transparent to-transparent opacity-40"></div>
+<div class="absolute bottom-10 left-10 text-white">
+<h3 class="text-2xl font-display mb-2">European Command</h3>
+<p class="text-sm opacity-80 uppercase tracking-widest">Rotterdam &amp; London</p>
+</div>
+</div>
+<div class="relative group overflow-hidden rounded-xl bg-primary-container p-10 flex flex-col justify-between">
+<span class="material-symbols-outlined text-on-primary-container text-4xl">public</span>
+<div>
+<div class="text-4xl font-display text-on-primary-container mb-2">120+</div>
+<p class="text-on-primary-container/70 text-xs uppercase tracking-widest">Partner Nations</p>
+</div>
+</div>
+<div class="relative group overflow-hidden rounded-xl bg-surface-container-high p-10 flex flex-col justify-between">
+<span class="material-symbols-outlined text-secondary text-4xl">inventory_2</span>
+<div>
+<div class="text-4xl font-display text-primary mb-2">6.2M</div>
+<p class="text-on-surface-variant text-xs uppercase tracking-widest">Tons Shipped Annually</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Illustration Section (Replacing CTA) -->
+<section class="py-24 px-12 bg-surface">
+<div class="max-w-[1440px] mx-auto border-t border-outline-variant/10 pt-24">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-16 items-center">
+<div class="text-center space-y-6 group">
+<div class="h-40 flex items-center justify-center">
+<svg class="w-24 h-24 text-primary/20 group-hover:text-primary/40 transition-colors duration-500" fill="none" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<circle cx="50" cy="50" r="45" stroke="currentColor" stroke-dasharray="4 4" stroke-width="0.5"></circle>
+<path class="line-draw" d="M20 50 C 35 20, 65 80, 80 50" stroke="currentColor" stroke-width="1"></path>
+<circle cx="20" cy="50" fill="currentColor" r="2"></circle>
+<circle cx="80" cy="50" fill="currentColor" r="2"></circle>
+</svg>
+</div>
+<h4 class="font-display text-xl text-primary uppercase tracking-widest">Global Trajectory</h4>
+<p class="text-xs text-outline leading-loose max-w-[200px] mx-auto uppercase tracking-tighter">Precision routing across longitudinal corridors with proprietary real-time telemetry.</p>
+</div>
+<div class="text-center space-y-6 group">
+<div class="h-40 flex items-center justify-center">
+<svg class="w-32 h-24 text-secondary/20 group-hover:text-secondary/40 transition-colors duration-500" fill="none" viewbox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+<rect height="15" stroke="currentColor" stroke-width="1" width="100" x="10" y="40"></rect>
+<rect height="15" stroke="currentColor" stroke-width="1" width="20" x="25" y="25"></rect>
+<rect height="15" stroke="currentColor" stroke-width="1" width="20" x="50" y="25"></rect>
+<rect height="15" stroke="currentColor" stroke-width="1" width="20" x="75" y="25"></rect>
+<path d="M10 55 L5 65 L115 65 L110 55" stroke="currentColor" stroke-width="1"></path>
+<circle class="animate-pulse" cx="60" cy="47" fill="currentColor" r="1.5"></circle>
+</svg>
+</div>
+<h4 class="font-display text-xl text-primary uppercase tracking-widest">Fleet Integrity</h4>
+<p class="text-xs text-outline leading-loose max-w-[200px] mx-auto uppercase tracking-tighter">Maintaining a sovereign fleet of Tier-1 vessels, engineered for deep-water endurance.</p>
+</div>
+<div class="text-center space-y-6 group">
+<div class="h-40 flex items-center justify-center">
+<svg class="w-24 h-24 text-primary/20 group-hover:text-primary/40 transition-colors duration-500" fill="none" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<path d="M50 10 L50 90 M10 50 L90 50" stroke="currentColor" stroke-width="0.5"></path>
+<path class="line-draw" d="M30 30 L50 10 L70 30 M30 70 L50 90 L70 70 M10 50 L30 30 M10 50 L30 70" stroke="currentColor" stroke-width="1"></path>
+<circle class="animate-ping" cx="50" cy="50" fill="currentColor" r="3"></circle>
+</svg>
+</div>
+<h4 class="font-display text-xl text-primary uppercase tracking-widest">Navigational Trust</h4>
+<p class="text-xs text-outline leading-loose max-w-[200px] mx-auto uppercase tracking-tighter">A century of maritime protocol combined with decentralized ledger transparency.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-16 px-12 bg-[#f5f4f0] dark:bg-[#1b1c1a] border-t border-[#c6c8b9]/15">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 max-w-[1920px] mx-auto">
+<div class="space-y-6">
+<div class="font-serif italic text-xl text-[#38451a] dark:text-[#faf9f5] opacity-60">
+                    Ameer Global
+                </div>
+<p class="text-[#38451a] dark:text-[#faf9f5] font-sans text-xs uppercase tracking-widest leading-relaxed">
+                    Excellence in Global Distribution <br/> Since the dawn of the modern era.
+                </p>
+</div>
+<div class="space-y-4">
+<h4 class="font-bold text-[#38451a] dark:text-[#faf9f5] font-sans text-xs uppercase tracking-[0.2em]">Legacy</h4>
+<ul class="space-y-2">
+<li><a class="font-sans text-xs uppercase tracking-widest text-[#38451a] opacity-60 hover:opacity-100 transition-opacity" href="#">Heritage</a></li>
+<li><a class="font-sans text-xs uppercase tracking-widest text-[#38451a] opacity-60 hover:opacity-100 transition-opacity" href="#">Sustainability</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h4 class="font-bold text-[#38451a] dark:text-[#faf9f5] font-sans text-xs uppercase tracking-[0.2em]">Partnership</h4>
+<ul class="space-y-2">
+<li><a class="font-sans text-xs uppercase tracking-widest text-[#38451a] opacity-60 hover:opacity-100 transition-opacity" href="#">Global Network</a></li>
+<li><a class="font-sans text-xs uppercase tracking-widest text-[#38451a] opacity-60 hover:opacity-100 transition-opacity" href="#">Terms of Trade</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h4 class="font-bold text-[#38451a] dark:text-[#faf9f5] font-sans text-xs uppercase tracking-[0.2em]">HQ</h4>
+<p class="text-[#38451a] dark:text-[#faf9f5] opacity-60 font-sans text-xs uppercase tracking-widest">
+                    The Trade Exchange <br/>
+                    Suite 800, Global District <br/>
+                    SG 18560
+                </p>
+</div>
+</div>
+<div class="mt-20 pt-8 border-t border-outline-variant/10 text-center">
+<p class="font-sans text-[10px] uppercase tracking-[0.5em] text-outline">
+                © 1856-2024 Ameer Global. The Digital Estate.
+            </p>
+</div>
+</footer>
+</body></html>
