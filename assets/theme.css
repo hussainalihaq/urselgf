@@ -5,10 +5,13 @@
   --brand-100: #e6edfb;
   --ink-900: #1c2c57;
   --ink-700: #43547d;
+  --ink-500: #6273a0;
 }
 
 body {
+  font-family: "Manrope", sans-serif !important;
   color: var(--ink-900);
+  background: #f8f9fc;
 }
 
 nav {
@@ -17,6 +20,7 @@ nav {
 
 nav a {
   font-weight: 500 !important;
+  font-size: 0.9rem !important;
   letter-spacing: 0.02em;
 }
 
@@ -31,6 +35,11 @@ h3 {
 
 .font-bold {
   font-weight: 500 !important;
+}
+
+.font-display,
+.font-headline {
+  font-family: "Manrope", sans-serif !important;
 }
 
 .bg-primary {
@@ -53,26 +62,95 @@ h3 {
   border-color: var(--brand-900) !important;
 }
 
-/* Make hero and highlighted text readable without harsh white */
+/* Keep text readable and minimal */
 .text-white {
-  color: #203a7c !important;
+  color: var(--ink-900) !important;
   text-shadow: none !important;
 }
 
 .text-white\/80 {
-  color: #314d93 !important;
+  color: var(--ink-700) !important;
 }
 
 .text-white\/40 {
-  color: #4f67a3 !important;
+  color: var(--ink-500) !important;
 }
 
-/* Home hero readability on top of image backgrounds */
-section h1.text-white,
-section p.text-white\/80,
-section .text-white\/40 {
-  color: #eaf0fc !important;
-  text-shadow: 0 2px 10px rgba(16, 34, 77, 0.28);
+/* Better hierarchy: reduce oversized generated headings */
+.text-9xl {
+  font-size: clamp(2.3rem, 7vw, 4.6rem) !important;
+}
+
+.text-8xl {
+  font-size: clamp(2.2rem, 6.2vw, 4.2rem) !important;
+}
+
+.text-7xl {
+  font-size: clamp(2rem, 5.6vw, 3.7rem) !important;
+}
+
+.text-6xl {
+  font-size: clamp(1.8rem, 5vw, 3.2rem) !important;
+}
+
+.text-5xl {
+  font-size: clamp(1.55rem, 4.2vw, 2.6rem) !important;
+}
+
+/* Home page hero: readable panel over image */
+main > section:first-of-type .relative.z-10 {
+  background: rgba(246, 249, 255, 0.8);
+  border: 1px solid rgba(38, 63, 133, 0.15);
+  border-radius: 1rem;
+  padding: 1.5rem 1.25rem;
+  backdrop-filter: blur(6px);
+}
+
+@media (min-width: 768px) {
+  main > section:first-of-type .relative.z-10 {
+    padding: 2.25rem 2rem;
+  }
+}
+
+main > section:first-of-type h1,
+main > section:first-of-type p {
+  color: var(--ink-900) !important;
+}
+
+main > section:first-of-type p {
+  color: var(--ink-700) !important;
+}
+
+/* Minimal button system */
+a.bg-primary,
+button.bg-primary,
+a.bg-secondary,
+button.bg-secondary {
+  border-radius: 0.6rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.06em !important;
+  box-shadow: 0 8px 18px rgba(34, 60, 125, 0.14);
+}
+
+a.bg-white\/10,
+button.bg-white\/10 {
+  background: rgba(230, 237, 251, 0.9) !important;
+  border-color: rgba(38, 63, 133, 0.18) !important;
+  color: var(--ink-900) !important;
+}
+
+/* Softer cards, less visual noise */
+.shadow-2xl {
+  box-shadow: 0 12px 28px rgba(25, 47, 101, 0.12) !important;
+}
+
+.hover\:shadow-2xl:hover {
+  box-shadow: 0 14px 30px rgba(25, 47, 101, 0.16) !important;
+}
+
+/* Brand links */
+a:hover {
+  color: var(--brand-800) !important;
 }
 
 /* Keep logo clear and clean on light nav background */
