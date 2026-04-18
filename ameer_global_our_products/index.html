@@ -97,14 +97,14 @@
             Ameer Global
         </div>
 <div class="hidden md:flex items-center gap-10 font-serif text-sm tracking-widest uppercase">
-<a class="text-[#1b1c1a]/60 hover:text-[#38451a] transition-all" href="#">Home</a>
-<a class="text-[#38451a] border-b-2 border-[#38451a] pb-1" href="#">Products</a>
-<a class="text-[#1b1c1a]/60 hover:text-[#38451a] transition-all" href="#">About</a>
-<a class="text-[#1b1c1a]/60 hover:text-[#38451a] transition-all" href="#">Contact</a>
+<a class="text-[#1b1c1a]/60 hover:text-[#38451a] transition-all" href="/home">Home</a>
+<a class="text-[#38451a] border-b-2 border-[#38451a] pb-1" href="/products">Products</a>
+<a class="text-[#1b1c1a]/60 hover:text-[#38451a] transition-all" href="/about">About</a>
+<a class="text-[#1b1c1a]/60 hover:text-[#38451a] transition-all" href="/contact">Contact</a>
 </div>
-<button class="bg-primary text-on-primary px-8 py-3 rounded text-xs uppercase tracking-widest font-bold hover:opacity-80 transition-all">
+<a class="bg-primary text-on-primary px-8 py-3 rounded text-xs uppercase tracking-widest font-bold hover:opacity-80 transition-all inline-block" href="/contact">
             Inquire Now
-        </button>
+        </a>
 </nav>
 </header>
 <main class="relative overflow-hidden">
@@ -122,10 +122,10 @@
                     Heritage in Every Bite - Since 1856. Experience the gold standard of Pakistani mangoes, nurtured in the fertile soils of Multan.
                 </p>
 <div class="flex gap-6">
-<button class="bg-secondary text-on-secondary px-10 py-5 rounded-lg font-bold flex items-center gap-3 transition-all hover:shadow-xl hover:-translate-y-1">
+<a class="bg-secondary text-on-secondary px-10 py-5 rounded-lg font-bold flex items-center gap-3 transition-all hover:shadow-xl hover:-translate-y-1" href="#product-grid">
                         Explore Collection
                         <span class="material-symbols-outlined">arrow_downward</span>
-</button>
+</a>
 </div>
 </div>
 <div class="lg:col-span-6 relative">
@@ -142,7 +142,7 @@
 </div>
 </section>
 <!-- Mango Varieties Grid -->
-<section class="py-24 px-6 md:px-12 bg-surface-container-low">
+<section class="py-24 px-6 md:px-12 bg-surface-container-low" id="product-grid">
 <div class="max-w-[1920px] mx-auto">
 <div class="mb-20 flex flex-col md:flex-row justify-between items-end gap-8">
 <div>
@@ -163,8 +163,8 @@
 </div>
 <p class="text-on-surface-variant mb-8 text-sm leading-relaxed">The 'King of Fragrance'. Small in size but explosive in flavor with a delicate skin.</p>
 <div class="grid grid-cols-2 gap-4">
-<button class="border border-outline py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-primary hover:text-white transition-colors">Reserve</button>
-<button class="bg-primary text-on-primary py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-colors">Buy Now</button>
+<a class="border border-outline py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-primary hover:text-white transition-colors text-center" href="/contact?product=Anwar%20Ratol%20Mango%20Reserve&amp;intent=reserve">Reserve</a>
+<a class="bg-primary text-on-primary py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-colors text-center" href="/contact?product=Anwar%20Ratol%20Mango%20Reserve&amp;intent=buy">Buy Now</a>
 </div>
 </div>
 <!-- Chaunsa -->
@@ -178,8 +178,8 @@
 </div>
 <p class="text-on-surface-variant mb-8 text-sm leading-relaxed">Sweet as honey with a succulent, fiberless texture. The most sought-after variety globally.</p>
 <div class="grid grid-cols-2 gap-4">
-<button class="border border-outline py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-primary hover:text-white transition-colors">Reserve</button>
-<button class="bg-primary text-on-primary py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-colors">Buy Now</button>
+<a class="border border-outline py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-primary hover:text-white transition-colors text-center" href="/contact?product=Chaunsa%20Mango%20Premium%20Box&amp;intent=reserve">Reserve</a>
+<a class="bg-primary text-on-primary py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-colors text-center" href="/contact?product=Chaunsa%20Mango%20Premium%20Box&amp;intent=buy">Buy Now</a>
 </div>
 </div>
 <!-- Sindhri -->
@@ -193,8 +193,8 @@
 </div>
 <p class="text-on-surface-variant mb-8 text-sm leading-relaxed">The aesthetic marvel. Large, oval, and lemon-yellow with a firm, buttery flesh.</p>
 <div class="grid grid-cols-2 gap-4">
-<button class="border border-outline py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-primary hover:text-white transition-colors">Reserve</button>
-<button class="bg-primary text-on-primary py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-colors">Buy Now</button>
+<a class="border border-outline py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-primary hover:text-white transition-colors text-center" href="/contact?product=Sindhri%20Mango%20Estate%20Selection&amp;intent=reserve">Reserve</a>
+<a class="bg-primary text-on-primary py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-colors text-center" href="/contact?product=Sindhri%20Mango%20Estate%20Selection&amp;intent=buy">Buy Now</a>
 </div>
 </div>
 </div>
@@ -360,10 +360,11 @@
 </div>
 <div class="flex flex-col gap-4">
 <h5 class="font-bold text-xs uppercase tracking-widest text-primary mb-2">Newsletter</h5>
-<div class="flex gap-2">
-<input class="bg-transparent border-b border-outline-variant focus:border-primary outline-none py-2 text-[10px] uppercase tracking-widest w-full" placeholder="EMAIL ADDRESS" type="email"/>
-<button class="material-symbols-outlined text-primary">arrow_forward</button>
-</div>
+<form class="flex gap-2" id="newsletter-form">
+<input class="bg-transparent border-b border-outline-variant focus:border-primary outline-none py-2 text-[10px] uppercase tracking-widest w-full" id="newsletter-email" placeholder="EMAIL ADDRESS" required="" type="email"/>
+<button class="material-symbols-outlined text-primary" type="submit">arrow_forward</button>
+</form>
+<p class="text-[10px] uppercase tracking-widest opacity-60" id="newsletter-status"></p>
 </div>
 </div>
 <div class="max-w-[1920px] mx-auto mt-24 pt-8 border-t border-outline-variant/10 flex justify-between items-center text-[#38451a]">
@@ -374,4 +375,33 @@
 </div>
 </div>
 </footer>
+<script>
+      const newsletterForm = document.getElementById('newsletter-form');
+      const newsletterEmail = document.getElementById('newsletter-email');
+      const newsletterStatus = document.getElementById('newsletter-status');
+
+      newsletterForm?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        newsletterStatus.textContent = 'Submitting...';
+
+        try {
+          const response = await fetch('/api/newsletter', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: newsletterEmail.value.trim() })
+          });
+          const result = await response.json();
+
+          if (!response.ok) {
+            newsletterStatus.textContent = result.error || 'Subscription failed.';
+            return;
+          }
+
+          newsletterStatus.textContent = result.message || 'Subscribed.';
+          newsletterForm.reset();
+        } catch (error) {
+          newsletterStatus.textContent = 'Network error. Please try again.';
+        }
+      });
+</script>
 </body></html>
