@@ -224,6 +224,11 @@ a {
   min-height: min(92vh, 900px) !important;
 }
 
+.home-page main > section:first-of-type .absolute.inset-0 {
+  position: absolute;
+  overflow: hidden;
+}
+
 .home-page main > section:first-of-type .absolute.inset-0.bg-gradient-to-b {
   background: linear-gradient(
     180deg,
@@ -234,8 +239,22 @@ a {
 }
 
 .home-page main > section:first-of-type .absolute.inset-0 img {
-  transform: scale(1.03);
-  animation: heroDrift 18s ease-in-out infinite alternate;
+  transform: scale(1.04) translateX(0);
+  animation: heroDrift 20s ease-in-out infinite alternate;
+}
+
+.home-page main > section:first-of-type .absolute.inset-0::after {
+  content: '';
+  position: absolute;
+  inset: -18%;
+  pointer-events: none;
+  background: linear-gradient(
+    118deg,
+    transparent 34%,
+    rgba(203, 224, 255, 0.18) 49%,
+    transparent 63%
+  );
+  animation: wakeSweep 9s ease-in-out infinite;
 }
 
 .home-page main > section:first-of-type .relative.z-10 {
@@ -254,8 +273,16 @@ a {
 
 /* Apply light hero text ONLY on image-based hero (home page) */
 .home-page main > section:first-of-type .relative.z-10 h1 {
-  color: #f1f5ff !important;
-  text-shadow: 0 8px 28px rgba(9, 24, 57, 0.58) !important;
+  color: transparent !important;
+  background: linear-gradient(180deg, #f8fbff 0%, #d9e6ff 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 10px 34px rgba(9, 24, 57, 0.52) !important;
+  letter-spacing: -0.018em !important;
+}
+
+.home-page main > section:first-of-type .relative.z-10 h1 span {
+  opacity: 0.9;
 }
 
 .home-page main > section:first-of-type .relative.z-10 p {
@@ -339,6 +366,32 @@ main > section:nth-of-type(odd) {
   background: linear-gradient(180deg, rgba(246, 249, 255, 0.9), rgba(238, 243, 252, 0.56)) !important;
 }
 
+main > section {
+  opacity: 0;
+  transform: translateY(22px);
+  animation: sectionReveal 760ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+main > section:nth-of-type(1) {
+  animation-delay: 80ms;
+}
+
+main > section:nth-of-type(2) {
+  animation-delay: 160ms;
+}
+
+main > section:nth-of-type(3) {
+  animation-delay: 240ms;
+}
+
+main > section:nth-of-type(4) {
+  animation-delay: 320ms;
+}
+
+main > section:nth-of-type(5) {
+  animation-delay: 400ms;
+}
+
 /* Reduce decorative noise */
 .heritage-watermark,
 .heritage-ghost {
@@ -367,7 +420,7 @@ img {
 }
 
 .group:hover img {
-  transform: scale(1.015);
+  transform: scale(1.03) translateY(-2px);
 }
 
 /* Progressive entrance animation */
@@ -414,10 +467,34 @@ img {
 
 @keyframes heroDrift {
   0% {
-    transform: scale(1.03) translateY(0px);
+    transform: scale(1.04) translate3d(0, 0, 0);
   }
   100% {
-    transform: scale(1.08) translateY(-16px);
+    transform: scale(1.1) translate3d(-1.5%, -14px, 0);
+  }
+}
+
+@keyframes wakeSweep {
+  0% {
+    transform: translateX(-38%) rotate(1deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(32%) rotate(1deg);
+    opacity: 0;
+  }
+}
+
+@keyframes sectionReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
