@@ -94,6 +94,21 @@
             0%, 100% { box-shadow: 0 10px 24px rgba(31, 63, 143, 0.22); }
             50% { box-shadow: 0 16px 32px rgba(31, 63, 143, 0.34); }
         }
+        /* Blue-only palette override for products page text + buttons */
+        h1, h2, h3, h4, .text-primary { color: #173773 !important; }
+        .text-secondary { color: #3f67c8 !important; }
+        .bg-primary {
+            background: #173773 !important;
+            color: #ffffff !important;
+        }
+        .bg-secondary {
+            background: #3f67c8 !important;
+            color: #ffffff !important;
+        }
+        .hover\:bg-secondary:hover { background: #3f67c8 !important; }
+        .hover\:bg-primary:hover { background: #173773 !important; color: #ffffff !important; }
+        .text-on-primary, .text-on-secondary { color: #ffffff !important; }
+        .border-outline:hover { border-color: #173773 !important; }
         .animate-subtle { animation: float 6s ease-in-out infinite; }
         main > section {
             opacity: 0;
