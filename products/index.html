@@ -76,15 +76,39 @@
       }
     </script>
 <style>
-        body { font-family: 'Manrope', sans-serif; background-color: #faf9f5; color: #1b1c1a; }
+        body {
+            font-family: 'Manrope', sans-serif;
+            color: #1b1c1a;
+            background:
+                radial-gradient(1200px 620px at 95% -10%, rgba(52, 94, 191, 0.16), transparent 60%),
+                radial-gradient(1000px 540px at -10% 5%, rgba(35, 71, 156, 0.12), transparent 56%),
+                linear-gradient(180deg, #f3f7ff 0%, #edf3ff 100%);
+        }
         h1, h2, h3, h4 { font-family: 'Noto Serif', serif; }
         .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
         .glass-nav { background: rgba(250, 249, 245, 0.7); backdrop-filter: blur(20px); }
         .heritage-ghost { position: absolute; font-family: 'Noto Serif', serif; font-style: italic; opacity: 0.04; font-size: 20rem; pointer-events: none; z-index: 0; line-height: 1; }
+        .bg-surface { background: transparent !important; }
+        .bg-surface-container-low { background: linear-gradient(180deg, rgba(234, 242, 255, 0.78), rgba(224, 236, 254, 0.52)) !important; }
+        .bg-surface-container-lowest { background: rgba(255, 255, 255, 0.72) !important; border: 1px solid rgba(31, 63, 143, 0.12); }
+        .bg-surface-container-high { background: rgba(236, 244, 255, 0.86) !important; }
         @keyframes float {
             0% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-10px) rotate(1deg); }
             100% { transform: translateY(0px) rotate(0deg); }
+        }
+        @keyframes mangoDrift {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            50% { transform: translateY(-8px) rotate(0.8deg) scale(1.02); }
+        }
+        @keyframes mangoGlow {
+            0%, 100% { box-shadow: 0 14px 30px rgba(23, 55, 115, 0.14); }
+            50% { box-shadow: 0 24px 44px rgba(63, 103, 200, 0.24); }
+        }
+        @keyframes mangoShine {
+            0% { transform: translateX(-120%) skewX(-18deg); opacity: 0; }
+            30% { opacity: 0.55; }
+            100% { transform: translateX(280%) skewX(-18deg); opacity: 0; }
         }
         @keyframes sectionReveal {
             from { opacity: 0; transform: translateY(22px); }
@@ -123,6 +147,30 @@
         .group img { transition: transform 500ms ease; }
         .group:hover img { transform: scale(1.05) translateY(-2px); }
         .bg-primary, .bg-secondary { animation: softPulse 4.5s ease-in-out infinite; }
+        /* Mango-specific animation accents */
+        #product-grid .group {
+            position: relative;
+            overflow: hidden;
+            animation: mangoGlow 4.8s ease-in-out infinite;
+        }
+        #product-grid .group:nth-child(2) { animation-delay: 0.6s; }
+        #product-grid .group:nth-child(3) { animation-delay: 1.2s; }
+        #product-grid .group .aspect-\[1\/1\] img {
+            animation: mangoDrift 6s ease-in-out infinite;
+        }
+        #product-grid .group:nth-child(2) .aspect-\[1\/1\] img { animation-delay: 0.8s; }
+        #product-grid .group:nth-child(3) .aspect-\[1\/1\] img { animation-delay: 1.5s; }
+        #product-grid .group::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 36%, rgba(255, 255, 255, 0.4) 50%, transparent 64%);
+            transform: translateX(-120%) skewX(-18deg);
+            pointer-events: none;
+            animation: mangoShine 5.2s ease-in-out infinite;
+        }
+        #product-grid .group:nth-child(2)::after { animation-delay: 0.7s; }
+        #product-grid .group:nth-child(3)::after { animation-delay: 1.4s; }
     </style>
 </head>
 <body class="bg-surface text-on-surface">
