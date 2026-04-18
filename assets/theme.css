@@ -1,0 +1,71 @@
+:root {
+  --brand-900: #1f3f8f;
+  --brand-800: #2a4e9f;
+  --brand-700: #355da8;
+  --brand-100: #e8eefb;
+  --ink-900: #1f2a44;
+  --ink-700: #3b4661;
+}
+
+body {
+  color: var(--ink-900);
+}
+
+nav {
+  border-bottom: 1px solid rgba(31, 63, 143, 0.1);
+}
+
+nav a {
+  font-weight: 500 !important;
+  letter-spacing: 0.02em;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--brand-900) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em;
+}
+
+.font-bold {
+  font-weight: 600 !important;
+}
+
+.bg-primary {
+  background-color: var(--brand-900) !important;
+}
+
+.bg-secondary {
+  background-color: var(--brand-800) !important;
+}
+
+.text-primary {
+  color: var(--brand-900) !important;
+}
+
+.text-secondary {
+  color: var(--brand-800) !important;
+}
+
+.border-primary {
+  border-color: var(--brand-900) !important;
+}
+
+/* Home hero: move away from stark white heavy text */
+.text-white {
+  color: #e7ecf8 !important;
+}
+
+.text-white\/80 {
+  color: #ced9f2 !important;
+}
+
+.text-white\/40 {
+  color: #b6c7ea !important;
+}
+
+/* Keep logo clear and clean on light nav background */
+nav img[alt="Ameer Global Logo"] {
+  image-rendering: auto;
+}
