@@ -1,10 +1,6 @@
 {
   "trailingSlash": true,
-  "rewrites": [
-    { "source": "/", "destination": "/home" },
-    { "source": "/home", "destination": "/ameer_global_home_refined/index.html" },
-    { "source": "/about", "destination": "/ameer_global_about_network_refined/index.html" },
-    { "source": "/products", "destination": "/ameer_global_our_products/index.html" },
-    { "source": "/contact", "destination": "/ameer_global_contact/index.html" }
+  "redirects": [
+    { "source": "/home", "destination": "/", "permanent": false }
   ]
 }

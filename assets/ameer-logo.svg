@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="120" viewBox="0 0 520 120" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#24479c"/>
+      <stop offset="1" stop-color="#102a66"/>
+    </linearGradient>
+  </defs>
+  <circle cx="60" cy="60" r="52" fill="url(#g)" stroke="#8fa3cf" stroke-width="4"/>
+  <path d="M60 16C38 16 20 35 20 58c0 24 18 42 40 46" stroke="#c7d4f1" stroke-width="3" fill="none"/>
+  <path d="M60 16c22 0 40 19 40 42 0 24-18 42-40 46" stroke="#c7d4f1" stroke-width="3" fill="none"/>
+  <path d="M20 60h80M60 16v88" stroke="#c7d4f1" stroke-width="2" opacity="0.7"/>
+  <text x="128" y="56" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="800" fill="#1f3f8f" letter-spacing="2">AMEER</text>
+  <text x="128" y="97" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#1f3f8f" letter-spacing="1.4">GLOBAL INC.</text>
+</svg>
