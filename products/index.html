@@ -12,51 +12,51 @@
         theme: {
           extend: {
             "colors": {
-                    "on-secondary-container": "#18357a",
-                    "primary-fixed-dim": "#95afe3",
+                    "on-secondary-container": "#773304",
+                    "primary-fixed-dim": "#bdcd94",
                     "error-container": "#ffdad6",
-                    "secondary-fixed": "#e8eefb",
+                    "secondary-fixed": "#ffdbca",
                     "surface-container-high": "#e9e8e4",
                     "background": "#faf9f5",
                     "on-primary": "#ffffff",
                     "outline-variant": "#c6c8b9",
-                    "secondary-fixed-dim": "#c6d4f6",
-                    "primary": "#1f3f8f",
-                    "tertiary": "#1c2f63",
+                    "secondary-fixed-dim": "#ffb68f",
+                    "primary": "#38451a",
+                    "tertiary": "#5b363a",
                     "surface-container-lowest": "#ffffff",
-                    "tertiary-fixed-dim": "#b9c9ef",
-                    "on-secondary-fixed": "#10244d",
-                    "on-primary-fixed": "#10244d",
+                    "tertiary-fixed-dim": "#eeb9bd",
+                    "on-secondary-fixed": "#331100",
+                    "on-primary-fixed": "#151f00",
                     "inverse-on-surface": "#f2f1ed",
-                    "tertiary-fixed": "#e3e9fb",
-                    "tertiary-container": "#2a3f79",
+                    "tertiary-fixed": "#ffdadc",
+                    "tertiary-container": "#754d51",
                     "on-secondary": "#ffffff",
-                    "on-tertiary-container": "#c7d5f7",
+                    "on-tertiary-container": "#f6c1c5",
                     "on-background": "#1b1c1a",
-                    "secondary": "#2f56b1",
-                    "surface-tint": "#2a4e9f",
+                    "secondary": "#944a1b",
+                    "surface-tint": "#556435",
                     "outline": "#76786c",
                     "surface-container-low": "#f5f4f0",
                     "surface-container-highest": "#e3e2df",
-                    "primary-container": "#2f56b1",
+                    "primary-container": "#4f5d2f",
                     "surface": "#faf9f5",
-                    "secondary-container": "#dbe5fb",
+                    "secondary-container": "#ff9e68",
                     "inverse-surface": "#30312e",
-                    "on-tertiary-fixed": "#0f1f49",
+                    "on-tertiary-fixed": "#301216",
                     "on-surface-variant": "#45483d",
                     "on-error-container": "#93000a",
-                    "on-secondary-fixed-variant": "#23448e",
-                    "on-primary-container": "#c6d4f6",
-                    "on-primary-fixed-variant": "#355da8",
+                    "on-secondary-fixed-variant": "#763303",
+                    "on-primary-container": "#c5d59c",
+                    "on-primary-fixed-variant": "#3e4c20",
                     "surface-variant": "#e3e2df",
                     "on-error": "#ffffff",
                     "surface-bright": "#faf9f5",
                     "error": "#ba1a1a",
                     "on-surface": "#1b1c1a",
-                    "primary-fixed": "#c6d4f6",
-                    "inverse-primary": "#95afe3",
+                    "primary-fixed": "#d9e9ae",
+                    "inverse-primary": "#bdcd94",
                     "on-tertiary": "#ffffff",
-                    "on-tertiary-fixed-variant": "#2a3f79",
+                    "on-tertiary-fixed-variant": "#623c40",
                     "surface-container": "#efeeea",
                     "surface-dim": "#dbdad6"
             },
@@ -88,24 +88,21 @@
         }
         .animate-subtle { animation: float 6s ease-in-out infinite; }
     </style>
-<link rel="stylesheet" href="/assets/theme.css?v=9"/>
 </head>
-<body class="products-page bg-surface text-on-surface">
+<body class="bg-surface text-on-surface">
 <!-- Navigation Shell -->
 <header class="sticky top-0 w-full z-50 bg-[#faf9f5]/70 backdrop-blur-lg shadow-[0_20px_50px_rgba(27,28,26,0.05)]">
-<nav class="site-nav-shell flex justify-between items-center px-6 md:px-6 py-4 max-w-[1920px] mx-auto">
-<a class="inline-flex items-center site-logo-wrap" href="/"><img alt="Ameer Global Logo" class="w-[190px] md:w-[290px] h-auto" src="/assets/logo-exact-clean.png?v=4"/></a>
-<div class="site-nav-right ml-auto">
-<div aria-label="Primary Navigation" class="site-nav-links hidden md:flex items-center" role="navigation">
-<a class="site-nav-link" href="/">Home</a>
-<a class="site-nav-link site-nav-link-active" href="/products/">Products</a>
-<a class="site-nav-link" href="/about/">About</a>
-<a class="site-nav-link" href="/contact/">Contact</a>
+<nav class="flex justify-between items-center px-6 md:px-12 py-4 max-w-[1920px] mx-auto">
+<a class="inline-flex items-center" href="/"><img alt="Ameer Global Logo" class="w-[170px] md:w-[240px] h-auto" src="/assets/logo-exact-clean.png?v=4"/></a>
+<div class="hidden md:flex items-center gap-3 bg-[#eaf0fd] border border-[#1f3f8f]/20 rounded-full p-1 ml-auto">
+<a class="px-4 py-2 rounded-full text-[11px] font-semibold tracking-[0.12em] uppercase text-[#1b2847]/75 hover:bg-white/70 hover:text-[#1f3f8f] transition-all" href="/">Home</a>
+<a class="px-4 py-2 rounded-full text-[11px] font-semibold tracking-[0.12em] uppercase bg-gradient-to-br from-[#1f3f8f] to-[#2f56b1] text-white shadow-[0_8px_18px_rgba(31,63,143,0.28)]" href="/products/">Products</a>
+<a class="px-4 py-2 rounded-full text-[11px] font-semibold tracking-[0.12em] uppercase text-[#1b2847]/75 hover:bg-white/70 hover:text-[#1f3f8f] transition-all" href="/about/">About</a>
+<a class="px-4 py-2 rounded-full text-[11px] font-semibold tracking-[0.12em] uppercase text-[#1b2847]/75 hover:bg-white/70 hover:text-[#1f3f8f] transition-all" href="/contact/">Contact</a>
 </div>
-<a class="site-nav-cta bg-primary text-on-primary px-5 py-2 rounded text-xs uppercase tracking-widest font-bold hover:opacity-80 transition-all inline-block" href="/contact/">
+<a class="bg-[#1f3f8f] text-white px-6 py-2.5 rounded-lg text-[11px] uppercase tracking-[0.14em] font-semibold hover:opacity-90 transition-all inline-block ml-3" href="/contact/">
             Inquire Now
         </a>
-</div>
 </nav>
 </header>
 <main class="relative overflow-hidden">
@@ -113,7 +110,7 @@
 <div class="heritage-ghost top-20 -left-20">1856</div>
 <!-- Product Hero: Ameer Farms Mangoes -->
 <section class="relative min-h-[819px] flex items-center px-6 md:px-12 py-24">
-<div class="max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center w-full">
+<div class="max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
 <div class="lg:col-span-6 z-10">
 <span class="label-md uppercase tracking-[0.3em] text-secondary font-bold mb-6 block">Legacy Selection</span>
 <h1 class="text-6xl md:text-8xl font-headline tracking-tighter text-primary leading-tight mb-8">
@@ -125,7 +122,7 @@
 <div class="flex gap-6">
 <a class="bg-secondary text-on-secondary px-10 py-5 rounded-lg font-bold flex items-center gap-3 transition-all hover:shadow-xl hover:-translate-y-1" href="#product-grid">
                         Explore Collection
-                        <span aria-hidden="true" class="inline-flex items-center">↓</span>
+                        <span class="material-symbols-outlined">arrow_downward</span>
 </a>
 </div>
 </div>
@@ -273,7 +270,7 @@
 <img class="w-64 h-64 object-contain opacity-40 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700 animate-subtle" data-alt="Minimalist bamboo plate" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbZTIeTlFyjcs4hSSuW2q4SeNfdC5otqk8y1yZHpB7iayueG9Ry402y7nC2oD_bpHUuXjwnI6FSMP2XIbj3_M2kyJuOeAuawxb2qM6PLC0yjbKXdN-WT9fcjOcGT4ZXRoapbXCe9pQ2IBJylXtwbmzIbfuca0JhI5pgANQ5JqqbDaLLtZlVgHFwTJiP9_y9Sahn8axpdQwWu83LZYbh8w4YEL8-uEVt4oH7vbkVJOLIeP6K6obf_zU0uEM5iYjpzj-7Wtgoc6Tpvw"/>
 </div>
 <div class="mt-8">
-<h3 class="text-xl font-headline text-primary mb-2">Sustainable Bamboo</h3>
+<h3 class="text-2xl font-headline text-primary mb-2">Sustainable Bamboo</h3>
 <p class="text-sm text-on-surface-variant font-light">Organic fibers, biodegradable finish.</p>
 </div>
 </div>
@@ -284,7 +281,7 @@
 <img class="w-64 h-64 object-contain opacity-40 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700 animate-subtle" data-alt="Pressed palm bowl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvzWPvmuahdhwOVcCb_nAfkjG7TmAsuuY9jNdNAuEJ8dDoxADgkLuT3XqQI2IcDqDGIhiW3CjM_1-uFNdGgEsLlitzAhIwUjstvFXhlxxN5AHcCgWZP-dNBM6rnAQFhyhot3dLII-WAr9hdrGj252s5mCGXSyU-MB4Yrp6wN8ShX_p9JljgzGxWtjCLiqbRfsrOLFpKja-2qHrT0BlFfpv8AM5Khg_djqusuRCMxOXCfQQ9eFIqW1tCKqLyB_jZMkIEjDVuNpuaAo" style="animation-delay: 0.5s;"/>
 </div>
 <div class="mt-8">
-<h3 class="text-xl font-headline text-primary mb-2">Pressed Palm</h3>
+<h3 class="text-2xl font-headline text-primary mb-2">Pressed Palm</h3>
 <p class="text-sm text-on-surface-variant font-light">Natural fallen leaf vessels.</p>
 </div>
 </div>
@@ -295,7 +292,7 @@
 <img class="w-64 h-64 object-contain opacity-40 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700 animate-subtle" data-alt="Artisan birch utensils" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzC4qhIp5A4HwEF36oSXinLY_R4ai59xIxETKvUPL6J7dH_VB2XJAbD86vKevVV0wlDXX7czn3W9Scdw4FRP8RaoYB_uvMQDfXRL2njIKNyz0SpFDy1W4CY66fbxGu_QYFbmoAFHgLCFCW3BgqKWJkeyUFpvANwDMOlwUev4O1XmCmmNeHbfmj55yKvO_lI00aZLdXRyysubAqwveQyzkFcAPrVZmEo9I7z6Vma_v4ZYu4VrAJmBCc6tm4NedJd8xkIeg1UYKcZnM" style="animation-delay: 1s;"/>
 </div>
 <div class="mt-8">
-<h3 class="text-xl font-headline text-primary mb-2">Artisan Birch</h3>
+<h3 class="text-2xl font-headline text-primary mb-2">Artisan Birch</h3>
 <p class="text-sm text-on-surface-variant font-light">Reclaimed wood craftsmanship.</p>
 </div>
 </div>
@@ -307,7 +304,7 @@
 <div class="max-w-[1920px] mx-auto text-center">
 <span class="label-md uppercase tracking-[0.3em] text-primary-container font-bold block mb-4">Quality Control</span>
 <h2 class="text-5xl md:text-6xl font-headline text-primary italic mb-24">From Soil to Doorstep</h2>
-<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12">
 <div class="group">
 <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-surface-container-high flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-all duration-500">
 <span class="material-symbols-outlined text-3xl">eco</span>
@@ -342,10 +339,10 @@
 </main>
 <!-- Footer Shell -->
 <footer class="w-full py-16 px-6 md:px-12 bg-[#f5f4f0] border-t border-[#c6c8b9]/15">
-<div class="max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+<div class="max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
 <div class="flex flex-col gap-6">
-<div class="font-headline italic text-xl text-[#1f3f8f] opacity-20 uppercase tracking-tighter">Ameer Global</div>
-<p class="text-[#1f3f8f] font-sans text-[10px] uppercase tracking-[0.2em] leading-loose">
+<div class="font-headline italic text-xl text-[#38451a] opacity-20 uppercase tracking-tighter">Ameer Global</div>
+<p class="text-[#38451a] font-sans text-[10px] uppercase tracking-[0.2em] leading-loose">
                 Curating Fine Commodities for a Discerning World.
             </p>
 </div>
@@ -368,7 +365,7 @@
 <p class="text-[10px] uppercase tracking-widest opacity-60" id="newsletter-status"></p>
 </div>
 </div>
-<div class="max-w-[1920px] mx-auto mt-24 pt-8 border-t border-outline-variant/10 flex justify-between items-center text-[#1f3f8f]">
+<div class="max-w-[1920px] mx-auto mt-24 pt-8 border-t border-outline-variant/10 flex justify-between items-center text-[#38451a]">
 <p class="text-[10px] uppercase tracking-widest opacity-40">© 1856-2024 Ameer Global.</p>
 <div class="flex gap-8">
 <span class="material-symbols-outlined opacity-40 hover:opacity-100 transition-opacity cursor-pointer">share</span>
@@ -383,14 +380,26 @@
 
       newsletterForm?.addEventListener('submit', async (event) => {
         event.preventDefault();
-        if (!newsletterEmail.value.trim()) {
-          newsletterStatus.textContent = 'Please enter a valid email address.';
-          return;
-        }
+        newsletterStatus.textContent = 'Submitting...';
 
-        newsletterStatus.textContent = 'Thanks. You are subscribed.';
-        newsletterForm.reset();
+        try {
+          const response = await fetch('/api/newsletter', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: newsletterEmail.value.trim() })
+          });
+          const result = await response.json();
+
+          if (!response.ok) {
+            newsletterStatus.textContent = result.error || 'Subscription failed.';
+            return;
+          }
+
+          newsletterStatus.textContent = result.message || 'Subscribed.';
+          newsletterForm.reset();
+        } catch (error) {
+          newsletterStatus.textContent = 'Network error. Please try again.';
+        }
       });
 </script>
-<script src="/assets/interactions.js"></script>
 </body></html>
