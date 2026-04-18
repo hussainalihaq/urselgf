@@ -153,11 +153,11 @@ a {
 }
 
 /* Hero treatment */
-main > section:first-of-type {
+.home-page main > section:first-of-type {
   min-height: min(92vh, 900px) !important;
 }
 
-main > section:first-of-type .absolute.inset-0.bg-gradient-to-b {
+.home-page main > section:first-of-type .absolute.inset-0.bg-gradient-to-b {
   background: linear-gradient(
     180deg,
     rgba(7, 17, 43, 0.34) 0%,
@@ -166,12 +166,12 @@ main > section:first-of-type .absolute.inset-0.bg-gradient-to-b {
   ) !important;
 }
 
-main > section:first-of-type .absolute.inset-0 img {
+.home-page main > section:first-of-type .absolute.inset-0 img {
   transform: scale(1.03);
   animation: heroDrift 18s ease-in-out infinite alternate;
 }
 
-main > section:first-of-type .relative.z-10 {
+.home-page main > section:first-of-type .relative.z-10 {
   max-width: 980px !important;
   background: transparent !important;
   border: 0 !important;
@@ -180,23 +180,23 @@ main > section:first-of-type .relative.z-10 {
 }
 
 @media (min-width: 768px) {
-  main > section:first-of-type .relative.z-10 {
+  .home-page main > section:first-of-type .relative.z-10 {
     padding: 1rem 1.2rem;
   }
 }
 
 /* Apply light hero text ONLY on image-based hero (home page) */
-main > section:first-of-type .relative.z-10 h1 {
+.home-page main > section:first-of-type .relative.z-10 h1 {
   color: #f1f5ff !important;
   text-shadow: 0 8px 28px rgba(9, 24, 57, 0.58) !important;
 }
 
-main > section:first-of-type .relative.z-10 p {
+.home-page main > section:first-of-type .relative.z-10 p {
   color: #dce7ff !important;
   text-shadow: 0 3px 14px rgba(11, 28, 66, 0.5) !important;
 }
 
-main > section:first-of-type .relative.z-10 .inline-block.font-label {
+.home-page main > section:first-of-type .relative.z-10 .inline-block.font-label {
   background: rgba(40, 76, 153, 0.35) !important;
   border: 1px solid rgba(184, 206, 255, 0.34) !important;
   color: #eff4ff !important;
@@ -316,25 +316,25 @@ img {
 }
 
 /* Hero staged animation */
-main > section:first-of-type .relative.z-10 > * {
+.home-page main > section:first-of-type .relative.z-10 > * {
   opacity: 0;
   transform: translateY(18px);
   animation: heroEnter 800ms ease forwards;
 }
 
-main > section:first-of-type .relative.z-10 > *:nth-child(1) {
+.home-page main > section:first-of-type .relative.z-10 > *:nth-child(1) {
   animation-delay: 120ms;
 }
 
-main > section:first-of-type .relative.z-10 > *:nth-child(2) {
+.home-page main > section:first-of-type .relative.z-10 > *:nth-child(2) {
   animation-delay: 260ms;
 }
 
-main > section:first-of-type .relative.z-10 > *:nth-child(3) {
+.home-page main > section:first-of-type .relative.z-10 > *:nth-child(3) {
   animation-delay: 380ms;
 }
 
-main > section:first-of-type .relative.z-10 > *:nth-child(4) {
+.home-page main > section:first-of-type .relative.z-10 > *:nth-child(4) {
   animation-delay: 520ms;
 }
 

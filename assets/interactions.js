@@ -27,8 +27,8 @@
 
   // Slight mouse parallax on hero image for premium feel
   if (!prefersReduced) {
-    const heroImage = document.querySelector('main > section:first-of-type .absolute.inset-0 img');
-    const hero = document.querySelector('main > section:first-of-type');
+    const heroImage = document.querySelector('.home-page main > section:first-of-type .absolute.inset-0 img');
+    const hero = document.querySelector('.home-page main > section:first-of-type');
 
     if (hero && heroImage) {
       hero.addEventListener('mousemove', (e) => {
