@@ -93,17 +93,19 @@
 <body class="products-page bg-surface text-on-surface">
 <!-- Navigation Shell -->
 <header class="sticky top-0 w-full z-50 bg-[#faf9f5]/70 backdrop-blur-lg shadow-[0_20px_50px_rgba(27,28,26,0.05)]">
-<nav class="flex justify-between items-center px-6 md:px-6 py-4 max-w-[1920px] mx-auto">
-<a class="inline-flex items-center" href="/"><img alt="Ameer Global Logo" class="w-[190px] md:w-[290px] h-auto" src="/assets/logo-exact-clean.png?v=4"/></a>
-<div class="hidden md:flex items-center ml-auto gap-10 font-serif text-sm tracking-widest uppercase">
-<a class="text-[#1b1c1a]/60 hover:text-[#1f3f8f] transition-all" href="/">Home</a>
-<a class="text-[#1f3f8f] border-b-2 border-[#1f3f8f] pb-1" href="/products/">Products</a>
-<a class="text-[#1b1c1a]/60 hover:text-[#1f3f8f] transition-all" href="/about/">About</a>
-<a class="text-[#1b1c1a]/60 hover:text-[#1f3f8f] transition-all" href="/contact/">Contact</a>
+<nav class="site-nav-shell flex justify-between items-center px-6 md:px-6 py-4 max-w-[1920px] mx-auto">
+<a class="inline-flex items-center site-logo-wrap" href="/"><img alt="Ameer Global Logo" class="w-[190px] md:w-[290px] h-auto" src="/assets/logo-exact-clean.png?v=4"/></a>
+<div class="site-nav-right ml-auto">
+<div aria-label="Primary Navigation" class="site-nav-links hidden md:flex items-center" role="navigation">
+<a class="site-nav-link" href="/">Home</a>
+<a class="site-nav-link site-nav-link-active" href="/products/">Products</a>
+<a class="site-nav-link" href="/about/">About</a>
+<a class="site-nav-link" href="/contact/">Contact</a>
 </div>
-<a class="bg-primary text-on-primary px-5 py-2 rounded text-xs uppercase tracking-widest font-bold hover:opacity-80 transition-all inline-block" href="/contact/">
+<a class="site-nav-cta bg-primary text-on-primary px-5 py-2 rounded text-xs uppercase tracking-widest font-bold hover:opacity-80 transition-all inline-block" href="/contact/">
             Inquire Now
         </a>
+</div>
 </nav>
 </header>
 <main class="relative overflow-hidden">
@@ -123,7 +125,7 @@
 <div class="flex gap-6">
 <a class="bg-secondary text-on-secondary px-10 py-5 rounded-lg font-bold flex items-center gap-3 transition-all hover:shadow-xl hover:-translate-y-1" href="#product-grid">
                         Explore Collection
-                        <span class="material-symbols-outlined">arrow_downward</span>
+                        <span aria-hidden="true" class="inline-flex items-center">↓</span>
 </a>
 </div>
 </div>

@@ -113,17 +113,19 @@
 <body class="home-page bg-surface text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container">
 <!-- TopNavBar -->
 <nav class="sticky top-0 w-full z-50 bg-[#faf9f5]/70 backdrop-blur-lg dark:bg-[#1b1c1a]/70 shadow-[0_20px_50px_rgba(27,28,26,0.05)]">
-<div class="flex justify-between items-center px-6 py-4 max-w-[1920px] mx-auto">
-<a class="inline-flex items-center" href="/"><img alt="Ameer Global Logo" class="w-[190px] md:w-[290px] h-auto" src="/assets/logo-exact-clean.png?v=4"/></a>
-<div class="hidden md:flex items-center ml-auto gap-8 font-serif text-lg tracking-tight font-display">
-<a class="text-[#1f3f8f] dark:text-[#faf9f5] border-b-2 border-[#1f3f8f] dark:border-[#faf9f5] pb-1" href="/">Home</a>
-<a class="text-[#1b1c1a]/60 dark:text-[#faf9f5]/60 hover:text-[#1f3f8f] dark:hover:text-[#faf9f5] transition-all" href="/products/">Products</a>
-<a class="text-[#1b1c1a]/60 dark:text-[#faf9f5]/60 hover:text-[#1f3f8f] dark:hover:text-[#faf9f5] transition-all" href="/about/">About</a>
-<a class="text-[#1b1c1a]/60 dark:text-[#faf9f5]/60 hover:text-[#1f3f8f] dark:hover:text-[#faf9f5] transition-all" href="/contact/">Contact</a>
+<div class="site-nav-shell flex justify-between items-center px-6 py-4 max-w-[1920px] mx-auto">
+<a class="inline-flex items-center site-logo-wrap" href="/"><img alt="Ameer Global Logo" class="w-[190px] md:w-[290px] h-auto" src="/assets/logo-exact-clean.png?v=4"/></a>
+<div class="site-nav-right ml-auto">
+<div aria-label="Primary Navigation" class="site-nav-links hidden md:flex items-center" role="navigation">
+<a class="site-nav-link site-nav-link-active" href="/">Home</a>
+<a class="site-nav-link" href="/products/">Products</a>
+<a class="site-nav-link" href="/about/">About</a>
+<a class="site-nav-link" href="/contact/">Contact</a>
 </div>
-<a class="bg-primary text-on-primary px-5 py-2 rounded-lg font-label text-xs uppercase tracking-widest hover:opacity-80 transition-opacity duration-300 active:scale-95 ease-out inline-block" href="/contact/">
+<a class="site-nav-cta bg-primary text-on-primary px-5 py-2 rounded-lg font-label text-xs uppercase tracking-widest hover:opacity-80 transition-opacity duration-300 active:scale-95 ease-out inline-block" href="/contact/">
                 Inquire Now
             </a>
+</div>
 </div>
 </nav>
 <main>

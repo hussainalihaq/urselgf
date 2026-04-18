@@ -108,17 +108,19 @@
 <body class="about-page bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
 <!-- Top Navigation -->
 <header class="sticky top-0 w-full z-50 bg-[#faf9f5]/70 backdrop-blur-lg dark:bg-[#1b1c1a]/70 border-b border-outline-variant/10">
-<nav class="flex justify-between items-center px-6 py-4 max-w-[1920px] mx-auto">
-<a class="inline-flex items-center" href="/"><img alt="Ameer Global Logo" class="w-[190px] md:w-[290px] h-auto" src="/assets/logo-exact-clean.png?v=4"/></a>
-<div class="hidden md:flex items-center ml-auto space-x-12">
-<a class="font-serif text-lg tracking-tight text-[#1b1c1a]/60 dark:text-[#faf9f5]/60 hover:text-[#1f3f8f] transition-all" href="/">Home</a>
-<a class="font-serif text-lg tracking-tight text-[#1b1c1a]/60 dark:text-[#faf9f5]/60 hover:text-[#1f3f8f] transition-all" href="/products/">Products</a>
-<a class="font-serif text-lg tracking-tight text-[#1f3f8f] dark:text-[#faf9f5] border-b border-[#1f3f8f] pb-1" href="/about/">About</a>
-<a class="font-serif text-lg tracking-tight text-[#1b1c1a]/60 dark:text-[#faf9f5]/60 hover:text-[#1f3f8f] transition-all" href="/contact/">Contact</a>
+<nav class="site-nav-shell flex justify-between items-center px-6 py-4 max-w-[1920px] mx-auto">
+<a class="inline-flex items-center site-logo-wrap" href="/"><img alt="Ameer Global Logo" class="w-[190px] md:w-[290px] h-auto" src="/assets/logo-exact-clean.png?v=4"/></a>
+<div class="site-nav-right ml-auto">
+<div aria-label="Primary Navigation" class="site-nav-links hidden md:flex items-center" role="navigation">
+<a class="site-nav-link" href="/">Home</a>
+<a class="site-nav-link" href="/products/">Products</a>
+<a class="site-nav-link site-nav-link-active" href="/about/">About</a>
+<a class="site-nav-link" href="/contact/">Contact</a>
 </div>
-<a class="bg-primary text-on-primary px-5 py-2 rounded-sm hover:opacity-90 transition-all duration-300 active:scale-95 font-label font-semibold text-xs uppercase tracking-widest inline-block" href="/contact/">
+<a class="site-nav-cta bg-primary text-on-primary px-5 py-2 rounded-sm hover:opacity-90 transition-all duration-300 active:scale-95 font-label font-semibold text-xs uppercase tracking-widest inline-block" href="/contact/">
                 Inquire
             </a>
+</div>
 </nav>
 </header>
 <main>

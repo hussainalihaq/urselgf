@@ -29,13 +29,15 @@
 </head>
 <body class="contact-page bg-surface text-onsurface antialiased">
   <header class="sticky top-0 z-50 bg-[#faf9f5]/80 backdrop-blur-lg border-b border-outline/30">
-    <nav class="max-w-[1280px] mx-auto px-6 md:px-10 py-4 flex items-center justify-between">
-      <a class="inline-flex items-center" href="/"><img alt="Ameer Global Logo" class="w-[190px] md:w-[290px] h-auto" src="/assets/logo-exact-clean.png?v=4"/></a>
-      <div class="hidden md:flex items-center ml-auto gap-8 text-sm uppercase tracking-wider">
-        <a class="opacity-70 hover:opacity-100" href="/">Home</a>
-        <a class="opacity-70 hover:opacity-100" href="/products/">Products</a>
-        <a class="opacity-70 hover:opacity-100" href="/about/">About</a>
-        <a class="text-primary border-b border-primary pb-1" href="/contact/">Contact</a>
+    <nav class="site-nav-shell max-w-[1280px] mx-auto px-6 md:px-10 py-4 flex items-center justify-between">
+      <a class="inline-flex items-center site-logo-wrap" href="/"><img alt="Ameer Global Logo" class="w-[190px] md:w-[290px] h-auto" src="/assets/logo-exact-clean.png?v=4"/></a>
+      <div class="site-nav-right ml-auto">
+      <div aria-label="Primary Navigation" class="site-nav-links hidden md:flex items-center" role="navigation">
+        <a class="site-nav-link" href="/">Home</a>
+        <a class="site-nav-link" href="/products/">Products</a>
+        <a class="site-nav-link" href="/about/">About</a>
+        <a class="site-nav-link site-nav-link-active" href="/contact/">Contact</a>
+      </div>
       </div>
     </nav>
   </header>
