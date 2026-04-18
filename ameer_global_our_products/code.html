@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#773304",
+                    "primary-fixed-dim": "#bdcd94",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#ffdbca",
+                    "surface-container-high": "#e9e8e4",
+                    "background": "#faf9f5",
+                    "on-primary": "#ffffff",
+                    "outline-variant": "#c6c8b9",
+                    "secondary-fixed-dim": "#ffb68f",
+                    "primary": "#38451a",
+                    "tertiary": "#5b363a",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#eeb9bd",
+                    "on-secondary-fixed": "#331100",
+                    "on-primary-fixed": "#151f00",
+                    "inverse-on-surface": "#f2f1ed",
+                    "tertiary-fixed": "#ffdadc",
+                    "tertiary-container": "#754d51",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-container": "#f6c1c5",
+                    "on-background": "#1b1c1a",
+                    "secondary": "#944a1b",
+                    "surface-tint": "#556435",
+                    "outline": "#76786c",
+                    "surface-container-low": "#f5f4f0",
+                    "surface-container-highest": "#e3e2df",
+                    "primary-container": "#4f5d2f",
+                    "surface": "#faf9f5",
+                    "secondary-container": "#ff9e68",
+                    "inverse-surface": "#30312e",
+                    "on-tertiary-fixed": "#301216",
+                    "on-surface-variant": "#45483d",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#763303",
+                    "on-primary-container": "#c5d59c",
+                    "on-primary-fixed-variant": "#3e4c20",
+                    "surface-variant": "#e3e2df",
+                    "on-error": "#ffffff",
+                    "surface-bright": "#faf9f5",
+                    "error": "#ba1a1a",
+                    "on-surface": "#1b1c1a",
+                    "primary-fixed": "#d9e9ae",
+                    "inverse-primary": "#bdcd94",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#623c40",
+                    "surface-container": "#efeeea",
+                    "surface-dim": "#dbdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Serif"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; background-color: #faf9f5; color: #1b1c1a; }
+        h1, h2, h3, h4 { font-family: 'Noto Serif', serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+        .glass-nav { background: rgba(250, 249, 245, 0.7); backdrop-filter: blur(20px); }
+        .heritage-ghost { position: absolute; font-family: 'Noto Serif', serif; font-style: italic; opacity: 0.04; font-size: 20rem; pointer-events: none; z-index: 0; line-height: 1; }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .animate-subtle { animation: float 6s ease-in-out infinite; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- Navigation Shell -->
+<header class="sticky top-0 w-full z-50 bg-[#faf9f5]/70 backdrop-blur-lg shadow-[0_20px_50px_rgba(27,28,26,0.05)]">
+<nav class="flex justify-between items-center px-6 md:px-12 py-6 max-w-[1920px] mx-auto">
+<div class="text-2xl font-serif font-bold tracking-tighter text-[#38451a] uppercase">
+            Ameer Global
+        </div>
+<div class="hidden md:flex items-center gap-10 font-serif text-sm tracking-widest uppercase">
+<a class="text-[#1b1c1a]/60 hover:text-[#38451a] transition-all" href="#">Home</a>
+<a class="text-[#38451a] border-b-2 border-[#38451a] pb-1" href="#">Products</a>
+<a class="text-[#1b1c1a]/60 hover:text-[#38451a] transition-all" href="#">About</a>
+<a class="text-[#1b1c1a]/60 hover:text-[#38451a] transition-all" href="#">Contact</a>
+</div>
+<button class="bg-primary text-on-primary px-8 py-3 rounded text-xs uppercase tracking-widest font-bold hover:opacity-80 transition-all">
+            Inquire Now
+        </button>
+</nav>
+</header>
+<main class="relative overflow-hidden">
+<!-- Heritage Ghost Element -->
+<div class="heritage-ghost top-20 -left-20">1856</div>
+<!-- Product Hero: Ameer Farms Mangoes -->
+<section class="relative min-h-[819px] flex items-center px-6 md:px-12 py-24">
+<div class="max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
+<div class="lg:col-span-6 z-10">
+<span class="label-md uppercase tracking-[0.3em] text-secondary font-bold mb-6 block">Legacy Selection</span>
+<h1 class="text-6xl md:text-8xl font-headline tracking-tighter text-primary leading-tight mb-8">
+                    Mangoes from <br/><i class="font-normal">Ameer Farms Multan</i>
+</h1>
+<p class="text-xl text-on-surface-variant max-w-lg mb-12 leading-relaxed">
+                    Heritage in Every Bite - Since 1856. Experience the gold standard of Pakistani mangoes, nurtured in the fertile soils of Multan.
+                </p>
+<div class="flex gap-6">
+<button class="bg-secondary text-on-secondary px-10 py-5 rounded-lg font-bold flex items-center gap-3 transition-all hover:shadow-xl hover:-translate-y-1">
+                        Explore Collection
+                        <span class="material-symbols-outlined">arrow_downward</span>
+</button>
+</div>
+</div>
+<div class="lg:col-span-6 relative">
+<div class="aspect-[4/5] rounded-xl overflow-hidden shadow-2xl relative z-10 animate-subtle">
+<img class="w-full h-full object-cover" data-alt="Close-up of a perfectly ripe, golden Pakistani honey mango" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8Jp9gcrniFjgI5BC54irN03d7Im3rZfn5CyVnf8JkqTxvKgWKOBmLrynB4jcAbl7m-ZR8TWdy26J8ddLr90rrwuYVLN8BKZOGNPzgPnJIOpXezXSWzT8CX8erW4McXzwouuS9rsjuKfi5HjxH_b5uzCgxA3m6FnaLgNH983BNQ28xXgbE8ryq_VbQ0C8bJF3nDNnVU6G642Ee8sI5LPKG941K1vq0kBvMwGFilfiqBID5hEPqFDhTnlAnkXBWvghwTIKWk7TZ9Vw"/>
+</div>
+<!-- Artistic SVG Illustration (Abstract sun/soil) -->
+<svg class="absolute -top-12 -right-12 w-48 h-48 text-secondary/10" fill="currentColor" viewbox="0 0 100 100">
+<circle cx="50" cy="50" r="40"></circle>
+<path d="M50 0 L50 100 M0 50 L100 50" stroke="currentColor" stroke-width="0.5"></path>
+</svg>
+<div class="absolute -bottom-10 -right-10 w-64 h-64 bg-secondary-container rounded-full opacity-20 blur-3xl"></div>
+</div>
+</div>
+</section>
+<!-- Mango Varieties Grid -->
+<section class="py-24 px-6 md:px-12 bg-surface-container-low">
+<div class="max-w-[1920px] mx-auto">
+<div class="mb-20 flex flex-col md:flex-row justify-between items-end gap-8">
+<div>
+<h2 class="text-5xl font-headline text-primary mb-4">Mango Varieties</h2>
+<p class="text-on-surface-variant text-lg">Selected from our private orchards for global connoisseurs.</p>
+</div>
+<div class="h-[1px] bg-outline-variant/30 flex-grow mx-12 hidden md:block"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Anwar Ratol -->
+<div class="group bg-surface-container-lowest p-6 rounded-xl transition-all duration-500 hover:shadow-2xl">
+<div class="aspect-[1/1] overflow-hidden rounded-lg mb-8">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Small fragrant Anwar Ratol mangoes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpJlxOztB7dWs7P4fM1MR2vREBSakTA61ekqfhpYQC5XFnXmtBDsZrNgXAobtLTXaaZEmmKrIgf5yMsPWsaEPpE5Yc_IN3qrf6bykv60dGJZIIQBo5t-DadjqPdj7QEieR0BI6Eq3Mocqk-ZxQZOabr66bpyxNZobf_b5cmcRFK5moc7fAewAXVewKqzZwOb-Hs3mORoIqwDG4uciejHXXE9B27BnJ1ipk6VgNtXeRv7ZvmNzcJkliRst-xzuIi3v1nG7kFEZRqpQ"/>
+</div>
+<div class="flex justify-between items-baseline mb-2">
+<h3 class="text-3xl font-headline text-primary">Anwar Ratol</h3>
+<span class="text-secondary font-bold">$45.00</span>
+</div>
+<p class="text-on-surface-variant mb-8 text-sm leading-relaxed">The 'King of Fragrance'. Small in size but explosive in flavor with a delicate skin.</p>
+<div class="grid grid-cols-2 gap-4">
+<button class="border border-outline py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-primary hover:text-white transition-colors">Reserve</button>
+<button class="bg-primary text-on-primary py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-colors">Buy Now</button>
+</div>
+</div>
+<!-- Chaunsa -->
+<div class="group bg-surface-container-lowest p-6 rounded-xl transition-all duration-500 hover:shadow-2xl md:translate-y-12">
+<div class="aspect-[1/1] overflow-hidden rounded-lg mb-8">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Sliced bright yellow Chaunsa mango" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxTPMWQD-Pmu1QKSRblagaRf5S4KQ03Cay86z23-GX8I7piepw8UHXkg0pQONCNrhoiziS0j34dDqqVLMWmiI7s85uaWT3XEgcYktNLYqEfbLCQfsw7291TntCBVqlyAnM7QNEJOCtEeaFZhMOk_4voWPH2BiAgmJyFSZ49GPd1sZVuL8VJ5lgHzjceNsknKixOAGYuAZX3fHlLF4s_1nVnuFivOjcU5agJ0BBp0i-i06nsWbBX-8REvaqZx6Jrn_ul3a8eMSNBa4"/>
+</div>
+<div class="flex justify-between items-baseline mb-2">
+<h3 class="text-3xl font-headline text-primary">Chaunsa</h3>
+<span class="text-secondary font-bold">$52.00</span>
+</div>
+<p class="text-on-surface-variant mb-8 text-sm leading-relaxed">Sweet as honey with a succulent, fiberless texture. The most sought-after variety globally.</p>
+<div class="grid grid-cols-2 gap-4">
+<button class="border border-outline py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-primary hover:text-white transition-colors">Reserve</button>
+<button class="bg-primary text-on-primary py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-colors">Buy Now</button>
+</div>
+</div>
+<!-- Sindhri -->
+<div class="group bg-surface-container-lowest p-6 rounded-xl transition-all duration-500 hover:shadow-2xl">
+<div class="aspect-[1/1] overflow-hidden rounded-lg mb-8">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="A large oval Sindhri mango" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDof995mZLHdm9umdZzSltTGW8XoZgOss0XZLvSmDVKz1gvYpvlo-ziqB8U8ACYnQSA3sovsN-kT0MNIw6PdJA0hnlUTzOTFWs40Nlr3TX7Jt7IPoCEVZfVGrLbnh_MzjU5nhj9qCpbvNb78G6IgdCNwnpRFkGADVlL1jmnKPp3YdigMr381UF8SMYTy6NHI21y8CXMtSpRGCFvrN0Sq7TRnN9QoE0OXfM-wYqfYqF7qM5GPB-B9uQfbv9RgMh23Ru1Q5hyDCSFsc"/>
+</div>
+<div class="flex justify-between items-baseline mb-2">
+<h3 class="text-3xl font-headline text-primary">Sindhri</h3>
+<span class="text-secondary font-bold">$38.00</span>
+</div>
+<p class="text-on-surface-variant mb-8 text-sm leading-relaxed">The aesthetic marvel. Large, oval, and lemon-yellow with a firm, buttery flesh.</p>
+<div class="grid grid-cols-2 gap-4">
+<button class="border border-outline py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-primary hover:text-white transition-colors">Reserve</button>
+<button class="bg-primary text-on-primary py-3 rounded font-bold text-xs uppercase tracking-widest hover:bg-secondary transition-colors">Buy Now</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Himalayan Pink Salt Section -->
+<section class="relative bg-surface py-24 md:py-32 overflow-hidden px-6 md:px-12">
+<div class="max-w-[1920px] mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+<div class="lg:col-span-5">
+<span class="label-md uppercase tracking-[0.3em] text-secondary font-bold mb-6 block">Mineral Pure</span>
+<h2 class="text-5xl md:text-6xl font-headline text-primary mb-8 leading-tight">Himalayan <br/><i class="font-normal">Pink Salt</i></h2>
+<p class="text-lg text-on-surface-variant mb-10 leading-relaxed max-w-lg">
+                        Mined from ancient deposits deep within the Himalayan range, our pink salt represents the zenith of mineral purity. Untouched by modern pollutants for 250 million years.
+                    </p>
+<div class="space-y-6 mb-12">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-secondary">verified</span>
+<div>
+<h4 class="font-bold text-primary uppercase text-xs tracking-widest mb-1">Ethically Sourced</h4>
+<p class="text-sm text-on-surface-variant">Direct partnerships with local artisans ensure fair trade.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-secondary">eco</span>
+<div>
+<h4 class="font-bold text-primary uppercase text-xs tracking-widest mb-1">Mineral Rich</h4>
+<p class="text-sm text-on-surface-variant">Contains 84 essential minerals including magnesium and potassium.</p>
+</div>
+</div>
+</div>
+<button class="group flex items-center gap-4 transition-all">
+<span class="font-bold text-xs uppercase tracking-widest">Explore Purity</span>
+<span class="h-[1px] w-12 bg-primary group-hover:w-20 transition-all duration-500"></span>
+</button>
+</div>
+<div class="lg:col-span-7 relative">
+<div class="grid grid-cols-2 gap-4">
+<div class="aspect-[4/5] rounded-lg overflow-hidden shadow-xl animate-subtle" style="animation-delay: 1s;">
+<img class="w-full h-full object-cover" data-alt="Close-up of pink salt crystals" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFUVx1KfEZ-J3v9L1PNoTVHouq8BNxxOk2t4jAMQqG37_7GPFq9UZ5W9VESE2p7us3LzJ___bgy-gnT0m1nM3V0LC72DzkpM4p_xCVGxJMiORCp9qYZEUH3LOLI7fQLLM3b_efnu-kzmID2zRLlGeYy90leUfXykx-4uQXdsuH9V52fJPFsqCjNNJq5FpnBtAsqnkXqGlnGGrjmBqZznO8o_BYrSo7dxSmfqc1Eh4G0vEORnrQRUBt0iVZLMsNTtl1HsIr9CBI4Bc"/>
+</div>
+<div class="aspect-[4/5] rounded-lg overflow-hidden shadow-xl translate-y-12 animate-subtle" style="animation-delay: 2s;">
+<img class="w-full h-full object-cover" data-alt="Artisanal salt chunks in a bowl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDe8QectWiH0hPP0NM_BW_PBbLN0NEMJvpTsarrcaXEamejcTwLyJ2V6ZIDCTkmU4kowFPS6j3-DsSvMh_fZJ2_ZvoqeDFN5KkJHF96DW7fEUniY-LzXqlIOb6wW6kqop2bLrO-RkivwKYXfYpyu3PyF8hcbAPMhkE50GibP7iRlXOOf5868ejTCW2tJKVb3bsIxpRh-alg7_2VCdkDf4ewtklnrecIsj-nxZti3ZFiMa4Qpn0oUHPZG2ndkfr71RUOibhNk9eNJXU"/>
+</div>
+</div>
+<!-- Artistic SVG Background Pattern -->
+<svg class="absolute -z-10 top-0 left-0 w-full h-full text-outline-variant/10" viewbox="0 0 100 100">
+<pattern height="10" id="grid" patternunits="userSpaceOnUse" width="10">
+<path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" stroke-width="0.5"></path>
+</pattern>
+<rect fill="url(#grid)" height="100%" width="100%"></rect>
+</svg>
+</div>
+</div>
+</div>
+</section>
+<!-- Eco-Friendly Dining: Coming Soon -->
+<section class="py-32 px-6 md:px-12 bg-surface-container-low overflow-hidden">
+<div class="max-w-[1920px] mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+<div class="max-w-2xl">
+<span class="label-md uppercase tracking-[0.3em] text-secondary font-bold mb-4 block">Future Heritage</span>
+<h2 class="text-5xl md:text-6xl font-headline text-primary">Eco-Friendly <br/><i class="font-normal">Dining Essentials</i></h2>
+</div>
+<div class="bg-surface px-8 py-4 border border-outline-variant/20 rounded-full flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+<span class="text-xs font-bold uppercase tracking-widest">Arriving Late 2024</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-1px bg-outline-variant/20 border border-outline-variant/20">
+<!-- Item 1 -->
+<div class="bg-surface p-12 aspect-[4/5] flex flex-col group hover:bg-surface-container-lowest transition-all duration-500 relative">
+<span class="text-[10px] uppercase tracking-tighter text-on-surface/40 mb-8">Series 01</span>
+<div class="flex-grow flex items-center justify-center">
+<img class="w-64 h-64 object-contain opacity-40 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700 animate-subtle" data-alt="Minimalist bamboo plate" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbZTIeTlFyjcs4hSSuW2q4SeNfdC5otqk8y1yZHpB7iayueG9Ry402y7nC2oD_bpHUuXjwnI6FSMP2XIbj3_M2kyJuOeAuawxb2qM6PLC0yjbKXdN-WT9fcjOcGT4ZXRoapbXCe9pQ2IBJylXtwbmzIbfuca0JhI5pgANQ5JqqbDaLLtZlVgHFwTJiP9_y9Sahn8axpdQwWu83LZYbh8w4YEL8-uEVt4oH7vbkVJOLIeP6K6obf_zU0uEM5iYjpzj-7Wtgoc6Tpvw"/>
+</div>
+<div class="mt-8">
+<h3 class="text-2xl font-headline text-primary mb-2">Sustainable Bamboo</h3>
+<p class="text-sm text-on-surface-variant font-light">Organic fibers, biodegradable finish.</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface p-12 aspect-[4/5] flex flex-col group hover:bg-surface-container-lowest transition-all duration-500 border-x border-outline-variant/20">
+<span class="text-[10px] uppercase tracking-tighter text-on-surface/40 mb-8">Series 02</span>
+<div class="flex-grow flex items-center justify-center">
+<img class="w-64 h-64 object-contain opacity-40 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700 animate-subtle" data-alt="Pressed palm bowl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvzWPvmuahdhwOVcCb_nAfkjG7TmAsuuY9jNdNAuEJ8dDoxADgkLuT3XqQI2IcDqDGIhiW3CjM_1-uFNdGgEsLlitzAhIwUjstvFXhlxxN5AHcCgWZP-dNBM6rnAQFhyhot3dLII-WAr9hdrGj252s5mCGXSyU-MB4Yrp6wN8ShX_p9JljgzGxWtjCLiqbRfsrOLFpKja-2qHrT0BlFfpv8AM5Khg_djqusuRCMxOXCfQQ9eFIqW1tCKqLyB_jZMkIEjDVuNpuaAo" style="animation-delay: 0.5s;"/>
+</div>
+<div class="mt-8">
+<h3 class="text-2xl font-headline text-primary mb-2">Pressed Palm</h3>
+<p class="text-sm text-on-surface-variant font-light">Natural fallen leaf vessels.</p>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="bg-surface p-12 aspect-[4/5] flex flex-col group hover:bg-surface-container-lowest transition-all duration-500">
+<span class="text-[10px] uppercase tracking-tighter text-on-surface/40 mb-8">Series 03</span>
+<div class="flex-grow flex items-center justify-center">
+<img class="w-64 h-64 object-contain opacity-40 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700 animate-subtle" data-alt="Artisan birch utensils" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzC4qhIp5A4HwEF36oSXinLY_R4ai59xIxETKvUPL6J7dH_VB2XJAbD86vKevVV0wlDXX7czn3W9Scdw4FRP8RaoYB_uvMQDfXRL2njIKNyz0SpFDy1W4CY66fbxGu_QYFbmoAFHgLCFCW3BgqKWJkeyUFpvANwDMOlwUev4O1XmCmmNeHbfmj55yKvO_lI00aZLdXRyysubAqwveQyzkFcAPrVZmEo9I7z6Vma_v4ZYu4VrAJmBCc6tm4NedJd8xkIeg1UYKcZnM" style="animation-delay: 1s;"/>
+</div>
+<div class="mt-8">
+<h3 class="text-2xl font-headline text-primary mb-2">Artisan Birch</h3>
+<p class="text-sm text-on-surface-variant font-light">Reclaimed wood craftsmanship.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- The Process Section (from SCREEN_4) -->
+<section class="py-32 px-6 md:px-12 bg-surface">
+<div class="max-w-[1920px] mx-auto text-center">
+<span class="label-md uppercase tracking-[0.3em] text-primary-container font-bold block mb-4">Quality Control</span>
+<h2 class="text-5xl md:text-6xl font-headline text-primary italic mb-24">From Soil to Doorstep</h2>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="group">
+<div class="w-20 h-20 mx-auto mb-6 rounded-full bg-surface-container-high flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-all duration-500">
+<span class="material-symbols-outlined text-3xl">eco</span>
+</div>
+<h4 class="text-xl font-headline text-primary mb-2">Prime Soil</h4>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest">Ancient Mineral Sourcing</p>
+</div>
+<div class="group">
+<div class="w-20 h-20 mx-auto mb-6 rounded-full bg-surface-container-high flex items-center justify-center group-hover:bg-secondary group-hover:text-on-secondary transition-all duration-500">
+<span class="material-symbols-outlined text-3xl">content_cut</span>
+</div>
+<h4 class="text-xl font-headline text-primary mb-2">Artisan Picked</h4>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest">Handled with Precision</p>
+</div>
+<div class="group">
+<div class="w-20 h-20 mx-auto mb-6 rounded-full bg-surface-container-high flex items-center justify-center group-hover:bg-primary-container group-hover:text-on-primary transition-all duration-500">
+<span class="material-symbols-outlined text-3xl">verified</span>
+</div>
+<h4 class="text-xl font-headline text-primary mb-2">Elite Grading</h4>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest">Strict Standards</p>
+</div>
+<div class="group">
+<div class="w-20 h-20 mx-auto mb-6 rounded-full bg-surface-container-high flex items-center justify-center group-hover:bg-tertiary group-hover:text-on-tertiary transition-all duration-500">
+<span class="material-symbols-outlined text-3xl">public</span>
+</div>
+<h4 class="text-xl font-headline text-primary mb-2">Express Transit</h4>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest">Global Freshness Network</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Shell -->
+<footer class="w-full py-16 px-6 md:px-12 bg-[#f5f4f0] border-t border-[#c6c8b9]/15">
+<div class="max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="flex flex-col gap-6">
+<div class="font-headline italic text-xl text-[#38451a] opacity-20 uppercase tracking-tighter">Ameer Global</div>
+<p class="text-[#38451a] font-sans text-[10px] uppercase tracking-[0.2em] leading-loose">
+                Curating Fine Commodities for a Discerning World.
+            </p>
+</div>
+<div class="flex flex-col gap-4">
+<h5 class="font-bold text-xs uppercase tracking-widest text-primary mb-2">Heritage</h5>
+<a class="text-[10px] uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity" href="#">Our History</a>
+<a class="text-[10px] uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity" href="#">Sustainability</a>
+</div>
+<div class="flex flex-col gap-4">
+<h5 class="font-bold text-xs uppercase tracking-widest text-primary mb-2">Network</h5>
+<a class="text-[10px] uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity" href="#">Logistics</a>
+<a class="text-[10px] uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity" href="#">Terms</a>
+</div>
+<div class="flex flex-col gap-4">
+<h5 class="font-bold text-xs uppercase tracking-widest text-primary mb-2">Newsletter</h5>
+<div class="flex gap-2">
+<input class="bg-transparent border-b border-outline-variant focus:border-primary outline-none py-2 text-[10px] uppercase tracking-widest w-full" placeholder="EMAIL ADDRESS" type="email"/>
+<button class="material-symbols-outlined text-primary">arrow_forward</button>
+</div>
+</div>
+</div>
+<div class="max-w-[1920px] mx-auto mt-24 pt-8 border-t border-outline-variant/10 flex justify-between items-center text-[#38451a]">
+<p class="text-[10px] uppercase tracking-widest opacity-40">© 1856-2024 Ameer Global.</p>
+<div class="flex gap-8">
+<span class="material-symbols-outlined opacity-40 hover:opacity-100 transition-opacity cursor-pointer">share</span>
+<span class="material-symbols-outlined opacity-40 hover:opacity-100 transition-opacity cursor-pointer">mail</span>
+</div>
+</div>
+</footer>
+</body></html>
