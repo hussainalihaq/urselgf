@@ -221,6 +221,7 @@ a {
 
 /* Hero treatment */
 .home-page main > section:first-of-type {
+  --ship-scroll: 0;
   min-height: min(92vh, 900px) !important;
 }
 
@@ -257,6 +258,106 @@ a {
   filter: saturate(108%) contrast(104%);
   transform: scale(1.06);
   animation: heroDrift 24s ease-in-out infinite alternate;
+}
+
+.scroll-ship-layer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(46px, 8vh, 88px);
+  height: 150px;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.scroll-waves {
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: 14px;
+  height: 24px;
+  background:
+    radial-gradient(22px 12px at 11px 12px, rgba(199, 219, 255, 0.5) 55%, transparent 56%) 0 0/44px 24px repeat-x;
+  opacity: 0.85;
+  animation: waveDrift 8s linear infinite;
+}
+
+.scroll-cargo-ship {
+  position: absolute;
+  left: 0;
+  bottom: 20px;
+  width: clamp(220px, 28vw, 360px);
+  height: 92px;
+  transform:
+    translateX(calc(-35% + (var(--ship-scroll) * 132%)))
+    translateY(calc(var(--ship-scroll) * -26px))
+    rotate(calc(var(--ship-scroll) * 0.8deg));
+  transform-origin: center bottom;
+  filter: drop-shadow(0 16px 20px rgba(8, 20, 48, 0.35));
+  animation: shipBob 3.8s ease-in-out infinite;
+}
+
+.ship-hull {
+  position: absolute;
+  left: 10%;
+  right: 0;
+  bottom: 10px;
+  height: 24px;
+  background: linear-gradient(145deg, #173774, #234e99 68%, #2f67c8);
+  border-radius: 4px 3px 12px 14px;
+  clip-path: polygon(0 0, 88% 0, 100% 55%, 96% 100%, 0 100%);
+}
+
+.ship-bridge {
+  position: absolute;
+  right: 18%;
+  bottom: 34px;
+  width: 34px;
+  height: 20px;
+  background: linear-gradient(180deg, #d9e7ff 0%, #9db9ee 100%);
+  border-radius: 4px 4px 0 0;
+}
+
+.ship-containers {
+  position: absolute;
+  left: 20%;
+  right: 24%;
+  bottom: 35px;
+  height: 34px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.stack {
+  border-radius: 3px;
+  border: 1px solid rgba(221, 233, 255, 0.25);
+  box-shadow: inset 0 0 0 1px rgba(17, 36, 76, 0.18);
+}
+
+.stack-a {
+  background: linear-gradient(180deg, #8fb0ea, #3b64b8);
+}
+
+.stack-b {
+  background: linear-gradient(180deg, #a6c0f1, #2b4f9f);
+}
+
+.stack-c {
+  background: linear-gradient(180deg, #7398dc, #224488);
+}
+
+.ship-wake {
+  position: absolute;
+  left: -10%;
+  bottom: 8px;
+  width: 34%;
+  height: 16px;
+  background: linear-gradient(90deg, rgba(198, 221, 255, 0), rgba(198, 221, 255, 0.78), rgba(198, 221, 255, 0));
+  filter: blur(1.2px);
+  opacity: 0.82;
+  animation: wakeTrail 1.5s ease-in-out infinite;
 }
 
 .home-page main > section:first-of-type .absolute.inset-0::after {
@@ -492,6 +593,37 @@ img {
   }
   100% {
     transform: scale(1.1) translate3d(-1.5%, -14px, 0);
+  }
+}
+
+@keyframes shipBob {
+  0%,
+  100% {
+    margin-bottom: 0;
+  }
+  50% {
+    margin-bottom: 4px;
+  }
+}
+
+@keyframes waveDrift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 44px 0;
+  }
+}
+
+@keyframes wakeTrail {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 0.95;
+    transform: translateX(-6px);
   }
 }
 

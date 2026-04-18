@@ -25,22 +25,32 @@
     candidates.forEach((el) => el.classList.add('is-visible'));
   }
 
-  // Slight mouse parallax on hero image for premium feel
+  // Scroll-linked hero motion (ship + media)
   if (!prefersReduced) {
-    const heroImage = document.querySelector('.home-page main > section:first-of-type .absolute.inset-0 img');
+    const heroImage = document.querySelector('.home-page main > section:first-of-type .hero-ship-video') ||
+      document.querySelector('.home-page main > section:first-of-type .absolute.inset-0 img');
     const hero = document.querySelector('.home-page main > section:first-of-type');
 
     if (hero && heroImage) {
-      hero.addEventListener('mousemove', (e) => {
-        const rect = hero.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        heroImage.style.transform = `scale(1.08) translate(${x * 14}px, ${y * 10}px)`;
-      });
+      let raf = null;
 
-      hero.addEventListener('mouseleave', () => {
-        heroImage.style.transform = 'scale(1.05) translate(0px, 0px)';
-      });
+      const syncHero = () => {
+        const rect = hero.getBoundingClientRect();
+        const travel = Math.max(hero.offsetHeight * 0.95, window.innerHeight);
+        const progressRaw = (window.innerHeight - rect.top) / (travel + window.innerHeight * 0.25);
+        const progress = Math.max(0, Math.min(1, progressRaw));
+        hero.style.setProperty('--ship-scroll', progress.toFixed(3));
+        heroImage.style.transform = `scale(${1.06 + progress * 0.08}) translate3d(${-progress * 14}px, ${-progress * 10}px, 0)`;
+        raf = null;
+      };
+
+      const onScroll = () => {
+        if (raf === null) raf = window.requestAnimationFrame(syncHero);
+      };
+
+      syncHero();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
     }
   }
 })();
