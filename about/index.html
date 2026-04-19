@@ -3,306 +3,308 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<title>Ameer Global - About &amp; Contact</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-          tailwind.config = {
-            darkMode: "class",
-            theme: {
-              extend: {
-                "colors": {
-                        "on-secondary-container": "#18357a",
-                        "primary-fixed-dim": "#95afe3",
-                        "error-container": "#ffdad6",
-                        "secondary-fixed": "#e8eefb",
-                        "surface-container-high": "#e9e8e4",
-                        "background": "#faf9f5",
-                        "on-primary": "#ffffff",
-                        "outline-variant": "#c6c8b9",
-                        "secondary-fixed-dim": "#c6d4f6",
-                        "primary": "#1f3f8f",
-                        "tertiary": "#1c2f63",
-                        "surface-container-lowest": "#ffffff",
-                        "tertiary-fixed-dim": "#b9c9ef",
-                        "on-secondary-fixed": "#10244d",
-                        "on-primary-fixed": "#10244d",
-                        "inverse-on-surface": "#f2f1ed",
-                        "tertiary-fixed": "#e3e9fb",
-                        "tertiary-container": "#2a3f79",
-                        "on-secondary": "#ffffff",
-                        "on-tertiary-container": "#c7d5f7",
-                        "on-background": "#1b1c1a",
-                        "secondary": "#2f56b1",
-                        "surface-tint": "#2a4e9f",
-                        "outline": "#76786c",
-                        "surface-container-low": "#f5f4f0",
-                        "surface-container-highest": "#e3e2df",
-                        "primary-container": "#2f56b1",
-                        "surface": "#faf9f5",
-                        "secondary-container": "#dbe5fb",
-                        "inverse-surface": "#30312e",
-                        "on-tertiary-fixed": "#0f1f49",
-                        "on-surface-variant": "#45483d",
-                        "on-error-container": "#93000a",
-                        "on-secondary-fixed-variant": "#23448e",
-                        "on-primary-container": "#c6d4f6",
-                        "on-primary-fixed-variant": "#355da8",
-                        "surface-variant": "#e3e2df",
-                        "on-error": "#ffffff",
-                        "surface-bright": "#faf9f5",
-                        "error": "#ba1a1a",
-                        "on-surface": "#1b1c1a",
-                        "primary-fixed": "#c6d4f6",
-                        "inverse-primary": "#95afe3",
-                        "on-tertiary": "#ffffff",
-                        "on-tertiary-fixed-variant": "#2a3f79",
-                        "surface-container": "#efeeea",
-                        "surface-dim": "#dbdad6"
-                },
-                "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                },
-                "fontFamily": {
-                        "headline": ["Noto Serif"],
-                        "body": ["Manrope"],
-                        "label": ["Manrope"]
-                }
-              },
-            },
-          }
-    </script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        .heritage-ghost {
-            font-family: 'Noto Serif', serif;
-            font-weight: 700;
-            font-style: italic;
-            pointer-events: none;
-        }
-        .tonal-shift {
-            background: linear-gradient(to bottom, #faf9f5, #f5f4f0);
-        }
-        .flag-hover-effect {
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .flag-item:hover .flag-hover-effect {
-            transform: scale(1.15) translateY(-4px);
-        }
-        .flag-item:hover .flag-label {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .flag-label {
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            transform: translateY(4px);
+        /* Fluid ease-out for custom animations */
+        .fluid-ease-out {
+            transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
         }
     </style>
-<link rel="stylesheet" href="/assets/theme.css?v=19"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#fbf9f4",
+                    "inverse-on-surface": "#f2f1ec",
+                    "surface-bright": "#fbf9f4",
+                    "secondary-fixed-dim": "#dbc3a6",
+                    "primary-container": "#2e4632",
+                    "surface-variant": "#e4e2dd",
+                    "surface-container-high": "#eae8e3",
+                    "on-background": "#1b1c19",
+                    "surface-container-low": "#f5f3ee",
+                    "on-secondary-container": "#725f48",
+                    "on-error": "#ffffff",
+                    "outline-variant": "#c3c8c0",
+                    "on-tertiary-fixed-variant": "#5d4037",
+                    "secondary-fixed": "#f8dec1",
+                    "on-surface-variant": "#434842",
+                    "primary-fixed-dim": "#b2ceb3",
+                    "surface-container": "#f0eee9",
+                    "on-tertiary": "#ffffff",
+                    "secondary-container": "#f5dcbe",
+                    "outline": "#737971",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#ffdbd0",
+                    "surface-tint": "#4b644e",
+                    "on-tertiary-fixed": "#2c160e",
+                    "inverse-primary": "#b2ceb3",
+                    "primary-fixed": "#cdeace",
+                    "on-primary-fixed-variant": "#344c38",
+                    "on-primary-fixed": "#08200f",
+                    "on-primary-container": "#98b39a",
+                    "surface-container-lowest": "#ffffff",
+                    "background": "#fbf9f4",
+                    "secondary": "#6e5b44",
+                    "tertiary-container": "#563a31",
+                    "on-secondary-fixed": "#261907",
+                    "error-container": "#ffdad6",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#e7bdb1",
+                    "surface-dim": "#dbdad5",
+                    "on-secondary-fixed-variant": "#55442e",
+                    "inverse-surface": "#30312e",
+                    "surface-container-highest": "#e4e2dd",
+                    "primary": "#18301d",
+                    "on-surface": "#1b1c19",
+                    "on-tertiary-container": "#cba498",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#3d241d",
+                    "error": "#ba1a1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {},
+            "fontFamily": {
+                    "headline": [
+                            "Noto Serif"
+                    ],
+                    "body": [
+                            "Manrope"
+                    ],
+                    "label": [
+                            "Manrope"
+                    ]
+            }
+    },
+        },
+      }
+    </script>
 </head>
-<body class="about-page bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
-<!-- Top Navigation -->
-<header class="sticky top-0 w-full z-50 bg-[#faf9f5]/70 backdrop-blur-lg dark:bg-[#1b1c1a]/70 border-b border-outline-variant/10">
-<nav class="site-nav-shell flex justify-between items-center px-6 py-4 max-w-[1920px] mx-auto">
-<a class="inline-flex items-center site-logo-wrap" href="/"><img alt="Ameer Global Logo" class="w-[190px] md:w-[290px] h-auto" src="/assets/logo-header-clean.png?v=1"/></a>
-<div class="site-nav-right ml-auto">
-<div aria-label="Primary Navigation" class="site-nav-links hidden md:flex items-center" role="navigation">
-<a class="site-nav-link" href="/">Home</a>
-<a class="site-nav-link" href="/products/">Products</a>
-<a class="site-nav-link site-nav-link-active" href="/about/">About</a>
-<a class="site-nav-link" href="/contact/">Contact</a>
+<body class="bg-surface text-on-surface font-body antialiased selection:bg-primary-container selection:text-on-primary">
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-stone-50/80 dark:bg-stone-900/80 backdrop-blur-xl border-none shadow-[0_4px_30px_rgba(0,0,0,0.02)] transition-all duration-300">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-8 py-6">
+<a aria-label="Ameer Global Home" class="flex items-center" href="/">
+<img alt="Ameer Global Logo" class="h-12 md:h-14 w-auto" src="/assets/logo-header-clear-v2.png?v=2"/>
+</a>
+<div class="hidden md:flex items-center gap-8 font-label text-base tracking-wide uppercase">
+<a class="text-stone-600 dark:text-stone-400 hover:text-emerald-800 transition-colors" href="/">Home</a>
+<a class="text-stone-600 dark:text-stone-400 hover:text-emerald-800 transition-colors" href="/products/">Products</a>
+<a class="text-primary border-b-2 border-primary pb-1" href="/about/">About</a>
+<a class="text-stone-600 dark:text-stone-400 hover:text-emerald-800 transition-colors" href="/contact/">Contact</a>
 </div>
-<a class="site-nav-cta bg-primary text-on-primary px-5 py-2 rounded-sm hover:opacity-90 transition-all duration-300 active:scale-95 font-label font-semibold text-xs uppercase tracking-widest inline-block" href="/contact/">
-                Inquire
+<a class="bg-primary text-on-primary px-6 py-3 rounded-DEFAULT font-label font-medium uppercase tracking-wider hover:bg-primary-container hover:shadow-xl hover:shadow-on-surface/5 fluid-ease-out transition-all duration-500 inline-block" href="/contact/">
+                Get Started
             </a>
 </div>
 </nav>
-</header>
-<main>
 <!-- Hero Section -->
-<section class="relative min-h-[760px] flex items-center px-6 md:px-12 py-16 md:py-24 overflow-hidden">
-<div class="absolute inset-0 -z-10 bg-gradient-to-br from-[#eff4ff] via-[#f6f9ff] to-[#eaf0fc]"></div>
-<div class="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-<div class="lg:col-span-6">
-<span class="font-label uppercase tracking-[0.34em] text-[11px] text-primary/80 mb-6 block">Legacy of Commerce</span>
-<h1 class="text-6xl md:text-7xl leading-[0.95] mb-7">
-                        Trading
-<span class="italic block text-secondary">Without Borders</span>
-                    </h1>
-<p class="max-w-xl text-lg md:text-xl text-on-surface-variant leading-relaxed mb-10">
-                        Established in 1856, Ameer Global operates at the intersection of heritage and modern trade infrastructure. We connect producers, ports, and partners with disciplined logistics and long-term reliability.
-                    </p>
-<div class="grid grid-cols-2 gap-4 max-w-md">
-<div class="rounded-xl bg-white/80 border border-primary/10 p-5">
-<div class="text-3xl text-primary mb-1">168+</div>
-<div class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">Years Active</div>
-</div>
-<div class="rounded-xl bg-white/80 border border-primary/10 p-5">
-<div class="text-3xl text-primary mb-1">42</div>
-<div class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">Trade Hubs</div>
-</div>
-</div>
-</div>
-<div class="lg:col-span-6">
-<div class="rounded-2xl overflow-hidden shadow-[0_22px_54px_rgba(20,41,92,0.18)] border border-primary/10 bg-white">
-<img alt="Global trade analytics wall with logistic network mapping and operations control center" class="w-full h-[560px] object-cover" src="https://images.unsplash.com/photo-1529078155058-5d716f45d604?auto=format&fit=crop&w=1500&q=80"/>
-<div class="px-6 py-5 bg-gradient-to-r from-[#1e3b83] to-[#2f58ad] text-white">
-<p class="text-[11px] tracking-[0.2em] uppercase opacity-90">Operational Integrity</p>
-<p class="text-sm md:text-base opacity-95">Strategic commodity logistics across six continents.</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Global Network Section -->
-<section class="py-40 bg-surface-container-low relative overflow-hidden">
-<div class="max-w-[1400px] mx-auto px-12">
-<div class="flex flex-col md:flex-row justify-between items-end mb-32 gap-8">
-<div class="max-w-2xl">
-<h2 class="text-5xl font-headline font-bold text-primary mb-8 tracking-tight">Global Network</h2>
-<p class="text-on-surface-variant/80 leading-relaxed font-light text-lg">
-                            Strategic partnerships across six continents ensure that essential commodities move with precision and efficiency. Our presence represents a commitment to reliability on a global scale.
-                        </p>
-</div>
-<div class="flex items-center gap-6 border-b border-primary/10 pb-4 group cursor-pointer transition-all">
-<span class="font-label uppercase tracking-[0.2em] text-xs font-bold text-primary">Explore Trade Routes</span>
-<span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform duration-500">arrow_forward</span>
-</div>
-</div>
-<!-- Flag Arrangement -->
-<div class="grid grid-cols-2 md:grid-cols-5 gap-px bg-outline-variant/10 border border-outline-variant/10">
-<!-- Grid Item: USA -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="USA" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnftcF6ORmK8ZRlu6zOwxN8-S-dfodf3Gb5R26uXiK5juhV7DrOzQNL7GwM6RyDBDnncmkuwRCSIcIjT156nrmn5xn-swmQd72ArMsK9ZNrqrOjgZbAXA6NoIbN3Y4dL9dzVG2ORB1kLl8TfGs0jydUp8IJ-6GUXfgKrvZDTMIXmNSs9Sg9HFNYwiA88-3dMMTGwVFxC1Wzz0YAAB2ojO8yarWYrrJ-TOUlIY5jb-WfuFVF6Z6l7xN7vUOp5IOlhJCz2_YrTzkP28"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">United States</span>
-</div>
-<!-- Grid Item: UK -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="UK" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOtQhExcfyx62tt9iK44_YUN6oTlLXTkiXrfMFXoy0RtmjN0WBZCsEEbp_9_uZGS11ak5RSvsDXoQlrLskuMuzYHjB7MsnQXVG1Vr8s4hi_NY39ObVNduUt8dCf1MN5gkTQ1BwarrZk6MWyLlGgomqfQYZT2W-21L5KK0C3SR-HTbrOM6A7MJ2bk_lEMRGglLvETDTvd3CHCQfs1-tcqqvzrbKtSohKn_E_rTtKZsSwD6ifLwVoVSXQxTg4N2DUm7vQyiIhtp0ndo"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">United Kingdom</span>
-</div>
-<!-- Grid Item: UAE -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="UAE" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi0NKgOsscC_oxE_hjpd-L1Bmyjm72gI9ut_p3QwhcsMcFgSw-zwccoJQJoh-cntMXWV2Fst219kJOIlSr9mRXLkvfiaWEPugonEMYNOfsOCjPrse04tO5gYL9CPiVvuYuOeYEmpMRo1itl5UyGJJHkOVk2o3vLNgvHdswp0hn9vqCq2O575reL-24aEIDlFFSEtlOBJuVE82FTzSNyAxqvYAFD6aEBNK_U3MKoj4_lZoZn4_ul_uUltDeUMUaNS99Y9udOdVISYQ"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">UAE</span>
-</div>
-<!-- Grid Item: Germany -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="Germany" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmdJxh1TT_lvOT12SFehXIvDYUlGHmBZlxW7HNePumiNmd6NVBWAR0sSpSJFZ1mviCGK6EeaQFhvAFjRLqjbaFXHpNB_zPpzVHzAZvE2wypvbAmJET8aYT0ABJg9ZHjghwL6mKz-AtAg0X5STgqxeuQIFtCoIxlvh0cERC5xOc8W8-8_cKNQcDS7iJuXgkEYJlLvhEQgUcCHS9nXKVj7WZn5Ex5lkLHte-erl8Ni-EJa4AKbIukYDUwqo5JgwKq__HTsQ3MIyfk60"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">Germany</span>
-</div>
-<!-- Grid Item: China -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="China" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBl66CFMgfpp4HfHQVQdGx04YGjlYhwL9NgG9kHnlXpeh1RdokLorHmrNdVwOGatPdlY2h1zdNg-4MOSra0cUUzXf_9pj3Piycny6erXqDu_DE0e8__Y-39ney8fpYyrScW_zj6QqOzb1pGO11QO1zf2k0d8K710maCdprEgy_8sdX8Z6IuzVXAulUg1Tgaqo9-uUvLMDxpMaCnxs9jtqZwWEgsMSfuRIjNnpxAlNxb-hYZfxYsSSYTUZafSIYd2d3KqR36ALo8N9s"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">China</span>
-</div>
-<!-- Grid Item: Japan -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="Japan" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMy9Cf3XUUyZBTkSX8ezFWOn7mn_8-P7nMDzgLv6lBn9JL4mPq99X6cR61qs8tPcbF6aBabrPFNHJnc3zSGLt28Ex-hcweNWrXXOzMAgIkoNeo_iDVaKiDFBTcgs0IoALjEvncd9iRq1SdNVOU5afAQvMqGTOw6pZJ4L_XocUkb-FfKROYnQLAdG2YRgjZELMP19BxQ50qzBja058x3Ish4uf9PGJNXMGxoDvYznXMkjdta_J-765gUIZdtwQtWNEy_dP5mKai41U"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">Japan</span>
-</div>
-<!-- Grid Item: India -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="India" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADWMAx0MNRFGRxfJK4BVJFSfBNoKmasZx-jYD77ZNEPvR3xZnRkGoj-my93BzfvwmeZANcttQgCMRsldzvS8sGFfl2zxbseaW12Z1xvTJ7vcUKSo5ZNa38RW4kmD7libnCP6GjS1wHBQDFbMPLmYR7mygKChS6abSxZ4g-6SB_670ePsm5fGWXEkz7e0mFx0Bz8592oB0Gskblo2crFN3sYE1kfAOQe0CO5bCb148E0JUa6Ss_E_IBW94b-ykU5J40L2KLoF6X8js"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">India</span>
-</div>
-<!-- Grid Item: Brazil -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="Brazil" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA42tS9eGxrkTq7zQzsrmDA2pIzUYsOKSIla-QoGEjjP0ibEIpTgDY7kqQzMOf3rAy9WTTUVdmnqT25MHpJuirGVFblfxFY3DKES6Tihni50GZGZTDC6EVsczCi-ax4u0Uw1w3k1v_QhJQRikAx8J-EwcOsJCE996Ty9CQ9ITr5mb7Bqw2Q3BgfIgoDs5LMlBkV0WlyBbo5KsX93pJtW10OKZDcsC-wz4PL-Abm7L5vkiGivQJ_s9FB_ZeYfXF_AVjUvCPJzEjjCOc"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">Brazil</span>
-</div>
-<!-- Grid Item: France -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="France" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKEp4uxHh0VdoCZ5aGcLgsMIZFnaBPFHcwqt4-uCw9yceulpGrZcThR5be-wqHk5pZiDpbIdF9IHFtnm3N4GzExca_vNu2Hfg3n7shbudpE76v8U_Qy_LOaE7XFBEFo1rwm3ICrpQE_9kW6YphfDy7Edw0vMAG3r0Wnkm1X84AqpeTQOMLcgKnvCNdWIn7bV6CwrE6Drsg6LqhJSuO_dpaCkBNtaE8EpQus2rGMfUsDDpeX1uCyDibOXYuo1-sX21ObNZwzanOlvo"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">France</span>
-</div>
-<!-- Grid Item: Singapore -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="Singapore" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2Sm1OiHuXDKxNyvJ6i1WkKu6oSIGPXx9Nar03_bCMuLN9u2vRw4SSlp_3xufAlwD0xnr0FBrtj2DEW3qTqt1DDVej4MxDVGeNhU1wAI4FAh3yXAXSl2GlFHmpI2-l8xfg6NX3ayMJaEAF0hgzGTDmD4DR_L8G6kU1M2wm9FPGY8fb6PflnYW7DIKNBJIOnCtZ5AQmvIICREj0SYq5tnJXTN9zLFDEZOe3ac-I0zMN0S5vRiVU0nk9oNd2xci_4gnZOmbZrmdH1v0"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">Singapore</span>
-</div>
-</div>
-</div>
-</section>
-<!-- Values Section -->
-<section class="py-32 px-12 max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-24 border-b border-outline-variant/10 bg-surface">
-<div class="flex flex-col gap-8">
-<div class="w-12 h-[1px] bg-secondary/40"></div>
-<h3 class="text-xl font-headline font-bold text-primary tracking-tight">Established Integrity</h3>
-<p class="text-sm font-light text-on-surface-variant/80 leading-relaxed">
-                    Over a century of experience provides a foundation of reliability. Partners depend on our market insights and consistent ethical standards in trade operations.
-                </p>
-</div>
-<div class="flex flex-col gap-8">
-<div class="w-12 h-[1px] bg-secondary/40"></div>
-<h3 class="text-xl font-headline font-bold text-primary tracking-tight">Logistics Precision</h3>
-<p class="text-sm font-light text-on-surface-variant/80 leading-relaxed">
-                    Our multimodal network ensures that the movement of goods between producers and consumers is defined by operational excellence and efficiency.
-                </p>
-</div>
-<div class="flex flex-col gap-8">
-<div class="w-12 h-[1px] bg-secondary/40"></div>
-<h3 class="text-xl font-headline font-bold text-primary tracking-tight">Adaptive Presence</h3>
-<p class="text-sm font-light text-on-surface-variant/80 leading-relaxed">
-                    A significant global presence allows for rapid response to market fluctuations, maintaining stability through diverse economic landscapes.
-                </p>
-</div>
-</section>
-</main>
-<!-- Footer -->
-<footer class="w-full py-20 px-12 bg-[#f5f4f0] dark:bg-[#1b1c1a]">
-<div class="grid grid-cols-1 md:grid-cols-4 gap-16 border-t border-[#c6c8b9]/20 pt-20 max-w-[1920px] mx-auto">
-<div class="flex flex-col gap-8">
-<div class="font-serif italic text-xl text-[#1f3f8f] dark:text-[#faf9f5] opacity-30">
-                    Ameer Global
+<header class="pt-40 pb-24 px-8 max-w-7xl mx-auto relative overflow-hidden">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<div class="lg:col-span-7 space-y-8 relative z-10">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-low text-secondary font-label text-sm uppercase tracking-widest">
+<span class="material-symbols-outlined text-[18px]">public</span>
+                    Our Legacy
                 </div>
-<p class="font-sans text-[10px] uppercase tracking-[0.3em] text-[#1f3f8f]/50 dark:text-[#faf9f5]/50">
-                    © 1856-2024 Ameer Global. Private Estate.
+<h1 class="font-headline text-5xl md:text-7xl font-semibold leading-[1.1] text-primary tracking-tight">
+                    Bridging heritage with modern global commerce.
+                </h1>
+<p class="font-body text-xl text-on-surface-variant leading-relaxed max-w-2xl">
+                    For over three decades, Ameer Global has been a steward of international trade, cultivating relationships that transcend borders. We believe in curated excellence over mass transaction.
                 </p>
 </div>
-<div class="flex flex-col gap-6">
-<h4 class="font-sans text-[10px] uppercase tracking-[0.3em] font-bold text-primary">Information</h4>
-<a class="font-sans text-[10px] uppercase tracking-[0.3em] opacity-50 hover:opacity-100 hover:text-[#2f56b1] transition-all" href="#">Heritage</a>
-<a class="font-sans text-[10px] uppercase tracking-[0.3em] opacity-50 hover:opacity-100 hover:text-[#2f56b1] transition-all" href="#">Environmental</a>
+<div class="lg:col-span-5 relative">
+<div class="aspect-[4/5] rounded-xl overflow-hidden relative group">
+<div class="absolute inset-0 bg-primary/10 mix-blend-overlay z-10 group-hover:bg-transparent transition-all duration-700"></div>
+<img alt="Global Trade" class="w-full h-full object-cover transform scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-out" data-alt="A sophisticated, softly lit meeting room with an antique globe, dark mahogany desk, and subtle natural light streaming through large windows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuVfnDtYjSUcXs7Kozf4xfNdunUtsuB1OOOLyAFWhByecmcdeaObOXb1S_uqvlksA7tSd-FJAvEbgs7qDuIc7tUpSK23NGM39vWKkL6FoDkT4TudRWfRCok88_7F-JJCupOqjqP7h59rHjNMPhdXJylRzODwXWcqtQZap7G9_3JvY9Dmoek_5FLbquV-EBTBDQilivUBJriLhqsY29lR8KDIl_zszCBRj16AEXvxRVmWDv-n5aMTHUQLwAwuD8FLnXayvG7Q6_SHg"/>
 </div>
-<div class="flex flex-col gap-6">
-<h4 class="font-sans text-[10px] uppercase tracking-[0.3em] font-bold text-primary">Operations</h4>
-<a class="font-sans text-[10px] uppercase tracking-[0.3em] font-bold border-b border-primary/20 w-fit text-primary" href="#">Global Network</a>
-<a class="font-sans text-[10px] uppercase tracking-[0.3em] opacity-50 hover:opacity-100 hover:text-[#2f56b1] transition-all" href="#">Trade Terms</a>
 </div>
-<div class="flex flex-col gap-6 items-start md:items-end">
-<div class="flex gap-8">
-<span class="material-symbols-outlined text-[20px] opacity-30 cursor-pointer hover:opacity-100 transition-opacity">public</span>
-<span class="material-symbols-outlined text-[20px] opacity-30 cursor-pointer hover:opacity-100 transition-opacity">language</span>
-<span class="material-symbols-outlined text-[20px] opacity-30 cursor-pointer hover:opacity-100 transition-opacity">mail</span>
+</div>
+</header>
+<!-- Message from the CEO -->
+<section class="py-32 bg-surface-container-low relative">
+<div class="max-w-5xl mx-auto px-8 relative z-10">
+<div class="bg-surface-container-lowest p-12 md:p-20 rounded-xl shadow-[0_40px_60px_rgba(27,28,25,0.04)] relative">
+<!-- Decorative Quote -->
+<span class="material-symbols-outlined absolute top-8 left-8 md:top-12 md:left-12 text-6xl text-surface-container-high opacity-50">
+                    format_quote
+                </span>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+<div class="md:col-span-8 space-y-8 relative z-10 pl-4 md:pl-12">
+<h2 class="font-headline text-3xl md:text-4xl text-primary font-medium">A Commitment to Enduring Value</h2>
+<p class="font-body text-lg text-on-surface-variant leading-relaxed">
+                            "In an era defined by speed, we choose to prioritize permanence. True partnerships are not built in a day, nor are the supply chains that sustain our modern world. At Ameer Global, we view every interaction not as a transaction, but as a thread in a larger, enduring tapestry of global commerce. Our dedication to quality is unwavering, because our reputation—and yours—depends on it."
+                        </p>
+<div class="pt-4 border-t border-outline-variant/20 flex items-center gap-4">
+<div class="w-16 h-16 rounded-full overflow-hidden bg-surface-container">
+<img alt="CEO Portrait" class="w-full h-full object-cover" data-alt="Black and white portrait of a distinguished older gentleman in a tailored suit, dramatic studio lighting, exuding calm authority." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUZjUUJ6WO7YqJ1anHnK8RTA6koQFcfDCExthw7u3d8fxcJKksFJxPjzSl5rDrIIzV7NfbZMjzx6Rxr6h0MZLtZjadsFYwyz-IZkO3LUT5kia4htClW_ZnmhWS-Wtzh6XnxrdOmhJ9JchLY4xVSDK0571M38X0BqGMuGN0Z89Mwz6AJIKI-7K9NyNV2EJAOC5Pnt6-uBU5ES97o_gmxbvrUL8EtFQT9WdSUUR5w3pv6_9ei40MewrJJNsVkfYShdijeHPkr9_VZCM"/>
+</div>
+<div>
+<h3 class="font-headline text-xl text-primary font-semibold">Elias Thorne</h3>
+<p class="font-label text-sm text-secondary uppercase tracking-widest mt-1">Chief Executive Officer</p>
+</div>
+</div>
+</div>
+<div class="md:col-span-4 hidden md:block">
+<img alt="Signature" class="w-full opacity-60 mix-blend-multiply" data-alt="Elegant handwritten signature in dark ink on textured cream paper, extreme macro photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACs-YoMfn8OjrKlQwfHtr-8hQaA3d0Zf_XC4ag4JbpUfrlJ7R_PzqxPkY-voYZhxEQCO-BpE4MY_M4XvUH2lFeMzMXjwKPk7Ca06ZR2_2CNSRZ9_xPW8fSdv7BJOlUvdg2jW5CFNP3l4pNc1D_NcB0_ZxiRZeiunXh1RGJWfcprIyHXjvNLSKrP-NqrRDdIelhuUX-R_lseHU7aUVDAI-1y8diXxbPYP_QfIYWeZ-tm8U8vIHsVTod7TcdwcljNb5edVDUTqD8tEo"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Global Reach Grid -->
+<section class="py-32 px-8 max-w-7xl mx-auto">
+<div class="text-center mb-20 max-w-3xl mx-auto">
+<h2 class="font-headline text-4xl md:text-5xl text-primary mb-6">Our Global Tapestry</h2>
+<p class="font-body text-lg text-on-surface-variant">We facilitate trade corridors across continents, connecting premium resources with discerning markets worldwide.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+<!-- Flag Items - Abstracted to maintain premium feel -->
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">USA</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">North America</span>
+</div>
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">UK</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Europe</span>
+</div>
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">UAE</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Middle East</span>
+</div>
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">Germany</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Europe</span>
+</div>
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">China</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Asia</span>
+</div>
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">Japan</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Asia</span>
+</div>
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">India</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Asia</span>
+</div>
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">Brazil</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">South America</span>
+</div>
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">France</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Europe</span>
+</div>
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">Singapore</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Asia</span>
+</div>
+</div>
+</section>
+<!-- Minimalist Contact Section -->
+<section class="py-32 bg-surface-container-highest relative overflow-hidden" id="contact-section">
+<!-- Abstract Background element -->
+<div class="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-surface-variant to-transparent opacity-50 pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-8 relative z-10">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+<div class="space-y-12">
+<div>
+<h2 class="font-headline text-5xl text-primary mb-6">Initiate Dialogue</h2>
+<p class="font-body text-xl text-on-surface-variant max-w-md">We welcome inquiries from prospective partners who share our dedication to uncompromised quality.</p>
+</div>
+<div class="space-y-8">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-secondary mt-1">location_on</span>
+<div>
+<h4 class="font-label text-sm uppercase tracking-widest text-primary font-semibold mb-1">Global Headquarters</h4>
+<p class="font-body text-on-surface-variant">100 International Plaza<br/>Suite 4500<br/>New York, NY 10005</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-secondary mt-1">mail</span>
+<div>
+<h4 class="font-label text-sm uppercase tracking-widest text-primary font-semibold mb-1">Direct Correspondence</h4>
+<p class="font-body text-on-surface-variant hover:text-primary transition-colors cursor-pointer">partnerships@ameerglobal.com</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Minimalist Form -->
+<div class="bg-surface-container-lowest p-10 rounded-xl shadow-[0_20px_40px_rgba(27,28,25,0.03)]">
+<form class="space-y-10">
+<div class="relative group">
+<input class="w-full bg-transparent border-0 border-b border-outline-variant/50 focus:border-primary focus:ring-0 px-0 py-3 font-body text-on-surface placeholder-transparent peer transition-colors" id="name" placeholder="Name" type="text"/>
+<label class="absolute left-0 top-3 font-label text-sm text-on-surface-variant transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-primary peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm" for="name">Full Name</label>
+</div>
+<div class="relative group">
+<input class="w-full bg-transparent border-0 border-b border-outline-variant/50 focus:border-primary focus:ring-0 px-0 py-3 font-body text-on-surface placeholder-transparent peer transition-colors" id="email" placeholder="Email" type="email"/>
+<label class="absolute left-0 top-3 font-label text-sm text-on-surface-variant transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-primary peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm" for="email">Corporate Email</label>
+</div>
+<div class="relative group">
+<input class="w-full bg-transparent border-0 border-b border-outline-variant/50 focus:border-primary focus:ring-0 px-0 py-3 font-body text-on-surface placeholder-transparent peer transition-colors" id="organization" placeholder="Organization" type="text"/>
+<label class="absolute left-0 top-3 font-label text-sm text-on-surface-variant transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-primary peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm" for="organization">Organization</label>
+</div>
+<div class="relative group">
+<textarea class="w-full bg-transparent border-0 border-b border-outline-variant/50 focus:border-primary focus:ring-0 px-0 py-3 font-body text-on-surface placeholder-transparent peer transition-colors resize-none" id="message" placeholder="Message" rows="4"></textarea>
+<label class="absolute left-0 top-3 font-label text-sm text-on-surface-variant transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-primary peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm" for="message">Inquiry Details</label>
+</div>
+<button class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary py-4 rounded-DEFAULT font-label uppercase tracking-widest text-sm hover:shadow-[0_10px_30px_rgba(24,48,29,0.2)] fluid-ease-out transition-all duration-500 mt-4" type="button">
+                            Submit Inquiry
+                        </button>
+</form>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-stone-100 dark:bg-stone-950 full-width border-t border-stone-200 dark:border-stone-800">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-7xl mx-auto px-8 py-16">
+<div class="col-span-2 md:col-span-1 space-y-4">
+<span class="text-xl font-serif font-semibold text-emerald-950 dark:text-emerald-100">Ameer Global</span>
+<p class="font-body text-sm text-stone-500 dark:text-stone-400 max-w-xs leading-relaxed">
+                    © 2024 Ameer Global. All rights reserved.
+                </p>
+</div>
+<div>
+<h4 class="font-headline text-lg text-emerald-900 dark:text-emerald-500 mb-6">Explore</h4>
+<div class="flex flex-col gap-3 font-body text-sm">
+<a class="text-stone-500 dark:text-stone-400 hover:underline decoration-emerald-900/30 underline-offset-4 transition-all" href="#">Sustainability</a>
+<a class="text-stone-500 dark:text-stone-400 hover:underline decoration-emerald-900/30 underline-offset-4 transition-all" href="#">Heritage</a>
+<a class="text-stone-500 dark:text-stone-400 hover:underline decoration-emerald-900/30 underline-offset-4 transition-all" href="#">Trade</a>
+</div>
+</div>
+<div>
+<h4 class="font-headline text-lg text-emerald-900 dark:text-emerald-500 mb-6">Legal</h4>
+<div class="flex flex-col gap-3 font-body text-sm">
+<a class="text-stone-500 dark:text-stone-400 hover:underline decoration-emerald-900/30 underline-offset-4 transition-all" href="#">Privacy Policy</a>
+<a class="text-stone-500 dark:text-stone-400 hover:underline decoration-emerald-900/30 underline-offset-4 transition-all" href="#">Terms of Service</a>
 </div>
 </div>
 </div>
 </footer>
-<script src="/assets/interactions.js?v=4"></script>
 </body></html>

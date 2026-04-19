@@ -1,134 +1,310 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ameer Global | Contact</title>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet" />
-  <style>
-    body { font-family: 'Manrope', sans-serif; }
-    .font-display { font-family: 'Noto Serif', serif; }
-  </style>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#1f3f8f',
-            secondary: '#2f56b1',
-            surface: '#faf9f5',
-            onsurface: '#1b1c1a',
-            outline: '#c6c8b9'
-          }
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ameer Global - About &amp; Contact</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+        /* Fluid ease-out for custom animations */
+        .fluid-ease-out {
+            transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#fbf9f4",
+                    "inverse-on-surface": "#f2f1ec",
+                    "surface-bright": "#fbf9f4",
+                    "secondary-fixed-dim": "#dbc3a6",
+                    "primary-container": "#2e4632",
+                    "surface-variant": "#e4e2dd",
+                    "surface-container-high": "#eae8e3",
+                    "on-background": "#1b1c19",
+                    "surface-container-low": "#f5f3ee",
+                    "on-secondary-container": "#725f48",
+                    "on-error": "#ffffff",
+                    "outline-variant": "#c3c8c0",
+                    "on-tertiary-fixed-variant": "#5d4037",
+                    "secondary-fixed": "#f8dec1",
+                    "on-surface-variant": "#434842",
+                    "primary-fixed-dim": "#b2ceb3",
+                    "surface-container": "#f0eee9",
+                    "on-tertiary": "#ffffff",
+                    "secondary-container": "#f5dcbe",
+                    "outline": "#737971",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#ffdbd0",
+                    "surface-tint": "#4b644e",
+                    "on-tertiary-fixed": "#2c160e",
+                    "inverse-primary": "#b2ceb3",
+                    "primary-fixed": "#cdeace",
+                    "on-primary-fixed-variant": "#344c38",
+                    "on-primary-fixed": "#08200f",
+                    "on-primary-container": "#98b39a",
+                    "surface-container-lowest": "#ffffff",
+                    "background": "#fbf9f4",
+                    "secondary": "#6e5b44",
+                    "tertiary-container": "#563a31",
+                    "on-secondary-fixed": "#261907",
+                    "error-container": "#ffdad6",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#e7bdb1",
+                    "surface-dim": "#dbdad5",
+                    "on-secondary-fixed-variant": "#55442e",
+                    "inverse-surface": "#30312e",
+                    "surface-container-highest": "#e4e2dd",
+                    "primary": "#18301d",
+                    "on-surface": "#1b1c19",
+                    "on-tertiary-container": "#cba498",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#3d241d",
+                    "error": "#ba1a1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {},
+            "fontFamily": {
+                    "headline": [
+                            "Noto Serif"
+                    ],
+                    "body": [
+                            "Manrope"
+                    ],
+                    "label": [
+                            "Manrope"
+                    ]
+            }
+    },
+        },
       }
-    };
-  </script>
-<link rel="stylesheet" href="/assets/theme.css?v=19"/>
+    </script>
 </head>
-<body class="contact-page bg-surface text-onsurface antialiased">
-  <header class="sticky top-0 z-50 bg-[#faf9f5]/80 backdrop-blur-lg border-b border-outline/30">
-    <nav class="site-nav-shell max-w-[1280px] mx-auto px-6 md:px-10 py-4 flex items-center justify-between">
-      <a class="inline-flex items-center site-logo-wrap" href="/"><img alt="Ameer Global Logo" class="w-[190px] md:w-[290px] h-auto" src="/assets/logo-header-clean.png?v=1"/></a>
-      <div class="site-nav-right ml-auto">
-      <div aria-label="Primary Navigation" class="site-nav-links hidden md:flex items-center" role="navigation">
-        <a class="site-nav-link" href="/">Home</a>
-        <a class="site-nav-link" href="/products/">Products</a>
-        <a class="site-nav-link" href="/about/">About</a>
-        <a class="site-nav-link site-nav-link-active" href="/contact/">Contact</a>
-      </div>
-      </div>
-    </nav>
-  </header>
-
-  <main>
-    <section class="relative overflow-hidden py-20 md:py-28 px-6 md:px-10">
-      <div class="absolute -right-16 -top-20 text-[200px] md:text-[320px] text-primary/5 font-display leading-none select-none">1856</div>
-      <div class="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-        <div class="lg:col-span-5">
-          <p class="uppercase tracking-[0.35em] text-xs text-secondary mb-5">Direct Inquiry</p>
-          <h1 class="font-display text-5xl md:text-6xl leading-tight text-primary mb-8">Trade With<br />Confidence</h1>
-          <p class="text-base md:text-lg text-onsurface/80 leading-relaxed mb-8">
-            Send us your sourcing needs, volume targets, and preferred destination ports.
-            Our team responds within one business day.
-          </p>
-          <div class="space-y-4 text-sm uppercase tracking-wider text-onsurface/70">
-            <p>Global Desk: +92 300 0000000</p>
-            <p>Email: trade@ameerglobal.example</p>
-            <p>Locations: Multan, Karachi, Dubai</p>
-          </div>
-        </div>
-
-        <div class="lg:col-span-7 bg-white border border-outline/60 rounded-xl p-6 md:p-10 shadow-[0_20px_50px_rgba(27,28,26,0.05)]">
-          <form class="space-y-6" id="contact-form">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label class="text-xs uppercase tracking-[0.2em] text-onsurface/70" for="name">Full Name</label>
-                <input class="mt-2 w-full border-0 border-b border-outline focus:border-primary bg-transparent px-0 py-2 focus:ring-0" id="name" name="name" required type="text" />
-              </div>
-              <div>
-                <label class="text-xs uppercase tracking-[0.2em] text-onsurface/70" for="email">Email</label>
-                <input class="mt-2 w-full border-0 border-b border-outline focus:border-primary bg-transparent px-0 py-2 focus:ring-0" id="email" name="email" required type="email" />
-              </div>
-            </div>
-
-            <div>
-              <label class="text-xs uppercase tracking-[0.2em] text-onsurface/70" for="subject">Subject</label>
-              <input class="mt-2 w-full border-0 border-b border-outline focus:border-primary bg-transparent px-0 py-2 focus:ring-0" id="subject" name="subject" required type="text" />
-            </div>
-
-            <div>
-              <label class="text-xs uppercase tracking-[0.2em] text-onsurface/70" for="message">Message</label>
-              <textarea class="mt-2 w-full border border-outline focus:border-primary bg-transparent px-4 py-3 focus:ring-0 min-h-[160px]" id="message" name="message" required></textarea>
-            </div>
-
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <p class="text-xs uppercase tracking-wider text-onsurface/60" id="contact-status">Ready to submit.</p>
-              <button class="bg-primary text-white px-8 py-3 text-xs uppercase tracking-[0.2em] rounded hover:opacity-90" type="submit">Send Inquiry</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const prefillProduct = params.get('product');
-    const prefillIntent = params.get('intent');
-
-    const subjectEl = document.getElementById('subject');
-    const messageEl = document.getElementById('message');
-
-    if (prefillProduct) {
-      const intentLabel = prefillIntent ? prefillIntent.toUpperCase() : 'INQUIRY';
-      subjectEl.value = `${intentLabel}: ${prefillProduct}`;
-      messageEl.value = `Hello Ameer Global team,\n\nI want to ${prefillIntent || 'inquire about'} ${prefillProduct}. Please share pricing, MOQ, shipment timelines, and payment terms.\n`;
-    }
-
-    const contactForm = document.getElementById('contact-form');
-    const contactStatus = document.getElementById('contact-status');
-
-    contactForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      contactStatus.textContent = 'Preparing email...';
-
-      const payload = {
-        name: document.getElementById('name').value.trim(),
-        email: document.getElementById('email').value.trim(),
-        subject: document.getElementById('subject').value.trim(),
-        message: document.getElementById('message').value.trim()
-      };
-
-      const subject = encodeURIComponent(payload.subject);
-      const body = encodeURIComponent(
-        `Name: ${payload.name}\nEmail: ${payload.email}\n\n${payload.message}`
-      );
-      window.location.href = `mailto:trade@ameerglobal.example?subject=${subject}&body=${body}`;
-      contactStatus.textContent = 'Email client opened. Please send your message.';
-    });
-  </script>
-  <script src="/assets/interactions.js?v=4"></script>
-</body>
-</html>
+<body class="bg-surface text-on-surface font-body antialiased selection:bg-primary-container selection:text-on-primary">
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-stone-50/80 dark:bg-stone-900/80 backdrop-blur-xl border-none shadow-[0_4px_30px_rgba(0,0,0,0.02)] transition-all duration-300">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-8 py-6">
+<a aria-label="Ameer Global Home" class="flex items-center" href="/">
+<img alt="Ameer Global Logo" class="h-12 md:h-14 w-auto" src="/assets/logo-header-clear-v2.png?v=2"/>
+</a>
+<div class="hidden md:flex items-center gap-8 font-label text-base tracking-wide uppercase">
+<a class="text-stone-600 dark:text-stone-400 hover:text-emerald-800 transition-colors" href="/">Home</a>
+<a class="text-stone-600 dark:text-stone-400 hover:text-emerald-800 transition-colors" href="/products/">Products</a>
+<a class="text-stone-600 dark:text-stone-400 hover:text-emerald-800 transition-colors" href="/about/">About</a>
+<a class="text-primary border-b-2 border-primary pb-1" href="/contact/">Contact</a>
+</div>
+<a class="bg-primary text-on-primary px-6 py-3 rounded-DEFAULT font-label font-medium uppercase tracking-wider hover:bg-primary-container hover:shadow-xl hover:shadow-on-surface/5 fluid-ease-out transition-all duration-500 inline-block" href="/contact/">
+                Get Started
+            </a>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="pt-40 pb-24 px-8 max-w-7xl mx-auto relative overflow-hidden">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<div class="lg:col-span-7 space-y-8 relative z-10">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-low text-secondary font-label text-sm uppercase tracking-widest">
+<span class="material-symbols-outlined text-[18px]">public</span>
+                    Our Legacy
+                </div>
+<h1 class="font-headline text-5xl md:text-7xl font-semibold leading-[1.1] text-primary tracking-tight">
+                    Bridging heritage with modern global commerce.
+                </h1>
+<p class="font-body text-xl text-on-surface-variant leading-relaxed max-w-2xl">
+                    For over three decades, Ameer Global has been a steward of international trade, cultivating relationships that transcend borders. We believe in curated excellence over mass transaction.
+                </p>
+</div>
+<div class="lg:col-span-5 relative">
+<div class="aspect-[4/5] rounded-xl overflow-hidden relative group">
+<div class="absolute inset-0 bg-primary/10 mix-blend-overlay z-10 group-hover:bg-transparent transition-all duration-700"></div>
+<img alt="Global Trade" class="w-full h-full object-cover transform scale-105 group-hover:scale-100 transition-transform duration-[1.5s] ease-out" data-alt="A sophisticated, softly lit meeting room with an antique globe, dark mahogany desk, and subtle natural light streaming through large windows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuVfnDtYjSUcXs7Kozf4xfNdunUtsuB1OOOLyAFWhByecmcdeaObOXb1S_uqvlksA7tSd-FJAvEbgs7qDuIc7tUpSK23NGM39vWKkL6FoDkT4TudRWfRCok88_7F-JJCupOqjqP7h59rHjNMPhdXJylRzODwXWcqtQZap7G9_3JvY9Dmoek_5FLbquV-EBTBDQilivUBJriLhqsY29lR8KDIl_zszCBRj16AEXvxRVmWDv-n5aMTHUQLwAwuD8FLnXayvG7Q6_SHg"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Message from the CEO -->
+<section class="py-32 bg-surface-container-low relative">
+<div class="max-w-5xl mx-auto px-8 relative z-10">
+<div class="bg-surface-container-lowest p-12 md:p-20 rounded-xl shadow-[0_40px_60px_rgba(27,28,25,0.04)] relative">
+<!-- Decorative Quote -->
+<span class="material-symbols-outlined absolute top-8 left-8 md:top-12 md:left-12 text-6xl text-surface-container-high opacity-50">
+                    format_quote
+                </span>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+<div class="md:col-span-8 space-y-8 relative z-10 pl-4 md:pl-12">
+<h2 class="font-headline text-3xl md:text-4xl text-primary font-medium">A Commitment to Enduring Value</h2>
+<p class="font-body text-lg text-on-surface-variant leading-relaxed">
+                            "In an era defined by speed, we choose to prioritize permanence. True partnerships are not built in a day, nor are the supply chains that sustain our modern world. At Ameer Global, we view every interaction not as a transaction, but as a thread in a larger, enduring tapestry of global commerce. Our dedication to quality is unwavering, because our reputation—and yours—depends on it."
+                        </p>
+<div class="pt-4 border-t border-outline-variant/20 flex items-center gap-4">
+<div class="w-16 h-16 rounded-full overflow-hidden bg-surface-container">
+<img alt="CEO Portrait" class="w-full h-full object-cover" data-alt="Black and white portrait of a distinguished older gentleman in a tailored suit, dramatic studio lighting, exuding calm authority." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUZjUUJ6WO7YqJ1anHnK8RTA6koQFcfDCExthw7u3d8fxcJKksFJxPjzSl5rDrIIzV7NfbZMjzx6Rxr6h0MZLtZjadsFYwyz-IZkO3LUT5kia4htClW_ZnmhWS-Wtzh6XnxrdOmhJ9JchLY4xVSDK0571M38X0BqGMuGN0Z89Mwz6AJIKI-7K9NyNV2EJAOC5Pnt6-uBU5ES97o_gmxbvrUL8EtFQT9WdSUUR5w3pv6_9ei40MewrJJNsVkfYShdijeHPkr9_VZCM"/>
+</div>
+<div>
+<h3 class="font-headline text-xl text-primary font-semibold">Elias Thorne</h3>
+<p class="font-label text-sm text-secondary uppercase tracking-widest mt-1">Chief Executive Officer</p>
+</div>
+</div>
+</div>
+<div class="md:col-span-4 hidden md:block">
+<img alt="Signature" class="w-full opacity-60 mix-blend-multiply" data-alt="Elegant handwritten signature in dark ink on textured cream paper, extreme macro photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACs-YoMfn8OjrKlQwfHtr-8hQaA3d0Zf_XC4ag4JbpUfrlJ7R_PzqxPkY-voYZhxEQCO-BpE4MY_M4XvUH2lFeMzMXjwKPk7Ca06ZR2_2CNSRZ9_xPW8fSdv7BJOlUvdg2jW5CFNP3l4pNc1D_NcB0_ZxiRZeiunXh1RGJWfcprIyHXjvNLSKrP-NqrRDdIelhuUX-R_lseHU7aUVDAI-1y8diXxbPYP_QfIYWeZ-tm8U8vIHsVTod7TcdwcljNb5edVDUTqD8tEo"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Global Reach Grid -->
+<section class="py-32 px-8 max-w-7xl mx-auto">
+<div class="text-center mb-20 max-w-3xl mx-auto">
+<h2 class="font-headline text-4xl md:text-5xl text-primary mb-6">Our Global Tapestry</h2>
+<p class="font-body text-lg text-on-surface-variant">We facilitate trade corridors across continents, connecting premium resources with discerning markets worldwide.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+<!-- Flag Items - Abstracted to maintain premium feel -->
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">USA</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">North America</span>
+</div>
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">UK</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Europe</span>
+</div>
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">UAE</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Middle East</span>
+</div>
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">Germany</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Europe</span>
+</div>
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">China</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Asia</span>
+</div>
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">Japan</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Asia</span>
+</div>
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">India</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Asia</span>
+</div>
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">Brazil</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">South America</span>
+</div>
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">France</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Europe</span>
+</div>
+<div class="group relative aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<span class="font-headline text-2xl text-primary mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">Singapore</span>
+<span class="font-label text-xs text-secondary uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Asia</span>
+</div>
+</div>
+</section>
+<!-- Minimalist Contact Section -->
+<section class="py-32 bg-surface-container-highest relative overflow-hidden" id="contact-section">
+<!-- Abstract Background element -->
+<div class="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-surface-variant to-transparent opacity-50 pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-8 relative z-10">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+<div class="space-y-12">
+<div>
+<h2 class="font-headline text-5xl text-primary mb-6">Initiate Dialogue</h2>
+<p class="font-body text-xl text-on-surface-variant max-w-md">We welcome inquiries from prospective partners who share our dedication to uncompromised quality.</p>
+</div>
+<div class="space-y-8">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-secondary mt-1">location_on</span>
+<div>
+<h4 class="font-label text-sm uppercase tracking-widest text-primary font-semibold mb-1">Global Headquarters</h4>
+<p class="font-body text-on-surface-variant">100 International Plaza<br/>Suite 4500<br/>New York, NY 10005</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-secondary mt-1">mail</span>
+<div>
+<h4 class="font-label text-sm uppercase tracking-widest text-primary font-semibold mb-1">Direct Correspondence</h4>
+<p class="font-body text-on-surface-variant hover:text-primary transition-colors cursor-pointer">partnerships@ameerglobal.com</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Minimalist Form -->
+<div class="bg-surface-container-lowest p-10 rounded-xl shadow-[0_20px_40px_rgba(27,28,25,0.03)]">
+<form class="space-y-10">
+<div class="relative group">
+<input class="w-full bg-transparent border-0 border-b border-outline-variant/50 focus:border-primary focus:ring-0 px-0 py-3 font-body text-on-surface placeholder-transparent peer transition-colors" id="name" placeholder="Name" type="text"/>
+<label class="absolute left-0 top-3 font-label text-sm text-on-surface-variant transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-primary peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm" for="name">Full Name</label>
+</div>
+<div class="relative group">
+<input class="w-full bg-transparent border-0 border-b border-outline-variant/50 focus:border-primary focus:ring-0 px-0 py-3 font-body text-on-surface placeholder-transparent peer transition-colors" id="email" placeholder="Email" type="email"/>
+<label class="absolute left-0 top-3 font-label text-sm text-on-surface-variant transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-primary peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm" for="email">Corporate Email</label>
+</div>
+<div class="relative group">
+<input class="w-full bg-transparent border-0 border-b border-outline-variant/50 focus:border-primary focus:ring-0 px-0 py-3 font-body text-on-surface placeholder-transparent peer transition-colors" id="organization" placeholder="Organization" type="text"/>
+<label class="absolute left-0 top-3 font-label text-sm text-on-surface-variant transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-primary peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm" for="organization">Organization</label>
+</div>
+<div class="relative group">
+<textarea class="w-full bg-transparent border-0 border-b border-outline-variant/50 focus:border-primary focus:ring-0 px-0 py-3 font-body text-on-surface placeholder-transparent peer transition-colors resize-none" id="message" placeholder="Message" rows="4"></textarea>
+<label class="absolute left-0 top-3 font-label text-sm text-on-surface-variant transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-primary peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm" for="message">Inquiry Details</label>
+</div>
+<button class="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary py-4 rounded-DEFAULT font-label uppercase tracking-widest text-sm hover:shadow-[0_10px_30px_rgba(24,48,29,0.2)] fluid-ease-out transition-all duration-500 mt-4" type="button">
+                            Submit Inquiry
+                        </button>
+</form>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-stone-100 dark:bg-stone-950 full-width border-t border-stone-200 dark:border-stone-800">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-7xl mx-auto px-8 py-16">
+<div class="col-span-2 md:col-span-1 space-y-4">
+<span class="text-xl font-serif font-semibold text-emerald-950 dark:text-emerald-100">Ameer Global</span>
+<p class="font-body text-sm text-stone-500 dark:text-stone-400 max-w-xs leading-relaxed">
+                    © 2024 Ameer Global. All rights reserved.
+                </p>
+</div>
+<div>
+<h4 class="font-headline text-lg text-emerald-900 dark:text-emerald-500 mb-6">Explore</h4>
+<div class="flex flex-col gap-3 font-body text-sm">
+<a class="text-stone-500 dark:text-stone-400 hover:underline decoration-emerald-900/30 underline-offset-4 transition-all" href="#">Sustainability</a>
+<a class="text-stone-500 dark:text-stone-400 hover:underline decoration-emerald-900/30 underline-offset-4 transition-all" href="#">Heritage</a>
+<a class="text-stone-500 dark:text-stone-400 hover:underline decoration-emerald-900/30 underline-offset-4 transition-all" href="#">Trade</a>
+</div>
+</div>
+<div>
+<h4 class="font-headline text-lg text-emerald-900 dark:text-emerald-500 mb-6">Legal</h4>
+<div class="flex flex-col gap-3 font-body text-sm">
+<a class="text-stone-500 dark:text-stone-400 hover:underline decoration-emerald-900/30 underline-offset-4 transition-all" href="#">Privacy Policy</a>
+<a class="text-stone-500 dark:text-stone-400 hover:underline decoration-emerald-900/30 underline-offset-4 transition-all" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
