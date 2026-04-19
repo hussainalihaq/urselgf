@@ -248,6 +248,16 @@ a {
   filter: saturate(88%) contrast(95%);
 }
 
+.hero-terminal-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 58%;
+  filter: saturate(92%) contrast(96%) brightness(0.88);
+}
+
 .hero-premium-overlay {
   background:
     linear-gradient(180deg, rgba(7, 16, 34, 0.18) 0%, rgba(7, 16, 34, 0.42) 100%);
@@ -336,6 +346,40 @@ a {
 .home-page .hero-premium .bg-secondary:hover {
   transform: none;
   box-shadow: 0 10px 24px rgba(24, 46, 97, 0.2);
+}
+
+/* Home header style to match cinematic hero */
+.home-page .sticky.top-0 {
+  background: rgba(8, 16, 34, 0.72) !important;
+  backdrop-filter: blur(14px) saturate(128%);
+  -webkit-backdrop-filter: blur(14px) saturate(128%);
+  border-bottom: 1px solid rgba(180, 204, 246, 0.22) !important;
+  box-shadow: 0 14px 32px rgba(5, 10, 24, 0.34) !important;
+}
+
+.home-page .site-nav-links {
+  background: rgba(12, 26, 56, 0.46);
+  border-color: rgba(171, 196, 240, 0.25);
+  box-shadow: inset 0 1px 0 rgba(225, 236, 255, 0.12);
+}
+
+.home-page .site-nav-link {
+  color: rgba(228, 238, 255, 0.86) !important;
+}
+
+.home-page .site-nav-link:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.home-page .site-nav-link-active {
+  background: linear-gradient(140deg, #4e73d4, #2c56b2);
+  box-shadow: 0 10px 22px rgba(33, 61, 126, 0.42);
+}
+
+.home-page .site-nav-cta.bg-primary {
+  background: linear-gradient(140deg, #3f66c5, #284c9e) !important;
+  box-shadow: 0 10px 24px rgba(20, 41, 92, 0.4);
 }
 
 @media (max-width: 900px) {
