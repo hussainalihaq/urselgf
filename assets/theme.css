@@ -245,8 +245,8 @@ a {
   height: 100%;
   object-fit: cover;
   object-position: center 58%;
-  filter: saturate(88%) contrast(95%);
-  z-index: 2;
+  filter: saturate(90%) contrast(96%) brightness(0.72);
+  z-index: 1;
 }
 
 .hero-terminal-video {
@@ -256,15 +256,10 @@ a {
   height: 100%;
   object-fit: cover;
   object-position: center 58%;
-  filter: saturate(92%) contrast(96%) brightness(0.88);
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 280ms ease;
-}
-
-.hero-terminal-video.is-playing {
-  z-index: 3;
+  filter: saturate(92%) contrast(98%) brightness(0.84);
+  z-index: 2;
   opacity: 1;
+  background: #12233d;
 }
 
 .hero-premium-overlay {
@@ -401,8 +396,7 @@ a {
 
 .home-page nav img[alt='Ameer Global Logo'] {
   width: 176px !important;
-  filter: drop-shadow(0 8px 16px rgba(4, 11, 26, 0.32)) brightness(1.48) contrast(1.24) saturate(1.08);
-  mix-blend-mode: screen;
+  filter: drop-shadow(0 8px 16px rgba(4, 11, 26, 0.28)) brightness(1.1) contrast(1.06) saturate(1.02);
 }
 
 @media (min-width: 768px) {
