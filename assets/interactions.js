@@ -26,11 +26,43 @@
   }
 
   // Hero video fallback handling:
-  // keep poster image visible until the local video can actually play.
-  const heroVideo = document.querySelector('.home-page .hero-terminal-video');
-  if (heroVideo) {
+  // keep poster/image visible until the local video is confirmed playing.
+  const heroVideos = document.querySelectorAll('.home-page .hero-terminal-video');
+  heroVideos.forEach((heroVideo) => {
     const markReady = () => heroVideo.classList.add('is-ready');
+    const tryPlay = () => {
+      const playPromise = heroVideo.play();
+      if (playPromise && typeof playPromise.then === 'function') {
+        playPromise.then(markReady).catch(() => {});
+      }
+    };
+
+    heroVideo.muted = true;
+    heroVideo.defaultMuted = true;
+    heroVideo.playsInline = true;
+    heroVideo.setAttribute('muted', '');
+    heroVideo.setAttribute('playsinline', '');
+    heroVideo.setAttribute('webkit-playsinline', '');
+
+    if (heroVideo.readyState >= 2) {
+      markReady();
+    }
+
     heroVideo.addEventListener('loadeddata', markReady, { once: true });
     heroVideo.addEventListener('playing', markReady, { once: true });
-  }
+    heroVideo.addEventListener('canplay', tryPlay, { once: true });
+
+    tryPlay();
+
+    // Some browsers block autoplay until first user gesture.
+    const unlock = () => {
+      tryPlay();
+      window.removeEventListener('pointerdown', unlock);
+      window.removeEventListener('touchstart', unlock);
+      window.removeEventListener('keydown', unlock);
+    };
+    window.addEventListener('pointerdown', unlock);
+    window.addEventListener('touchstart', unlock);
+    window.addEventListener('keydown', unlock);
+  });
 })();
