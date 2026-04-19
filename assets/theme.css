@@ -24,6 +24,10 @@ body {
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
   color: var(--ink-900);
@@ -75,14 +79,21 @@ nav a.border-b {
 }
 
 nav img[alt='Ameer Global Logo'] {
-  width: 190px !important;
+  width: 172px !important;
   height: auto !important;
 }
 
 @media (min-width: 768px) {
   nav img[alt='Ameer Global Logo'] {
-    width: 275px !important;
+    width: 248px !important;
   }
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid rgba(42, 79, 159, 0.5);
+  outline-offset: 2px;
+  border-radius: 0.4rem;
 }
 
 .site-nav-shell {
