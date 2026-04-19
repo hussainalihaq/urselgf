@@ -24,4 +24,13 @@
   } else {
     candidates.forEach((el) => el.classList.add('is-visible'));
   }
+
+  // Hero video fallback handling:
+  // keep poster image visible until the local video can actually play.
+  const heroVideo = document.querySelector('.home-page .hero-terminal-video');
+  if (heroVideo) {
+    const markReady = () => heroVideo.classList.add('is-ready');
+    heroVideo.addEventListener('loadeddata', markReady, { once: true });
+    heroVideo.addEventListener('playing', markReady, { once: true });
+  }
 })();
