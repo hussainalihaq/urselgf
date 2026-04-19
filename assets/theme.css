@@ -258,11 +258,6 @@ a {
   object-position: center 58%;
   filter: saturate(92%) contrast(96%) brightness(0.88);
   z-index: 2;
-  opacity: 0;
-  transition: opacity 320ms ease;
-}
-
-.hero-terminal-video.is-ready {
   opacity: 1;
 }
 
@@ -400,7 +395,7 @@ a {
 
 .home-page nav img[alt='Ameer Global Logo'] {
   width: 176px !important;
-  filter: drop-shadow(0 5px 12px rgba(4, 11, 26, 0.3));
+  filter: drop-shadow(0 5px 12px rgba(4, 11, 26, 0.3)) brightness(1.13) contrast(1.08);
 }
 
 @media (min-width: 768px) {

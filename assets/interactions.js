@@ -25,15 +25,13 @@
     candidates.forEach((el) => el.classList.add('is-visible'));
   }
 
-  // Hero video fallback handling:
-  // keep poster/image visible until the local video is confirmed playing.
+  // Hero video autoplay hardening for Safari/Chromium.
   const heroVideos = document.querySelectorAll('.home-page .hero-terminal-video');
   heroVideos.forEach((heroVideo) => {
-    const markReady = () => heroVideo.classList.add('is-ready');
     const tryPlay = () => {
       const playPromise = heroVideo.play();
       if (playPromise && typeof playPromise.then === 'function') {
-        playPromise.then(markReady).catch(() => {});
+        playPromise.catch(() => {});
       }
     };
 
@@ -43,14 +41,10 @@
     heroVideo.setAttribute('muted', '');
     heroVideo.setAttribute('playsinline', '');
     heroVideo.setAttribute('webkit-playsinline', '');
+    heroVideo.preload = 'auto';
 
-    if (heroVideo.readyState >= 2) {
-      markReady();
-    }
-
-    heroVideo.addEventListener('loadeddata', markReady, { once: true });
-    heroVideo.addEventListener('playing', markReady, { once: true });
     heroVideo.addEventListener('canplay', tryPlay, { once: true });
+    heroVideo.addEventListener('loadedmetadata', tryPlay, { once: true });
 
     tryPlay();
 
@@ -64,5 +58,9 @@
     window.addEventListener('pointerdown', unlock);
     window.addEventListener('touchstart', unlock);
     window.addEventListener('keydown', unlock);
+
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) tryPlay();
+    });
   });
 })();
