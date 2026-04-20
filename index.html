@@ -1,105 +1,27 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Ameer Global | The Digital Estate</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-        body {
-            font-family: 'Manrope', sans-serif;
-            scroll-behavior: smooth;
-        }
-        .font-display { font-family: 'Noto Serif', serif; }
-        .heritage-watermark {
-            pointer-events: none;
-            user-select: none;
-            z-index: 0;
-        }
-        .glass-nav {
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
-        }
-        .line-draw {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            animation: draw 3s ease-forward forwards;
-        }
-        @keyframes draw {
-            to { stroke-dashoffset: 0; }
-        }
-    </style>
-<script id="tailwind-config">
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Ameer Global | The Digital Estate</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
         theme: {
           extend: {
-            "colors": {
-                "on-secondary-container": "#18357a",
-                "primary-fixed-dim": "#95afe3",
-                "error-container": "#ffdad6",
-                "secondary-fixed": "#e8eefb",
-                "surface-container-high": "#e9e8e4",
-                "background": "#faf9f5",
+            colors: {
+                "primary": "#1f3f8f",
+                "secondary": "#2f56b1",
+                "surface": "#faf9f5",
+                "surface-container": "#efeeea",
+                "on-surface": "#1b1c1a",
                 "on-primary": "#ffffff",
                 "outline-variant": "#c6c8b9",
-                "secondary-fixed-dim": "#c6d4f6",
-                "primary": "#1f3f8f",
-                "tertiary": "#1c2f63",
-                "surface-container-lowest": "#ffffff",
-                "tertiary-fixed-dim": "#b9c9ef",
-                "on-secondary-fixed": "#10244d",
-                "on-primary-fixed": "#10244d",
-                "inverse-on-surface": "#f2f1ed",
-                "tertiary-fixed": "#e3e9fb",
-                "tertiary-container": "#2a3f79",
-                "on-secondary": "#ffffff",
-                "on-tertiary-container": "#c7d5f7",
-                "on-background": "#1b1c1a",
-                "secondary": "#2f56b1",
-                "surface-tint": "#2a4e9f",
-                "outline": "#76786c",
-                "surface-container-low": "#f5f4f0",
-                "surface-container-highest": "#e3e2df",
-                "primary-container": "#2f56b1",
-                "surface": "#faf9f5",
-                "secondary-container": "#dbe5fb",
-                "inverse-surface": "#30312e",
-                "on-tertiary-fixed": "#0f1f49",
-                "on-surface-variant": "#45483d",
-                "on-error-container": "#93000a",
-                "on-secondary-fixed-variant": "#23448e",
-                "on-primary-container": "#c6d4f6",
-                "on-primary-fixed-variant": "#355da8",
-                "surface-variant": "#e3e2df",
-                "on-error": "#ffffff",
-                "surface-bright": "#faf9f5",
-                "error": "#ba1a1a",
-                "on-surface": "#1b1c1a",
-                "primary-fixed": "#c6d4f6",
-                "inverse-primary": "#95afe3",
-                "on-tertiary": "#ffffff",
-                "on-tertiary-fixed-variant": "#2a3f79",
-                "surface-container": "#efeeea",
-                "surface-dim": "#dbdad6"
             },
-            "borderRadius": {
-                "DEFAULT": "0.125rem",
-                "lg": "0.25rem",
-                "xl": "0.5rem",
-                "full": "0.75rem"
-            },
-            "fontFamily": {
+            fontFamily: {
                 "headline": ["Noto Serif"],
                 "body": ["Manrope"],
                 "label": ["Manrope"]
@@ -108,240 +30,257 @@
         },
       }
     </script>
-<link rel="stylesheet" href="/assets/theme.css?v=22"/>
+    <style>
+        body { font-family: 'Manrope', sans-serif; scroll-behavior: smooth; }
+        .font-display { font-family: 'Noto Serif', serif; }
+        
+        .hero-slideshow .hero-slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out, transform 8s ease-in-out;
+            transform: scale(1.05);
+        }
+        .hero-slideshow .hero-slide.is-active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05);
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .ceo-signature {
+            font-family: 'Noto Serif', serif;
+            font-style: italic;
+        }
+
+        .dark .glass-panel {
+            background: rgba(30, 30, 30, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+    </style>
+    <link rel="stylesheet" href="/assets/theme.css?v=23"/>
 </head>
-<body class="home-page bg-surface text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container">
-<!-- TopNavBar -->
-<nav class="sticky top-0 w-full z-50 bg-[#faf9f5]/70 backdrop-blur-lg dark:bg-[#1b1c1a]/70 shadow-[0_20px_50px_rgba(27,28,26,0.05)]">
-<div class="site-nav-shell flex justify-between items-center px-6 py-4 max-w-[1920px] mx-auto">
-<a class="inline-flex items-center site-logo-wrap" href="/"><img alt="Ameer Global Logo" class="w-[190px] md:w-[290px] h-auto" src="/assets/logo-transparent-final.png?v=1"/></a>
-<div class="site-nav-right ml-auto">
-<div aria-label="Primary Navigation" class="site-nav-links hidden md:flex items-center" role="navigation">
-<a class="site-nav-link site-nav-link-active" href="/">Home</a>
-<a class="site-nav-link" href="/products/">Products</a>
-<a class="site-nav-link" href="/about/">About</a>
-<a class="site-nav-link" href="/contact/">Contact</a>
-</div>
-<a class="site-nav-cta bg-primary text-on-primary px-5 py-2 rounded-lg font-label text-xs uppercase tracking-widest hover:opacity-80 transition-opacity duration-300 active:scale-95 ease-out inline-block" href="/contact/">
-                Inquire Now
-            </a>
-</div>
-</div>
+<body class="bg-surface text-on-surface antialiased">
+
+<!-- Top Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-[#faf9f5]/80 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.03)] border-b border-outline-variant/20 transition-all duration-300">
+    <div class="flex justify-between items-center px-6 md:px-12 py-5 max-w-[1920px] mx-auto">
+        <a class="inline-flex items-center" href="/">
+            <img alt="Ameer Global Logo" class="h-[60px] md:h-[75px] object-contain" src="/assets/logo-transparent-final.png"/>
+        </a>
+        <div class="hidden md:flex items-center space-x-12">
+            <a class="font-label text-sm uppercase tracking-widest text-primary border-b-2 border-primary pb-1" href="/">Home</a>
+            <a class="font-label text-sm uppercase tracking-widest text-on-surface/60 hover:text-primary transition-colors" href="/products/">Products</a>
+            <a class="font-label text-sm uppercase tracking-widest text-on-surface/60 hover:text-primary transition-colors" href="/about/">About</a>
+            <a class="font-label text-sm uppercase tracking-widest text-on-surface/60 hover:text-primary transition-colors" href="/contact/">Contact</a>
+        </div>
+        <a class="bg-primary text-on-primary px-8 py-3 rounded-md text-xs font-bold uppercase tracking-widest shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all" href="/contact/">
+            Inquire Now
+        </a>
+    </div>
 </nav>
-<div aria-hidden="true" class="front-popup" id="front-popup">
-<div aria-labelledby="front-popup-title" class="front-popup-card" role="dialog">
-<button aria-label="Close message" class="front-popup-close" data-popup-close="" type="button">×</button>
-<p class="front-popup-kicker">Ameer Global • Worldwide Trade Desk</p>
-<h2 class="front-popup-title" id="front-popup-title">Customized Brandable Products</h2>
-<p class="front-popup-copy">Give customized brandable products and if you want to import or export any product from anywhere in the world.</p>
-<a class="front-popup-action" href="/contact/">Start Your Requirement</a>
-</div>
-</div>
-<main>
+
 <!-- Hero Section -->
-<section class="relative min-h-[860px] flex items-end md:items-center overflow-hidden hero-premium hero-slideshow">
-<div class="absolute inset-0 z-0 hero-slides" id="hero-slides">
-<figure aria-hidden="false" class="hero-slide is-active" style="background-image:url('https://images.pexels.com/photos/2199293/pexels-photo-2199293.jpeg?auto=compress&cs=tinysrgb&w=2000');"></figure>
-<figure aria-hidden="true" class="hero-slide" style="background-image:url('https://images.pexels.com/photos/163726/belgium-antwerp-shipping-container-163726.jpeg?auto=compress&cs=tinysrgb&w=2000');"></figure>
-<figure aria-hidden="true" class="hero-slide" style="background-image:url('https://images.pexels.com/photos/4011956/pexels-photo-4011956.jpeg?auto=compress&cs=tinysrgb&w=2000');"></figure>
-<div class="absolute inset-0 hero-premium-overlay"></div>
-<div class="absolute inset-y-0 left-0 w-full md:w-[68%] hero-premium-shade"></div>
-</div>
-<div class="hero-premium-shell">
-<div class="max-w-[1440px] mx-auto px-6 md:px-12 pt-32 md:pt-24 pb-16 md:pb-0">
-<div class="max-w-[760px]">
-<span class="hero-premium-kicker">
-                    Est. 1856 • Global Logistics • Private Trade Desk
-                </span>
-<h1 class="hero-premium-title">
-                    The Art of
-<span>Global Exchange</span>
-</h1>
-<p class="hero-premium-copy">
-                    Delivering reliable import and export partnerships across commodities, logistics, and private-label supply for modern markets.
-                </p>
-<div class="flex flex-col md:flex-row gap-5 md:gap-6 items-start">
-<a class="w-full md:w-auto px-10 py-5 bg-primary text-on-primary rounded-lg font-semibold inline-block text-center" href="/products/">
-                        Explore our products
-                    </a>
-<a class="w-full md:w-auto px-10 py-5 bg-white/10 backdrop-blur-lg border border-white/20 text-white rounded-lg font-semibold transition-all inline-block text-center" href="/about/">View Heritage
-                    </a>
-</div>
-<div class="hero-motto-list" role="list">
-<span class="hero-motto-item" role="listitem">Premium Trading</span>
-<span class="hero-motto-item" role="listitem">Global Reach</span>
-<span class="hero-motto-item" role="listitem">Trusted Quality</span>
-</div>
-<div aria-label="Hero slideshow selector" class="hero-slide-dots">
-<button aria-label="Show slide 1" class="hero-dot is-active" data-slide-to="0" type="button"></button>
-<button aria-label="Show slide 2" class="hero-dot" data-slide-to="1" type="button"></button>
-<button aria-label="Show slide 3" class="hero-dot" data-slide-to="2" type="button"></button>
-</div>
-</div>
-<div class="hero-premium-metrics">
-<div>
-<span class="hero-metric-label">Operations</span>
-<strong>End-to-End International Movement</strong>
-</div>
-<div>
-<span class="hero-metric-label">Assurance</span>
-<strong>168+ Years of Trade Discipline</strong>
-</div>
-<div>
-<span class="hero-metric-label">Focus</span>
-<strong>Brandable, Export-Ready Product Lines</strong>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Heritage Section (Tonal Shift) -->
-<section class="py-32 bg-surface-container-low overflow-hidden relative">
-<div class="heritage-watermark absolute -right-20 top-20 text-[20rem] font-display font-bold text-on-surface/[0.03] italic">
-                1856
+<section class="relative h-screen min-h-[900px] flex items-center overflow-hidden hero-slideshow">
+    <div class="absolute inset-0 z-0 bg-black/40" id="hero-slides">
+        <figure class="hero-slide is-active" style="background-image:url('https://images.pexels.com/photos/1095814/pexels-photo-1095814.jpeg?auto=compress&cs=tinysrgb&w=2000');"></figure>
+        <figure class="hero-slide" style="background-image:url('https://images.pexels.com/photos/2226458/pexels-photo-2226458.jpeg?auto=compress&cs=tinysrgb&w=2000');"></figure>
+        <figure class="hero-slide" style="background-image:url('https://images.pexels.com/photos/6620586/pexels-photo-6620586.jpeg?auto=compress&cs=tinysrgb&w=2000');"></figure>
+    </div>
+    
+    <!-- Gradient Overlay -->
+    <div class="absolute inset-0 z-10 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+    
+    <div class="relative z-20 max-w-[1440px] w-full mx-auto px-6 md:px-12 pt-20">
+        <div class="max-w-[800px] reveal active">
+            <span class="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-[0.2em] mb-8">
+                Est. 1856 • Worldwide Operations
+            </span>
+            <h1 class="text-6xl md:text-8xl font-display font-medium text-white leading-[1.05] tracking-tight mb-8">
+                The Standard for <br/>
+                <span class="italic text-[#dbe5fb] font-light">Global Exchange</span>
+            </h1>
+            <p class="text-[#e8eefb] text-lg md:text-xl font-light leading-relaxed max-w-2xl mb-12">
+                Delivering reliable import and export partnerships across commodities, logistics, and private-label supply for modern markets.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-5">
+                <a href="/products/" class="px-10 py-5 bg-white text-primary rounded-lg font-bold text-sm uppercase tracking-widest shadow-2xl hover:scale-[1.02] transition-transform text-center flex items-center justify-center gap-3">
+                    Explore Our Products <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                </a>
+                <a href="/about/" class="px-10 py-5 bg-black/30 backdrop-blur-lg border border-white/20 text-white rounded-lg font-bold text-sm uppercase tracking-widest hover:bg-white/10 transition-colors text-center">
+                    Discover Our Legacy
+                </a>
             </div>
-<div class="max-w-[1440px] mx-auto px-12 grid grid-cols-1 md:grid-cols-12 gap-20 items-center">
-<div class="md:col-span-5 relative z-10">
-<h2 class="text-4xl md:text-6xl font-display text-primary leading-tight mb-8">
-                        A Legacy <br/> 
-                        Built on <span class="italic text-secondary">Trust</span>.
-                    </h2>
-<p class="text-on-surface-variant font-body text-lg leading-relaxed mb-12">
-                        Since our inception in the mid-19th century, Ameer Global has evolved from a regional merchant house into a cornerstone of international trade. Our journey is etched in the quality of every cargo we deliver and the longevity of every partnership we nurture.
+            
+            <div class="flex gap-8 mt-16 text-white/80 font-label text-sm uppercase tracking-widest font-semibold">
+                <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-blue-400 rounded-full"></span> Premium Trading</span>
+                <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-blue-400 rounded-full"></span> Global Reach</span>
+                <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-blue-400 rounded-full"></span> Trusted Quality</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CEO Message Section -->
+<section class="py-32 bg-surface relative overflow-hidden" id="ceo-message">
+    <div class="max-w-[1440px] mx-auto px-6 md:px-12 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
+            <div class="md:col-span-5 reveal">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl group animate-float">
+                    <!-- Image wrapper with ratio -->
+                    <div class="aspect-[3/4] w-full bg-surface-container">
+                        <!-- Intentionally trying to retrieve the image / placeholder -->
+                        <img src="/assets/ceo.jpg" onerror="this.onerror=null; this.src='https://images.pexels.com/photos/834863/pexels-photo-834863.jpeg?auto=compress&cs=tinysrgb&w=800';" alt="Ameer Khokhar, CEO of Ameer Global INC." class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"/>
+                    </div>
+                </div>
+            </div>
+            <div class="md:col-span-7 reveal flex flex-col justify-center">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="h-px w-12 bg-primary"></div>
+                    <span class="font-label text-primary font-bold uppercase tracking-[0.2em] text-xs">Message from our CEO</span>
+                </div>
+                
+                <h2 class="text-4xl md:text-5xl font-display text-on-surface mb-10 leading-tight">
+                    "Our vision is built on three core principles— <span class="italic text-primary">premium trading</span>, global reach, and trusted quality."
+                </h2>
+                
+                <div class="space-y-6 text-on-surface/70 font-body text-lg leading-relaxed mb-12 max-w-2xl">
+                    <p>
+                        We are committed to delivering excellence at every stage of our operations—from sourcing the finest products to ensuring they reach markets across the world with reliability and care. 
                     </p>
-<div class="grid grid-cols-2 gap-8">
-<div>
-<div class="text-3xl font-display text-primary mb-2">168+</div>
-<div class="text-xs uppercase tracking-widest text-outline">Years of History</div>
-</div>
-<div>
-<div class="text-3xl font-display text-primary mb-2">42</div>
-<div class="text-xs uppercase tracking-widest text-outline">Trading Hubs</div>
-</div>
-</div>
-</div>
-<div class="md:col-span-7 relative">
-<div class="grid grid-cols-2 gap-6 items-start">
-<div class="pt-24">
-<img alt="monochrome vintage-style photography of a busy trading port from the early 20th century with tall ships" class="w-full aspect-[3/4] object-cover rounded-xl shadow-2xl grayscale transition-all hover:grayscale-0 duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYAfVzlRNfYYh8MUIcpNbQUJOPGaTSbMK52YYWUqZrL7u30_qLH_8E2_Effqh4aGT5myG4mJclsM7R1Ztzw2_AwsIksP6zq6JqNthPfVfKtzNBXVJo1oazZNIaIzdWVYD3QbPEZEyigRr2wKA5p5FKt_wl1C4r8qYhvxJ-NywwoV2dWeTIMy_iDetUSGqYbmjCcMd0eRsP-AQ49Ks8_tNjKVV6L-WX9IyEpDOnxJGj7cifIo7EQZDHESX-lSv7dpbvYzPy1M0Rc8k"/>
-</div>
-<div class="space-y-6">
-<img alt="close up of premium aged wood merchant desk with an antique brass compass and aged parchment map" class="w-full aspect-square object-cover rounded-xl shadow-xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXRjs1I3V2XpTqKfkAuqvq8MJZJX6AE7iJVnQVmuzpc68mcqighdPz5k20c4CTc8SfBHgscMLvWfV8LjYCzAUlluSCiy3RqjGSPEtg7ZC21_vxaU_pNc0kUr119cBCZjtZdIiph6aF1fQPAJKCIBJe5wV8FXQBSY0_OrD5EYOwsoePwg07lyUg2xHZpzoWM3gP-r9jamsgqJdDfANlbhdieWR-Vo8K3iRTMs1WGRbFWkGjCIVwBUci0eWtfWT8lOvXZIhiqUe-OM4"/>
-<div class="p-8 bg-surface-container-lowest border border-outline-variant/15 rounded-lg flex flex-col items-center justify-center min-h-[160px]">
-<!-- Minimalist Maritime Illustration -->
-<svg class="w-16 h-16 text-secondary/40 mb-2 animate-float" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
-</svg>
-<div class="w-12 h-[1px] bg-outline-variant/30 mb-4"></div>
-<p class="text-[10px] uppercase tracking-[0.3em] text-outline text-center">Seamless Logistics Architecture</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Global Network Bento Grid -->
-<section class="py-32 bg-surface">
-<div class="max-w-[1440px] mx-auto px-12">
-<div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-<div class="max-w-2xl">
-<span class="font-label text-secondary text-xs uppercase tracking-widest block mb-4">Operations</span>
-<h2 class="text-5xl font-display text-primary tracking-tight">Our Global Footprint</h2>
-</div>
-<p class="text-on-surface-variant max-w-sm font-body text-sm leading-relaxed">
-                        Strategically positioned across five continents, ensuring seamless flow and unparalleled market access.
+                    <p>
+                        Our global network allows us to connect producers and consumers seamlessly, while our dedication to quality ensures that every product meets the highest standards. As we continue to grow, we remain grounded in our values, striving to build lasting partnerships and earn the trust of our clients worldwide.
                     </p>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6 h-auto md:h-[800px]">
-<div class="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-xl">
-<img alt="vibrant sunset view of a futuristic mega-port in Singapore with neon crane lights and calm water" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqt6aVilcD4eD8IOVpl3PLKbBpo4lq6fkD4WlZ6D4De-zRf3d5iTjxWxV3qBczaJ55Jzz23qKaACXEnvwYMX3rQiif-4-tnQN79b2uHwsTjli6oBPSafQV4cakpw_I4VdVicclGacDfM2dTeGpPwwvYxJ9SzR9Us-QXp5Uuw0hZFPqVLdaFoqSDfHtBBxT4N167wkk2SqMCgagS3dRB8SW6I5M4CeKHpxg68pIMa8535mwVq7arwZAT5p9D0ekyLVg09z-rF0ga4U"/>
-<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-60"></div>
-<div class="absolute bottom-10 left-10 text-white">
-<h3 class="text-xl font-display mb-2">Asia-Pacific Hub</h3>
-<p class="text-sm opacity-80 uppercase tracking-widest">Singapore &amp; Hong Kong</p>
-</div>
-</div>
-<div class="md:col-span-2 relative group overflow-hidden rounded-xl">
-<img alt="high-end luxury office interior in London with dark oak panels and floor-to-ceiling windows overlooking the Thames" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL1au9PLeh6Gh4HBYJjvtZChTigQLzuTCx-UB6-nCDgZ-zTa4uZb0KmZjutgXGBKV1gjeql_PHz57AWh1YTMtyuBtVsdf2o4SfKS-lHxa1R6rT6rGISVGMvNaw8jF9yHppreI0L_8pisNEvliFEG_Ix938XHijvwWVvJFJlNc5NRVJL3CjeHCsukevYvTzLCNCHE-y4an1rt1qH9yTe3z-2YzO9Yg9fL9HxqjnKnR6DTVync6RCL4Y4IXkcGab9jDCavm5G2UG_ZE"/>
-<div class="absolute inset-0 bg-gradient-to-t from-secondary/80 via-transparent to-transparent opacity-40"></div>
-<div class="absolute bottom-10 left-10 text-white">
-<h3 class="text-xl font-display mb-2">European Command</h3>
-<p class="text-sm opacity-80 uppercase tracking-widest">Rotterdam &amp; London</p>
-</div>
-</div>
-<div class="relative group overflow-hidden rounded-xl bg-primary-container p-10 flex flex-col justify-between">
-<span class="material-symbols-outlined text-on-primary-container text-4xl">public</span>
-<div>
-<div class="text-4xl font-display text-on-primary-container mb-2">120+</div>
-<p class="text-on-primary-container/70 text-xs uppercase tracking-widest">Partner Nations</p>
-</div>
-</div>
-<div class="relative group overflow-hidden rounded-xl bg-surface-container-high p-10 flex flex-col justify-between">
-<span class="material-symbols-outlined text-secondary text-4xl">inventory_2</span>
-<div>
-<div class="text-4xl font-display text-primary mb-2">6.2M</div>
-<p class="text-on-surface-variant text-xs uppercase tracking-widest">Tons Shipped Annually</p>
-</div>
-</div>
-</div>
-</div>
+                </div>
+                
+                <div class="border-t border-outline-variant/30 pt-8 mt-4 max-w-sm">
+                    <h4 class="font-display text-2xl text-on-surface mb-1 ceo-signature text-primary">Ameer Khokhar</h4>
+                    <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant font-bold">CEO, Ameer Global INC.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
-<!-- Illustration Section (Replacing CTA) -->
-<section class="py-24 px-12 bg-surface">
-<div class="max-w-[1440px] mx-auto border-t border-outline-variant/10 pt-24">
-<div class="grid grid-cols-1 md:grid-cols-3 gap-16 items-center">
-<div class="text-center space-y-6 group">
-<div class="h-40 flex items-center justify-center">
-<svg class="w-24 h-24 text-primary/20 group-hover:text-primary/40 transition-colors duration-500" fill="none" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-<circle cx="50" cy="50" r="45" stroke="currentColor" stroke-dasharray="4 4" stroke-width="0.5"></circle>
-<path class="line-draw" d="M20 50 C 35 20, 65 80, 80 50" stroke="currentColor" stroke-width="1"></path>
-<circle cx="20" cy="50" fill="currentColor" r="2"></circle>
-<circle cx="80" cy="50" fill="currentColor" r="2"></circle>
-</svg>
-</div>
-<h4 class="font-display text-xl text-primary uppercase tracking-widest">Global Trajectory</h4>
-<p class="text-xs text-outline leading-loose max-w-[200px] mx-auto uppercase tracking-tighter">Precision routing across longitudinal corridors with proprietary real-time telemetry.</p>
-</div>
-<div class="text-center space-y-6 group">
-<div class="h-40 flex items-center justify-center">
-<svg class="w-32 h-24 text-secondary/20 group-hover:text-secondary/40 transition-colors duration-500" fill="none" viewbox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
-<rect height="15" stroke="currentColor" stroke-width="1" width="100" x="10" y="40"></rect>
-<rect height="15" stroke="currentColor" stroke-width="1" width="20" x="25" y="25"></rect>
-<rect height="15" stroke="currentColor" stroke-width="1" width="20" x="50" y="25"></rect>
-<rect height="15" stroke="currentColor" stroke-width="1" width="20" x="75" y="25"></rect>
-<path d="M10 55 L5 65 L115 65 L110 55" stroke="currentColor" stroke-width="1"></path>
-<circle class="animate-pulse" cx="60" cy="47" fill="currentColor" r="1.5"></circle>
-</svg>
-</div>
-<h4 class="font-display text-xl text-primary uppercase tracking-widest">Fleet Integrity</h4>
-<p class="text-xs text-outline leading-loose max-w-[200px] mx-auto uppercase tracking-tighter">Maintaining a sovereign fleet of Tier-1 vessels, engineered for deep-water endurance.</p>
-</div>
-<div class="text-center space-y-6 group">
-<div class="h-40 flex items-center justify-center">
-<svg class="w-24 h-24 text-primary/20 group-hover:text-primary/40 transition-colors duration-500" fill="none" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-<path d="M50 10 L50 90 M10 50 L90 50" stroke="currentColor" stroke-width="0.5"></path>
-<path class="line-draw" d="M30 30 L50 10 L70 30 M30 70 L50 90 L70 70 M10 50 L30 30 M10 50 L30 70" stroke="currentColor" stroke-width="1"></path>
-<circle class="animate-ping" cx="50" cy="50" fill="currentColor" r="3"></circle>
-</svg>
-</div>
-<h4 class="font-display text-xl text-primary uppercase tracking-widest">Navigational Trust</h4>
-<p class="text-xs text-outline leading-loose max-w-[200px] mx-auto uppercase tracking-tighter">A century of maritime protocol combined with decentralized ledger transparency.</p>
-</div>
-</div>
-</div>
+
+<!-- Values & Aesthetics Section -->
+<section class="py-32 bg-surface-container relative">
+    <div class="max-w-[1440px] mx-auto px-6 md:px-12 text-center reveal">
+        <h2 class="text-4xl md:text-5xl font-display text-on-surface mb-20">The Architecture of Trade</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-panel p-12 rounded-2xl text-center shadow-xl hover:-translate-y-2 transition-transform duration-500">
+                <div class="w-20 h-20 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-8">
+                    <span class="material-symbols-outlined text-4xl text-primary">public</span>
+                </div>
+                <h3 class="text-2xl font-display mb-4 text-on-surface">Seamless Logistics</h3>
+                <p class="text-on-surface-variant leading-relaxed">Advanced routing intelligence ensuring secure, timely delivery across international maritime and air corridors.</p>
+            </div>
+            
+            <div class="glass-panel p-12 rounded-2xl text-center shadow-xl hover:-translate-y-2 transition-transform duration-500">
+                <div class="w-20 h-20 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-8">
+                    <span class="material-symbols-outlined text-4xl text-primary">verified</span>
+                </div>
+                <h3 class="text-2xl font-display mb-4 text-on-surface">Quality Assurance</h3>
+                <p class="text-on-surface-variant leading-relaxed">Stringent multi-tier inspections verifying purity, authenticity, and compliance before any cargo leaves.</p>
+            </div>
+            
+            <div class="glass-panel p-12 rounded-2xl text-center shadow-xl hover:-translate-y-2 transition-transform duration-500">
+                <div class="w-20 h-20 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-8">
+                    <span class="material-symbols-outlined text-4xl text-primary">handshake</span>
+                </div>
+                <h3 class="text-2xl font-display mb-4 text-on-surface">Trusted Network</h3>
+                <p class="text-on-surface-variant leading-relaxed">Leveraging 168+ years of heritage to guarantee ethical sourcing, fairness, and absolute trust in global markets.</p>
+            </div>
+        </div>
+    </div>
 </section>
-</main>
-<footer class="site-footer">
-<div class="site-footer-shell">
-<div class="site-footer-brand">Ameer Global</div>
-<div class="site-footer-links">
-<a href="/">Home</a>
-<a href="/products/">Products</a>
-<a href="/about/">About</a>
-<a href="/contact/">Contact</a>
-</div>
-<p class="site-footer-copy">© 1856-2026 Ameer Global. Premium Trading • Global Reach • Trusted Quality.</p>
-</div>
+
+<!-- Footer -->
+<footer class="bg-surface border-t border-outline-variant/20 pt-24 pb-12">
+    <div class="max-w-[1440px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div class="col-span-1 md:col-span-2">
+            <img alt="Ameer Global Logo" class="h-12 object-contain mb-8" src="/assets/logo-transparent-final.png"/>
+            <p class="text-on-surface-variant/80 font-body text-sm leading-relaxed max-w-sm">
+                Premium Trading • Global Reach • Trusted Quality. <br/>
+                Curating fine commodities for a discerning world since 1856.
+            </p>
+        </div>
+        <div>
+            <h4 class="font-label text-xs uppercase tracking-widest font-bold text-on-surface mb-6">Explore</h4>
+            <ul class="space-y-4 text-sm text-on-surface-variant/80 font-label">
+                <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
+                <li><a href="/products/" class="hover:text-primary transition-colors">Our Products</a></li>
+                <li><a href="/about/" class="hover:text-primary transition-colors">Legacy & About</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="font-label text-xs uppercase tracking-widest font-bold text-on-surface mb-6">Contact</h4>
+            <ul class="space-y-4 text-sm text-on-surface-variant/80 font-label">
+                <li><a href="/contact/" class="hover:text-primary transition-colors">Inquiries & Partnerships</a></li>
+                <li><span class="block mt-4 opacity-50">Global Exchange District</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="max-w-[1440px] mx-auto px-6 md:px-12 mt-20 pt-8 border-t border-outline-variant/20">
+        <p class="text-center text-xs font-label uppercase tracking-widest text-on-surface-variant/50">
+            © 1856-2026 Ameer Global INC. All rights reserved.
+        </p>
+    </div>
 </footer>
-<script src="/assets/interactions.js?v=8"></script>
-</body></html>
+
+<script>
+    // Reveal animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('.reveal').forEach((el) => {
+        observer.observe(el);
+    });
+
+    // Simple slideshow
+    const slides = document.querySelectorAll('.hero-slide');
+    let currentSlide = 0;
+    if(slides.length > 0) {
+        setInterval(() => {
+            slides[currentSlide].classList.remove('is-active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('is-active');
+        }, 6000);
+    }
+</script>
+</body>
+</html>

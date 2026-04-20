@@ -115,9 +115,9 @@ async function getRecords(filename) {
 }
 
 const pageRoutes = {
-  '/': 'ameer_global_home_refined/index.html',
-  '/home': 'ameer_global_home_refined/index.html',
-  '/products': 'ameer_global_our_products/index.html',
+  '/': 'index.html',
+  '/home': 'index.html',
+  '/products': 'products/index.html',
   '/about': 'ameer_global_about_network_refined/index.html',
   '/contact': 'ameer_global_contact/index.html'
 };
