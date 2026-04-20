@@ -3,78 +3,161 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Himalayan Salt | Ameer Global</title>
+  <title>Himalayan Salt — 250 Million Years in the Making | Ameer Global</title>
+  <meta name="description" content="Premium Himalayan pink salt sourced from the legendary Khewra Salt Mines. Food-grade, wellness, décor, and private-label solutions."/>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <style>
-    body { font-family: 'Manrope', sans-serif; }
-    .font-display { font-family: 'Noto Serif', serif; }
-    .hero {
-      background:
-        linear-gradient(130deg, rgba(15, 30, 66, 0.9), rgba(22, 46, 99, 0.68)),
-        url('https://images.pexels.com/photos/6630900/pexels-photo-6630900.jpeg?auto=compress&cs=tinysrgb&w=2000') center/cover no-repeat;
-    }
-    .info-card { background: rgba(255,255,255,0.82); border: 1px solid rgba(31,63,143,0.14); }
+    :root{--brand-950:#182a59;--brand-900:#203a7b;--brand-800:#2a4f9f;--ink-900:#1b2847;--ink-700:#4a5877;--ink-500:#6e7b97;--surface-0:#f4f6fb}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}
+    body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink-900);background:var(--surface-0);overflow-x:hidden}
+    h1,h2,h3{font-family:'DM Serif Display',serif;color:var(--brand-950);font-weight:400;letter-spacing:-.01em;line-height:1.1}
+    .material-symbols-outlined{font-family:'Material Symbols Outlined'!important;font-weight:normal!important;font-style:normal!important;line-height:1!important;letter-spacing:normal!important;text-transform:none!important;display:inline-block;direction:ltr}
+    .reveal{opacity:0;transform:translateY(28px);transition:all 1s cubic-bezier(.16,1,.3,1)}.reveal.active{opacity:1;transform:translateY(0)}
+    .salt-gradient{background:linear-gradient(135deg,#f8e8e0 0%,#f0d0c0 30%,#e8c0b0 60%,#d4a090 100%)}
+    .timeline-line{position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(180deg,transparent,#d4a090,#203a7b,transparent);transform:translateX(-50%)}
+    @media(max-width:767px){.timeline-line{left:24px}}
   </style>
-  <link rel="stylesheet" href="/assets/theme.css?v=22"/>
 </head>
-<body class="bg-surface text-on-surface antialiased">
-  <header class="sticky top-0 w-full z-50">
-    <nav class="site-nav-shell max-w-[1280px] mx-auto px-6 md:px-10 py-4">
-      <a class="inline-flex items-center site-logo-wrap" href="/"><img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png?v=1"/></a>
-      <div class="site-nav-right">
-        <div aria-label="Primary Navigation" class="site-nav-links hidden md:flex items-center" role="navigation">
-          <a class="site-nav-link" href="/">Home</a>
-          <a class="site-nav-link site-nav-link-active" href="/products/">Products</a>
-          <a class="site-nav-link" href="/about/">About</a>
-          <a class="site-nav-link" href="/contact/">Contact</a>
-        </div>
-        <a class="site-nav-cta bg-primary text-on-primary px-5 py-2 rounded-lg font-label text-xs uppercase tracking-widest inline-block" href="/contact/">Inquire Now</a>
-      </div>
-    </nav>
-  </header>
+<body>
 
-  <main>
-    <section class="hero py-24 md:py-32 px-6 md:px-10 text-white">
-      <div class="max-w-[1280px] mx-auto reveal-on-scroll">
-        <p class="uppercase tracking-[0.28em] text-xs text-[#d9e4ff] mb-5">Himalayan Product Line</p>
-        <h1 class="font-display text-5xl md:text-7xl leading-[0.96] mb-6 text-white">Himalayan Salt</h1>
-        <p class="max-w-3xl text-lg text-[#e5edff]">Our Himalayan salt is sourced through Khewra-linked corridors, where the region's mineral reserves support food-grade, wellness, and lifestyle product streams for global markets.</p>
-      </div>
-    </section>
-
-    <section class="py-16 md:py-24 px-6 md:px-10">
-      <div class="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        <div class="lg:col-span-7 info-card rounded-2xl p-8 reveal-on-scroll">
-          <h2 class="font-display text-4xl text-primary mb-4">Khewra Reference & Quality</h2>
-          <p class="text-on-surface-variant mb-5">The Khewra mining region is central to our Himalayan salt story. We work with extraction and sorting partners that prioritize consistent grading, packaging stability, and export-ready documentation.</p>
-          <ul class="list-disc pl-6 space-y-2 text-on-surface-variant">
-            <li>Food-grade crystals for table and culinary use</li>
-            <li>Cut blocks and slabs for chefs and hospitality</li>
-            <li>Private-label formatting for import/export programs</li>
-            <li>Traceability and quality checks before dispatch</li>
-          </ul>
-        </div>
-        <div class="lg:col-span-5 info-card rounded-2xl overflow-hidden reveal-on-scroll">
-          <img alt="Khewra linked Himalayan salt formation" class="w-full h-[380px] object-cover" src="https://images.pexels.com/photos/6621248/pexels-photo-6621248.jpeg?auto=compress&cs=tinysrgb&w=1400"/>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="site-footer-shell">
-      <div class="site-footer-brand">Ameer Global</div>
-      <div class="site-footer-links">
-        <a href="/">Home</a>
-        <a href="/products/">Products</a>
-        <a href="/about/">About</a>
-        <a href="/contact/">Contact</a>
-      </div>
-      <p class="site-footer-copy">© 1856-2026 Ameer Global. Premium Trading • Global Reach • Trusted Quality.</p>
+<!-- NAV -->
+<nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-[#203a7b]/10 shadow-[0_4px_24px_rgba(20,42,88,.06)]">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 flex items-center justify-between" style="height:82px">
+    <a href="/"><img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png" class="h-[52px] md:h-[60px] w-auto object-contain"/></a>
+    <div class="hidden md:flex items-center gap-1 bg-[#edf3ff]/80 border border-[#203a7b]/12 rounded-full px-1 py-1">
+      <a href="/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Home</a>
+      <a href="/products/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-white bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] shadow-md">Products</a>
+      <a href="/about/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">About</a>
+      <a href="/contact/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Contact</a>
     </div>
-  </footer>
+    <a href="/contact/" class="bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white px-6 py-2.5 rounded-xl text-[.75rem] font-semibold uppercase tracking-[.1em] shadow-lg hover:-translate-y-0.5 transition-all">Inquire Now</a>
+  </div>
+</nav>
 
-  <script src="/assets/interactions.js?v=8"></script>
+<main style="padding-top:82px">
+
+  <!-- HERO -->
+  <section class="relative py-32 md:py-40 px-6 md:px-10 text-white overflow-hidden" style="background:linear-gradient(135deg,rgba(24,42,89,.9),rgba(180,120,100,.5)),url('https://images.pexels.com/photos/6630900/pexels-photo-6630900.jpeg?auto=compress&cs=tinysrgb&w=2000') center/cover">
+    <div class="max-w-[1280px] mx-auto text-center relative z-10">
+      <p class="uppercase tracking-[.28em] text-[.75rem] text-[#f0d0c0] font-semibold mb-5">Himalayan Product Line</p>
+      <h1 class="text-[clamp(2.4rem,6vw,4.2rem)] text-white mb-6">Himalayan Pink Salt</h1>
+      <p class="max-w-2xl mx-auto text-lg text-white/85 font-light leading-relaxed">250 million years of geological perfection. Sourced from the legendary Khewra Salt Mines in Pakistan — the world's second-largest salt mine.</p>
+    </div>
+  </section>
+
+  <!-- HISTORY OF KHEWRA -->
+  <section class="py-24 px-6 md:px-10">
+    <div class="max-w-[1280px] mx-auto">
+      <div class="text-center mb-20 reveal">
+        <p class="uppercase tracking-[.28em] text-[.72rem] text-[#203a7b] font-bold mb-4">The Origin Story</p>
+        <h2 class="text-[clamp(1.8rem,4vw,2.8rem)] mb-5">The Khewra Salt Mines</h2>
+        <p class="max-w-2xl mx-auto text-[#4a5877] leading-relaxed">Discovered by Alexander the Great's army in 326 BC, the Khewra mines sit at the foothills of the Salt Range in Punjab, Pakistan. They produce over 350,000 tons of salt annually from deposits formed during the Precambrian era.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+        <div class="rounded-2xl overflow-hidden shadow-xl reveal">
+          <img alt="Inside the Khewra Salt Mines showing pink salt formations" class="w-full h-[380px] object-cover" src="/assets/salt-mines.png"/>
+        </div>
+        <div class="rounded-2xl overflow-hidden shadow-xl reveal">
+          <img alt="Pink Himalayan salt crystals up close" class="w-full h-[380px] object-cover" src="/assets/himalayan-salt.png"/>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="relative py-16">
+        <div class="timeline-line"></div>
+        <div class="space-y-20">
+          <div class="relative flex flex-col md:flex-row items-center gap-8 reveal">
+            <div class="md:w-1/2 md:text-right md:pr-16">
+              <span class="text-[#d4a090] font-bold text-sm uppercase tracking-wider">326 BC</span>
+              <h3 class="text-2xl mt-2 mb-3">Discovery by Alexander's Army</h3>
+              <p class="text-[#4a5877] text-[.92rem] leading-relaxed">Horses of Alexander's cavalry began licking the rocks, leading soldiers to discover the mineral-rich salt deposits in the foothills of the Salt Range.</p>
+            </div>
+            <div class="w-5 h-5 rounded-full salt-gradient border-4 border-white shadow-lg z-10 flex-shrink-0"></div>
+            <div class="md:w-1/2 md:pl-16"></div>
+          </div>
+          <div class="relative flex flex-col md:flex-row-reverse items-center gap-8 reveal">
+            <div class="md:w-1/2 md:text-left md:pl-16">
+              <span class="text-[#d4a090] font-bold text-sm uppercase tracking-wider">1872</span>
+              <h3 class="text-2xl mt-2 mb-3">Modern Mining Established</h3>
+              <p class="text-[#4a5877] text-[.92rem] leading-relaxed">British engineers introduced systematic mining techniques, establishing the mine as one of the most significant mineral extraction sites in British India.</p>
+            </div>
+            <div class="w-5 h-5 rounded-full salt-gradient border-4 border-white shadow-lg z-10 flex-shrink-0"></div>
+            <div class="md:w-1/2 md:pr-16"></div>
+          </div>
+          <div class="relative flex flex-col md:flex-row items-center gap-8 reveal">
+            <div class="md:w-1/2 md:text-right md:pr-16">
+              <span class="text-[#d4a090] font-bold text-sm uppercase tracking-wider">Today</span>
+              <h3 class="text-2xl mt-2 mb-3">Global Wellness Icon</h3>
+              <p class="text-[#4a5877] text-[.92rem] leading-relaxed">Himalayan pink salt has become a cornerstone of wellness, culinary, and interior design globally — exported to over 100 countries for food, spa, and décor use.</p>
+            </div>
+            <div class="w-5 h-5 rounded-full bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] border-4 border-white shadow-lg z-10 flex-shrink-0"></div>
+            <div class="md:w-1/2 md:pl-16"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCT CATEGORIES -->
+  <section class="py-24 px-6 md:px-10" style="background:linear-gradient(180deg,rgba(232,239,253,.45),rgba(248,232,224,.3))">
+    <div class="max-w-[1280px] mx-auto">
+      <div class="text-center mb-16 reveal">
+        <h2 class="text-[clamp(1.8rem,4vw,2.6rem)] mb-4">Our Salt Categories</h2>
+        <p class="text-[#4a5877] max-w-xl mx-auto leading-relaxed">From table-top to infrastructure — our Himalayan salt serves every purpose.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white/80 backdrop-blur border border-[#203a7b]/8 rounded-2xl p-8 text-center hover:-translate-y-2 transition-transform duration-500 reveal">
+          <div class="w-14 h-14 mx-auto bg-[#f8e8e0] rounded-full flex items-center justify-center mb-5"><span class="material-symbols-outlined text-2xl text-[#d4a090]">restaurant</span></div>
+          <h3 class="text-lg mb-2">Food-Grade Crystals</h3>
+          <p class="text-[#4a5877] text-[.85rem] leading-relaxed">Fine, medium, and coarse grain for culinary and table use. 84 essential minerals.</p>
+        </div>
+        <div class="bg-white/80 backdrop-blur border border-[#203a7b]/8 rounded-2xl p-8 text-center hover:-translate-y-2 transition-transform duration-500 reveal">
+          <div class="w-14 h-14 mx-auto bg-[#f8e8e0] rounded-full flex items-center justify-center mb-5"><span class="material-symbols-outlined text-2xl text-[#d4a090]">self_improvement</span></div>
+          <h3 class="text-lg mb-2">Spa & Wellness</h3>
+          <p class="text-[#4a5877] text-[.85rem] leading-relaxed">Bath soak crystals, detox blends, and relaxation kits for premium spa programs.</p>
+        </div>
+        <div class="bg-white/80 backdrop-blur border border-[#203a7b]/8 rounded-2xl p-8 text-center hover:-translate-y-2 transition-transform duration-500 reveal">
+          <div class="w-14 h-14 mx-auto bg-[#f8e8e0] rounded-full flex items-center justify-center mb-5"><span class="material-symbols-outlined text-2xl text-[#d4a090]">skillet</span></div>
+          <h3 class="text-lg mb-2">Cooking Slabs & Blocks</h3>
+          <p class="text-[#4a5877] text-[.85rem] leading-relaxed">Hand-cut slabs for grilling, curing, and presentation. A chef's statement piece.</p>
+        </div>
+        <div class="bg-white/80 backdrop-blur border border-[#203a7b]/8 rounded-2xl p-8 text-center hover:-translate-y-2 transition-transform duration-500 reveal">
+          <div class="w-14 h-14 mx-auto bg-[#f8e8e0] rounded-full flex items-center justify-center mb-5"><span class="material-symbols-outlined text-2xl text-[#d4a090]">light</span></div>
+          <h3 class="text-lg mb-2">Lamps & Décor</h3>
+          <p class="text-[#4a5877] text-[.85rem] leading-relaxed">Artisan-carved salt lamps, candle holders, and tiled wall panels for interiors.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 px-6 md:px-10 text-center reveal">
+    <div class="max-w-[700px] mx-auto">
+      <h2 class="text-[clamp(1.6rem,3.5vw,2.2rem)] mb-5">Interested in <span class="italic">Himalayan Salt</span>?</h2>
+      <p class="text-[#4a5877] mb-8 leading-relaxed">We offer private-label, bulk tonnage, and custom-format supply. Contact our trade desk for pricing and MOQs.</p>
+      <a href="/contact/?product=Himalayan%20Salt" class="inline-flex items-center gap-3 bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white px-10 py-4 rounded-xl text-[.78rem] font-semibold uppercase tracking-wider shadow-lg hover:-translate-y-0.5 transition-all">
+        Request Quote <span class="material-symbols-outlined text-sm">arrow_forward</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="border-t border-[#203a7b]/10 pt-16 pb-8 bg-white/60">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 grid grid-cols-1 md:grid-cols-4 gap-10">
+    <div class="md:col-span-2"><img alt="Ameer Global Logo" class="h-[48px] object-contain mb-6" src="/assets/logo-transparent-final.png"/><p class="text-[#4a5877] text-sm leading-relaxed max-w-xs">Premium Trading · Global Reach · Trusted Quality.</p></div>
+    <div><h4 class="text-[.7rem] font-bold uppercase tracking-[.15em] text-[#182a59] mb-5">Explore</h4><ul class="space-y-3 text-sm text-[#4a5877]"><li><a href="/">Home</a></li><li><a href="/products/">Products</a></li><li><a href="/about/">About</a></li></ul></div>
+    <div><h4 class="text-[.7rem] font-bold uppercase tracking-[.15em] text-[#182a59] mb-5">Contact</h4><ul class="space-y-3 text-sm text-[#4a5877]"><li><a href="/contact/">Inquiries</a></li></ul></div>
+  </div>
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 mt-14 pt-6 border-t border-[#203a7b]/8"><p class="text-center text-[.68rem] uppercase tracking-[.2em] text-[#6e7b97]">© 1856–2026 Ameer Global INC.</p></div>
+</footer>
+
+<script>
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('active')}),{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
 </body>
 </html>

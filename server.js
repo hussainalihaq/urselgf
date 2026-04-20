@@ -117,9 +117,13 @@ async function getRecords(filename) {
 const pageRoutes = {
   '/': 'index.html',
   '/home': 'index.html',
+  '/home/': 'index.html',
   '/products': 'products/index.html',
+  '/products/': 'products/index.html',
   '/about': 'ameer_global_about_network_refined/index.html',
-  '/contact': 'ameer_global_contact/index.html'
+  '/about/': 'ameer_global_about_network_refined/index.html',
+  '/contact': 'ameer_global_contact/index.html',
+  '/contact/': 'ameer_global_contact/index.html'
 };
 
 async function serveFile(res, filePath) {

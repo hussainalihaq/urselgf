@@ -1,145 +1,127 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ameer Global | Contact</title>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Contact Us | Ameer Global INC.</title>
+  <meta name="description" content="Get in touch with Ameer Global for inquiries, partnerships, and trade requirements."/>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <style>
-    body { font-family: 'Manrope', sans-serif; }
-    .font-display { font-family: 'Noto Serif', serif; }
+    :root{--brand-950:#182a59;--brand-900:#203a7b;--brand-800:#2a4f9f;--ink-900:#1b2847;--ink-700:#4a5877;--surface-0:#f4f6fb}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}
+    body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink-900);background:radial-gradient(1200px 600px at 95% -10%,rgba(42,79,159,.1),transparent 60%),linear-gradient(180deg,var(--surface-0),#f7f9fd);overflow-x:hidden}
+    h1,h2,h3{font-family:'DM Serif Display',serif;color:var(--brand-950);font-weight:400;letter-spacing:-.01em;line-height:1.1}
+    .material-symbols-outlined{font-family:'Material Symbols Outlined'!important;font-weight:normal!important;font-style:normal!important;line-height:1!important;letter-spacing:normal!important;text-transform:none!important;display:inline-block;direction:ltr}
+    input,textarea{font-family:'Plus Jakarta Sans',sans-serif}
+    input:focus,textarea:focus{border-color:var(--brand-900)!important;box-shadow:0 0 0 3px rgba(38,63,133,.12)!important;outline:none}
   </style>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#38451a',
-            secondary: '#944a1b',
-            surface: '#faf9f5',
-            onsurface: '#1b1c1a',
-            outline: '#c6c8b9'
-          }
-        }
-      }
-    };
-  </script>
 </head>
-<body class="bg-surface text-onsurface antialiased">
-  <header class="sticky top-0 z-50 bg-[#faf9f5]/80 backdrop-blur-lg border-b border-outline/30">
-    <nav class="max-w-[1280px] mx-auto px-6 md:px-10 py-5 flex items-center justify-between">
-      <a class="inline-flex items-center" href="/">
-          <img alt="Ameer Global Logo" class="h-[60px] md:h-[75px] object-contain" src="/assets/logo-transparent-final.png"/>
-      </a>
-      <div class="hidden md:flex items-center gap-8 text-sm uppercase tracking-wider">
-        <a class="opacity-70 hover:opacity-100" href="/home">Home</a>
-        <a class="opacity-70 hover:opacity-100" href="/products">Products</a>
-        <a class="opacity-70 hover:opacity-100" href="/about">About</a>
-        <a class="text-primary border-b border-primary pb-1" href="/contact">Contact</a>
-      </div>
-    </nav>
-  </header>
+<body>
 
-  <main>
-    <section class="relative overflow-hidden py-20 md:py-28 px-6 md:px-10">
-      <div class="absolute -right-16 -top-20 text-[200px] md:text-[320px] text-primary/5 font-display leading-none select-none">1856</div>
-      <div class="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-        <div class="lg:col-span-5">
-          <p class="uppercase tracking-[0.35em] text-xs text-secondary mb-5">Direct Inquiry</p>
-          <h1 class="font-display text-5xl md:text-6xl leading-tight text-primary mb-8">Trade With<br />Confidence</h1>
-          <p class="text-base md:text-lg text-onsurface/80 leading-relaxed mb-8">
-            Send us your sourcing needs, volume targets, and preferred destination ports.
-            Our team responds within one business day.
-          </p>
-          <div class="space-y-4 text-sm uppercase tracking-wider text-onsurface/70">
-            <p>Global Desk: +92 300 0000000</p>
-            <p>Email: trade@ameerglobal.example</p>
-            <p>Locations: Multan, Karachi, Dubai</p>
+<!-- NAV -->
+<nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-[#203a7b]/10 shadow-[0_4px_24px_rgba(20,42,88,.06)]">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 flex items-center justify-between" style="height:82px">
+    <a href="/"><img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png" class="h-[52px] md:h-[60px] w-auto object-contain"/></a>
+    <div class="hidden md:flex items-center gap-1 bg-[#edf3ff]/80 border border-[#203a7b]/12 rounded-full px-1 py-1">
+      <a href="/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Home</a>
+      <a href="/products/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Products</a>
+      <a href="/about/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">About</a>
+      <a href="/contact/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-white bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] shadow-md">Contact</a>
+    </div>
+    <a href="/contact/" class="bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white px-6 py-2.5 rounded-xl text-[.75rem] font-semibold uppercase tracking-[.1em] shadow-lg hover:-translate-y-0.5 transition-all">Inquire Now</a>
+  </div>
+</nav>
+
+<main style="padding-top:82px">
+  <section class="relative overflow-hidden py-20 md:py-28 px-6 md:px-10">
+    <div class="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-14 items-start">
+      <div class="lg:col-span-5">
+        <p class="uppercase tracking-[.28em] text-[.72rem] text-[#203a7b] font-bold mb-5">Direct Inquiry</p>
+        <h1 class="text-[clamp(2rem,5vw,3.2rem)] mb-6">Trade With<br/>Confidence</h1>
+        <p class="text-[#4a5877] leading-relaxed mb-10">Send us your sourcing needs, volume targets, and preferred destination ports. Our team responds within one business day.</p>
+        <div class="space-y-4 text-[.85rem] text-[#4a5877]">
+          <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#203a7b]">call</span> +92 300 0000000</div>
+          <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#203a7b]">mail</span> trade@ameerglobal.com</div>
+          <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#203a7b]">location_on</span> Multan · Karachi · Dubai</div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7 bg-white border border-[#203a7b]/10 rounded-2xl p-8 md:p-10 shadow-[0_20px_50px_rgba(20,42,88,.06)]">
+        <form class="space-y-6" id="contact-form">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="text-[.72rem] uppercase tracking-[.15em] text-[#4a5877] font-semibold mb-2 block" for="name">Full Name</label>
+              <input class="w-full border border-[#203a7b]/15 rounded-lg px-4 py-3 text-sm bg-[#f4f6fb]" id="name" name="name" required type="text"/>
+            </div>
+            <div>
+              <label class="text-[.72rem] uppercase tracking-[.15em] text-[#4a5877] font-semibold mb-2 block" for="email">Email</label>
+              <input class="w-full border border-[#203a7b]/15 rounded-lg px-4 py-3 text-sm bg-[#f4f6fb]" id="email" name="email" required type="email"/>
+            </div>
           </div>
-        </div>
-
-        <div class="lg:col-span-7 bg-white border border-outline/60 rounded-xl p-6 md:p-10 shadow-[0_20px_50px_rgba(27,28,26,0.05)]">
-          <form class="space-y-6" id="contact-form">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label class="text-xs uppercase tracking-[0.2em] text-onsurface/70" for="name">Full Name</label>
-                <input class="mt-2 w-full border-0 border-b border-outline focus:border-primary bg-transparent px-0 py-2 focus:ring-0" id="name" name="name" required type="text" />
-              </div>
-              <div>
-                <label class="text-xs uppercase tracking-[0.2em] text-onsurface/70" for="email">Email</label>
-                <input class="mt-2 w-full border-0 border-b border-outline focus:border-primary bg-transparent px-0 py-2 focus:ring-0" id="email" name="email" required type="email" />
-              </div>
-            </div>
-
-            <div>
-              <label class="text-xs uppercase tracking-[0.2em] text-onsurface/70" for="subject">Subject</label>
-              <input class="mt-2 w-full border-0 border-b border-outline focus:border-primary bg-transparent px-0 py-2 focus:ring-0" id="subject" name="subject" required type="text" />
-            </div>
-
-            <div>
-              <label class="text-xs uppercase tracking-[0.2em] text-onsurface/70" for="message">Message</label>
-              <textarea class="mt-2 w-full border border-outline focus:border-primary bg-transparent px-4 py-3 focus:ring-0 min-h-[160px]" id="message" name="message" required></textarea>
-            </div>
-
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <p class="text-xs uppercase tracking-wider text-onsurface/60" id="contact-status">Ready to submit.</p>
-              <button class="bg-primary text-white px-8 py-3 text-xs uppercase tracking-[0.2em] rounded hover:opacity-90" type="submit">Send Inquiry</button>
-            </div>
-          </form>
-        </div>
+          <div>
+            <label class="text-[.72rem] uppercase tracking-[.15em] text-[#4a5877] font-semibold mb-2 block" for="subject">Subject</label>
+            <input class="w-full border border-[#203a7b]/15 rounded-lg px-4 py-3 text-sm bg-[#f4f6fb]" id="subject" name="subject" required type="text"/>
+          </div>
+          <div>
+            <label class="text-[.72rem] uppercase tracking-[.15em] text-[#4a5877] font-semibold mb-2 block" for="message">Message</label>
+            <textarea class="w-full border border-[#203a7b]/15 rounded-lg px-4 py-3 text-sm bg-[#f4f6fb] min-h-[160px]" id="message" name="message" required></textarea>
+          </div>
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <p class="text-[.75rem] text-[#4a5877]" id="contact-status">Ready to submit.</p>
+            <button class="bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white px-8 py-3 rounded-xl text-[.75rem] font-semibold uppercase tracking-[.12em] shadow-lg hover:-translate-y-0.5 transition-all" type="submit">Send Inquiry</button>
+          </div>
+        </form>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
+</main>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const prefillProduct = params.get('product');
-    const prefillIntent = params.get('intent');
+<!-- FOOTER -->
+<footer class="border-t border-[#203a7b]/10 pt-16 pb-8 bg-white/60">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 grid grid-cols-1 md:grid-cols-4 gap-10">
+    <div class="md:col-span-2"><img alt="Ameer Global Logo" class="h-[48px] object-contain mb-6" src="/assets/logo-transparent-final.png"/><p class="text-[#4a5877] text-sm leading-relaxed max-w-xs">Premium Trading · Global Reach · Trusted Quality.</p></div>
+    <div><h4 class="text-[.7rem] font-bold uppercase tracking-[.15em] text-[#182a59] mb-5">Explore</h4><ul class="space-y-3 text-sm text-[#4a5877]"><li><a href="/">Home</a></li><li><a href="/products/">Products</a></li><li><a href="/about/">About</a></li></ul></div>
+    <div><h4 class="text-[.7rem] font-bold uppercase tracking-[.15em] text-[#182a59] mb-5">Contact</h4><ul class="space-y-3 text-sm text-[#4a5877]"><li><a href="/contact/">Inquiries</a></li></ul></div>
+  </div>
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 mt-14 pt-6 border-t border-[#203a7b]/8"><p class="text-center text-[.68rem] uppercase tracking-[.2em] text-[#6e7b97]">© 1856–2026 Ameer Global INC.</p></div>
+</footer>
 
-    const subjectEl = document.getElementById('subject');
-    const messageEl = document.getElementById('message');
-
-    if (prefillProduct) {
-      const intentLabel = prefillIntent ? prefillIntent.toUpperCase() : 'INQUIRY';
-      subjectEl.value = `${intentLabel}: ${prefillProduct}`;
-      messageEl.value = `Hello Ameer Global team,\n\nI want to ${prefillIntent || 'inquire about'} ${prefillProduct}. Please share pricing, MOQ, shipment timelines, and payment terms.\n`;
-    }
-
-    const contactForm = document.getElementById('contact-form');
-    const contactStatus = document.getElementById('contact-status');
-
-    contactForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      contactStatus.textContent = 'Submitting...';
-
-      const payload = {
-        name: document.getElementById('name').value.trim(),
-        email: document.getElementById('email').value.trim(),
-        subject: document.getElementById('subject').value.trim(),
-        message: document.getElementById('message').value.trim()
-      };
-
-      try {
-        const response = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        const result = await response.json();
-
-        if (!response.ok) {
-          contactStatus.textContent = result.error || 'Failed to send inquiry.';
-          return;
-        }
-
-        contactStatus.textContent = result.message || 'Inquiry sent successfully.';
-        contactForm.reset();
-      } catch (error) {
-        contactStatus.textContent = 'Network error. Please try again.';
-      }
-    });
-  </script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const prefillProduct = params.get('product');
+  const prefillIntent = params.get('intent');
+  const subjectEl = document.getElementById('subject');
+  const messageEl = document.getElementById('message');
+  if (prefillProduct) {
+    const intentLabel = prefillIntent ? prefillIntent.toUpperCase() : 'INQUIRY';
+    subjectEl.value = `${intentLabel}: ${prefillProduct}`;
+    messageEl.value = `Hello Ameer Global team,\n\nI want to ${prefillIntent || 'inquire about'} ${prefillProduct}. Please share pricing, MOQ, shipment timelines, and payment terms.\n`;
+  }
+  const contactForm = document.getElementById('contact-form');
+  const contactStatus = document.getElementById('contact-status');
+  contactForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    contactStatus.textContent = 'Submitting...';
+    const payload = {
+      name: document.getElementById('name').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      subject: document.getElementById('subject').value.trim(),
+      message: document.getElementById('message').value.trim()
+    };
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const result = await response.json();
+      if (!response.ok) { contactStatus.textContent = result.error || 'Failed.'; return; }
+      contactStatus.textContent = result.message || 'Inquiry sent.';
+      contactForm.reset();
+    } catch (error) { contactStatus.textContent = 'Network error. Please try again.'; }
+  });
+</script>
 </body>
 </html>

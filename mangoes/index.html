@@ -1,206 +1,330 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Ameer Farms - Mangoes</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400..700;1,400..700&amp;family=Manrope:wght@300..700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "on-secondary": "#ffffff",
-                        "secondary-fixed-dim": "#dbc3a6",
-                        "on-primary-container": "#98b39a",
-                        "on-secondary-container": "#725f48",
-                        "error-container": "#ffdad6",
-                        "inverse-surface": "#30312e",
-                        "error": "#ba1a1a",
-                        "tertiary": "#3d241d",
-                        "on-tertiary": "#ffffff",
-                        "on-surface-variant": "#434842",
-                        "on-secondary-fixed": "#261907",
-                        "surface-bright": "#fbf9f4",
-                        "surface": "#fbf9f4",
-                        "surface-container-high": "#eae8e3",
-                        "on-tertiary-fixed-variant": "#5d4037",
-                        "tertiary-container": "#563a31",
-                        "on-background": "#1b1c19",
-                        "tertiary-fixed-dim": "#e7bdb1",
-                        "on-tertiary-container": "#cba498",
-                        "surface-tint": "#4b644e",
-                        "primary-container": "#2e4632",
-                        "on-error": "#ffffff",
-                        "primary-fixed": "#cdeace",
-                        "on-primary-fixed": "#08200f",
-                        "on-primary": "#ffffff",
-                        "primary-fixed-dim": "#b2ceb3",
-                        "secondary-container": "#f5dcbe",
-                        "primary": "#18301d",
-                        "background": "#fbf9f4",
-                        "on-surface": "#1b1c19",
-                        "on-primary-fixed-variant": "#344c38",
-                        "secondary": "#6e5b44",
-                        "surface-container-lowest": "#ffffff",
-                        "surface-variant": "#e4e2dd",
-                        "surface-container-low": "#f5f3ee",
-                        "on-secondary-fixed-variant": "#55442e",
-                        "on-error-container": "#93000a",
-                        "inverse-primary": "#b2ceb3",
-                        "tertiary-fixed": "#ffdbd0",
-                        "surface-dim": "#dbdad5",
-                        "surface-container": "#f0eee9",
-                        "inverse-on-surface": "#f2f1ec",
-                        "outline-variant": "#c3c8c0",
-                        "secondary-fixed": "#f8dec1",
-                        "surface-container-highest": "#e4e2dd",
-                        "outline": "#737971",
-                        "on-tertiary-fixed": "#2c160e"
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    fontFamily: {
-                        "headline": ["Noto Serif", "serif"],
-                        "body": ["Manrope", "sans-serif"],
-                        "label": ["Manrope", "sans-serif"]
-                    }
-                }
-            }
-        }
-    </script>
-<style>
-        .glass-panel {
-            background: rgba(245, 243, 238, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-    </style>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Premium Mangoes — Heritage Orchards of Multan | Ameer Global INC.</title>
+  <meta name="description" content="Discover Ameer Global's premium Pakistani mangoes — Sindhri, Anwar Ratol, and Chaunsa — cultivated in Multan's heritage orchards since 1856."/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--brand-950:#182a59;--brand-900:#203a7b;--brand-800:#2a4f9f;--ink-900:#1b2847;--ink-700:#4a5877;--ink-500:#6e7b97;--surface-0:#f4f6fb;--mango-gold:#d4a017;--mango-amber:#e8a02a;--mango-warm:#fef3c0}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}
+    body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink-900);background:var(--surface-0);overflow-x:hidden}
+    h1,h2,h3{font-family:'DM Serif Display',serif;color:var(--brand-950);font-weight:400;letter-spacing:-.01em;line-height:1.1}
+    .material-symbols-outlined{font-family:'Material Symbols Outlined'!important;font-weight:normal!important;font-style:normal!important;line-height:1!important;letter-spacing:normal!important;text-transform:none!important;display:inline-block;direction:ltr}
+    .reveal{opacity:0;transform:translateY(28px);transition:all 1s cubic-bezier(.16,1,.3,1)}.reveal.active{opacity:1;transform:translateY(0)}
+    .variety-card{background:rgba(255,255,255,.8);backdrop-filter:blur(18px);border:1px solid rgba(24,42,89,.06);border-radius:1.5rem;overflow:hidden;transition:transform .6s cubic-bezier(.16,1,.3,1),box-shadow .6s}
+    .variety-card:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 32px 64px rgba(24,42,89,.1)}
+    .variety-card img{transition:transform 1.2s cubic-bezier(.16,1,.3,1)}.variety-card:hover img{transform:scale(1.06)}
+    .stat-ring{width:100px;height:100px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;border:3px solid rgba(212,160,23,.3);background:rgba(254,243,192,.3)}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+    .hero-float{animation:float 6s ease-in-out infinite}
+    @keyframes shimmer{0%{background-position:-1000px 0}100%{background-position:1000px 0}}
+    .gold-shimmer{background:linear-gradient(90deg,transparent 0%,rgba(212,160,23,.1) 50%,transparent 100%);background-size:1000px 100%;animation:shimmer 4s ease-in-out infinite}
+    .season-bar{height:8px;border-radius:999px;background:rgba(24,42,89,.06)}.season-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--mango-gold),var(--mango-amber))}
+  </style>
 </head>
-<body class="bg-surface text-on-surface font-body antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col">
-<!-- TopNavBar Component -->
-<header class="fixed top-0 w-full z-50 bg-[#fbf9f4]/90 backdrop-blur-md dark:bg-[#1b1c19]/90 no-border bg-[#f5f3ee]/50 dark:bg-[#1b1c19]/50 flat no-shadows transition-all cubic-bezier(0.19, 1, 0.22, 1)">
-<div class="flex justify-between items-center px-12 py-6 max-w-[1440px] mx-auto w-full">
-<a aria-label="Ameer Global Home" class="flex items-center" href="/">
-<img alt="Ameer Global Logo" class="h-12 md:h-14 w-auto" src="/assets/logo-transparent-final.png?v=1"/>
-</a>
-<nav class="hidden md:flex gap-8 items-center font-serif text-lg tracking-tight selection:bg-[#2e4632]">
-<a class="text-[#1b1c19]/60 dark:text-[#fbf9f4]/60 hover:text-[#18301d] dark:hover:text-white transition-opacity duration-300" href="/about/">Heritage</a>
-<a class="text-[#1b1c19]/60 dark:text-[#fbf9f4]/60 hover:text-[#18301d] dark:hover:text-white transition-opacity duration-300" href="/products/">Orchards</a>
-<a class="text-[#18301d] dark:text-white border-b border-[#18301d] pb-1 hover:text-[#18301d] dark:hover:text-white transition-opacity duration-300" href="/mangoes/">Varieties</a>
-<a class="text-[#1b1c19]/60 dark:text-[#fbf9f4]/60 hover:text-[#18301d] dark:hover:text-white transition-opacity duration-300" href="/contact/">Journal</a>
+<body>
+
+<!-- NAV -->
+<nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-[#203a7b]/10 shadow-[0_4px_24px_rgba(20,42,88,.06)]">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 flex items-center justify-between" style="height:82px">
+    <a href="/"><img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png" class="h-[52px] md:h-[60px] w-auto object-contain"/></a>
+    <div class="hidden md:flex items-center gap-1 bg-[#edf3ff]/80 border border-[#203a7b]/12 rounded-full px-1 py-1">
+      <a href="/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Home</a>
+      <a href="/products/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-white bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] shadow-md">Products</a>
+      <a href="/about/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">About</a>
+      <a href="/contact/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Contact</a>
+    </div>
+    <a href="/contact/" class="bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white px-6 py-2.5 rounded-xl text-[.75rem] font-semibold uppercase tracking-[.1em] shadow-lg hover:-translate-y-0.5 transition-all">Inquire Now</a>
+  </div>
 </nav>
-<a class="bg-primary text-on-primary px-6 py-2 rounded font-label tracking-wide hover:bg-primary-container transition-colors duration-300 inline-block" href="/contact/">Order Now</a>
-</div>
-</header>
-<main class="flex-grow pt-24">
-<!-- Hero Section -->
-<section class="relative min-h-[921px] flex items-center justify-center overflow-hidden">
-<div class="absolute inset-0 z-0">
-<img alt="Mango Orchard" class="w-full h-full object-cover opacity-80" data-alt="Lush green mango orchard at golden hour with soft sunlight filtering through the leaves creating a warm glowing atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqwlAN7O3huKaWeGRYTdAhVAv3jDJsUaQnoMVwmG_BSFtRqzg64SUNYWc_jKsHl3c75ZDhKQr8bo0uXo1jmJYd1uGekFkQRMqnFwb3wrF32BeFuaq36qVYjAYfEfztVJxVCSuLR5qt5P4viK9EGfpjxa3HGtIrGqrenG-VFrGObRCDSUIXpFYfhk0x_QPGjngqfT89OcXxFcy-eKXabvQAj9D65WGaaTDblzZeMV5PkdyNH-9dPHg37bfPQWViGfVEk-QLu03ZyC0"/>
-<div class="absolute inset-0 bg-gradient-to-b from-surface/40 to-surface"></div>
-</div>
-<div class="relative z-10 max-w-7xl mx-auto px-8 w-full flex flex-col items-center text-center">
-<span class="font-label text-sm uppercase tracking-[0.3em] text-secondary mb-6">Ameer Farms Multan Since 1856</span>
-<h1 class="font-headline text-5xl md:text-7xl lg:text-8xl text-primary leading-tight tracking-tighter mb-8 max-w-4xl mix-blend-multiply">
-                    The Gold of <br/> the Punjab
-                </h1>
-<p class="font-body text-xl md:text-2xl text-on-surface-variant max-w-2xl font-light leading-relaxed mb-12">
-                    Cultivating legacy through the soil. A curated collection of the world's finest mangoes, nurtured by century-old traditions.
-                </p>
-<button class="bg-transparent border-b-2 border-primary text-primary font-label text-lg pb-1 hover:text-primary-container hover:border-primary-container transition-all duration-300 uppercase tracking-widest">Explore the Harvest</button>
-</div>
-</section>
-<!-- The Varieties Section -->
-<section class="py-32 bg-surface">
-<div class="max-w-7xl mx-auto px-8">
-<div class="text-left mb-24 max-w-2xl">
-<h2 class="font-headline text-4xl md:text-5xl text-primary tracking-tight mb-6">The Varieties</h2>
-<p class="font-body text-lg text-on-surface-variant leading-relaxed">
-                        Each variety is a distinct chapter in our heritage. Hand-selected, individually wrapped, and presented with the reverence they deserve.
-                    </p>
-</div>
-<div class="space-y-32">
-<!-- Sindhri -->
-<div class="flex flex-col md:flex-row items-center gap-16">
-<div class="w-full md:w-1/2 relative">
-<div class="aspect-[4/5] overflow-hidden rounded-xl bg-surface-container-low shadow-[0_40px_60px_-15px_rgba(27,28,25,0.04)]">
-<img alt="Sindhri Mangoes" class="w-full h-full object-cover" data-alt="Elegant arrangement of large golden Sindhri mangoes in a vintage woven basket set against a neutral textured background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdwlbtuhxiXMbGxrlvvyd7Mdc-SUDd2YwVduooV6LE2xGNiIAmAA80fz3lceRc5glxEN1Sz-QFsxoaknRVApo_C5HuUQZvREUzWBKVrB-XaDvsnVjkbwaudquVr3pPe5a-HjpaoYUBKo6699ludNwQCbXDXAVXDlwr5R6JTNxIcoNNJM8JXkNX_UucSn8VHkGYU5c4bHqTs-ISNDZDPhqobZAi1lLcHKLY9BalhZjYfrTRdq4Cz19Aj-y-lg1KBpMpQAJfEZB6FhM"/>
-</div>
-</div>
-<div class="w-full md:w-1/2 flex flex-col items-start">
-<span class="font-label text-secondary tracking-widest uppercase text-sm mb-4">The Honeyed Giant</span>
-<h3 class="font-headline text-4xl text-primary mb-6">Sindhri</h3>
-<p class="font-body text-on-surface-variant leading-relaxed mb-8 max-w-md">
-                                Large, visually striking, and intensely aromatic. The Sindhri offers a perfect balance of tartness and honeyed sweetness, with a firm texture ideal for slicing.
-                            </p>
-<div class="flex gap-6 items-center">
-<button class="bg-primary text-on-primary px-8 py-3 rounded font-label hover:bg-primary-container transition-colors duration-300">Reserve</button>
-<button class="text-primary font-label border-b border-transparent hover:border-primary pb-1 transition-all duration-300 uppercase text-sm tracking-wide">Buy Now</button>
-</div>
-</div>
-</div>
-<!-- Anwar Ratol -->
-<div class="flex flex-col md:flex-row-reverse items-center gap-16">
-<div class="w-full md:w-1/2 relative">
-<div class="aspect-[4/5] overflow-hidden rounded-xl bg-surface-container-low shadow-[0_40px_60px_-15px_rgba(27,28,25,0.04)]">
-<img alt="Anwar Ratol Mangoes" class="w-full h-full object-cover" data-alt="Close-up of premium Anwar Ratol mangoes resting on dark rustic wood with dramatic studio lighting emphasizing their golden skin" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbhAdTE59oQswVDvFSMKNQbxagiQSnu81r3lV3sWPY4gEbtA1oxUYSaAAfcBkhNeaMVB6Oc3yqI18COg7kwR-q3MZ96VXHQfPmwQM9DJsbV6tSy-hHRJfsHaE1Rwc1kp_ZwNqb5RVp-idsA_4r_FeGr-XB8Kfg-Q1R44hF8QObsGF7jHqo0fF4VkKQy0f_WWvppmrbyAf3lWZzdArC0-p-qG1_Z-WlQRB04n8JlvFQtpleDIJ8h1Htl7dJUSjbfb3tdz-xgDikqTw"/>
-</div>
-</div>
-<div class="w-full md:w-1/2 flex flex-col items-start md:items-end text-left md:text-right">
-<span class="font-label text-secondary tracking-widest uppercase text-sm mb-4">The Crown Jewel</span>
-<h3 class="font-headline text-4xl text-primary mb-6">Anwar Ratol</h3>
-<p class="font-body text-on-surface-variant leading-relaxed mb-8 max-w-md">
-                                Small in stature, immense in character. The Anwar Ratol is celebrated for its intense, floral aroma and remarkably sweet, fiberless flesh. A fleeting luxury of the mid-summer harvest.
-                            </p>
-<div class="flex gap-6 items-center flex-row-reverse">
-<button class="bg-primary text-on-primary px-8 py-3 rounded font-label hover:bg-primary-container transition-colors duration-300">Reserve</button>
-<button class="text-primary font-label border-b border-transparent hover:border-primary pb-1 transition-all duration-300 uppercase text-sm tracking-wide">Buy Now</button>
-</div>
-</div>
-</div>
-<!-- Chaunsa -->
-<div class="flex flex-col md:flex-row items-center gap-16">
-<div class="w-full md:w-1/2 relative">
-<div class="aspect-[4/5] overflow-hidden rounded-xl bg-surface-container-low shadow-[0_40px_60px_-15px_rgba(27,28,25,0.04)]">
-<img alt="Chaunsa Mangoes" class="w-full h-full object-cover" data-alt="Artistic presentation of sliced Chaunsa mangoes on a marble slab with soft natural window light highlighting the juicy texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCl9uCMb4Pq2APKiSW5Djx2gU9OuHLr1izBa30JWTiODVNABtfaUGDMKtlsrYvgho5ow1l_MoTucxEgodU1LUDb9U55KQPAtGUPuOPLf3nii2fHKJeSVuDyT4m3l7UdIyA_HZJsQQumtgRkKqmj4GPgdZwf7ZBc01NT-62WJiKMoH_5dHvONHXH_fSpcV_RawWWmq-wZQX23fek-zOJ5QOJr6E-jJ14t_7eycyks2Zx0His9Hh6DW-Dq7K0r2pdlZRGWRUiK6L6zOA"/>
-</div>
-</div>
-<div class="w-full md:w-1/2 flex flex-col items-start">
-<span class="font-label text-secondary tracking-widest uppercase text-sm mb-4">The Nectar</span>
-<h3 class="font-headline text-4xl text-primary mb-6">Chaunsa</h3>
-<p class="font-body text-on-surface-variant leading-relaxed mb-8 max-w-md">
-                                Renowned for its exceptionally rich, syrupy sweetness and minimal fiber. The Chaunsa is a late-season delicacy that offers a profound, melting texture.
-                            </p>
-<div class="flex gap-6 items-center">
-<button class="bg-primary text-on-primary px-8 py-3 rounded font-label hover:bg-primary-container transition-colors duration-300">Reserve</button>
-<button class="text-primary font-label border-b border-transparent hover:border-primary pb-1 transition-all duration-300 uppercase text-sm tracking-wide">Buy Now</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
+
+<main style="padding-top:82px">
+
+  <!-- HERO -->
+  <section class="relative py-36 md:py-48 overflow-hidden" style="background:linear-gradient(180deg,#fef9e7 0%,#fef3c0 40%,#f8e896 100%)">
+    <div class="absolute inset-0 opacity-30" style="background-image:radial-gradient(circle at 20% 80%,rgba(212,160,23,.3) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(232,160,42,.2) 0%,transparent 45%)"></div>
+    <div class="max-w-[1280px] mx-auto px-6 md:px-10 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <div class="flex items-center gap-3 mb-6">
+            <div class="h-px w-10 bg-[#d4a017]"></div>
+            <span class="text-[.72rem] font-bold uppercase tracking-[.22em] text-[#9a7510]">Ameer Farms · Since 1856</span>
+          </div>
+          <h1 class="text-[clamp(2.6rem,6vw,4.6rem)] leading-[1.05] tracking-tight mb-6">
+            The Gold of<br/><span class="italic" style="color:#d4a017">the Punjab</span>
+          </h1>
+          <p class="text-[#5a4a20] text-lg font-light leading-relaxed max-w-lg mb-10">
+            Cultivating legacy through the soil. A curated collection of the world's finest mangoes, nurtured by century-old traditions in the orchards of Multan.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="#varieties" class="px-10 py-4 bg-[#182a59] text-white rounded-xl font-bold text-[.8rem] uppercase tracking-wider shadow-xl hover:-translate-y-0.5 transition-all inline-flex items-center gap-2">
+              Explore Varieties <span class="material-symbols-outlined text-base">arrow_downward</span>
+            </a>
+            <a href="/contact/?product=Mangoes" class="px-10 py-4 border-2 border-[#182a59]/20 text-[#182a59] rounded-xl font-bold text-[.8rem] uppercase tracking-wider hover:bg-[#182a59]/5 transition-all">
+              Order Now
+            </a>
+          </div>
+        </div>
+        <div class="flex justify-center hero-float">
+          <div class="relative">
+            <div class="w-[340px] h-[340px] md:w-[420px] md:h-[420px] rounded-full overflow-hidden shadow-2xl border-4 border-white/60">
+              <img alt="Premium golden mangoes from Multan" class="w-full h-full object-cover" src="https://images.pexels.com/photos/918643/pexels-photo-918643.jpeg?auto=compress&cs=tinysrgb&w=1000"/>
+            </div>
+            <div class="absolute -bottom-4 -right-4 bg-white rounded-2xl shadow-xl px-6 py-4 text-center">
+              <span class="block text-2xl font-bold text-[#d4a017]">168+</span>
+              <span class="text-[.65rem] font-bold uppercase tracking-wider text-[#4a5877]">Years of Heritage</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HERITAGE STATS -->
+  <section class="py-20 px-6 md:px-10 gold-shimmer">
+    <div class="max-w-[1280px] mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center reveal">
+        <div class="stat-ring mx-auto">
+          <span class="text-2xl font-bold text-[#d4a017]">3</span>
+          <span class="text-[.6rem] font-bold uppercase tracking-wider text-[#4a5877] mt-1">Varieties</span>
+        </div>
+        <div class="stat-ring mx-auto">
+          <span class="text-2xl font-bold text-[#d4a017]">500+</span>
+          <span class="text-[.6rem] font-bold uppercase tracking-wider text-[#4a5877] mt-1">Acres</span>
+        </div>
+        <div class="stat-ring mx-auto">
+          <span class="text-2xl font-bold text-[#d4a017]">40+</span>
+          <span class="text-[.6rem] font-bold uppercase tracking-wider text-[#4a5877] mt-1">Countries</span>
+        </div>
+        <div class="stat-ring mx-auto">
+          <span class="text-2xl font-bold text-[#d4a017]">A+</span>
+          <span class="text-[.6rem] font-bold uppercase tracking-wider text-[#4a5877] mt-1">Grade Export</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUR ROOTS & LEGACY -->
+  <section class="py-24 px-6 md:px-10 bg-white">
+    <div class="max-w-[1280px] mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+        <div class="lg:col-span-5 reveal">
+          <div class="rounded-2xl overflow-hidden shadow-2xl border border-[#d4a017]/20 relative">
+            <div class="absolute inset-0 bg-[#d4a017]/10 mix-blend-overlay z-10 hidden"></div>
+            <img alt="Portrait of Malik Ameer Bakhsh Khokhar" class="w-full aspect-[4/5] object-cover" src="/assets/ameer-bakhsh.png" style="filter: sepia(0.3) contrast(1.1) brightness(0.9);"/>
+            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-8 z-20">
+              <h4 class="text-white text-2xl font-bold" style="font-family:'DM Serif Display',serif">Malik Ameer Bakhsh Khokhar</h4>
+              <p class="text-white/80 text-sm uppercase tracking-widest mt-1">Founder, Ameer Bakhsh Farm (1966)</p>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-7 reveal">
+          <p class="uppercase tracking-[.28em] text-[.72rem] text-[#d4a017] font-bold mb-4">Our Roots / Story / Legacy</p>
+          <h2 class="text-[clamp(1.8rem,4vw,2.8rem)] mb-6">A Century of Refining<br/><span class="italic" style="color:#d4a017">Nature's Gold</span></h2>
+          <div class="space-y-6 text-[#4a5877] text-lg leading-relaxed max-w-2xl">
+            <p>Our story began with Malik Ameer Bakhsh Khokhar, a revolutionary farmer who founded the Ameer Bakhsh Farm in 1966. His spirit and dedication transformed our family lands into a sanctuary for the world's finest mangoes.</p>
+            <p>By moving beyond early or late varieties to curate only peak-season fruit, we ensure a true farm-to-table experience with no middleman. We aren't just selling a product; we want you to taste a part of our heritage, legacy, and culture.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VARIETIES -->
+  <section id="varieties" class="py-28 px-6 md:px-10">
+    <div class="max-w-[1280px] mx-auto">
+      <div class="text-center mb-20 reveal">
+        <p class="uppercase tracking-[.28em] text-[.72rem] text-[#d4a017] font-bold mb-4">Curated Selection</p>
+        <h2 class="text-[clamp(1.8rem,4vw,2.8rem)] mb-5">The Varieties</h2>
+        <p class="text-[#4a5877] max-w-xl mx-auto leading-relaxed">Each variety is a distinct chapter in our heritage. Hand-selected, individually graded, and presented with the reverence they deserve.</p>
+      </div>
+
+      <div class="space-y-24">
+        <!-- Sindhri -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center reveal">
+          <div class="variety-card">
+            <div class="aspect-[4/5] overflow-hidden">
+              <img alt="Sindhri Mangoes — The Honeyed Giant" class="w-full h-full object-cover" src="https://images.pexels.com/photos/5402092/pexels-photo-5402092.jpeg?auto=compress&cs=tinysrgb&w=800"/>
+            </div>
+          </div>
+          <div>
+            <span class="inline-block px-4 py-1.5 rounded-full bg-[#fef3c0] text-[#9a7510] text-[.7rem] font-bold uppercase tracking-[.18em] mb-5">The Honeyed Giant</span>
+            <h3 class="text-[clamp(1.8rem,3.5vw,2.6rem)] mb-6">Sindhri</h3>
+            <p class="text-[#4a5877] leading-relaxed mb-8 max-w-md text-[.95rem]">
+              Large, visually striking, and intensely aromatic. The Sindhri offers a perfect balance of tartness and honeyed sweetness, with a firm texture ideal for slicing. Prized by chefs and connoisseurs worldwide.
+            </p>
+            <div class="space-y-4 mb-8">
+              <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#d4a017]">scale</span><span class="text-sm text-[#4a5877]"><strong>Weight:</strong> 250–400g per fruit</span></div>
+              <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#d4a017]">calendar_month</span><span class="text-sm text-[#4a5877]"><strong>Season:</strong> May – July</span></div>
+              <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#d4a017]">star</span><span class="text-sm text-[#4a5877]"><strong>Brix:</strong> 18–22° sweetness index</span></div>
+            </div>
+            <a href="/contact/?product=Sindhri%20Mangoes" class="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white rounded-xl text-[.78rem] font-bold uppercase tracking-wider shadow-lg hover:-translate-y-0.5 transition-all">
+              Buy Now <span class="material-symbols-outlined text-sm">shopping_cart</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Anwar Ratol -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center reveal">
+          <div class="order-2 lg:order-1">
+            <span class="inline-block px-4 py-1.5 rounded-full bg-[#fef3c0] text-[#9a7510] text-[.7rem] font-bold uppercase tracking-[.18em] mb-5">The Crown Jewel</span>
+            <h3 class="text-[clamp(1.8rem,3.5vw,2.6rem)] mb-6">Anwar Ratol</h3>
+            <p class="text-[#4a5877] leading-relaxed mb-8 max-w-md text-[.95rem]">
+              Small in stature, immense in character. The Anwar Ratol is celebrated for its intense, floral aroma and remarkably sweet, fiberless flesh. A fleeting luxury of the mid-summer harvest — available for only 3 weeks each season.
+            </p>
+            <div class="space-y-4 mb-8">
+              <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#d4a017]">scale</span><span class="text-sm text-[#4a5877]"><strong>Weight:</strong> 80–120g per fruit</span></div>
+              <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#d4a017]">calendar_month</span><span class="text-sm text-[#4a5877]"><strong>Season:</strong> July (limited window)</span></div>
+              <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#d4a017]">star</span><span class="text-sm text-[#4a5877]"><strong>Brix:</strong> 22–26° sweetness index</span></div>
+            </div>
+            <a href="/contact/?product=Anwar%20Ratol%20Mangoes" class="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white rounded-xl text-[.78rem] font-bold uppercase tracking-wider shadow-lg hover:-translate-y-0.5 transition-all">
+              Buy Now <span class="material-symbols-outlined text-sm">shopping_cart</span>
+            </a>
+          </div>
+          <div class="variety-card order-1 lg:order-2">
+            <div class="aspect-[4/5] overflow-hidden">
+              <img alt="Anwar Ratol Mangoes — The Crown Jewel" class="w-full h-full object-cover" src="https://images.pexels.com/photos/2294471/pexels-photo-2294471.jpeg?auto=compress&cs=tinysrgb&w=800"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chaunsa -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center reveal">
+          <div class="variety-card">
+            <div class="aspect-[4/5] overflow-hidden">
+              <img alt="Chaunsa Mangoes — The Nectar" class="w-full h-full object-cover" src="https://images.pexels.com/photos/2294477/pexels-photo-2294477.jpeg?auto=compress&cs=tinysrgb&w=800"/>
+            </div>
+          </div>
+          <div>
+            <span class="inline-block px-4 py-1.5 rounded-full bg-[#fef3c0] text-[#9a7510] text-[.7rem] font-bold uppercase tracking-[.18em] mb-5">The Nectar</span>
+            <h3 class="text-[clamp(1.8rem,3.5vw,2.6rem)] mb-6">Chaunsa</h3>
+            <p class="text-[#4a5877] leading-relaxed mb-8 max-w-md text-[.95rem]">
+              Renowned for its exceptionally rich, syrupy sweetness and minimal fiber. The Chaunsa is a late-season delicacy that offers a profound, melting texture — the connoisseur's favorite among Pakistani mangoes.
+            </p>
+            <div class="space-y-4 mb-8">
+              <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#d4a017]">scale</span><span class="text-sm text-[#4a5877]"><strong>Weight:</strong> 200–350g per fruit</span></div>
+              <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#d4a017]">calendar_month</span><span class="text-sm text-[#4a5877]"><strong>Season:</strong> July – August</span></div>
+              <div class="flex items-center gap-3"><span class="material-symbols-outlined text-[#d4a017]">star</span><span class="text-sm text-[#4a5877]"><strong>Brix:</strong> 20–24° sweetness index</span></div>
+            </div>
+            <a href="/contact/?product=Chaunsa%20Mangoes" class="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white rounded-xl text-[.78rem] font-bold uppercase tracking-wider shadow-lg hover:-translate-y-0.5 transition-all">
+              Buy Now <span class="material-symbols-outlined text-sm">shopping_cart</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEASON CALENDAR -->
+  <section class="py-24 px-6 md:px-10" style="background:linear-gradient(180deg,rgba(254,243,192,.2),rgba(244,246,251,.5))">
+    <div class="max-w-[900px] mx-auto reveal">
+      <div class="text-center mb-16">
+        <p class="uppercase tracking-[.28em] text-[.72rem] text-[#d4a017] font-bold mb-4">Harvest Calendar</p>
+        <h2 class="text-[clamp(1.6rem,3.5vw,2.4rem)] mb-5">When to Order</h2>
+        <p class="text-[#4a5877] max-w-lg mx-auto leading-relaxed">Our mango season runs May through August. Pre-orders open 6 weeks before each variety's peak window.</p>
+      </div>
+      <div class="space-y-10">
+        <div class="flex items-center gap-6">
+          <h4 class="w-36 text-right text-lg" style="font-family:'DM Serif Display',serif">Sindhri</h4>
+          <div class="flex-1">
+            <div class="season-bar"><div class="season-fill" style="width:50%;margin-left:20%"></div></div>
+            <div class="flex justify-between mt-2 text-[.65rem] uppercase tracking-wider text-[#6e7b97]">
+              <span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-6">
+          <h4 class="w-36 text-right text-lg" style="font-family:'DM Serif Display',serif">Anwar Ratol</h4>
+          <div class="flex-1">
+            <div class="season-bar"><div class="season-fill" style="width:15%;margin-left:55%"></div></div>
+            <div class="flex justify-between mt-2 text-[.65rem] uppercase tracking-wider text-[#6e7b97]">
+              <span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-6">
+          <h4 class="w-36 text-right text-lg" style="font-family:'DM Serif Display',serif">Chaunsa</h4>
+          <div class="flex-1">
+            <div class="season-bar"><div class="season-fill" style="width:35%;margin-left:55%"></div></div>
+            <div class="flex justify-between mt-2 text-[.65rem] uppercase tracking-wider text-[#6e7b97]">
+              <span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUALITY PROCESS -->
+  <section class="py-24 px-6 md:px-10">
+    <div class="max-w-[1280px] mx-auto">
+      <div class="text-center mb-16 reveal">
+        <p class="uppercase tracking-[.28em] text-[.72rem] text-[#203a7b] font-bold mb-4">From Orchard to Market</p>
+        <h2 class="text-[clamp(1.6rem,3.5vw,2.4rem)] mb-5">Our Quality Promise</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 reveal">
+        <div class="text-center p-8 rounded-2xl bg-white/60 backdrop-blur border border-[#203a7b]/6 hover:-translate-y-2 transition-transform duration-500">
+          <div class="w-16 h-16 mx-auto bg-[#fef3c0] rounded-full flex items-center justify-center mb-5">
+            <span class="material-symbols-outlined text-2xl text-[#d4a017]">agriculture</span>
+          </div>
+          <h4 class="text-lg mb-2" style="font-family:'DM Serif Display',serif">Hand-Picked</h4>
+          <p class="text-[#4a5877] text-[.85rem] leading-relaxed">Every mango is hand-selected at optimal ripeness by experienced harvesters.</p>
+        </div>
+        <div class="text-center p-8 rounded-2xl bg-white/60 backdrop-blur border border-[#203a7b]/6 hover:-translate-y-2 transition-transform duration-500">
+          <div class="w-16 h-16 mx-auto bg-[#fef3c0] rounded-full flex items-center justify-center mb-5">
+            <span class="material-symbols-outlined text-2xl text-[#d4a017]">fact_check</span>
+          </div>
+          <h4 class="text-lg mb-2" style="font-family:'DM Serif Display',serif">Graded & Sorted</h4>
+          <p class="text-[#4a5877] text-[.85rem] leading-relaxed">Multi-tier grading by size, color, and brix level ensures export-grade consistency.</p>
+        </div>
+        <div class="text-center p-8 rounded-2xl bg-white/60 backdrop-blur border border-[#203a7b]/6 hover:-translate-y-2 transition-transform duration-500">
+          <div class="w-16 h-16 mx-auto bg-[#fef3c0] rounded-full flex items-center justify-center mb-5">
+            <span class="material-symbols-outlined text-2xl text-[#d4a017]">ac_unit</span>
+          </div>
+          <h4 class="text-lg mb-2" style="font-family:'DM Serif Display',serif">Cold Chain</h4>
+          <p class="text-[#4a5877] text-[.85rem] leading-relaxed">Temperature-controlled logistics from packhouse to destination port, 4°C throughout.</p>
+        </div>
+        <div class="text-center p-8 rounded-2xl bg-white/60 backdrop-blur border border-[#203a7b]/6 hover:-translate-y-2 transition-transform duration-500">
+          <div class="w-16 h-16 mx-auto bg-[#fef3c0] rounded-full flex items-center justify-center mb-5">
+            <span class="material-symbols-outlined text-2xl text-[#d4a017]">local_shipping</span>
+          </div>
+          <h4 class="text-lg mb-2" style="font-family:'DM Serif Display',serif">Global Delivery</h4>
+          <p class="text-[#4a5877] text-[.85rem] leading-relaxed">Air and sea freight to 40+ countries with full phytosanitary documentation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 px-6 md:px-10" style="background:linear-gradient(135deg,#182a59 0%,#2a4f9f 100%)">
+    <div class="max-w-[700px] mx-auto text-center reveal">
+      <h2 class="text-[clamp(1.6rem,3.5vw,2.2rem)] text-white mb-5" style="font-family:'DM Serif Display',serif">Secure Your <span class="italic" style="color:#fef3c0">2026 Harvest</span></h2>
+      <p class="text-[#c5d6f5] mb-8 leading-relaxed">Pre-orders for the 2026 season are now open. Volume pricing, private-label packaging, and air freight options available.</p>
+      <a href="/contact/?product=Mangoes" class="inline-flex items-center gap-3 px-10 py-4 bg-white text-[#182a59] rounded-xl font-bold text-[.8rem] uppercase tracking-wider shadow-2xl hover:scale-[1.02] transition-transform">
+        Place Pre-Order <span class="material-symbols-outlined text-base">arrow_forward</span>
+      </a>
+    </div>
+  </section>
+
 </main>
-<!-- Footer Component -->
-<footer class="w-full pt-20 pb-12 bg-[#f5f3ee] dark:bg-[#1b1c19] text-[#18301d] dark:text-[#fbf9f4] font-sans text-sm tracking-wide uppercase dark:text-stone-400 max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-end tonal shift from surface to surface-container-low flat Fluid ease-out fade-in">
-<div class="flex flex-col gap-6">
-<span class="font-serif text-xl italic text-[#2e4632] dark:text-stone-200">Ameer Farms</span>
-<p class="normal-case opacity-70">© 2024 Ameer Farms. The Living Legacy of the Soil.</p>
-</div>
-<nav class="flex flex-col md:flex-row gap-6 justify-end">
-<a class="text-[#1b1c19]/50 hover:opacity-70 transition-opacity duration-500" href="#">Sustainability</a>
-<a class="text-[#1b1c19]/50 hover:opacity-70 transition-opacity duration-500" href="#">Heritage Journal</a>
-<a class="text-[#1b1c19]/50 hover:opacity-70 transition-opacity duration-500" href="#">Shipping</a>
-<a class="text-[#1b1c19]/50 hover:opacity-70 transition-opacity duration-500" href="#">Contact</a>
-</nav>
+
+<!-- FOOTER -->
+<footer class="border-t border-[#203a7b]/10 pt-16 pb-8 bg-white/60">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 grid grid-cols-1 md:grid-cols-4 gap-10">
+    <div class="md:col-span-2"><img alt="Ameer Global Logo" class="h-[48px] object-contain mb-6" src="/assets/logo-transparent-final.png"/><p class="text-[#4a5877] text-sm leading-relaxed max-w-xs">Premium Trading · Global Reach · Trusted Quality.</p></div>
+    <div><h4 class="text-[.7rem] font-bold uppercase tracking-[.15em] text-[#182a59] mb-5">Explore</h4><ul class="space-y-3 text-sm text-[#4a5877]"><li><a href="/">Home</a></li><li><a href="/products/">Products</a></li><li><a href="/about/">About</a></li></ul></div>
+    <div><h4 class="text-[.7rem] font-bold uppercase tracking-[.15em] text-[#182a59] mb-5">Contact</h4><ul class="space-y-3 text-sm text-[#4a5877]"><li><a href="/contact/">Inquiries</a></li></ul></div>
+  </div>
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 mt-14 pt-6 border-t border-[#203a7b]/8"><p class="text-center text-[.68rem] uppercase tracking-[.2em] text-[#6e7b97]">© 1856–2026 Ameer Global INC.</p></div>
 </footer>
-</body></html>
+
+<script>
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('active')}),{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
