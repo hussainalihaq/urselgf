@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Himalayan Salt | Ameer Global</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet"/>
+  <style>
+    body { font-family: 'Manrope', sans-serif; }
+    .font-display { font-family: 'Noto Serif', serif; }
+    .hero {
+      background:
+        linear-gradient(130deg, rgba(15, 30, 66, 0.9), rgba(22, 46, 99, 0.68)),
+        url('https://images.pexels.com/photos/6630900/pexels-photo-6630900.jpeg?auto=compress&cs=tinysrgb&w=2000') center/cover no-repeat;
+    }
+    .info-card { background: rgba(255,255,255,0.82); border: 1px solid rgba(31,63,143,0.14); }
+  </style>
+  <link rel="stylesheet" href="/assets/theme.css?v=22"/>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+  <header class="sticky top-0 w-full z-50">
+    <nav class="site-nav-shell max-w-[1280px] mx-auto px-6 md:px-10 py-4">
+      <a class="inline-flex items-center site-logo-wrap" href="/"><img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png?v=1"/></a>
+      <div class="site-nav-right">
+        <div aria-label="Primary Navigation" class="site-nav-links hidden md:flex items-center" role="navigation">
+          <a class="site-nav-link" href="/">Home</a>
+          <a class="site-nav-link site-nav-link-active" href="/products/">Products</a>
+          <a class="site-nav-link" href="/about/">About</a>
+          <a class="site-nav-link" href="/contact/">Contact</a>
+        </div>
+        <a class="site-nav-cta bg-primary text-on-primary px-5 py-2 rounded-lg font-label text-xs uppercase tracking-widest inline-block" href="/contact/">Inquire Now</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero py-24 md:py-32 px-6 md:px-10 text-white">
+      <div class="max-w-[1280px] mx-auto reveal-on-scroll">
+        <p class="uppercase tracking-[0.28em] text-xs text-[#d9e4ff] mb-5">Himalayan Product Line</p>
+        <h1 class="font-display text-5xl md:text-7xl leading-[0.96] mb-6 text-white">Himalayan Salt</h1>
+        <p class="max-w-3xl text-lg text-[#e5edff]">Our Himalayan salt is sourced through Khewra-linked corridors, where the region's mineral reserves support food-grade, wellness, and lifestyle product streams for global markets.</p>
+      </div>
+    </section>
+
+    <section class="py-16 md:py-24 px-6 md:px-10">
+      <div class="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-7 info-card rounded-2xl p-8 reveal-on-scroll">
+          <h2 class="font-display text-4xl text-primary mb-4">Khewra Reference & Quality</h2>
+          <p class="text-on-surface-variant mb-5">The Khewra mining region is central to our Himalayan salt story. We work with extraction and sorting partners that prioritize consistent grading, packaging stability, and export-ready documentation.</p>
+          <ul class="list-disc pl-6 space-y-2 text-on-surface-variant">
+            <li>Food-grade crystals for table and culinary use</li>
+            <li>Cut blocks and slabs for chefs and hospitality</li>
+            <li>Private-label formatting for import/export programs</li>
+            <li>Traceability and quality checks before dispatch</li>
+          </ul>
+        </div>
+        <div class="lg:col-span-5 info-card rounded-2xl overflow-hidden reveal-on-scroll">
+          <img alt="Khewra linked Himalayan salt formation" class="w-full h-[380px] object-cover" src="https://images.pexels.com/photos/6621248/pexels-photo-6621248.jpeg?auto=compress&cs=tinysrgb&w=1400"/>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-shell">
+      <div class="site-footer-brand">Ameer Global</div>
+      <div class="site-footer-links">
+        <a href="/">Home</a>
+        <a href="/products/">Products</a>
+        <a href="/about/">About</a>
+        <a href="/contact/">Contact</a>
+      </div>
+      <p class="site-footer-copy">© 1856-2026 Ameer Global. Premium Trading • Global Reach • Trusted Quality.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/interactions.js?v=8"></script>
+</body>
+</html>

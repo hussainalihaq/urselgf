@@ -51,7 +51,7 @@ nav {
 }
 
 .sticky.top-0 {
-  background: rgba(255, 255, 255, 0.95) !important;
+  background: rgba(255, 255, 255, 0.96) !important;
   backdrop-filter: blur(12px) saturate(120%);
   -webkit-backdrop-filter: blur(12px) saturate(120%);
   border-bottom: 1px solid rgba(31, 63, 143, 0.12) !important;
@@ -79,13 +79,13 @@ nav a.border-b {
 }
 
 nav img[alt='Ameer Global Logo'] {
-  width: 172px !important;
+  width: 148px !important;
   height: auto !important;
 }
 
 @media (min-width: 768px) {
   nav img[alt='Ameer Global Logo'] {
-    width: 248px !important;
+    width: 212px !important;
   }
 }
 
@@ -97,16 +97,23 @@ button:focus-visible {
 }
 
 .site-nav-shell {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
   min-height: 88px;
 }
 
 .site-nav-right {
-  display: flex;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.9rem;
+  margin-left: 0 !important;
 }
 
 .site-nav-links {
+  justify-self: center;
   background: rgba(237, 243, 255, 0.88);
   border: 1px solid rgba(31, 63, 143, 0.14);
   border-radius: 999px;
@@ -149,6 +156,7 @@ button:focus-visible {
 }
 
 .site-nav-cta {
+  justify-self: end;
   padding-left: 1.1rem !important;
   padding-right: 1.1rem !important;
 }
@@ -159,6 +167,8 @@ button:focus-visible {
   }
 
   .site-nav-right {
+    display: flex;
+    justify-content: flex-end;
     gap: 0;
   }
 }
@@ -425,40 +435,6 @@ a {
   box-shadow: 0 10px 24px rgba(24, 46, 97, 0.2);
 }
 
-/* Home header style to match cinematic hero */
-.home-page .sticky.top-0 {
-  background: rgba(8, 16, 34, 0.72) !important;
-  backdrop-filter: blur(14px) saturate(128%);
-  -webkit-backdrop-filter: blur(14px) saturate(128%);
-  border-bottom: 1px solid rgba(180, 204, 246, 0.22) !important;
-  box-shadow: 0 14px 32px rgba(5, 10, 24, 0.34) !important;
-}
-
-.home-page .site-nav-links {
-  background: rgba(12, 26, 56, 0.46);
-  border-color: rgba(171, 196, 240, 0.25);
-  box-shadow: inset 0 1px 0 rgba(225, 236, 255, 0.12);
-}
-
-.home-page .site-nav-link {
-  color: rgba(228, 238, 255, 0.86) !important;
-}
-
-.home-page .site-nav-link:hover {
-  color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.14);
-}
-
-.home-page .site-nav-link-active {
-  background: linear-gradient(140deg, #4e73d4, #2c56b2);
-  box-shadow: 0 10px 22px rgba(33, 61, 126, 0.42);
-}
-
-.home-page .site-nav-cta.bg-primary {
-  background: linear-gradient(140deg, #3f66c5, #284c9e) !important;
-  box-shadow: 0 10px 24px rgba(20, 41, 92, 0.4);
-}
-
 .home-page .site-logo-wrap {
   background: transparent;
   border: 0;
@@ -468,13 +444,13 @@ a {
 }
 
 .home-page nav img[alt='Ameer Global Logo'] {
-  width: 176px !important;
-  filter: drop-shadow(0 8px 16px rgba(4, 11, 26, 0.28)) brightness(1.1) contrast(1.06) saturate(1.02);
+  width: 148px !important;
+  filter: none;
 }
 
 @media (min-width: 768px) {
   .home-page nav img[alt='Ameer Global Logo'] {
-    width: 248px !important;
+    width: 212px !important;
   }
 }
 
@@ -745,6 +721,46 @@ footer a,
 footer p,
 footer span {
   color: var(--ink-700) !important;
+}
+
+.site-footer {
+  background: rgba(255, 255, 255, 0.74);
+  border-top: 1px solid rgba(24, 42, 89, 0.14);
+}
+
+.site-footer-shell {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.8rem 1.5rem;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.site-footer-brand {
+  font-family: 'DM Serif Display', serif !important;
+  font-size: 1.2rem;
+  color: var(--brand-900) !important;
+}
+
+.site-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.site-footer-links a {
+  font-size: 0.72rem !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase;
+  color: var(--ink-700) !important;
+}
+
+.site-footer-copy {
+  margin: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-500) !important;
 }
 
 /* Products hero readability reset */
