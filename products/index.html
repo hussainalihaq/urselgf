@@ -3,7 +3,13 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Our Products | Ameer Global INC.</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="dns-prefetch" href="https://images.pexels.com"/>
+  <link rel="dns-prefetch" href="https://images.unsplash.com"/>
+  <link rel="dns-prefetch" href="https://lh3.googleusercontent.com"/>
+<title>Our Products | Ameer Global INC.</title>
   <meta name="description" content="Explore Ameer Global's four flagship product lines — Mangoes, Himalayan Salt, EcoWare, and Industrial De-Icing Salt."/>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
@@ -25,7 +31,7 @@
 <!-- NAV -->
 <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-[#203a7b]/10 shadow-[0_4px_24px_rgba(20,42,88,.06)]">
   <div class="max-w-[1280px] mx-auto px-6 md:px-10 flex items-center justify-between" style="height:82px">
-    <a href="/"><img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png" class="h-[52px] md:h-[60px] w-auto object-contain"/></a>
+    <a href="/"><img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png" class="h-[52px] md:h-[60px] w-auto object-contain" decoding="async"/></a>
     <div class="hidden md:flex items-center gap-1 bg-[#edf3ff]/80 border border-[#203a7b]/12 rounded-full px-1 py-1">
       <a href="/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Home</a>
       <a href="/products/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-white bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] shadow-md">Products</a>
@@ -52,7 +58,7 @@
     <div class="max-w-[1280px] mx-auto reveal">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 bg-white rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,.06)] border border-[#203a7b]/8">
         <div class="lg:col-span-7 h-[360px] lg:h-[520px] relative overflow-hidden group">
-          <img alt="Premium Pakistani Mangoes" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src="https://images.pexels.com/photos/2294471/pexels-photo-2294471.jpeg?auto=compress&cs=tinysrgb&w=1200"/>
+          <img alt="Premium Pakistani Mangoes" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src="https://images.pexels.com/photos/2294471/pexels-photo-2294471.jpeg?auto=compress&cs=tinysrgb&w=1200" decoding="async" loading="eager" fetchpriority="high"/>
           <div class="absolute top-6 left-6 px-4 py-1.5 bg-amber-500 text-white text-[.68rem] font-bold uppercase tracking-wider rounded-full shadow">★ Featured</div>
           <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
         </div>
@@ -75,7 +81,7 @@
 
         <!-- Himalayan Salt -->
         <article class="product-card reveal">
-          <div class="h-[280px] overflow-hidden"><img alt="Himalayan pink salt crystals" class="w-full h-full object-cover" src="/assets/himalayan-salt.png"/></div>
+          <div class="h-[280px] overflow-hidden"><img alt="Himalayan pink salt crystals" class="w-full h-full object-cover" src="/assets/himalayan-salt.jpg" decoding="async" loading="lazy" fetchpriority="low"/></div>
           <div class="p-8">
             <h3 class="text-2xl mb-3">Himalayan Salt</h3>
             <p class="text-[#4a5877] text-[.88rem] leading-relaxed mb-6 min-h-[72px]">Food-grade, décor, and wellness-grade Himalayan crystal salt sourced from legendary Khewra mines.</p>
@@ -87,7 +93,7 @@
 
         <!-- EcoWare -->
         <article class="product-card reveal">
-          <div class="h-[280px] overflow-hidden"><img alt="Eco friendly wooden utensils" class="w-full h-full object-cover" src="/assets/eco-utensils.png"/></div>
+          <div class="h-[280px] overflow-hidden"><img alt="Eco friendly wooden utensils" class="w-full h-full object-cover" src="/assets/eco-utensils.jpg" decoding="async" loading="lazy" fetchpriority="low"/></div>
           <div class="p-8">
             <h3 class="text-2xl mb-3">EcoWare Naturals</h3>
             <p class="text-[#4a5877] text-[.88rem] leading-relaxed mb-6 min-h-[72px]">Biodegradable utensils and dining essentials for hospitality, retail, and private-label export programs.</p>
@@ -99,7 +105,7 @@
 
         <!-- De-Icing Salt -->
         <article class="product-card reveal">
-          <div class="h-[280px] overflow-hidden"><img alt="Industrial road de-icing salt" class="w-full h-full object-cover" src="/assets/deicing-salt.png"/></div>
+          <div class="h-[280px] overflow-hidden"><img alt="Industrial road de-icing salt" class="w-full h-full object-cover" src="/assets/deicing-salt.jpg" decoding="async" loading="lazy" fetchpriority="low"/></div>
           <div class="p-8">
             <h3 class="text-2xl mb-3">De-Icing Salt</h3>
             <p class="text-[#4a5877] text-[.88rem] leading-relaxed mb-6 min-h-[72px]">Industrial mineral salt for road maintenance, de-icing, and municipal infrastructure supply contracts.</p>
@@ -118,7 +124,7 @@
 <footer class="border-t border-[#203a7b]/10 pt-16 pb-8 bg-white/60">
   <div class="max-w-[1280px] mx-auto px-6 md:px-10 grid grid-cols-1 md:grid-cols-4 gap-10">
     <div class="md:col-span-2">
-      <img alt="Ameer Global Logo" class="h-[48px] object-contain mb-6" src="/assets/logo-transparent-final.png"/>
+      <img alt="Ameer Global Logo" class="h-[48px] object-contain mb-6" src="/assets/logo-transparent-final.png" decoding="async"/>
       <p class="text-[#4a5877] text-sm leading-relaxed max-w-xs">Premium Trading · Global Reach · Trusted Quality.</p>
     </div>
     <div>

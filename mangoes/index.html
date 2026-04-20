@@ -3,7 +3,13 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Premium Mangoes — Heritage Orchards of Multan | Ameer Global INC.</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="dns-prefetch" href="https://images.pexels.com"/>
+  <link rel="dns-prefetch" href="https://images.unsplash.com"/>
+  <link rel="dns-prefetch" href="https://lh3.googleusercontent.com"/>
+<title>Premium Mangoes — Heritage Orchards of Multan | Ameer Global INC.</title>
   <meta name="description" content="Discover Ameer Global's premium Pakistani mangoes — Sindhri, Anwar Ratol, and Chaunsa — cultivated in Multan's heritage orchards since 1856."/>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
@@ -33,7 +39,7 @@
 <!-- NAV -->
 <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-[#203a7b]/10 shadow-[0_4px_24px_rgba(20,42,88,.06)]">
   <div class="max-w-[1280px] mx-auto px-6 md:px-10 flex items-center justify-between" style="height:82px">
-    <a href="/"><img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png" class="h-[52px] md:h-[60px] w-auto object-contain"/></a>
+    <a href="/"><img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png" class="h-[52px] md:h-[60px] w-auto object-contain" decoding="async"/></a>
     <div class="hidden md:flex items-center gap-1 bg-[#edf3ff]/80 border border-[#203a7b]/12 rounded-full px-1 py-1">
       <a href="/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Home</a>
       <a href="/products/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-white bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] shadow-md">Products</a>
@@ -49,7 +55,7 @@
   <!-- HERO -->
   <section class="relative py-36 md:py-48 overflow-hidden">
     <div class="absolute inset-0">
-      <img src="/assets/mango-farm.png" alt="Ameer Farms mango orchard at golden hour" class="w-full h-full object-cover"/>
+      <img src="/assets/mango-farm.jpg" alt="Ameer Farms mango orchard at golden hour" class="w-full h-full object-cover" decoding="async" loading="eager" fetchpriority="high"/>
       <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-black/55 to-black/30"></div>
     </div>
     <div class="max-w-[1280px] mx-auto px-6 md:px-10 relative z-10">
@@ -77,7 +83,7 @@
         <div class="flex justify-center hero-float">
           <div class="relative">
             <div class="w-[340px] h-[340px] md:w-[420px] md:h-[420px] rounded-full overflow-hidden shadow-2xl border-4 border-white/60">
-              <img alt="Premium ripe golden mangoes" class="w-full h-full object-cover" src="/assets/mango-hero-round.png"/>
+              <img alt="Premium ripe golden mangoes" class="w-full h-full object-cover" src="/assets/mango-hero-round.jpg" decoding="async" loading="lazy" fetchpriority="low"/>
             </div>
             <div class="absolute -bottom-4 -right-4 bg-white rounded-2xl shadow-xl px-6 py-4 text-center">
               <span class="block text-2xl font-bold text-[#d4a017]">168+</span>
@@ -120,7 +126,7 @@
         <div class="lg:col-span-5 reveal">
           <div class="rounded-2xl overflow-hidden shadow-2xl border border-[#d4a017]/20 relative">
             <div class="absolute inset-0 bg-[#d4a017]/10 mix-blend-overlay z-10 hidden"></div>
-            <img alt="Portrait of Malik Ameer Bakhsh Khokhar" class="w-full aspect-[4/5] object-cover" src="/assets/ameer-bakhsh.png" style="filter: sepia(0.3) contrast(1.1) brightness(0.9);"/>
+            <img alt="Portrait of Malik Ameer Bakhsh Khokhar" class="w-full aspect-[4/5] object-cover" src="/assets/ameer-bakhsh.jpg" style="filter: sepia(0.3) contrast(1.1) brightness(0.9);" decoding="async" loading="lazy" fetchpriority="low"/>
             <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-8 z-20">
               <h4 class="text-white text-2xl font-bold" style="font-family:'DM Serif Display',serif">Malik Ameer Bakhsh Khokhar</h4>
               <p class="text-white/80 text-sm uppercase tracking-widest mt-1">Founder, Ameer Bakhsh Farm (1966)</p>
@@ -153,7 +159,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center reveal">
           <div class="variety-card">
             <div class="aspect-[4/5] overflow-hidden">
-              <img alt="Sindhri Mangoes — The Honeyed Giant" class="w-full h-full object-cover" src="/assets/sindhri-mangoes.png"/>
+              <img alt="Sindhri Mangoes — The Honeyed Giant" class="w-full h-full object-cover" src="/assets/sindhri-mangoes.jpg" decoding="async" loading="lazy" fetchpriority="low"/>
             </div>
           </div>
           <div>
@@ -202,7 +208,7 @@
           </div>
           <div class="variety-card order-1 lg:order-2">
             <div class="aspect-[4/5] overflow-hidden">
-              <img alt="Anwar Ratol Mangoes — The Crown Jewel" class="w-full h-full object-cover" src="/assets/anwar-ratol-mangoes.png"/>
+              <img alt="Anwar Ratol Mangoes — The Crown Jewel" class="w-full h-full object-cover" src="/assets/anwar-ratol-mangoes.jpg" decoding="async" loading="lazy" fetchpriority="low"/>
             </div>
           </div>
         </div>
@@ -211,7 +217,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center reveal">
           <div class="variety-card">
             <div class="aspect-[4/5] overflow-hidden">
-              <img alt="Chaunsa Mangoes — The Nectar" class="w-full h-full object-cover" src="/assets/chaunsa-mangoes.png"/>
+              <img alt="Chaunsa Mangoes — The Nectar" class="w-full h-full object-cover" src="/assets/chaunsa-mangoes.jpg" decoding="async" loading="lazy" fetchpriority="low"/>
             </div>
           </div>
           <div>
@@ -335,7 +341,7 @@
 <!-- FOOTER -->
 <footer class="border-t border-[#203a7b]/10 pt-16 pb-8 bg-white/60">
   <div class="max-w-[1280px] mx-auto px-6 md:px-10 grid grid-cols-1 md:grid-cols-4 gap-10">
-    <div class="md:col-span-2"><img alt="Ameer Global Logo" class="h-[48px] object-contain mb-6" src="/assets/logo-transparent-final.png"/><p class="text-[#4a5877] text-sm leading-relaxed max-w-xs">Premium Trading · Global Reach · Trusted Quality.</p></div>
+    <div class="md:col-span-2"><img alt="Ameer Global Logo" class="h-[48px] object-contain mb-6" src="/assets/logo-transparent-final.png" decoding="async"/><p class="text-[#4a5877] text-sm leading-relaxed max-w-xs">Premium Trading · Global Reach · Trusted Quality.</p></div>
     <div><h4 class="text-[.7rem] font-bold uppercase tracking-[.15em] text-[#182a59] mb-5">Explore</h4><ul class="space-y-3 text-sm text-[#4a5877]"><li><a href="/">Home</a></li><li><a href="/products/">Products</a></li><li><a href="/about/">About</a></li></ul></div>
     <div><h4 class="text-[.7rem] font-bold uppercase tracking-[.15em] text-[#182a59] mb-5">Contact</h4><ul class="space-y-3 text-sm text-[#4a5877]"><li><a href="/contact/">Inquiries</a></li></ul></div>
   </div>

@@ -15,10 +15,28 @@ const CONTENT_TYPES = {
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.avif': 'image/avif',
   '.svg': 'image/svg+xml',
+  '.mp4': 'video/mp4',
+  '.woff2': 'font/woff2',
   '.ico': 'image/x-icon',
   '.txt': 'text/plain; charset=utf-8'
 };
+
+const LONG_CACHE_EXTENSIONS = new Set([
+  '.css',
+  '.js',
+  '.png',
+  '.jpg',
+  '.jpeg',
+  '.webp',
+  '.avif',
+  '.svg',
+  '.ico',
+  '.mp4',
+  '.woff2'
+]);
 
 const products = [
   {
@@ -126,12 +144,36 @@ const pageRoutes = {
   '/contact/': 'ameer_global_contact/index.html'
 };
 
-async function serveFile(res, filePath) {
+async function serveFile(req, res, filePath) {
   try {
     const ext = path.extname(filePath).toLowerCase();
     const contentType = CONTENT_TYPES[ext] || 'application/octet-stream';
+    const stat = await fs.stat(filePath);
+    const etag = `W/\"${stat.size}-${Math.floor(stat.mtimeMs).toString(16)}\"`;
+    const ifNoneMatch = req.headers['if-none-match'];
+
+    if (ifNoneMatch && ifNoneMatch === etag) {
+      res.writeHead(304, {
+        ETag: etag
+      });
+      res.end();
+      return;
+    }
+
+    const cacheControl = LONG_CACHE_EXTENSIONS.has(ext)
+      ? 'public, max-age=31536000, immutable'
+      : ext === '.html'
+        ? 'public, max-age=0, must-revalidate'
+        : 'public, max-age=300, must-revalidate';
+
     const data = await fs.readFile(filePath);
-    res.writeHead(200, { 'Content-Type': contentType });
+    res.writeHead(200, {
+      'Content-Type': contentType,
+      'Content-Length': stat.size,
+      'Cache-Control': cacheControl,
+      ETag: etag,
+      'Last-Modified': new Date(stat.mtimeMs).toUTCString()
+    });
     res.end(data);
   } catch {
     res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
@@ -246,7 +288,7 @@ const server = http.createServer(async (req, res) => {
 
     if (pageRoutes[pathname]) {
       const absolute = path.join(ROOT, pageRoutes[pathname]);
-      await serveFile(res, absolute);
+      await serveFile(req, res, absolute);
       return;
     }
 
@@ -255,11 +297,11 @@ const server = http.createServer(async (req, res) => {
 
     if (absolutePath.startsWith(ROOT) && await fileExists(absolutePath)) {
       if (await isDirectory(absolutePath)) {
-        await serveFile(res, path.join(absolutePath, 'index.html'));
+        await serveFile(req, res, path.join(absolutePath, 'index.html'));
         return;
       }
 
-      await serveFile(res, absolutePath);
+      await serveFile(req, res, absolutePath);
       return;
     }
 

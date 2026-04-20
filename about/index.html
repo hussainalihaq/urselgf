@@ -1,309 +1,184 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-          tailwind.config = {
-            darkMode: "class",
-            theme: {
-              extend: {
-                "colors": {
-                        "on-secondary-container": "#18357a",
-                        "primary-fixed-dim": "#95afe3",
-                        "error-container": "#ffdad6",
-                        "secondary-fixed": "#e8eefb",
-                        "surface-container-high": "#e9e8e4",
-                        "background": "#faf9f5",
-                        "on-primary": "#ffffff",
-                        "outline-variant": "#c6c8b9",
-                        "secondary-fixed-dim": "#c6d4f6",
-                        "primary": "#1f3f8f",
-                        "tertiary": "#1c2f63",
-                        "surface-container-lowest": "#ffffff",
-                        "tertiary-fixed-dim": "#b9c9ef",
-                        "on-secondary-fixed": "#10244d",
-                        "on-primary-fixed": "#10244d",
-                        "inverse-on-surface": "#f2f1ed",
-                        "tertiary-fixed": "#e3e9fb",
-                        "tertiary-container": "#2a3f79",
-                        "on-secondary": "#ffffff",
-                        "on-tertiary-container": "#c7d5f7",
-                        "on-background": "#1b1c1a",
-                        "secondary": "#2f56b1",
-                        "surface-tint": "#2a4e9f",
-                        "outline": "#76786c",
-                        "surface-container-low": "#f5f4f0",
-                        "surface-container-highest": "#e3e2df",
-                        "primary-container": "#2f56b1",
-                        "surface": "#faf9f5",
-                        "secondary-container": "#dbe5fb",
-                        "inverse-surface": "#30312e",
-                        "on-tertiary-fixed": "#0f1f49",
-                        "on-surface-variant": "#45483d",
-                        "on-error-container": "#93000a",
-                        "on-secondary-fixed-variant": "#23448e",
-                        "on-primary-container": "#c6d4f6",
-                        "on-primary-fixed-variant": "#355da8",
-                        "surface-variant": "#e3e2df",
-                        "on-error": "#ffffff",
-                        "surface-bright": "#faf9f5",
-                        "error": "#ba1a1a",
-                        "on-surface": "#1b1c1a",
-                        "primary-fixed": "#c6d4f6",
-                        "inverse-primary": "#95afe3",
-                        "on-tertiary": "#ffffff",
-                        "on-tertiary-fixed-variant": "#2a3f79",
-                        "surface-container": "#efeeea",
-                        "surface-dim": "#dbdad6"
-                },
-                "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                },
-                "fontFamily": {
-                        "headline": ["Noto Serif"],
-                        "body": ["Manrope"],
-                        "label": ["Manrope"]
-                }
-              },
-            },
-          }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .heritage-ghost {
-            font-family: 'Noto Serif', serif;
-            font-weight: 700;
-            font-style: italic;
-            pointer-events: none;
-        }
-        .tonal-shift {
-            background: linear-gradient(to bottom, #faf9f5, #f5f4f0);
-        }
-        .flag-hover-effect {
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .flag-item:hover .flag-hover-effect {
-            transform: scale(1.15) translateY(-4px);
-        }
-        .flag-item:hover .flag-label {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .flag-label {
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            transform: translateY(4px);
-        }
-    </style>
-<link rel="stylesheet" href="/assets/theme.css?v=22"/>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="dns-prefetch" href="https://images.pexels.com"/>
+  <link rel="dns-prefetch" href="https://images.unsplash.com"/>
+  <link rel="dns-prefetch" href="https://lh3.googleusercontent.com"/>
+<title>About Us — Our Legacy & Vision | Ameer Global INC.</title>
+  <meta name="description" content="Discover the heritage, global network, and leadership behind Ameer Global INC. — 168 years of trusted trade."/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--brand-950:#182a59;--brand-900:#203a7b;--brand-800:#2a4f9f;--ink-900:#1b2847;--ink-700:#4a5877;--ink-500:#6e7b97;--surface-0:#f4f6fb}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}
+    body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink-900);background:radial-gradient(1200px 600px at 95% -10%,rgba(42,79,159,.1),transparent 60%),linear-gradient(180deg,var(--surface-0),#f7f9fd);overflow-x:hidden}
+    h1,h2,h3{font-family:'DM Serif Display',serif;color:var(--brand-950);font-weight:400;letter-spacing:-.01em;line-height:1.1}
+    .material-symbols-outlined{font-family:'Material Symbols Outlined'!important;font-weight:normal!important;font-style:normal!important;line-height:1!important;letter-spacing:normal!important;text-transform:none!important;display:inline-block;direction:ltr}
+    .reveal{opacity:0;transform:translateY(28px);transition:all 1s cubic-bezier(.16,1,.3,1)}.reveal.active{opacity:1;transform:translateY(0)}
+    .flag-item{transition:transform .5s}.flag-item:hover{transform:translateY(-4px)}
+    .flag-item img{filter:grayscale(.4);transition:filter .5s}.flag-item:hover img{filter:grayscale(0)}
+  </style>
 </head>
-<body class="about-page bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
-<!-- Top Navigation -->
-<header class="sticky top-0 w-full z-50 bg-[#faf9f5]/70 backdrop-blur-lg dark:bg-[#1b1c1a]/70 border-b border-outline-variant/10">
-<nav class="site-nav-shell flex justify-between items-center px-6 py-4 max-w-[1920px] mx-auto">
-<a class="inline-flex items-center site-logo-wrap" href="/"><img alt="Ameer Global Logo" class="w-[190px] md:w-[290px] h-auto" src="/assets/logo-transparent-final.png?v=1"/></a>
-<div class="site-nav-right ml-auto">
-<div aria-label="Primary Navigation" class="site-nav-links hidden md:flex items-center" role="navigation">
-<a class="site-nav-link" href="/">Home</a>
-<a class="site-nav-link" href="/products/">Products</a>
-<a class="site-nav-link site-nav-link-active" href="/about/">About</a>
-<a class="site-nav-link" href="/contact/">Contact</a>
-</div>
-<a class="site-nav-cta bg-primary text-on-primary px-5 py-2 rounded-sm hover:opacity-90 transition-all duration-300 active:scale-95 font-label font-semibold text-xs uppercase tracking-widest inline-block" href="/contact/">
-                Inquire
-            </a>
-</div>
+<body>
+
+<!-- NAV -->
+<nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-[#203a7b]/10 shadow-[0_4px_24px_rgba(20,42,88,.06)]">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 flex items-center justify-between" style="height:82px">
+    <a href="/"><img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png" class="h-[52px] md:h-[60px] w-auto object-contain" decoding="async"/></a>
+    <div class="hidden md:flex items-center gap-1 bg-[#edf3ff]/80 border border-[#203a7b]/12 rounded-full px-1 py-1">
+      <a href="/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Home</a>
+      <a href="/products/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Products</a>
+      <a href="/about/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-white bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] shadow-md">About</a>
+      <a href="/contact/" class="px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Contact</a>
+    </div>
+    <a href="/contact/" class="bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white px-6 py-2.5 rounded-xl text-[.75rem] font-semibold uppercase tracking-[.1em] shadow-lg hover:-translate-y-0.5 transition-all">Inquire Now</a>
+  </div>
 </nav>
-</header>
-<main>
-<!-- Hero Section -->
-<section class="relative min-h-[760px] flex items-center px-6 md:px-12 py-16 md:py-24 overflow-hidden">
-<div class="absolute inset-0 -z-10 bg-gradient-to-br from-[#eff4ff] via-[#f6f9ff] to-[#eaf0fc]"></div>
-<div class="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-<div class="lg:col-span-6">
-<span class="font-label uppercase tracking-[0.34em] text-[11px] text-primary/80 mb-6 block">Legacy of Commerce</span>
-<h1 class="text-6xl md:text-7xl leading-[0.95] mb-7">
-                        Trading
-<span class="italic block text-secondary">Without Borders</span>
-                    </h1>
-<p class="max-w-xl text-lg md:text-xl text-on-surface-variant leading-relaxed mb-10">
-                        Established in 1856, Ameer Global operates at the intersection of heritage and modern trade infrastructure. We connect producers, ports, and partners with disciplined logistics and long-term reliability.
-                    </p>
-<div class="grid grid-cols-2 gap-4 max-w-md">
-<div class="rounded-xl bg-white/80 border border-primary/10 p-5">
-<div class="text-3xl text-primary mb-1">168+</div>
-<div class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">Years Active</div>
-</div>
-<div class="rounded-xl bg-white/80 border border-primary/10 p-5">
-<div class="text-3xl text-primary mb-1">42</div>
-<div class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">Trade Hubs</div>
-</div>
-</div>
-</div>
-<div class="lg:col-span-6">
-<div class="rounded-2xl overflow-hidden shadow-[0_22px_54px_rgba(20,41,92,0.18)] border border-primary/10 bg-white">
-<img alt="Global trade analytics wall with logistic network mapping and operations control center" class="w-full h-[560px] object-cover" src="https://images.unsplash.com/photo-1529078155058-5d716f45d604?auto=format&fit=crop&w=1500&q=80"/>
-<div class="px-6 py-5 bg-gradient-to-r from-[#1e3b83] to-[#2f58ad] text-white">
-<p class="text-[11px] tracking-[0.2em] uppercase opacity-90">Operational Integrity</p>
-<p class="text-sm md:text-base opacity-95">Strategic commodity logistics across six continents.</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- CEO Message Section -->
-<section class="py-24 px-6 md:px-12 bg-white/60 border-y border-primary/10">
-<div class="max-w-[1220px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-<div class="lg:col-span-8 rounded-2xl border border-primary/10 bg-white/85 p-8 md:p-12 shadow-[0_18px_40px_rgba(20,41,92,0.08)]">
-<p class="text-[11px] uppercase tracking-[0.28em] text-primary/70 mb-4">Message From Leadership</p>
-<h2 class="text-4xl md:text-5xl font-headline text-primary leading-tight mb-6">A Commitment to Enduring Value</h2>
-<p class="text-on-surface-variant text-lg leading-relaxed">
-                            "In an era defined by speed, we prioritize permanence. At Ameer Global, every exchange is treated as a long-term relationship built on trust, precision, and quality."
-                        </p>
-</div>
-<div class="lg:col-span-4 rounded-2xl overflow-hidden border border-primary/10 shadow-[0_20px_44px_rgba(22,42,92,0.12)] bg-white">
-<img alt="Ameer Global leadership portrait in a modern executive setting" class="w-full h-[360px] object-cover" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=80"/>
-<div class="px-6 py-5 bg-gradient-to-r from-[#1e3b83] to-[#2f58ad] text-white">
-<p class="text-xs tracking-[0.18em] uppercase opacity-90">Chief Executive Office</p>
-<p class="text-base font-medium">Ameer Global Leadership</p>
-</div>
-</div>
-</div>
-</section>
-<!-- Global Network Section -->
-<section class="py-40 bg-surface-container-low relative overflow-hidden">
-<div class="max-w-[1400px] mx-auto px-12">
-<div class="flex flex-col md:flex-row justify-between items-end mb-32 gap-8">
-<div class="max-w-2xl">
-<h2 class="text-5xl font-headline font-bold text-primary mb-8 tracking-tight">Global Network</h2>
-<p class="text-on-surface-variant/80 leading-relaxed font-light text-lg">
-                            Strategic partnerships across six continents ensure that essential commodities move with precision and efficiency. Our presence represents a commitment to reliability on a global scale.
-                        </p>
-</div>
-<div class="flex items-center gap-6 border-b border-primary/10 pb-4 group cursor-pointer transition-all">
-<span class="font-label uppercase tracking-[0.2em] text-xs font-bold text-primary">Explore Trade Routes</span>
-<span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform duration-500">arrow_forward</span>
-</div>
-</div>
-<!-- Flag Arrangement -->
-<div class="grid grid-cols-2 md:grid-cols-5 gap-px bg-outline-variant/10 border border-outline-variant/10">
-<!-- Grid Item: USA -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="USA" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnftcF6ORmK8ZRlu6zOwxN8-S-dfodf3Gb5R26uXiK5juhV7DrOzQNL7GwM6RyDBDnncmkuwRCSIcIjT156nrmn5xn-swmQd72ArMsK9ZNrqrOjgZbAXA6NoIbN3Y4dL9dzVG2ORB1kLl8TfGs0jydUp8IJ-6GUXfgKrvZDTMIXmNSs9Sg9HFNYwiA88-3dMMTGwVFxC1Wzz0YAAB2ojO8yarWYrrJ-TOUlIY5jb-WfuFVF6Z6l7xN7vUOp5IOlhJCz2_YrTzkP28"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">United States</span>
-</div>
-<!-- Grid Item: UK -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="UK" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOtQhExcfyx62tt9iK44_YUN6oTlLXTkiXrfMFXoy0RtmjN0WBZCsEEbp_9_uZGS11ak5RSvsDXoQlrLskuMuzYHjB7MsnQXVG1Vr8s4hi_NY39ObVNduUt8dCf1MN5gkTQ1BwarrZk6MWyLlGgomqfQYZT2W-21L5KK0C3SR-HTbrOM6A7MJ2bk_lEMRGglLvETDTvd3CHCQfs1-tcqqvzrbKtSohKn_E_rTtKZsSwD6ifLwVoVSXQxTg4N2DUm7vQyiIhtp0ndo"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">United Kingdom</span>
-</div>
-<!-- Grid Item: UAE -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="UAE" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi0NKgOsscC_oxE_hjpd-L1Bmyjm72gI9ut_p3QwhcsMcFgSw-zwccoJQJoh-cntMXWV2Fst219kJOIlSr9mRXLkvfiaWEPugonEMYNOfsOCjPrse04tO5gYL9CPiVvuYuOeYEmpMRo1itl5UyGJJHkOVk2o3vLNgvHdswp0hn9vqCq2O575reL-24aEIDlFFSEtlOBJuVE82FTzSNyAxqvYAFD6aEBNK_U3MKoj4_lZoZn4_ul_uUltDeUMUaNS99Y9udOdVISYQ"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">UAE</span>
-</div>
-<!-- Grid Item: Germany -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="Germany" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmdJxh1TT_lvOT12SFehXIvDYUlGHmBZlxW7HNePumiNmd6NVBWAR0sSpSJFZ1mviCGK6EeaQFhvAFjRLqjbaFXHpNB_zPpzVHzAZvE2wypvbAmJET8aYT0ABJg9ZHjghwL6mKz-AtAg0X5STgqxeuQIFtCoIxlvh0cERC5xOc8W8-8_cKNQcDS7iJuXgkEYJlLvhEQgUcCHS9nXKVj7WZn5Ex5lkLHte-erl8Ni-EJa4AKbIukYDUwqo5JgwKq__HTsQ3MIyfk60"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">Germany</span>
-</div>
-<!-- Grid Item: China -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="China" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBl66CFMgfpp4HfHQVQdGx04YGjlYhwL9NgG9kHnlXpeh1RdokLorHmrNdVwOGatPdlY2h1zdNg-4MOSra0cUUzXf_9pj3Piycny6erXqDu_DE0e8__Y-39ney8fpYyrScW_zj6QqOzb1pGO11QO1zf2k0d8K710maCdprEgy_8sdX8Z6IuzVXAulUg1Tgaqo9-uUvLMDxpMaCnxs9jtqZwWEgsMSfuRIjNnpxAlNxb-hYZfxYsSSYTUZafSIYd2d3KqR36ALo8N9s"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">China</span>
-</div>
-<!-- Grid Item: Japan -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="Japan" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMy9Cf3XUUyZBTkSX8ezFWOn7mn_8-P7nMDzgLv6lBn9JL4mPq99X6cR61qs8tPcbF6aBabrPFNHJnc3zSGLt28Ex-hcweNWrXXOzMAgIkoNeo_iDVaKiDFBTcgs0IoALjEvncd9iRq1SdNVOU5afAQvMqGTOw6pZJ4L_XocUkb-FfKROYnQLAdG2YRgjZELMP19BxQ50qzBja058x3Ish4uf9PGJNXMGxoDvYznXMkjdta_J-765gUIZdtwQtWNEy_dP5mKai41U"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">Japan</span>
-</div>
-<!-- Grid Item: India -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="India" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADWMAx0MNRFGRxfJK4BVJFSfBNoKmasZx-jYD77ZNEPvR3xZnRkGoj-my93BzfvwmeZANcttQgCMRsldzvS8sGFfl2zxbseaW12Z1xvTJ7vcUKSo5ZNa38RW4kmD7libnCP6GjS1wHBQDFbMPLmYR7mygKChS6abSxZ4g-6SB_670ePsm5fGWXEkz7e0mFx0Bz8592oB0Gskblo2crFN3sYE1kfAOQe0CO5bCb148E0JUa6Ss_E_IBW94b-ykU5J40L2KLoF6X8js"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">India</span>
-</div>
-<!-- Grid Item: Brazil -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="Brazil" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA42tS9eGxrkTq7zQzsrmDA2pIzUYsOKSIla-QoGEjjP0ibEIpTgDY7kqQzMOf3rAy9WTTUVdmnqT25MHpJuirGVFblfxFY3DKES6Tihni50GZGZTDC6EVsczCi-ax4u0Uw1w3k1v_QhJQRikAx8J-EwcOsJCE996Ty9CQ9ITr5mb7Bqw2Q3BgfIgoDs5LMlBkV0WlyBbo5KsX93pJtW10OKZDcsC-wz4PL-Abm7L5vkiGivQJ_s9FB_ZeYfXF_AVjUvCPJzEjjCOc"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">Brazil</span>
-</div>
-<!-- Grid Item: France -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="France" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKEp4uxHh0VdoCZ5aGcLgsMIZFnaBPFHcwqt4-uCw9yceulpGrZcThR5be-wqHk5pZiDpbIdF9IHFtnm3N4GzExca_vNu2Hfg3n7shbudpE76v8U_Qy_LOaE7XFBEFo1rwm3ICrpQE_9kW6YphfDy7Edw0vMAG3r0Wnkm1X84AqpeTQOMLcgKnvCNdWIn7bV6CwrE6Drsg6LqhJSuO_dpaCkBNtaE8EpQus2rGMfUsDDpeX1uCyDibOXYuo1-sX21ObNZwzanOlvo"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">France</span>
-</div>
-<!-- Grid Item: Singapore -->
-<div class="flag-item bg-surface p-12 flex flex-col items-center justify-center aspect-square transition-all duration-700 hover:bg-surface-container-lowest cursor-default">
-<div class="flag-hover-effect w-16 h-10 mb-8 shadow-sm overflow-hidden rounded-sm">
-<img alt="Singapore" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2Sm1OiHuXDKxNyvJ6i1WkKu6oSIGPXx9Nar03_bCMuLN9u2vRw4SSlp_3xufAlwD0xnr0FBrtj2DEW3qTqt1DDVej4MxDVGeNhU1wAI4FAh3yXAXSl2GlFHmpI2-l8xfg6NX3ayMJaEAF0hgzGTDmD4DR_L8G6kU1M2wm9FPGY8fb6PflnYW7DIKNBJIOnCtZ5AQmvIICREj0SYq5tnJXTN9zLFDEZOe3ac-I0zMN0S5vRiVU0nk9oNd2xci_4gnZOmbZrmdH1v0"/>
-</div>
-<span class="flag-label font-label text-[10px] uppercase tracking-[0.3em] font-bold opacity-30">Singapore</span>
-</div>
-</div>
-</div>
-</section>
-<!-- Values Section -->
-<section class="py-32 px-12 max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-24 border-b border-outline-variant/10 bg-surface">
-<div class="flex flex-col gap-8">
-<div class="w-12 h-[1px] bg-secondary/40"></div>
-<h3 class="text-xl font-headline font-bold text-primary tracking-tight">Established Integrity</h3>
-<p class="text-sm font-light text-on-surface-variant/80 leading-relaxed">
-                    Over a century of experience provides a foundation of reliability. Partners depend on our market insights and consistent ethical standards in trade operations.
-                </p>
-</div>
-<div class="flex flex-col gap-8">
-<div class="w-12 h-[1px] bg-secondary/40"></div>
-<h3 class="text-xl font-headline font-bold text-primary tracking-tight">Logistics Precision</h3>
-<p class="text-sm font-light text-on-surface-variant/80 leading-relaxed">
-                    Our multimodal network ensures that the movement of goods between producers and consumers is defined by operational excellence and efficiency.
-                </p>
-</div>
-<div class="flex flex-col gap-8">
-<div class="w-12 h-[1px] bg-secondary/40"></div>
-<h3 class="text-xl font-headline font-bold text-primary tracking-tight">Adaptive Presence</h3>
-<p class="text-sm font-light text-on-surface-variant/80 leading-relaxed">
-                    A significant global presence allows for rapid response to market fluctuations, maintaining stability through diverse economic landscapes.
-                </p>
-</div>
-</section>
+
+<main style="padding-top:82px">
+
+  <!-- HERO -->
+  <section class="relative py-32 md:py-44 px-6 md:px-10 overflow-hidden" style="background:linear-gradient(135deg,rgba(24,42,89,.92),rgba(42,79,159,.7)),url('https://images.pexels.com/photos/2199293/pexels-photo-2199293.jpeg?auto=compress&cs=tinysrgb&w=2000') center/cover">
+    <div class="max-w-[1280px] mx-auto relative z-10">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+        <div class="md:col-span-7">
+          <p class="uppercase tracking-[.28em] text-[.75rem] text-[#b8cbed] font-semibold mb-5">Legacy of Commerce</p>
+          <h1 class="text-[clamp(2.6rem,6.5vw,4.8rem)] text-white leading-[1.05] tracking-tight mb-6">
+            Trading<br/><span class="italic" style="color:#d1defa">Without</span><br/>Borders
+          </h1>
+          <p class="max-w-xl text-[#c5d6f5] text-lg font-light leading-relaxed">Established in 1856, Ameer Global serves as a facilitator of international trade — connecting producers, markets, and consumers across every continent.</p>
+        </div>
+        <div class="md:col-span-5 hidden md:flex justify-end">
+          <div class="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-10 text-center">
+            <div class="text-5xl font-bold text-white mb-2" style="font-family:'DM Serif Display',serif">168+</div>
+            <p class="text-[#c5d6f5] text-[.78rem] uppercase tracking-widest font-semibold">Years of Heritage</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="py-24 px-6 md:px-10">
+    <div class="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 reveal">
+      <div class="border-t-2 border-[#203a7b] pt-8">
+        <h3 class="text-xl mb-3">Established Integrity</h3>
+        <p class="text-[#4a5877] text-[.92rem] leading-relaxed">Over a century of experience provides a foundation of reliability. Partners depend on our market insights and consistent ethical standards.</p>
+      </div>
+      <div class="border-t-2 border-[#203a7b] pt-8">
+        <h3 class="text-xl mb-3">Logistics Precision</h3>
+        <p class="text-[#4a5877] text-[.92rem] leading-relaxed">Our multimodal network ensures the movement of goods between producers and consumers is defined by operational excellence and efficiency.</p>
+      </div>
+      <div class="border-t-2 border-[#203a7b] pt-8">
+        <h3 class="text-xl mb-3">Adaptive Presence</h3>
+        <p class="text-[#4a5877] text-[.92rem] leading-relaxed">A significant global presence allows rapid response to market fluctuations, maintaining stability through diverse economic landscapes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CEO MESSAGE -->
+  <section class="py-28 px-6 md:px-10" style="background:linear-gradient(180deg,rgba(232,239,253,.45),rgba(244,247,253,.3))">
+    <div class="max-w-[1280px] mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
+        <div class="md:col-span-4 reveal">
+          <div class="rounded-2xl overflow-hidden shadow-2xl">
+            <img alt="Ameer Khokhar, CEO of Ameer Global INC." class="w-full aspect-[3/4] object-cover object-top" src="/assets/ceo.jpg" decoding="async" loading="eager" fetchpriority="high"/>
+          </div>
+        </div>
+        <div class="md:col-span-8 reveal">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="h-px w-10 bg-[#203a7b]"></div>
+            <span class="text-[.72rem] font-bold uppercase tracking-[.2em] text-[#203a7b]">Message from our CEO</span>
+          </div>
+          <h2 class="text-[clamp(1.6rem,3.5vw,2.4rem)] mb-8 leading-[1.3]">
+            "At Ameer Global, our vision is built on three core principles — <span class="italic" style="color:#203a7b">premium trading</span>, global reach, and trusted quality."
+          </h2>
+          <div class="space-y-5 text-[#4a5877] text-[.95rem] leading-relaxed mb-10 max-w-2xl">
+            <p>We are committed to delivering excellence at every stage of our operations — from sourcing the finest products to ensuring they reach markets across the world with reliability and care.</p>
+            <p>Our global network allows us to connect producers and consumers seamlessly, while our dedication to quality ensures that every product meets the highest standards. As we continue to grow, we remain grounded in our values, striving to build lasting partnerships and earn the trust of our clients worldwide.</p>
+          </div>
+          <div class="border-t border-[#203a7b]/15 pt-6 max-w-xs">
+            <h4 class="text-xl mb-1" style="font-family:'DM Serif Display',serif;font-style:italic;color:#203a7b">Ameer Khokhar</h4>
+            <p class="text-[.72rem] font-bold uppercase tracking-[.15em] text-[#4a5877]">CEO, Ameer Global INC.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GLOBAL NETWORK -->
+  <section class="py-24 px-6 md:px-10">
+    <div class="max-w-[1280px] mx-auto">
+      <div class="text-center mb-16 reveal">
+        <h2 class="text-[clamp(1.8rem,4vw,2.6rem)] mb-4">Global Network</h2>
+        <p class="text-[#4a5877] max-w-xl mx-auto leading-relaxed">Strategic partnerships across six continents ensure essential commodities move with precision and efficiency.</p>
+      </div>
+      <div class="grid grid-cols-3 md:grid-cols-5 gap-4 reveal">
+        <div class="flag-item bg-white/70 border border-[#203a7b]/8 rounded-xl p-6 flex flex-col items-center gap-3">
+          <img alt="USA" class="w-12 h-8 object-cover rounded shadow-sm" src="https://flagcdn.com/w80/us.png" decoding="async" loading="lazy" fetchpriority="low"/>
+          <span class="text-[.65rem] font-bold uppercase tracking-wider text-[#4a5877]">USA</span>
+        </div>
+        <div class="flag-item bg-white/70 border border-[#203a7b]/8 rounded-xl p-6 flex flex-col items-center gap-3">
+          <img alt="UK" class="w-12 h-8 object-cover rounded shadow-sm" src="https://flagcdn.com/w80/gb.png" decoding="async" loading="lazy" fetchpriority="low"/>
+          <span class="text-[.65rem] font-bold uppercase tracking-wider text-[#4a5877]">UK</span>
+        </div>
+        <div class="flag-item bg-white/70 border border-[#203a7b]/8 rounded-xl p-6 flex flex-col items-center gap-3">
+          <img alt="UAE" class="w-12 h-8 object-cover rounded shadow-sm" src="https://flagcdn.com/w80/ae.png" decoding="async" loading="lazy" fetchpriority="low"/>
+          <span class="text-[.65rem] font-bold uppercase tracking-wider text-[#4a5877]">UAE</span>
+        </div>
+        <div class="flag-item bg-white/70 border border-[#203a7b]/8 rounded-xl p-6 flex flex-col items-center gap-3">
+          <img alt="Germany" class="w-12 h-8 object-cover rounded shadow-sm" src="https://flagcdn.com/w80/de.png" decoding="async" loading="lazy" fetchpriority="low"/>
+          <span class="text-[.65rem] font-bold uppercase tracking-wider text-[#4a5877]">Germany</span>
+        </div>
+        <div class="flag-item bg-white/70 border border-[#203a7b]/8 rounded-xl p-6 flex flex-col items-center gap-3">
+          <img alt="China" class="w-12 h-8 object-cover rounded shadow-sm" src="https://flagcdn.com/w80/cn.png" decoding="async" loading="lazy" fetchpriority="low"/>
+          <span class="text-[.65rem] font-bold uppercase tracking-wider text-[#4a5877]">China</span>
+        </div>
+        <div class="flag-item bg-white/70 border border-[#203a7b]/8 rounded-xl p-6 flex flex-col items-center gap-3">
+          <img alt="Japan" class="w-12 h-8 object-cover rounded shadow-sm" src="https://flagcdn.com/w80/jp.png" decoding="async" loading="lazy" fetchpriority="low"/>
+          <span class="text-[.65rem] font-bold uppercase tracking-wider text-[#4a5877]">Japan</span>
+        </div>
+        <div class="flag-item bg-white/70 border border-[#203a7b]/8 rounded-xl p-6 flex flex-col items-center gap-3">
+          <img alt="India" class="w-12 h-8 object-cover rounded shadow-sm" src="https://flagcdn.com/w80/in.png" decoding="async" loading="lazy" fetchpriority="low"/>
+          <span class="text-[.65rem] font-bold uppercase tracking-wider text-[#4a5877]">India</span>
+        </div>
+        <div class="flag-item bg-white/70 border border-[#203a7b]/8 rounded-xl p-6 flex flex-col items-center gap-3">
+          <img alt="France" class="w-12 h-8 object-cover rounded shadow-sm" src="https://flagcdn.com/w80/fr.png" decoding="async" loading="lazy" fetchpriority="low"/>
+          <span class="text-[.65rem] font-bold uppercase tracking-wider text-[#4a5877]">France</span>
+        </div>
+        <div class="flag-item bg-white/70 border border-[#203a7b]/8 rounded-xl p-6 flex flex-col items-center gap-3">
+          <img alt="Brazil" class="w-12 h-8 object-cover rounded shadow-sm" src="https://flagcdn.com/w80/br.png" decoding="async" loading="lazy" fetchpriority="low"/>
+          <span class="text-[.65rem] font-bold uppercase tracking-wider text-[#4a5877]">Brazil</span>
+        </div>
+        <div class="flag-item bg-white/70 border border-[#203a7b]/8 rounded-xl p-6 flex flex-col items-center gap-3">
+          <img alt="Singapore" class="w-12 h-8 object-cover rounded shadow-sm" src="https://flagcdn.com/w80/sg.png" decoding="async" loading="lazy" fetchpriority="low"/>
+          <span class="text-[.65rem] font-bold uppercase tracking-wider text-[#4a5877]">Singapore</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
-<footer class="site-footer">
-<div class="site-footer-shell">
-<div class="site-footer-brand">Ameer Global</div>
-<div class="site-footer-links">
-<a href="/">Home</a>
-<a href="/products/">Products</a>
-<a href="/about/">About</a>
-<a href="/contact/">Contact</a>
-</div>
-<p class="site-footer-copy">© 1856-2026 Ameer Global. Premium Trading • Global Reach • Trusted Quality.</p>
-</div>
+
+<!-- FOOTER -->
+<footer class="border-t border-[#203a7b]/10 pt-16 pb-8 bg-white/60">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 grid grid-cols-1 md:grid-cols-4 gap-10">
+    <div class="md:col-span-2"><img alt="Ameer Global Logo" class="h-[48px] object-contain mb-6" src="/assets/logo-transparent-final.png" decoding="async"/><p class="text-[#4a5877] text-sm leading-relaxed max-w-xs">Premium Trading · Global Reach · Trusted Quality.</p></div>
+    <div><h4 class="text-[.7rem] font-bold uppercase tracking-[.15em] text-[#182a59] mb-5">Explore</h4><ul class="space-y-3 text-sm text-[#4a5877]"><li><a href="/">Home</a></li><li><a href="/products/">Products</a></li><li><a href="/about/">About</a></li></ul></div>
+    <div><h4 class="text-[.7rem] font-bold uppercase tracking-[.15em] text-[#182a59] mb-5">Contact</h4><ul class="space-y-3 text-sm text-[#4a5877]"><li><a href="/contact/">Inquiries</a></li></ul></div>
+  </div>
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 mt-14 pt-6 border-t border-[#203a7b]/8"><p class="text-center text-[.68rem] uppercase tracking-[.2em] text-[#6e7b97]">© 1856–2026 Ameer Global INC.</p></div>
 </footer>
-<script src="/assets/interactions.js?v=8"></script>
-</body></html>
+
+<script>
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('active')}),{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
