@@ -66,8 +66,8 @@
 <section class="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden">
   <div class="absolute inset-0 bg-[#0a1428]" id="hero-slides">
     <figure class="hero-slide is-active" style="background-image:url('/assets/new-uasc-ship.png')"></figure>
-    <figure class="hero-slide" style="background-image:url('https://images.pexels.com/photos/6146604/pexels-photo-6146604.jpeg?auto=compress&cs=tinysrgb&w=2000')"></figure>
     <figure class="hero-slide" style="background-image:url('https://images.pexels.com/photos/1519088/pexels-photo-1519088.jpeg?auto=compress&cs=tinysrgb&w=2000')"></figure>
+    <figure class="hero-slide" style="background-image:url('https://images.pexels.com/photos/379964/pexels-photo-379964.jpeg?auto=compress&cs=tinysrgb&w=2000')"></figure>
   </div>
   <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/60 via-black/40 to-black/70"></div>
 
@@ -116,24 +116,24 @@
     </div>
 
     <!-- Animated Service Tags -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-20">
-      <div class="float-1 relative z-0 hover:z-50">
-        <div onclick="openServiceModal('Private Labeling', 'Your brand on our premium products, packaged to your exact specifications. We handle everything from design to final fulfillment.')" class="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-md text-center shadow-[0_8px_32px_rgba(0,0,0,0.2)] hover:scale-[1.04] hover:-translate-y-2 hover:bg-white/10 hover:shadow-[0_25px_60px_rgba(0,0,0,0.5)] hover:border-white/30 transition-all duration-500 ease-out w-full h-full cursor-pointer">
-          <span class="material-symbols-outlined text-[2.5rem] text-blue-300 mb-4 block" style="filter: drop-shadow(0 0 10px rgba(147, 197, 253, 0.4));">inventory_2</span>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-20 px-4 md:px-0">
+      <div class="reveal" style="transition-delay: 100ms;">
+        <div onclick="openServiceModal('Private Labeling', 'Your brand on our premium products, packaged to your exact specifications. We handle everything from design to final fulfillment.')" class="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-md text-center shadow-[0_8px_32px_rgba(0,0,0,0.2)] hover:scale-[1.04] hover:-translate-y-2 hover:bg-white/10 hover:shadow-[0_25px_60px_rgba(0,0,0,0.5)] hover:border-white/30 transition-all duration-500 ease-out w-full h-full cursor-pointer group">
+          <span class="material-symbols-outlined text-[2.5rem] text-blue-300 mb-4 block group-hover:scale-110 group-hover:rotate-6 transition-transform" style="filter: drop-shadow(0 0 10px rgba(147, 197, 253, 0.4));">inventory_2</span>
           <h3 class="text-white text-xl mb-3 font-semibold" style="font-family: 'Plus Jakarta Sans', sans-serif;">Private Labeling</h3>
           <p class="text-blue-100/70 text-[.9rem] leading-relaxed">Your brand on our premium products, packaged to your exact specifications.</p>
         </div>
       </div>
-      <div class="float-2 relative z-0 hover:z-50 mt-0 md:mt-8">
-        <div onclick="openServiceModal('Import & Export', 'Navigating global trade logistics, compliance, and customs seamlessly. We have a dedicated desk spanning across multiple continents.')" class="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-md text-center shadow-[0_8px_32px_rgba(0,0,0,0.2)] hover:scale-[1.04] hover:-translate-y-2 hover:bg-white/10 hover:shadow-[0_25px_60px_rgba(0,0,0,0.5)] hover:border-white/30 transition-all duration-500 ease-out w-full h-full cursor-pointer">
-          <span class="material-symbols-outlined text-[2.5rem] text-blue-300 mb-4 block" style="filter: drop-shadow(0 0 10px rgba(147, 197, 253, 0.4));">language</span>
+      <div class="reveal mt-0 md:mt-8" style="transition-delay: 300ms;">
+        <div onclick="openServiceModal('Import & Export', 'Navigating global trade logistics, compliance, and customs seamlessly. We have a dedicated desk spanning across multiple continents.')" class="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-md text-center shadow-[0_8px_32px_rgba(0,0,0,0.2)] hover:scale-[1.04] hover:-translate-y-2 hover:bg-white/10 hover:shadow-[0_25px_60px_rgba(0,0,0,0.5)] hover:border-white/30 transition-all duration-500 ease-out w-full h-full cursor-pointer group">
+          <span class="material-symbols-outlined text-[2.5rem] text-blue-300 mb-4 block group-hover:scale-110 group-hover:-rotate-6 transition-transform" style="filter: drop-shadow(0 0 10px rgba(147, 197, 253, 0.4));">language</span>
           <h3 class="text-white text-xl mb-3 font-semibold" style="font-family: 'Plus Jakarta Sans', sans-serif;">Import & Export</h3>
           <p class="text-blue-100/70 text-[.9rem] leading-relaxed">Navigating global trade logistics, compliance, and customs seamlessly.</p>
         </div>
       </div>
-      <div class="float-3 relative z-0 hover:z-50">
-        <div onclick="openServiceModal('End-to-End Sourcing', 'From raw material selection to final delivery directly at your warehouse. We provide unmatched quality control at every step.')" class="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-md text-center shadow-[0_8px_32px_rgba(0,0,0,0.2)] hover:scale-[1.04] hover:-translate-y-2 hover:bg-white/10 hover:shadow-[0_25px_60px_rgba(0,0,0,0.5)] hover:border-white/30 transition-all duration-500 ease-out w-full h-full cursor-pointer">
-          <span class="material-symbols-outlined text-[2.5rem] text-blue-300 mb-4 block" style="filter: drop-shadow(0 0 10px rgba(147, 197, 253, 0.4));">handshake</span>
+      <div class="reveal" style="transition-delay: 500ms;">
+        <div onclick="openServiceModal('End-to-End Sourcing', 'From raw material selection to final delivery directly at your warehouse. We provide unmatched quality control at every step.')" class="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-md text-center shadow-[0_8px_32px_rgba(0,0,0,0.2)] hover:scale-[1.04] hover:-translate-y-2 hover:bg-white/10 hover:shadow-[0_25px_60px_rgba(0,0,0,0.5)] hover:border-white/30 transition-all duration-500 ease-out w-full h-full cursor-pointer group">
+          <span class="material-symbols-outlined text-[2.5rem] text-blue-300 mb-4 block group-hover:scale-110 group-hover:rotate-3 transition-transform" style="filter: drop-shadow(0 0 10px rgba(147, 197, 253, 0.4));">handshake</span>
           <h3 class="text-white text-xl mb-3 font-semibold" style="font-family: 'Plus Jakarta Sans', sans-serif;">End-to-End Sourcing</h3>
           <p class="text-blue-100/70 text-[.9rem] leading-relaxed">From raw material selection to final delivery directly at your warehouse.</p>
         </div>
@@ -157,28 +157,28 @@
       <h2 class="text-[clamp(1.8rem,4vw,2.6rem)] mb-4">Our Global Presence</h2>
       <p class="text-[#4a5877] max-w-lg mx-auto leading-relaxed">160+ years of heritage condensed into a global operation that never stops moving.</p>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 reveal">
-      <div class="text-center p-8 rounded-2xl glass hover:-translate-y-2 transition-transform duration-500">
-        <span class="block text-[clamp(2rem,3vw,2.5rem)] font-bold text-[#203a7b]" style="font-family:'DM Serif Display',serif">160+</span>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 reveal">
+      <div class="text-center p-8 rounded-2xl glass hover:-translate-y-4 hover:shadow-[0_20px_50px_rgba(32,58,123,0.15)] transition-all duration-500 group" style="transition-delay: 0ms;">
+        <span class="block text-[clamp(2rem,3vw,2.5rem)] font-bold text-[#203a7b] group-hover:scale-110 transition-transform" style="font-family:'DM Serif Display',serif">160+</span>
         <span class="text-[.72rem] font-bold uppercase tracking-[.15em] text-[#4a5877] mt-2 block">Years of Heritage</span>
       </div>
-      <div class="text-center p-8 rounded-2xl glass hover:-translate-y-2 transition-transform duration-500">
-        <div class="w-12 h-12 mx-auto bg-[#edf3ff] rounded-full flex items-center justify-center mb-4">
-          <span class="material-symbols-outlined text-2xl text-[#203a7b]">public</span>
+      <div class="text-center p-8 rounded-2xl glass hover:-translate-y-4 hover:shadow-[0_20px_50px_rgba(32,58,123,0.15)] transition-all duration-500 group" style="transition-delay: 200ms;">
+        <div class="w-12 h-12 mx-auto bg-[#edf3ff] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#203a7b] transition-colors">
+          <span class="material-symbols-outlined text-2xl text-[#203a7b] group-hover:text-white transition-colors">public</span>
         </div>
         <span class="text-[.72rem] font-bold uppercase tracking-[.15em] text-[#4a5877] mt-2 block">Premium Global Reach</span>
       </div>
-      <div class="text-center p-8 rounded-2xl glass hover:-translate-y-2 transition-transform duration-500">
-        <div class="w-12 h-12 mx-auto bg-[#edf3ff] rounded-full flex items-center justify-center mb-4">
-          <span class="material-symbols-outlined text-2xl text-[#203a7b]">verified</span>
+      <div class="text-center p-8 rounded-2xl glass hover:-translate-y-4 hover:shadow-[0_20px_50px_rgba(32,58,123,0.15)] transition-all duration-500 group" style="transition-delay: 400ms;">
+        <div class="w-12 h-12 mx-auto bg-[#edf3ff] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#203a7b] transition-colors">
+          <span class="material-symbols-outlined text-2xl text-[#203a7b] group-hover:text-white transition-colors">verified</span>
         </div>
         <span class="text-[.72rem] font-bold uppercase tracking-[.15em] text-[#4a5877] mt-2 block">Trusted Quality Standards</span>
       </div>
-      <div class="text-center p-8 rounded-2xl glass hover:-translate-y-2 transition-transform duration-500">
-        <div class="w-12 h-12 mx-auto bg-[#edf3ff] rounded-full flex items-center justify-center mb-4">
-          <span class="material-symbols-outlined text-2xl text-[#203a7b]">local_shipping</span>
+      <div class="text-center p-8 rounded-2xl glass hover:-translate-y-4 hover:shadow-[0_20px_50px_rgba(32,58,123,0.15)] transition-all duration-500 group" style="transition-delay: 600ms;">
+        <div class="w-12 h-12 mx-auto bg-[#edf3ff] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#203a7b] transition-colors">
+          <span class="material-symbols-outlined text-2xl text-[#203a7b] group-hover:text-white transition-colors">local_shipping</span>
         </div>
-        <span class="text-[.72rem] font-bold uppercase tracking-[.15em] text-[#4a5877] mt-2 block">Integrated Supply Chain Precision</span>
+        <span class="text-[.72rem] font-bold uppercase tracking-[.15em] text-[#4a5877] mt-2 block">Scale & Precision</span>
       </div>
     </div>
   </div>
