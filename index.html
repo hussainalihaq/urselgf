@@ -348,19 +348,64 @@
   }),{threshold:.5});
   document.querySelectorAll('.counter').forEach(el=>counterObs.observe(el));
 </script>
-<!-- ═══════════ SERVICES MODAL ═══════════ -->
-<div id="serviceModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#0a1428]/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
-  <div class="bg-[#182a59] rounded-2xl p-10 max-w-[600px] w-full mx-6 shadow-[0_30px_80px_rgba(0,0,0,0.6)] border border-white/10 relative transform scale-95 transition-transform duration-300" id="serviceModalContent">
-    <button onclick="closeServiceModal()" class="absolute top-6 right-6 text-white/50 hover:text-white transition-colors">
-      <span class="material-symbols-outlined text-3xl">close</span>
-    </button>
-    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/40 border border-slate-500/30 backdrop-blur-md mb-6">
-       <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
-       <span class="text-[.65rem] uppercase tracking-[.2em] text-blue-100 font-semibold" id="modalCategory">Service Overview</span>
+<!-- ═══════════ SERVICES MODAL (FLOXR STYLE DRAWER) ═══════════ -->
+<div id="serviceModal" class="fixed inset-0 z-[100] flex justify-end bg-[#0a1428]/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-500">
+  <!-- Left Side Atmospheric Area (Desktop Only) -->
+  <div class="hidden lg:flex flex-1 items-center justify-center p-20 select-none pointer-events-none">
+    <div class="max-w-md">
+      <h2 class="text-[12rem] font-bold text-white/[0.03] leading-none absolute left-10 top-1/2 -translate-y-1/2" style="font-family: 'DM Serif Display', serif;">TRADE</h2>
+      <div class="relative z-10">
+        <span class="text-[#d4a017] uppercase tracking-[.4em] text-sm font-bold mb-6 block">Ameer Global Hub</span>
+        <h3 class="text-6xl text-white font-bold leading-tight" style="font-family: 'DM Serif Display', serif;">Global Sourcing.<br/>Seamless Scale.</h3>
+      </div>
     </div>
-    <h2 id="modalTitle" class="text-3xl text-white font-bold mb-4" style="font-family: 'DM Serif Display', serif;">Target Title</h2>
-    <p id="modalDesc" class="text-blue-100/80 leading-relaxed mb-10 border-l-4 border-blue-400 pl-5 text-lg">Details.</p>
-    <a href="/contact/" class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-8 py-3.5 rounded-xl font-bold uppercase tracking-wider text-[.8rem] shadow-lg hover:shadow-xl inline-block transition-all">Begin Inquiry</a>
+  </div>
+
+  <!-- Right Side Drawer -->
+  <div class="bg-[#0f1c3f] w-full lg:w-[600px] h-full shadow-[-20px_0_80px_rgba(0,0,0,0.5)] border-l border-white/10 relative transform translate-x-full transition-transform duration-500 flex flex-col" id="serviceModalContent">
+    <div class="p-10 flex-1 overflow-y-auto">
+      <button onclick="closeServiceModal()" class="absolute top-8 right-8 text-white/30 hover:text-white transition-colors">
+        <span class="material-symbols-outlined text-4xl">close</span>
+      </button>
+
+      <div class="mb-12">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 backdrop-blur-md mb-8">
+           <span class="w-2 h-2 rounded-full bg-[#d4a017] animate-pulse"></span>
+           <span class="text-[.65rem] uppercase tracking-[.2em] text-[#d4a017] font-bold" id="modalCategory">Service Inquiry</span>
+        </div>
+        <h2 id="modalTitle" class="text-[clamp(2.5rem,4vw,3.5rem)] text-white font-bold mb-6 leading-tight" style="font-family: 'DM Serif Display', serif;">Target Title</h2>
+        <p id="modalDesc" class="text-blue-100/60 leading-relaxed mb-10 border-l-4 border-[#d4a017] pl-6 text-lg font-light">Details about the service will be injected here dynamically.</p>
+      </div>
+
+      <form id="drawer-form" action="https://formsubmit.co/info@ameerglobal.ca" method="POST" class="space-y-8">
+        <!-- Hidden field to capture the service name -->
+        <input type="hidden" name="_subject" id="form-subject" value="New Service Inquiry">
+        <input type="hidden" name="_captcha" value="false">
+        
+        <div class="space-y-6">
+          <div class="relative group">
+            <label class="text-[.65rem] uppercase tracking-[.2em] text-[#d4a017] font-bold mb-2 block">Full Name</label>
+            <input type="text" name="name" required class="w-full bg-white/5 border-b-2 border-white/10 focus:border-[#d4a017] transition-colors py-4 text-white outline-none placeholder-white/20" placeholder="John Doe">
+          </div>
+          <div class="relative group">
+            <label class="text-[.65rem] uppercase tracking-[.2em] text-[#d4a017] font-bold mb-2 block">Enterprise Email</label>
+            <input type="email" name="email" required class="w-full bg-white/5 border-b-2 border-white/10 focus:border-[#d4a017] transition-colors py-4 text-white outline-none placeholder-white/20" placeholder="john@company.com">
+          </div>
+          <div class="relative group">
+            <label class="text-[.65rem] uppercase tracking-[.2em] text-[#d4a017] font-bold mb-2 block">Tell us about your requirements</label>
+            <textarea name="message" required rows="4" class="w-full bg-white/5 border-b-2 border-white/10 focus:border-[#d4a017] transition-colors py-4 text-white outline-none placeholder-white/20 resize-none" placeholder="Volume, destination ports, frequency..."></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full group py-5 bg-[#d4a017] hover:bg-[#b88a14] text-[#0f1c3f] font-black uppercase tracking-[.15em] text-sm rounded-xl shadow-2xl hover:-translate-y-1 transition-all flex items-center justify-center gap-3 mt-10">
+          Initialize Project <span class="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
+        </button>
+      </form>
+    </div>
+    
+    <div class="p-10 border-t border-white/5 bg-black/20">
+      <p class="text-white/30 text-[.65rem] uppercase tracking-widest text-center">Inquiry Desk: Toronto | Lahore | Dubai</p>
+    </div>
   </div>
 </div>
 
@@ -368,22 +413,23 @@
   function openServiceModal(title, desc) {
     document.getElementById('modalTitle').textContent = title;
     document.getElementById('modalDesc').textContent = desc;
+    document.getElementById('form-subject').value = `Service Inquiry: ${title}`;
     const modal = document.getElementById('serviceModal');
     const content = document.getElementById('serviceModalContent');
     modal.classList.remove('hidden');
     setTimeout(() => {
       modal.classList.remove('opacity-0');
-      content.classList.remove('scale-95');
+      content.classList.remove('translate-x-full');
     }, 10);
   }
   function closeServiceModal() {
     const modal = document.getElementById('serviceModal');
     const content = document.getElementById('serviceModalContent');
     modal.classList.add('opacity-0');
-    content.classList.add('scale-95');
+    content.classList.add('translate-x-full');
     setTimeout(() => {
       modal.classList.add('hidden');
-    }, 300);
+    }, 500);
   }
 </script>
 </body>
