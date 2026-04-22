@@ -502,9 +502,6 @@
 </div>
 
 <script>
-  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('active')}),{threshold:.08});
-  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-
   // Sequential Scroll (Sticky Services) Logic
   document.addEventListener('DOMContentLoaded', () => {
     const scrollTrack = document.getElementById('scroll-track');
