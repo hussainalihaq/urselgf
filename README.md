@@ -41,3 +41,36 @@ Server runs on `http://localhost:3000` by default.
   "message": "Please share pricing and shipment timeline."
 }
 ```
+
+## Supabase Integration (Recommended)
+
+The API automatically writes to Supabase when these env vars are set:
+
+- `SUPABASE_URL`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `SUPABASE_CONTACTS_TABLE` (optional, default: `contacts`)
+- `SUPABASE_NEWSLETTER_TABLE` (optional, default: `newsletter_subscribers`)
+
+If `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are not set, the app falls back to local JSON files in `data/*.json`.
+
+### Suggested SQL
+
+```sql
+create table if not exists public.contacts (
+  id uuid primary key,
+  name text not null,
+  email text not null,
+  subject text not null,
+  message text not null,
+  source text,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.newsletter_subscribers (
+  id uuid primary key,
+  email text not null unique,
+  created_at timestamptz not null default now()
+);
+```
+
+RLS can stay disabled for these tables when using server-side `service_role` key only.

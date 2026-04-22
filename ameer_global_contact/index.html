@@ -58,7 +58,7 @@
       </div>
 
       <div class="lg:col-span-7 bg-white border border-[#203a7b]/10 rounded-2xl p-8 md:p-10 shadow-[0_20px_50px_rgba(20,42,88,.06)]">
-        <form class="space-y-6" id="contact-form" action="https://formsubmit.co/info@ameerglobal.ca" method="POST">
+        <form class="space-y-6" id="contact-form">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label class="text-[.72rem] uppercase tracking-[.15em] text-[#4a5877] font-semibold mb-2 block" for="name">Full Name</label>
@@ -66,7 +66,7 @@
             </div>
             <div>
               <label class="text-[.72rem] uppercase tracking-[.15em] text-[#4a5877] font-semibold mb-2 block" for="email">Email</label>
-              <input class="w-full border border-[#203a7b]/15 rounded-lg px-4 py-3 text-sm bg-[#f4f6fb]" id="email" name="email" required type="email" name="email"/>
+              <input class="w-full border border-[#203a7b]/15 rounded-lg px-4 py-3 text-sm bg-[#f4f6fb]" id="email" name="email" required type="email"/>
             </div>
           </div>
           <div>
@@ -110,12 +110,37 @@
   }
   const contactForm = document.getElementById('contact-form');
   const contactStatus = document.getElementById('contact-status');
-  
+
+  contactForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    contactStatus.textContent = 'Submitting...';
+
+    const payload = {
+      name: document.getElementById('name').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      subject: document.getElementById('subject').value.trim(),
+      message: document.getElementById('message').value.trim(),
+      source: 'contact-page'
+    };
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
       const result = await response.json();
-      if (!response.ok) { contactStatus.textContent = result.error || 'Failed.'; return; }
+      if (!response.ok) {
+        contactStatus.textContent = result.error || 'Failed.';
+        return;
+      }
+
       contactStatus.textContent = result.message || 'Inquiry sent.';
       contactForm.reset();
-    } catch (error) { contactStatus.textContent = 'Network error. Please try again.'; }
+    } catch (error) {
+      contactStatus.textContent = 'Network error. Please try again.';
+    }
   });
 </script>
 </body>

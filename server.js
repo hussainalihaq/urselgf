@@ -6,6 +6,11 @@ const { randomUUID } = require('node:crypto');
 const ROOT = __dirname;
 const DATA_DIR = path.join(ROOT, 'data');
 const PORT = Number(process.env.PORT || 3000);
+const SUPABASE_URL = (process.env.SUPABASE_URL || '').replace(/\/+$/, '');
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+const SUPABASE_CONTACTS_TABLE = process.env.SUPABASE_CONTACTS_TABLE || 'contacts';
+const SUPABASE_NEWSLETTER_TABLE = process.env.SUPABASE_NEWSLETTER_TABLE || 'newsletter_subscribers';
+const USE_SUPABASE = Boolean(SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY);
 
 const CONTENT_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -97,17 +102,40 @@ async function isDirectory(filePath) {
 async function readBody(req) {
   return new Promise((resolve, reject) => {
     const chunks = [];
-    req.on('data', (chunk) => chunks.push(chunk));
+    let size = 0;
+    req.on('data', (chunk) => {
+      size += chunk.length;
+      if (size > 1024 * 1024) {
+        reject(new Error('Payload too large'));
+        req.destroy();
+        return;
+      }
+      chunks.push(chunk);
+    });
     req.on('end', () => {
       const raw = Buffer.concat(chunks).toString('utf8');
       if (!raw) {
         resolve({});
         return;
       }
+      const contentType = (req.headers['content-type'] || '').split(';')[0].trim().toLowerCase();
+
+      if (contentType === 'application/x-www-form-urlencoded') {
+        const params = new URLSearchParams(raw);
+        resolve(Object.fromEntries(params.entries()));
+        return;
+      }
+
       try {
         resolve(JSON.parse(raw));
       } catch {
-        reject(new Error('Invalid JSON payload'));
+        if (contentType.includes('json')) {
+          reject(new Error('Invalid JSON payload'));
+          return;
+        }
+
+        const params = new URLSearchParams(raw);
+        resolve(Object.fromEntries(params.entries()));
       }
     });
     req.on('error', reject);
@@ -116,6 +144,10 @@ async function readBody(req) {
 
 function validateEmail(email) {
   return typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+}
+
+function normalizeText(value) {
+  return typeof value === 'string' ? value.trim() : '';
 }
 
 async function appendRecord(filename, record) {
@@ -130,6 +162,48 @@ async function getRecords(filename) {
   const file = path.join(DATA_DIR, filename);
   const currentRaw = await fs.readFile(file, 'utf8');
   return JSON.parse(currentRaw);
+}
+
+async function supabaseRequest(endpoint, options = {}) {
+  const response = await fetch(`${SUPABASE_URL}${endpoint}`, {
+    ...options,
+    headers: {
+      apikey: SUPABASE_SERVICE_ROLE_KEY,
+      Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+      'Content-Type': 'application/json',
+      ...(options.headers || {})
+    }
+  });
+
+  return response;
+}
+
+async function supabaseNewsletterExists(email) {
+  const query = `?select=id&email=eq.${encodeURIComponent(email)}&limit=1`;
+  const response = await supabaseRequest(`/rest/v1/${SUPABASE_NEWSLETTER_TABLE}${query}`, {
+    method: 'GET'
+  });
+
+  if (!response.ok) {
+    const detail = await response.text();
+    throw new Error(`Supabase newsletter lookup failed (${response.status}): ${detail}`);
+  }
+
+  const rows = await response.json();
+  return rows.length > 0;
+}
+
+async function supabaseInsert(table, record) {
+  const response = await supabaseRequest(`/rest/v1/${table}`, {
+    method: 'POST',
+    headers: { Prefer: 'return=minimal' },
+    body: JSON.stringify(record)
+  });
+
+  if (!response.ok) {
+    const detail = await response.text();
+    throw new Error(`Supabase insert failed (${response.status}): ${detail}`);
+  }
 }
 
 const pageRoutes = {
@@ -182,6 +256,16 @@ async function serveFile(req, res, filePath) {
 }
 
 async function handleApi(req, res, pathname) {
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204, {
+      Allow: 'GET,POST,OPTIONS',
+      'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    });
+    res.end();
+    return true;
+  }
+
   if (req.method === 'GET' && pathname === '/api/health') {
     json(res, 200, { ok: true, service: 'ameerglobal-api', uptime: process.uptime() });
     return true;
@@ -195,26 +279,36 @@ async function handleApi(req, res, pathname) {
   if (req.method === 'POST' && pathname === '/api/newsletter') {
     try {
       const body = await readBody(req);
-      const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
+      const email = normalizeText(body.email).toLowerCase();
 
       if (!validateEmail(email)) {
         json(res, 400, { error: 'Valid email is required.' });
         return true;
       }
-
-      const existing = await getRecords('newsletter.json');
-      if (existing.some((item) => item.email === email)) {
-        json(res, 200, { ok: true, message: 'Already subscribed.' });
-        return true;
-      }
-
       const record = {
         id: randomUUID(),
         email,
         createdAt: new Date().toISOString()
       };
 
-      await appendRecord('newsletter.json', record);
+      if (USE_SUPABASE) {
+        const exists = await supabaseNewsletterExists(email);
+        if (exists) {
+          json(res, 200, { ok: true, message: 'Already subscribed.' });
+          return true;
+        }
+
+        await supabaseInsert(SUPABASE_NEWSLETTER_TABLE, record);
+      } else {
+        const existing = await getRecords('newsletter.json');
+        if (existing.some((item) => item.email === email)) {
+          json(res, 200, { ok: true, message: 'Already subscribed.' });
+          return true;
+        }
+
+        await appendRecord('newsletter.json', record);
+      }
+
       json(res, 201, { ok: true, message: 'Subscribed successfully.' });
       return true;
     } catch (err) {
@@ -226,10 +320,11 @@ async function handleApi(req, res, pathname) {
   if (req.method === 'POST' && pathname === '/api/contact') {
     try {
       const body = await readBody(req);
-      const name = typeof body.name === 'string' ? body.name.trim() : '';
-      const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
-      const subject = typeof body.subject === 'string' ? body.subject.trim() : '';
-      const message = typeof body.message === 'string' ? body.message.trim() : '';
+      const name = normalizeText(body.name);
+      const email = normalizeText(body.email).toLowerCase();
+      const subject = normalizeText(body.subject);
+      const message = normalizeText(body.message);
+      const source = normalizeText(body.source) || 'website';
 
       if (!name || name.length < 2) {
         json(res, 400, { error: 'Name must be at least 2 characters.' });
@@ -257,10 +352,16 @@ async function handleApi(req, res, pathname) {
         email,
         subject,
         message,
+        source,
         createdAt: new Date().toISOString()
       };
 
-      await appendRecord('contacts.json', record);
+      if (USE_SUPABASE) {
+        await supabaseInsert(SUPABASE_CONTACTS_TABLE, record);
+      } else {
+        await appendRecord('contacts.json', record);
+      }
+
       json(res, 201, { ok: true, message: 'Inquiry sent successfully.' });
       return true;
     } catch (err) {

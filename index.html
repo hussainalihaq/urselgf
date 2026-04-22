@@ -495,10 +495,9 @@
         <p id="modalDesc" class="text-blue-100/60 leading-relaxed mb-10 border-l-4 border-[#d4a017] pl-6 text-lg font-light">Details about the service will be injected here dynamically.</p>
       </div>
 
-      <form id="drawer-form" action="https://formsubmit.co/info@ameerglobal.ca" method="POST" class="space-y-8">
-        <!-- Hidden field to capture the service name -->
-        <input type="hidden" name="_subject" id="form-subject" value="New Service Inquiry">
-        <input type="hidden" name="_captcha" value="false">
+      <form id="drawer-form" action="/api/contact" method="POST" class="space-y-8">
+        <input type="hidden" name="subject" id="form-subject" value="New Service Inquiry">
+        <input type="hidden" name="source" value="home-service-drawer">
         
         <div class="space-y-6">
           <div class="relative group">
@@ -518,6 +517,7 @@
         <button type="submit" class="w-full group py-5 bg-[#d4a017] hover:bg-[#b88a14] text-[#0f1c3f] font-black uppercase tracking-[.15em] text-sm rounded-xl shadow-2xl hover:-translate-y-1 transition-all flex items-center justify-center gap-3 mt-10">
           Initialize Project <span class="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
         </button>
+        <p id="drawer-status" class="text-[.72rem] text-blue-100/70 text-center">Ready to submit.</p>
       </form>
     </div>
     
@@ -528,6 +528,73 @@
 </div>
 
 <script>
+  const serviceModal = document.getElementById('serviceModal');
+  const serviceModalContent = document.getElementById('serviceModalContent');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDesc = document.getElementById('modalDesc');
+  const formSubject = document.getElementById('form-subject');
+  const drawerForm = document.getElementById('drawer-form');
+  const drawerStatus = document.getElementById('drawer-status');
+
+  function openServiceModal(title = 'Service Inquiry', description = 'Share your requirements and our team will reach out with pricing, timelines, and shipping details.') {
+    if (!serviceModal || !serviceModalContent) return;
+    if (modalTitle) modalTitle.textContent = title;
+    if (modalDesc) modalDesc.textContent = description;
+    if (formSubject) formSubject.value = `New Service Inquiry: ${title}`;
+
+    serviceModal.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      serviceModal.classList.add('opacity-100');
+      serviceModalContent.classList.remove('translate-x-full');
+    });
+  }
+
+  function closeServiceModal() {
+    if (!serviceModal || !serviceModalContent) return;
+    serviceModal.classList.remove('opacity-100');
+    serviceModalContent.classList.add('translate-x-full');
+    setTimeout(() => serviceModal.classList.add('hidden'), 450);
+  }
+
+  serviceModal?.addEventListener('click', (event) => {
+    if (event.target === serviceModal) closeServiceModal();
+  });
+
+  drawerForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!drawerStatus) return;
+
+    const payload = {
+      name: drawerForm.elements.name.value.trim(),
+      email: drawerForm.elements.email.value.trim(),
+      subject: drawerForm.elements.subject.value.trim(),
+      message: drawerForm.elements.message.value.trim(),
+      source: drawerForm.elements.source.value
+    };
+
+    drawerStatus.textContent = 'Submitting...';
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        drawerStatus.textContent = result.error || 'Failed to submit inquiry.';
+        return;
+      }
+
+      drawerStatus.textContent = result.message || 'Inquiry sent successfully.';
+      drawerForm.reset();
+      if (formSubject) formSubject.value = 'New Service Inquiry';
+    } catch {
+      drawerStatus.textContent = 'Network error. Please try again.';
+    }
+  });
+
   // Sequential Scroll (Sticky Services) Logic
   document.addEventListener('DOMContentLoaded', () => {
     const scrollTrack = document.getElementById('scroll-track');
