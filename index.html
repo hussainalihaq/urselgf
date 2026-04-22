@@ -178,7 +178,7 @@
           <div class="relative h-[400px] flex flex-col justify-center">
             
             <!-- Service 01 Content -->
-            <div class="service-content-pane absolute inset-0 transition-all duration-700 opacity-0 translate-y-10" data-service-index="0">
+            <div class="service-content-pane absolute inset-0 transition-all duration-700 opacity-100 translate-y-0" data-service-index="0">
               <div class="flex items-center gap-4 mb-6">
                 <span class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
                   <span class="material-symbols-outlined text-blue-400">inventory_2</span>
@@ -252,7 +252,7 @@
                   </div>
 
                   <!-- Dashboard 01: Private Labeling Stats -->
-                  <div class="service-visual-pane absolute inset-x-8 top-20 bottom-8 transition-all duration-700 opacity-0 scale-95" data-service-index="0">
+                  <div class="service-visual-pane absolute inset-x-8 top-20 bottom-8 transition-all duration-700 opacity-100 scale-100" data-service-index="0">
                     <div class="grid grid-cols-2 gap-4 mb-6">
                        <div class="bg-white/[.03] border border-white/5 p-4 rounded-xl">
                           <span class="text-blue-400 text-xl font-bold block mb-1">84+</span>
@@ -600,43 +600,57 @@
   document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
   // Sequential Scroll (Sticky Services) Logic
-  const scrollTrack = document.getElementById('scroll-track');
-  const serviceContentPanes = document.querySelectorAll('.service-content-pane');
-  const serviceVisualPanes = document.querySelectorAll('.service-visual-pane');
+  document.addEventListener('DOMContentLoaded', () => {
+    const scrollTrack = document.getElementById('scroll-track');
+    const serviceContentPanes = document.querySelectorAll('.service-content-pane');
+    const serviceVisualPanes = document.querySelectorAll('.service-visual-pane');
 
-  window.addEventListener('scroll', () => {
-    if (!scrollTrack) return;
-    
-    const rect = scrollTrack.getBoundingClientRect();
-    const scrollPos = -rect.top;
-    const trackHeight = rect.height - window.innerHeight;
-    const scrollPercent = Math.max(0, Math.min(100, (scrollPos / trackHeight) * 100));
+    function updateStickyScroll() {
+      if (!scrollTrack) return;
+      
+      const rect = scrollTrack.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      
+      // Calculate progress (0 to 100)
+      const scrollPos = -rect.top;
+      const trackHeight = rect.height - viewportHeight;
+      
+      let progress = (scrollPos / trackHeight) * 100;
+      progress = Math.max(0, Math.min(100, progress));
 
-    // Determine target index (3 panels = 0-33%, 33-66%, 66-100%)
-    let targetIndex = 0;
-    if (scrollPercent >= 33 && scrollPercent < 66) targetIndex = 1;
-    else if (scrollPercent >= 66) targetIndex = 2;
+      // Determine target index (3 panels: 0-33, 33-66, 66-100)
+      let targetIndex = 0;
+      if (progress > 33 && progress <= 66) targetIndex = 1;
+      else if (progress > 66) targetIndex = 2;
 
-    // Update Panes
-    serviceContentPanes.forEach((pane, idx) => {
-      if (idx === targetIndex) {
-        pane.classList.remove('opacity-0', 'translate-y-10');
-        pane.classList.add('opacity-100', 'translate-y-0');
-      } else {
-        pane.classList.add('opacity-0', 'translate-y-10');
-        pane.classList.remove('opacity-100', 'translate-y-0');
-      }
-    });
+      serviceContentPanes.forEach((pane, idx) => {
+        if (idx === targetIndex) {
+          pane.style.opacity = "1";
+          pane.style.transform = "translateY(0)";
+          pane.style.pointerEvents = "auto";
+        } else {
+          pane.style.opacity = "0";
+          pane.style.transform = "translateY(20px)";
+          pane.style.pointerEvents = "none";
+        }
+      });
 
-    serviceVisualPanes.forEach((pane, idx) => {
-      if (idx === targetIndex) {
-        pane.classList.remove('opacity-0', 'scale-95');
-        pane.classList.add('opacity-100', 'scale-100');
-      } else {
-        pane.classList.add('opacity-0', 'scale-95');
-        pane.classList.remove('opacity-100', 'scale-100');
-      }
-    });
+      serviceVisualPanes.forEach((pane, idx) => {
+        if (idx === targetIndex) {
+          pane.style.opacity = "1";
+          pane.style.transform = "scale(1)";
+        } else {
+          pane.style.opacity = "0";
+          pane.style.transform = "scale(0.95)";
+        }
+      });
+    }
+
+    // Bind events
+    window.addEventListener('scroll', updateStickyScroll);
+    window.addEventListener('resize', updateStickyScroll);
+    // Initial call
+    updateStickyScroll();
   });
 </script>
 </body>
