@@ -101,12 +101,19 @@
   const params = new URLSearchParams(window.location.search);
   const prefillProduct = params.get('product');
   const prefillIntent = params.get('intent');
+  const normalizedIntent = (prefillIntent || '').toLowerCase();
+  const intentLabels = {
+    buy: 'PURCHASE ORDER',
+    reserve: 'RESERVE ORDER',
+    inquiry: 'INQUIRY'
+  };
   const subjectEl = document.getElementById('subject');
   const messageEl = document.getElementById('message');
   if (prefillProduct) {
-    const intentLabel = prefillIntent ? prefillIntent.toUpperCase() : 'INQUIRY';
+    const intentLabel = intentLabels[normalizedIntent] || 'INQUIRY';
+    const intentVerb = normalizedIntent === 'buy' ? 'purchase' : normalizedIntent === 'reserve' ? 'reserve' : 'inquire about';
     subjectEl.value = `${intentLabel}: ${prefillProduct}`;
-    messageEl.value = `Hello Ameer Global team,\n\nI want to ${prefillIntent || 'inquire about'} ${prefillProduct}. Please share pricing, MOQ, shipment timelines, and payment terms.\n`;
+    messageEl.value = `Hello Ameer Global team,\n\nI want to ${intentVerb} ${prefillProduct}. Please share pricing, MOQ, shipment timelines, and payment terms.\n`;
   }
   const contactForm = document.getElementById('contact-form');
   const contactStatus = document.getElementById('contact-status');
@@ -118,7 +125,9 @@
       email: document.getElementById('email').value.trim(),
       subject: document.getElementById('subject').value.trim(),
       message: document.getElementById('message').value.trim(),
-      source: 'contact-page'
+      source: 'contact-page',
+      product: prefillProduct || '',
+      intent: normalizedIntent || 'inquiry'
     };
     try {
       const response = await fetch('/api/contact', {

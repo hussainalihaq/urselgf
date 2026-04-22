@@ -569,7 +569,9 @@
       email: drawerForm.elements.email.value.trim(),
       subject: drawerForm.elements.subject.value.trim(),
       message: drawerForm.elements.message.value.trim(),
-      source: drawerForm.elements.source.value
+      source: drawerForm.elements.source.value,
+      product: modalTitle?.textContent?.trim() || '',
+      intent: 'service'
     };
 
     drawerStatus.textContent = 'Submitting...';

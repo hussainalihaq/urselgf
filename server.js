@@ -150,6 +150,12 @@ function normalizeText(value) {
   return typeof value === 'string' ? value.trim() : '';
 }
 
+function normalizeIntent(value) {
+  const intent = normalizeText(value).toLowerCase();
+  const allowed = new Set(['buy', 'reserve', 'inquiry', 'service', 'other']);
+  return allowed.has(intent) ? intent : '';
+}
+
 async function appendRecord(filename, record) {
   const file = path.join(DATA_DIR, filename);
   const currentRaw = await fs.readFile(file, 'utf8');
@@ -203,6 +209,48 @@ async function supabaseInsert(table, record) {
   if (!response.ok) {
     const detail = await response.text();
     throw new Error(`Supabase insert failed (${response.status}): ${detail}`);
+  }
+}
+
+async function insertContactRecord(record) {
+  if (!USE_SUPABASE) {
+    await appendRecord('contacts.json', record);
+    return;
+  }
+
+  const supabaseRecord = {
+    id: record.id,
+    name: record.name,
+    email: record.email,
+    subject: record.subject,
+    message: record.message,
+    source: record.source,
+    product: record.product,
+    intent: record.intent,
+    created_at: record.createdAt
+  };
+
+  try {
+    await supabaseInsert(SUPABASE_CONTACTS_TABLE, supabaseRecord);
+  } catch (error) {
+    const message = String(error?.message || '');
+    const missingOrderColumns =
+      /column .* does not exist|schema cache/i.test(message) &&
+      /product|intent/i.test(message);
+
+    if (!missingOrderColumns) throw error;
+
+    const legacyRecord = {
+      id: record.id,
+      name: record.name,
+      email: record.email,
+      subject: record.subject,
+      message: record.message,
+      source: record.source,
+      created_at: record.createdAt
+    };
+
+    await supabaseInsert(SUPABASE_CONTACTS_TABLE, legacyRecord);
   }
 }
 
@@ -298,7 +346,11 @@ async function handleApi(req, res, pathname) {
           return true;
         }
 
-        await supabaseInsert(SUPABASE_NEWSLETTER_TABLE, record);
+        await supabaseInsert(SUPABASE_NEWSLETTER_TABLE, {
+          id: record.id,
+          email: record.email,
+          created_at: record.createdAt
+        });
       } else {
         const existing = await getRecords('newsletter.json');
         if (existing.some((item) => item.email === email)) {
@@ -325,6 +377,8 @@ async function handleApi(req, res, pathname) {
       const subject = normalizeText(body.subject);
       const message = normalizeText(body.message);
       const source = normalizeText(body.source) || 'website';
+      const product = normalizeText(body.product);
+      const intent = normalizeIntent(body.intent);
 
       if (!name || name.length < 2) {
         json(res, 400, { error: 'Name must be at least 2 characters.' });
@@ -353,14 +407,12 @@ async function handleApi(req, res, pathname) {
         subject,
         message,
         source,
+        product,
+        intent,
         createdAt: new Date().toISOString()
       };
 
-      if (USE_SUPABASE) {
-        await supabaseInsert(SUPABASE_CONTACTS_TABLE, record);
-      } else {
-        await appendRecord('contacts.json', record);
-      }
+      await insertContactRecord(record);
 
       json(res, 201, { ok: true, message: 'Inquiry sent successfully.' });
       return true;

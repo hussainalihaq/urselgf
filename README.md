@@ -63,6 +63,8 @@ create table if not exists public.contacts (
   subject text not null,
   message text not null,
   source text,
+  product text,
+  intent text,
   created_at timestamptz not null default now()
 );
 
@@ -74,3 +76,15 @@ create table if not exists public.newsletter_subscribers (
 ```
 
 RLS can stay disabled for these tables when using server-side `service_role` key only.
+
+### If You Already Created The Old `contacts` Table
+
+Run this once to add order tracking fields:
+
+```sql
+alter table public.contacts
+  add column if not exists product text,
+  add column if not exists intent text;
+```
+
+Without these two columns, contact submissions still work, but order-specific tracking fields are skipped in Supabase.
