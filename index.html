@@ -105,7 +105,7 @@
 <!-- ═══════════ SEQUENTIAL SCROLL SERVICES ═══════════ -->
 <section id="services-scroll" class="relative bg-[#070b14]">
   <!-- Height defines the scroll duration for 3 service transitions -->
-  <div class="h-[320vh] relative" id="scroll-track">
+  <div class="relative" id="scroll-track" style="height:320vh;">
     <div class="sticky top-0 h-screen w-full flex items-center overflow-hidden">
       
       <!-- Ambient Background Elements -->
@@ -512,22 +512,17 @@
     const serviceVisualPanes = document.querySelectorAll('.service-visual-pane');
 
     function updateStickyScroll() {
-      if (!scrollTrack) return;
+      if (!scrollTrack || serviceContentPanes.length === 0) return;
       
       const rect = scrollTrack.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
+      const paneCount = serviceContentPanes.length;
       
-      // Calculate progress (0 to 100)
-      const scrollPos = -rect.top;
-      const trackHeight = rect.height - viewportHeight;
-      
-      let progress = (scrollPos / trackHeight) * 100;
-      progress = Math.max(0, Math.min(100, progress));
-
-      // Determine target index based on total panes.
-      const paneCount = serviceContentPanes.length || 1;
-      const segmentSize = 100 / paneCount;
-      const targetIndex = Math.min(paneCount - 1, Math.floor(progress / segmentSize));
+      // Calculate clamped progress (0 to 1) and map it to pane index safely.
+      const scrollPos = Math.max(0, -rect.top);
+      const trackHeight = Math.max(1, rect.height - viewportHeight);
+      const progress = Math.min(0.9999, scrollPos / trackHeight);
+      const targetIndex = Math.min(paneCount - 1, Math.floor(progress * paneCount));
 
       serviceContentPanes.forEach((pane, idx) => {
         if (idx === targetIndex) {
