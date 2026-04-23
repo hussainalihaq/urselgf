@@ -47,7 +47,7 @@
 
     /* Services: brand-aligned raised panels */
     #services-scroll{isolation:isolate;background:linear-gradient(180deg,#f7f9fd 0%,#ffffff 48%,#edf3ff 100%)}
-    .service-sticky{min-height:100svh;padding:7rem 0 5rem}
+    .service-sticky{top:96px;min-height:calc(100svh - 96px);padding:4.5rem 0 3.5rem}
     .service-stack-wrap{perspective:1600px;perspective-origin:50% 48%;transform-style:preserve-3d;position:relative;height:clamp(500px,62vh,650px);min-height:500px}
     .service-scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transform-style:preserve-3d;transform:translate3d(0,70px,-180px) rotateX(10deg) scale(.92);filter:blur(3px);transition:opacity .55s ease,transform .75s cubic-bezier(.2,1,.3,1),filter .45s ease}
     .service-scene.is-active{opacity:1;pointer-events:auto;transform:translate3d(0,0,64px) rotateX(0deg) scale(1);filter:blur(0)}
@@ -72,7 +72,7 @@
     .service-step-dot{width:2.4rem;height:.24rem;border-radius:99px;background:rgba(32,58,123,.22);transition:all .35s ease}
     .service-step-dot.is-active{width:3.4rem;background:#d4a017}
     @media (max-width:1023px){
-      .service-sticky{padding:5.5rem 0 3.5rem}
+      .service-sticky{top:96px;min-height:calc(100svh - 96px);padding:3.25rem 0 2.25rem}
       .service-stack-wrap{perspective:1200px}
       .service-scene{transform:translate3d(0,48px,-120px) rotateX(8deg) scale(.94)}
       .service-scene.is-active{transform:translate3d(0,0,36px) rotateX(0deg) scale(1)}
@@ -84,7 +84,7 @@
       .service-note{width:100%}
     }
     @media (max-width:520px){
-      .service-sticky{padding:5rem 0 3rem}
+      .service-sticky{top:96px;min-height:calc(100svh - 96px);padding:2.5rem 0 1.75rem}
       .service-card{padding:1.1rem}
       .service-title{font-size:2rem}
       .service-copy{font-size:.92rem;line-height:1.6}
@@ -160,7 +160,7 @@
 <!-- ═══════════ SEQUENTIAL SCROLL SERVICES ═══════════ -->
 <section id="services-scroll" class="relative overflow-hidden">
   <div class="relative" id="scroll-track" style="height:330vh;">
-    <div class="service-sticky sticky top-0 w-full flex items-center justify-center overflow-hidden">
+    <div class="service-sticky sticky w-full flex items-center justify-center overflow-hidden">
       <div class="relative z-10 w-full max-w-[1240px] mx-auto px-6 md:px-10">
         <div class="text-center mb-8 md:mb-10">
           <p class="uppercase tracking-[.28em] text-[.72rem] text-[#203a7b] font-bold mb-3">Our Services</p>
@@ -593,6 +593,7 @@
     const serviceStack = document.querySelector('.service-stack-wrap');
     const serviceScenes = document.querySelectorAll('.service-scene');
     const serviceStepDots = document.querySelectorAll('.service-step-dot');
+    let lastIndex = -1;
 
     function syncServiceStackHeight() {
       if (!serviceStack || serviceScenes.length === 0) return;
@@ -608,25 +609,28 @@
       }
     }
 
-    function updateStickyScroll() {
-      if (!scrollTrack || serviceScenes.length === 0) return;
-      
-      const rect = scrollTrack.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const paneCount = serviceScenes.length;
-      
-      // Calculate clamped progress (0 to 1) and map it to pane index safely.
-      const scrollPos = Math.max(0, -rect.top);
-      const trackHeight = Math.max(1, rect.height - viewportHeight);
-      const progress = Math.min(1, scrollPos / trackHeight);
-      const targetIndex = Math.min(paneCount - 1, Math.max(0, Math.round(progress * (paneCount - 1))));
-
+    function setActiveService(index) {
+      if (index === lastIndex) return;
+      lastIndex = index;
       serviceScenes.forEach((scene, idx) => {
-        scene.classList.toggle('is-active', idx === targetIndex);
+        scene.classList.toggle('is-active', idx === index);
       });
       serviceStepDots.forEach((dot, idx) => {
-        dot.classList.toggle('is-active', idx === targetIndex);
+        dot.classList.toggle('is-active', idx === index);
       });
+    }
+
+    function updateStickyScroll() {
+      if (!scrollTrack || serviceScenes.length === 0) return;
+
+      const paneCount = serviceScenes.length;
+      const sectionTop = scrollTrack.offsetTop;
+      const sectionHeight = scrollTrack.offsetHeight;
+      const available = Math.max(1, sectionHeight - window.innerHeight);
+      const rawProgress = (window.scrollY - sectionTop) / available;
+      const progress = Math.min(0.9999, Math.max(0, rawProgress));
+      const targetIndex = Math.floor(progress * paneCount);
+      setActiveService(Math.min(paneCount - 1, Math.max(0, targetIndex)));
     }
 
     let scrollRaf = 0;
@@ -644,10 +648,29 @@
       syncServiceStackHeight();
       queueScrollUpdate();
     });
+    window.addEventListener('load', () => {
+      syncServiceStackHeight();
+      queueScrollUpdate();
+    });
+
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(() => {
+        syncServiceStackHeight();
+        queueScrollUpdate();
+      });
+      serviceScenes.forEach((scene) => {
+        const card = scene.querySelector('.service-card');
+        if (card) ro.observe(card);
+      });
+    }
 
     // Initial call
     syncServiceStackHeight();
     queueScrollUpdate();
+    setTimeout(() => {
+      syncServiceStackHeight();
+      queueScrollUpdate();
+    }, 250);
   });
 </script>
 </body>
