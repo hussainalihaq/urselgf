@@ -45,20 +45,38 @@
     @keyframes glassShine { 0% { transform: translateX(-150%) skewX(-15deg); } 100% { transform: translateX(250%) skewX(-15deg); } }
     .btn-shine-effect { position: absolute; top: 0; bottom: 0; left: 0; width: 60%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent); animation: glassShine 3s infinite; }
 
-    /* Services Pop-Out Motion (3D) */
-    .service-visual-wrap{perspective:1500px;perspective-origin:52% 45%}
-    .service-visual-shell{transform-style:preserve-3d;transform:rotateY(-8deg) rotateX(5deg) translateZ(0);transition:transform .75s cubic-bezier(.22,1,.36,1)}
-    .service-visual-pane{opacity:0;transform:translate3d(0,44px,-140px) rotateX(14deg) scale(.86);filter:blur(3px);pointer-events:none;transition:opacity .55s ease,transform .85s cubic-bezier(.22,1,.36,1),filter .55s ease;transform-style:preserve-3d}
-    .service-visual-pane.is-active{opacity:1;transform:translate3d(0,0,0) rotateX(0deg) scale(1);filter:blur(0);pointer-events:auto}
-    .pop-unit{opacity:0;transform:translate3d(0,34px,-120px) rotateX(16deg) rotateY(-8deg) scale(.9);transition:opacity .5s ease,transform .85s cubic-bezier(.22,1,.36,1),box-shadow .5s ease;border-radius:1rem;transform-style:preserve-3d;will-change:transform}
-    .pop-unit::before{content:"";position:absolute;inset:-1px;border-radius:inherit;background:linear-gradient(140deg,rgba(255,255,255,.16),rgba(255,255,255,0) 45%,rgba(42,79,159,.2) 100%);pointer-events:none;opacity:.65}
-    .service-visual-pane.is-active .pop-unit{opacity:1;transform:translate3d(var(--pop-x,0),0,var(--pop-z,80px)) rotateX(0deg) rotateY(0deg) scale(1);box-shadow:0 32px 70px rgba(2,8,23,.52)}
-    .pop-depth-1{--pop-z:125px;--pop-x:-8px}
-    .pop-depth-2{--pop-z:92px;--pop-x:7px}
-    .pop-depth-3{--pop-z:62px;--pop-x:0px}
-    .pop-delay-1{transition-delay:.05s}
-    .pop-delay-2{transition-delay:.18s}
-    .pop-delay-3{transition-delay:.31s}
+    /* Services Cinematic 3D Stage */
+    #services-scroll{isolation:isolate}
+    .service-stack-wrap{perspective:2200px;perspective-origin:50% 42%;transform-style:preserve-3d}
+    .service-scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;opacity:0;pointer-events:none;transform-style:preserve-3d;transform:translate3d(0,140px,-420px) rotateX(24deg) scale(.74);filter:blur(8px);transition:opacity .7s ease,transform .95s cubic-bezier(.2,1,.3,1),filter .65s ease}
+    .service-scene.is-active{opacity:1;pointer-events:auto;transform:translate3d(0,0,180px) rotateX(0deg) scale(1);filter:blur(0)}
+    .service-code{letter-spacing:.28em;text-transform:uppercase;font-size:.68rem;color:rgba(191,219,254,.58);font-weight:700;margin-bottom:1rem}
+    .depth-word{position:relative;line-height:.9;transform-style:preserve-3d;margin-bottom:1.2rem}
+    .depth-word-main,.depth-word-shadow{display:block;font-family:'DM Serif Display',serif;font-size:clamp(2.4rem,8vw,6.4rem);letter-spacing:-.02em}
+    .depth-word-main{position:relative;color:#f8fbff;text-shadow:0 14px 40px rgba(12,22,46,.55);transform:translateZ(140px)}
+    .depth-word-shadow{position:absolute;inset:0;color:rgba(136,171,237,.5);transform:translateZ(28px) translateY(12px) scale(1.02);filter:blur(.6px)}
+    .service-caption{max-width:760px;font-size:clamp(1rem,2vw,1.25rem);line-height:1.7;color:rgba(219,234,254,.76);transform:translateZ(86px)}
+    .service-bullet-stream{margin-top:1.6rem;display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem;max-width:880px}
+    .service-chip{display:inline-flex;align-items:center;gap:.45rem;padding:.5rem .9rem;border-radius:999px;border:1px solid rgba(148,163,184,.35);background:rgba(15,23,42,.35);font-size:.74rem;text-transform:uppercase;letter-spacing:.12em;font-weight:600;color:rgba(226,232,240,.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transform:translateZ(var(--chip-z,68px));box-shadow:0 12px 30px rgba(2,8,23,.38)}
+    .service-chip::before{content:"";width:.34rem;height:.34rem;border-radius:999px;background:rgba(212,160,23,.9)}
+    .service-chip:nth-child(odd){--chip-z:94px}
+    .service-chip:nth-child(even){--chip-z:72px}
+    .scene-cta{margin-top:2rem;display:inline-flex;align-items:center;gap:.55rem;padding:.9rem 1.6rem;border-radius:999px;background:#fff;color:#0a1428;font-weight:800;letter-spacing:.12em;font-size:.78rem;text-transform:uppercase;transform:translateZ(132px);box-shadow:0 18px 34px rgba(0,0,0,.35);transition:transform .35s ease,box-shadow .35s ease}
+    .scene-cta:hover{transform:translateZ(144px) scale(1.03);box-shadow:0 24px 42px rgba(0,0,0,.42)}
+    .scene-halo{position:absolute;border-radius:999px;pointer-events:none}
+    .scene-halo-1{width:min(70vw,760px);height:min(70vw,760px);border:1px solid rgba(96,165,250,.22);transform:translateZ(12px)}
+    .scene-halo-2{width:min(52vw,560px);height:min(52vw,560px);border:1px dashed rgba(212,160,23,.24);transform:translateZ(58px)}
+    .scene-halo-3{width:min(36vw,390px);height:min(36vw,390px);border:1px solid rgba(255,255,255,.18);transform:translateZ(98px)}
+    .service-step-dot{width:2.6rem;height:.28rem;border-radius:99px;background:rgba(148,163,184,.34);transition:all .35s ease}
+    .service-step-dot.is-active{width:3.4rem;background:#d4a017}
+    @media (max-width:1023px){
+      .service-stack-wrap{perspective:1500px}
+      .service-scene{transform:translate3d(0,90px,-260px) rotateX(16deg) scale(.84)}
+      .service-scene.is-active{transform:translate3d(0,0,94px) rotateX(0deg) scale(1)}
+      .depth-word-main,.depth-word-shadow{font-size:clamp(2rem,12vw,3.8rem)}
+      .service-caption{max-width:92%}
+      .service-chip{font-size:.65rem;letter-spacing:.09em;padding:.45rem .72rem}
+    }
   </style>
 </head>
 <body>
@@ -127,151 +145,83 @@
 
 <!-- ═══════════ SEQUENTIAL SCROLL SERVICES ═══════════ -->
 <section id="services-scroll" class="relative bg-[#070b14]">
-  <!-- Height defines the scroll duration for 3 service transitions -->
-  <div class="relative" id="scroll-track" style="height:320vh;">
-    <div class="sticky top-0 h-screen w-full flex items-center overflow-hidden">
-      
-      <!-- Ambient Background Elements -->
+  <div class="relative" id="scroll-track" style="height:330vh;">
+    <div class="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
       <div class="absolute inset-0 z-0">
-        <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-900/20 rounded-full blur-[120px]"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#d4a017]/5 rounded-full blur-[150px]"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_18%_24%,rgba(59,130,246,.18),transparent_48%),radial-gradient(circle_at_82%_76%,rgba(212,160,23,.16),transparent_46%),linear-gradient(180deg,#04070f,#070f1e_45%,#060912)]"></div>
+        <div class="absolute top-[14%] left-[12%] w-[340px] h-[340px] rounded-full bg-blue-400/8 blur-[85px]"></div>
+        <div class="absolute bottom-[12%] right-[10%] w-[360px] h-[360px] rounded-full bg-[#d4a017]/10 blur-[90px]"></div>
       </div>
 
-      <div class="max-w-[1440px] mx-auto w-full px-6 md:px-20 relative z-10">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          
-          <!-- Left Content (Sticky Context) -->
-          <div class="relative h-[400px] flex flex-col justify-center">
-            
-            <!-- Service 01 Content -->
-            <div class="service-content-pane absolute inset-0 transition-all duration-700 opacity-100 translate-y-0" data-service-index="0">
-              <div class="flex items-center gap-4 mb-6">
-                <span class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                  <span class="material-symbols-outlined text-blue-400">inventory_2</span>
-                </span>
-                <span class="text-blue-100/40 text-xs font-bold uppercase tracking-[.3em]">Service 01</span>
-              </div>
-              <h3 class="text-white text-[clamp(2.5rem,5vw,4rem)] font-bold mb-6 leading-none" style="font-family: 'DM Serif Display', serif;">Private Labeling</h3>
-              <p class="text-blue-100/60 text-lg mb-8 max-w-md">Launch your proprietary brand using our premium global supply. Custom packaging, formulation, and labeling.</p>
-              <ul class="space-y-3 mb-10 text-blue-100/80 font-light text-[.95rem]">
-                <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Custom Brand Design</li>
-                <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Premium Retail Packaging</li>
-                <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Direct Warehouse Fulfillment</li>
-              </ul>
-              <a href="/contact/" class="inline-flex items-center gap-3 px-8 py-4 bg-white text-[#0a1428] rounded-full font-bold text-[.85rem] uppercase tracking-wider hover:scale-105 transition-all">I WANT THIS <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
-            </div>
+      <div class="relative z-10 w-full max-w-[1240px] mx-auto px-6 md:px-10">
+        <div class="text-center mb-8 md:mb-10">
+          <p class="uppercase tracking-[.28em] text-[.72rem] text-blue-200/75 font-bold mb-3">Our Services</p>
+          <h2 class="text-white text-[clamp(1.6rem,4.1vw,2.8rem)]">Built To Stand Out In The Real Market</h2>
+        </div>
 
-            <!-- Service 02 Content -->
-            <div class="service-content-pane absolute inset-0 transition-all duration-700 opacity-0 translate-y-10" data-service-index="1">
-              <div class="flex items-center gap-4 mb-6">
-                <span class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                  <span class="material-symbols-outlined text-blue-400">language</span>
-                </span>
-                <span class="text-blue-100/40 text-xs font-bold uppercase tracking-[.3em]">Service 02</span>
-              </div>
-              <h3 class="text-white text-[clamp(2.5rem,5vw,4rem)] font-bold mb-6 leading-none" style="font-family: 'DM Serif Display', serif;">Import & Export</h3>
-              <p class="text-blue-100/60 text-lg mb-8 max-w-md">Specialized trade desk navigating complex global logistics, compliance, and multi-modal transit.</p>
-              <ul class="space-y-3 mb-10 text-blue-100/80 font-light text-[.95rem]">
-                <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Real-time Trade Analytics</li>
-                <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Customs Clearance Management</li>
-                <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Global Port Coordination</li>
-              </ul>
-              <a href="/contact/" class="inline-flex items-center gap-3 px-8 py-4 bg-white text-[#0a1428] rounded-full font-bold text-[.85rem] uppercase tracking-wider hover:scale-105 transition-all">I WANT THIS <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+        <div class="service-stack-wrap relative h-[520px] md:h-[560px]">
+          <div class="service-scene is-active" data-service-index="0">
+            <span class="service-code">Service 01</span>
+            <div class="depth-word">
+              <span class="depth-word-shadow">Private Labeling</span>
+              <span class="depth-word-main">Private Labeling</span>
             </div>
-
-            <!-- Service 03 Content -->
-            <div class="service-content-pane absolute inset-0 transition-all duration-700 opacity-0 translate-y-10" data-service-index="2">
-              <div class="flex items-center gap-4 mb-6">
-                <span class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                  <span class="material-symbols-outlined text-blue-400">handshake</span>
-                </span>
-                <span class="text-blue-100/40 text-xs font-bold uppercase tracking-[.3em]">Service 03</span>
-              </div>
-              <h3 class="text-white text-[clamp(2.5rem,5vw,4rem)] font-bold mb-6 leading-none" style="font-family: 'DM Serif Display', serif;">End-to-End Sourcing</h3>
-              <p class="text-blue-100/60 text-lg mb-8 max-w-md">From farm-gate to warehouse door. Total transparency across the entire value chain.</p>
-              <ul class="space-y-3 mb-10 text-blue-100/80 font-light text-[.95rem]">
-                <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Vertical Supply Control</li>
-                <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Ethical Source Verification</li>
-                <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Cost & Quality Optimization</li>
-              </ul>
-              <a href="/contact/" class="inline-flex items-center gap-3 px-8 py-4 bg-white text-[#0a1428] rounded-full font-bold text-[.85rem] uppercase tracking-wider hover:scale-105 transition-all">I WANT THIS <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+            <p class="service-caption">Launch your own market-facing brand with premium sourcing, packaging, and execution under one trusted trade partner.</p>
+            <div class="service-bullet-stream">
+              <span class="service-chip">Custom Brand Design</span>
+              <span class="service-chip">Retail Packaging</span>
+              <span class="service-chip">Product Positioning</span>
+              <span class="service-chip">Global Fulfillment</span>
             </div>
-
+            <a href="/contact/" class="scene-cta">I Want This <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+            <span class="scene-halo scene-halo-1"></span>
+            <span class="scene-halo scene-halo-2"></span>
+            <span class="scene-halo scene-halo-3"></span>
           </div>
 
-          <!-- Right Visual (Feature Showcases) -->
-          <div class="service-visual-wrap relative h-[500px] hidden lg:block">
-            
-            <div class="service-visual-shell absolute inset-0 bg-[#0f1c3f]/50 border border-white/10 rounded-[2rem] p-1 shadow-[0_0_100px_rgba(0,0,0,0.5)] overflow-hidden">
-              <div class="h-full w-full relative overflow-hidden bg-[#070b14]/50 p-8">
-                <div class="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
-                  <span class="text-[.62rem] text-white/40 uppercase tracking-[.28em] font-bold">Service Features</span>
-                  <span class="text-[.62rem] text-[#d4a017]/80 uppercase tracking-[.22em] font-bold">Ameer Global</span>
-                </div>
-
-                <!-- Feature 01: Private Labeling -->
-                <div class="service-visual-pane is-active absolute inset-x-8 top-20 bottom-8" data-service-index="0">
-                  <div class="relative h-full">
-                    <div class="pop-unit pop-depth-1 pop-delay-1 absolute top-4 left-4 w-[58%] rounded-2xl border border-blue-300/25 bg-gradient-to-br from-blue-500/20 to-blue-800/15 p-5">
-                      <span class="text-[.6rem] uppercase tracking-[.22em] text-blue-100/60">Brand Identity</span>
-                      <p class="text-white text-xl font-semibold mt-3">Custom Label Design</p>
-                    </div>
-                    <div class="pop-unit pop-depth-2 pop-delay-2 absolute top-28 right-0 w-[56%] rounded-2xl border border-white/15 bg-white/[.06] backdrop-blur-md p-5">
-                      <span class="text-[.6rem] uppercase tracking-[.22em] text-blue-100/60">Packaging</span>
-                      <p class="text-white text-lg font-semibold mt-3">Retail-Ready Formats</p>
-                    </div>
-                    <div class="pop-unit pop-depth-3 pop-delay-3 absolute bottom-2 left-10 right-6 rounded-2xl border border-[#d4a017]/25 bg-[#d4a017]/10 p-5">
-                      <div class="flex items-center justify-between">
-                        <span class="text-[.6rem] uppercase tracking-[.22em] text-[#d4a017]">Go To Market</span>
-                        <span class="text-[.62rem] text-white/80 uppercase tracking-[.18em]">Fast Turnaround</span>
-                      </div>
-                      <p class="text-white text-lg font-semibold mt-3">Approval to shipment in one coordinated flow</p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Feature 02: Import & Export -->
-                <div class="service-visual-pane absolute inset-x-8 top-20 bottom-8" data-service-index="1">
-                  <div class="relative h-full">
-                    <div class="pop-unit pop-depth-1 pop-delay-1 absolute top-6 left-2 w-[60%] rounded-2xl border border-blue-300/25 bg-gradient-to-br from-blue-500/15 to-slate-900/30 p-5">
-                      <span class="text-[.6rem] uppercase tracking-[.22em] text-blue-100/60">Freight Planning</span>
-                      <p class="text-white text-xl font-semibold mt-3">Multi-Port Routing</p>
-                    </div>
-                    <div class="pop-unit pop-depth-2 pop-delay-2 absolute top-32 right-2 w-[52%] rounded-2xl border border-white/15 bg-white/[.07] backdrop-blur-md p-5">
-                      <span class="text-[.6rem] uppercase tracking-[.22em] text-blue-100/60">Customs Desk</span>
-                      <p class="text-white text-lg font-semibold mt-3">Clearance + Documentation</p>
-                    </div>
-                    <div class="pop-unit pop-depth-3 pop-delay-3 absolute bottom-3 left-8 right-8 rounded-2xl border border-white/15 bg-white/[.04] p-5">
-                      <div class="grid grid-cols-3 gap-3 text-center text-[.58rem] uppercase tracking-[.18em] text-blue-100/65">
-                        <div class="rounded-lg border border-white/10 bg-white/[.02] p-2">ETD</div>
-                        <div class="rounded-lg border border-white/10 bg-white/[.02] p-2">Transit</div>
-                        <div class="rounded-lg border border-white/10 bg-white/[.02] p-2">Arrival</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Feature 03: End-to-End Sourcing -->
-                <div class="service-visual-pane absolute inset-x-8 top-20 bottom-8" data-service-index="2">
-                  <div class="relative h-full">
-                    <div class="pop-unit pop-depth-1 pop-delay-1 absolute top-5 left-4 w-[55%] rounded-2xl border border-[#d4a017]/30 bg-[#d4a017]/10 p-5">
-                      <span class="text-[.6rem] uppercase tracking-[.22em] text-[#d4a017]">Supplier Vetting</span>
-                      <p class="text-white text-xl font-semibold mt-3">Verified Source Network</p>
-                    </div>
-                    <div class="pop-unit pop-depth-2 pop-delay-2 absolute top-32 right-0 w-[58%] rounded-2xl border border-white/15 bg-white/[.05] backdrop-blur-md p-5">
-                      <span class="text-[.6rem] uppercase tracking-[.22em] text-blue-100/60">Quality Control</span>
-                      <p class="text-white text-lg font-semibold mt-3">Lot-Level QA Protocols</p>
-                    </div>
-                    <div class="pop-unit pop-depth-3 pop-delay-3 absolute bottom-2 left-10 right-4 rounded-2xl border border-white/15 bg-gradient-to-r from-blue-700/15 to-slate-900/20 p-5">
-                      <span class="text-[.6rem] uppercase tracking-[.22em] text-blue-100/65">Final Mile</span>
-                      <p class="text-white text-lg font-semibold mt-3">Packed, documented, and dispatched under one SLA</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="service-scene" data-service-index="1">
+            <span class="service-code">Service 02</span>
+            <div class="depth-word">
+              <span class="depth-word-shadow">Import & Export</span>
+              <span class="depth-word-main">Import & Export</span>
             </div>
+            <p class="service-caption">End-to-end trade operations for shipments that move cleanly from origin to destination with visibility at every checkpoint.</p>
+            <div class="service-bullet-stream">
+              <span class="service-chip">Port Coordination</span>
+              <span class="service-chip">Customs Clearance</span>
+              <span class="service-chip">Freight Compliance</span>
+              <span class="service-chip">Live Transit Updates</span>
+            </div>
+            <a href="/contact/" class="scene-cta">I Want This <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+            <span class="scene-halo scene-halo-1"></span>
+            <span class="scene-halo scene-halo-2"></span>
+            <span class="scene-halo scene-halo-3"></span>
           </div>
 
+          <div class="service-scene" data-service-index="2">
+            <span class="service-code">Service 03</span>
+            <div class="depth-word">
+              <span class="depth-word-shadow">End-to-End Sourcing</span>
+              <span class="depth-word-main">End-to-End Sourcing</span>
+            </div>
+            <p class="service-caption">From source discovery to delivered stock, we run one integrated chain for quality, speed, and predictable cost control.</p>
+            <div class="service-bullet-stream">
+              <span class="service-chip">Supplier Verification</span>
+              <span class="service-chip">Lot Quality Control</span>
+              <span class="service-chip">Cost Optimization</span>
+              <span class="service-chip">Single-SLA Delivery</span>
+            </div>
+            <a href="/contact/" class="scene-cta">I Want This <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+            <span class="scene-halo scene-halo-1"></span>
+            <span class="scene-halo scene-halo-2"></span>
+            <span class="scene-halo scene-halo-3"></span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-center gap-2 mt-8">
+          <span class="service-step-dot is-active" data-service-step="0"></span>
+          <span class="service-step-dot" data-service-step="1"></span>
+          <span class="service-step-dot" data-service-step="2"></span>
         </div>
       </div>
     </div>
@@ -616,15 +566,15 @@
   // Sequential Scroll (Sticky Services) Logic
   document.addEventListener('DOMContentLoaded', () => {
     const scrollTrack = document.getElementById('scroll-track');
-    const serviceContentPanes = document.querySelectorAll('.service-content-pane');
-    const serviceVisualPanes = document.querySelectorAll('.service-visual-pane');
+    const serviceScenes = document.querySelectorAll('.service-scene');
+    const serviceStepDots = document.querySelectorAll('.service-step-dot');
 
     function updateStickyScroll() {
-      if (!scrollTrack || serviceContentPanes.length === 0) return;
+      if (!scrollTrack || serviceScenes.length === 0) return;
       
       const rect = scrollTrack.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
-      const paneCount = serviceContentPanes.length;
+      const paneCount = serviceScenes.length;
       
       // Calculate clamped progress (0 to 1) and map it to pane index safely.
       const scrollPos = Math.max(0, -rect.top);
@@ -632,20 +582,11 @@
       const progress = Math.min(1, scrollPos / trackHeight);
       const targetIndex = Math.min(paneCount - 1, Math.max(0, Math.round(progress * (paneCount - 1))));
 
-      serviceContentPanes.forEach((pane, idx) => {
-        if (idx === targetIndex) {
-          pane.style.opacity = "1";
-          pane.style.transform = "translateY(0)";
-          pane.style.pointerEvents = "auto";
-        } else {
-          pane.style.opacity = "0";
-          pane.style.transform = "translateY(20px)";
-          pane.style.pointerEvents = "none";
-        }
+      serviceScenes.forEach((scene, idx) => {
+        scene.classList.toggle('is-active', idx === targetIndex);
       });
-
-      serviceVisualPanes.forEach((pane, idx) => {
-        pane.classList.toggle('is-active', idx === targetIndex);
+      serviceStepDots.forEach((dot, idx) => {
+        dot.classList.toggle('is-active', idx === targetIndex);
       });
     }
 
