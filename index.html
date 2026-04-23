@@ -158,9 +158,9 @@
 </section>
 
 <!-- ═══════════ SEQUENTIAL SCROLL SERVICES ═══════════ -->
-<section id="services-scroll" class="relative overflow-hidden">
+<section id="services-scroll" class="relative">
   <div class="relative" id="scroll-track" style="height:330vh;">
-    <div class="service-sticky sticky w-full flex items-center justify-center overflow-hidden">
+    <div class="service-sticky sticky w-full flex items-center justify-center">
       <div class="relative z-10 w-full max-w-[1240px] mx-auto px-6 md:px-10">
         <div class="text-center mb-8 md:mb-10">
           <p class="uppercase tracking-[.28em] text-[.72rem] text-[#203a7b] font-bold mb-3">Our Services</p>
@@ -603,13 +603,16 @@
         if (!card) return;
         maxCardHeight = Math.max(maxCardHeight, card.scrollHeight);
       });
-      if (maxCardHeight > 0) {
-        const buffer = window.innerWidth < 640 ? 28 : 46;
-        serviceStack.style.height = `${maxCardHeight + buffer}px`;
-      }
+      const fallbackHeight = window.innerWidth < 640 ? 460 : 540;
+      const measured = maxCardHeight > 200 ? maxCardHeight : fallbackHeight;
+      const buffer = window.innerWidth < 640 ? 28 : 46;
+      serviceStack.style.height = `${measured + buffer}px`;
     }
 
     function setActiveService(index) {
+      if (!Number.isFinite(index)) index = 0;
+      const clampedIndex = Math.min(serviceScenes.length - 1, Math.max(0, Math.floor(index)));
+      index = clampedIndex;
       if (index === lastIndex) return;
       lastIndex = index;
       serviceScenes.forEach((scene, idx) => {
@@ -618,6 +621,13 @@
       serviceStepDots.forEach((dot, idx) => {
         dot.classList.toggle('is-active', idx === index);
       });
+
+      // Keep one pane visible even if the browser misses class updates during rapid scroll.
+      if (![...serviceScenes].some((scene) => scene.classList.contains('is-active')) && serviceScenes[0]) {
+        serviceScenes[0].classList.add('is-active');
+        if (serviceStepDots[0]) serviceStepDots[0].classList.add('is-active');
+        lastIndex = 0;
+      }
     }
 
     function updateStickyScroll() {
@@ -628,6 +638,10 @@
       const sectionHeight = scrollTrack.offsetHeight;
       const available = Math.max(1, sectionHeight - window.innerHeight);
       const rawProgress = (window.scrollY - sectionTop) / available;
+      if (!Number.isFinite(rawProgress)) {
+        setActiveService(0);
+        return;
+      }
       const progress = Math.min(0.9999, Math.max(0, rawProgress));
       const targetIndex = Math.floor(progress * paneCount);
       setActiveService(Math.min(paneCount - 1, Math.max(0, targetIndex)));
