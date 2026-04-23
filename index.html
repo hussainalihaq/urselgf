@@ -48,7 +48,7 @@
     /* Services: brand-aligned raised panels */
     #services-scroll{isolation:isolate;background:linear-gradient(180deg,#f7f9fd 0%,#ffffff 48%,#edf3ff 100%)}
     .service-sticky{min-height:100svh;padding:7rem 0 5rem}
-    .service-stack-wrap{perspective:1600px;perspective-origin:50% 48%;transform-style:preserve-3d}
+    .service-stack-wrap{perspective:1600px;perspective-origin:50% 48%;transform-style:preserve-3d;position:relative;height:clamp(500px,62vh,650px);min-height:500px}
     .service-scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transform-style:preserve-3d;transform:translate3d(0,70px,-180px) rotateX(10deg) scale(.92);filter:blur(3px);transition:opacity .55s ease,transform .75s cubic-bezier(.2,1,.3,1),filter .45s ease}
     .service-scene.is-active{opacity:1;pointer-events:auto;transform:translate3d(0,0,64px) rotateX(0deg) scale(1);filter:blur(0)}
     .service-card{position:relative;width:min(960px,100%);padding:2rem;border-radius:1.5rem;border:1px solid rgba(32,58,123,.14);background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(237,243,255,.9));box-shadow:0 26px 65px rgba(24,42,89,.16);transform-style:preserve-3d}
@@ -85,7 +85,6 @@
     }
     @media (max-width:520px){
       .service-sticky{padding:5rem 0 3rem}
-      .service-stack-wrap{height:400px}
       .service-card{padding:1.1rem}
       .service-title{font-size:2rem}
       .service-copy{font-size:.92rem;line-height:1.6}
@@ -169,7 +168,7 @@
           <p class="text-[#4a5877] max-w-xl mx-auto leading-relaxed">Three service paths for brands and buyers who need reliable sourcing, packaging, and shipment coordination.</p>
         </div>
 
-        <div class="service-stack-wrap relative h-[440px] md:h-[460px]">
+        <div class="service-stack-wrap">
           <div class="service-scene is-active" data-service-index="0">
             <div class="service-card">
               <div class="service-backplate one"></div>
@@ -591,8 +590,23 @@
   // Sequential Scroll (Sticky Services) Logic
   document.addEventListener('DOMContentLoaded', () => {
     const scrollTrack = document.getElementById('scroll-track');
+    const serviceStack = document.querySelector('.service-stack-wrap');
     const serviceScenes = document.querySelectorAll('.service-scene');
     const serviceStepDots = document.querySelectorAll('.service-step-dot');
+
+    function syncServiceStackHeight() {
+      if (!serviceStack || serviceScenes.length === 0) return;
+      let maxCardHeight = 0;
+      serviceScenes.forEach((scene) => {
+        const card = scene.querySelector('.service-card');
+        if (!card) return;
+        maxCardHeight = Math.max(maxCardHeight, card.scrollHeight);
+      });
+      if (maxCardHeight > 0) {
+        const buffer = window.innerWidth < 640 ? 28 : 46;
+        serviceStack.style.height = `${maxCardHeight + buffer}px`;
+      }
+    }
 
     function updateStickyScroll() {
       if (!scrollTrack || serviceScenes.length === 0) return;
@@ -615,11 +629,25 @@
       });
     }
 
+    let scrollRaf = 0;
+    const queueScrollUpdate = () => {
+      if (scrollRaf) return;
+      scrollRaf = requestAnimationFrame(() => {
+        scrollRaf = 0;
+        updateStickyScroll();
+      });
+    };
+
     // Bind events
-    window.addEventListener('scroll', updateStickyScroll);
-    window.addEventListener('resize', updateStickyScroll);
+    window.addEventListener('scroll', queueScrollUpdate, { passive: true });
+    window.addEventListener('resize', () => {
+      syncServiceStackHeight();
+      queueScrollUpdate();
+    });
+
     // Initial call
-    updateStickyScroll();
+    syncServiceStackHeight();
+    queueScrollUpdate();
   });
 </script>
 </body>
