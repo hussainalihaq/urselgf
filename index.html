@@ -71,7 +71,6 @@
     .service-backplate.one{background:linear-gradient(140deg,rgba(56,94,174,.24),rgba(56,94,174,.03));transform:translate3d(-12px,12px,-52px) rotateX(2deg) rotateY(-4deg)}
     .service-backplate.two{background:linear-gradient(130deg,rgba(212,160,23,.16),rgba(212,160,23,.03));transform:translate3d(11px,-7px,-26px) rotateX(-1deg) rotateY(3deg)}
     .service-layout{display:block;position:relative;z-index:2}
-    .service-visual{display:none!important}
     .service-content{min-width:0;transform:translateZ(45px)}
     .service-code{display:inline-flex;align-items:center;gap:.5rem;letter-spacing:.2em;text-transform:uppercase;font-size:.66rem;color:#9db8f6;font-weight:800;margin-bottom:.78rem}
     .service-code::before{content:"";width:2.15rem;height:1px;background:linear-gradient(90deg,rgba(157,184,246,.12),rgba(157,184,246,.9))}
@@ -170,7 +169,7 @@
 
 <!-- ═══════════ SEQUENTIAL SCROLL SERVICES ═══════════ -->
 <section id="services-scroll" class="relative">
-  <div class="relative" id="scroll-track" style="height:280vh;">
+  <div class="relative" id="scroll-track" style="height:380vh;">
     <div class="service-sticky sticky w-full flex items-center justify-center">
       <div class="relative z-10 w-full max-w-[1240px] mx-auto px-6 md:px-10">
         <div class="text-center mb-3 md:mb-4 services-intro">
@@ -201,33 +200,6 @@
                       <span class="service-note">Private label launch support</span>
                     </div>
                   </div>
-                  <aside class="service-visual" aria-hidden="true">
-                    <span class="service-visual-label">Live Brand Rollout</span>
-                    <div class="service-kpi-grid">
-                      <div class="service-kpi">
-                        <span class="service-kpi-value">48h</span>
-                        <span class="service-kpi-label">Pack Design Start</span>
-                      </div>
-                      <div class="service-kpi">
-                        <span class="service-kpi-value">12+</span>
-                        <span class="service-kpi-label">Packaging Options</span>
-                      </div>
-                      <div class="service-kpi wide">
-                        <span class="service-kpi-value">Global</span>
-                        <span class="service-kpi-label">Retail Ready Labels</span>
-                      </div>
-                    </div>
-                    <div class="service-meter-list">
-                      <div>
-                        <div class="service-meter-label"><span>Brand Readiness</span><span>97%</span></div>
-                        <div class="service-meter-track"><div class="service-meter-fill" style="width:97%"></div></div>
-                      </div>
-                      <div>
-                        <div class="service-meter-label"><span>Packaging Precision</span><span>95%</span></div>
-                        <div class="service-meter-track"><div class="service-meter-fill" style="width:95%"></div></div>
-                      </div>
-                    </div>
-                  </aside>
                 </div>
               </div>
             </div>
@@ -254,33 +226,6 @@
                       <span class="service-note">Trade desk with real movement</span>
                     </div>
                   </div>
-                  <aside class="service-visual" aria-hidden="true">
-                    <span class="service-visual-label">Live Trade Flow</span>
-                    <div class="service-kpi-grid">
-                      <div class="service-kpi">
-                        <span class="service-kpi-value">32</span>
-                        <span class="service-kpi-label">Connected Ports</span>
-                      </div>
-                      <div class="service-kpi">
-                        <span class="service-kpi-value">24/7</span>
-                        <span class="service-kpi-label">Shipment Visibility</span>
-                      </div>
-                      <div class="service-kpi wide">
-                        <span class="service-kpi-value">0 Delay</span>
-                        <span class="service-kpi-label">Priority Compliance Lane</span>
-                      </div>
-                    </div>
-                    <div class="service-meter-list">
-                      <div>
-                        <div class="service-meter-label"><span>Port Efficiency</span><span>99%</span></div>
-                        <div class="service-meter-track"><div class="service-meter-fill" style="width:99%"></div></div>
-                      </div>
-                      <div>
-                        <div class="service-meter-label"><span>Documentation Accuracy</span><span>98%</span></div>
-                        <div class="service-meter-track"><div class="service-meter-fill" style="width:98%"></div></div>
-                      </div>
-                    </div>
-                  </aside>
                 </div>
               </div>
             </div>
@@ -307,33 +252,6 @@
                       <span class="service-note">Source, inspect, and ship</span>
                     </div>
                   </div>
-                  <aside class="service-visual" aria-hidden="true">
-                    <span class="service-visual-label">Live Sourcing Matrix</span>
-                    <div class="service-kpi-grid">
-                      <div class="service-kpi">
-                        <span class="service-kpi-value">150+</span>
-                        <span class="service-kpi-label">Vetted Suppliers</span>
-                      </div>
-                      <div class="service-kpi">
-                        <span class="service-kpi-value">QA+</span>
-                        <span class="service-kpi-label">Every Shipment</span>
-                      </div>
-                      <div class="service-kpi wide">
-                        <span class="service-kpi-value">Single SLA</span>
-                        <span class="service-kpi-label">From Origin To Destination</span>
-                      </div>
-                    </div>
-                    <div class="service-meter-list">
-                      <div>
-                        <div class="service-meter-label"><span>Supplier Reliability</span><span>96%</span></div>
-                        <div class="service-meter-track"><div class="service-meter-fill" style="width:96%"></div></div>
-                      </div>
-                      <div>
-                        <div class="service-meter-label"><span>Cost Optimization</span><span>94%</span></div>
-                        <div class="service-meter-track"><div class="service-meter-fill" style="width:94%"></div></div>
-                      </div>
-                    </div>
-                  </aside>
                 </div>
               </div>
             </div>
@@ -692,6 +610,8 @@
     const serviceScenes = document.querySelectorAll('.service-scene');
     const serviceStepDots = document.querySelectorAll('.service-step-dot');
     let lastIndex = -1;
+    let lastSwitchAt = 0;
+    const MIN_SWITCH_INTERVAL = 260;
 
     function syncServiceStackHeight() {
       if (!serviceStack || serviceScenes.length === 0) return;
@@ -712,6 +632,7 @@
       index = Math.min(serviceScenes.length - 1, Math.max(0, Math.floor(index)));
       if (index === lastIndex) return;
       lastIndex = index;
+      lastSwitchAt = performance.now();
       serviceScenes.forEach((scene, idx) => scene.classList.toggle('is-active', idx === index));
       serviceStepDots.forEach((dot, idx) => dot.classList.toggle('is-active', idx === index));
     }
@@ -733,9 +654,20 @@
         return;
       }
 
-      const progress = Math.min(0.999999, Math.max(0, rawProgress));
-      const targetIndex = Math.min(paneCount - 1, Math.max(0, Math.floor(progress * paneCount)));
-      setActiveService(targetIndex);
+      const progress = Math.min(1, Math.max(0, rawProgress));
+      const desiredIndex = Math.min(paneCount - 1, Math.max(0, Math.round(progress * (paneCount - 1))));
+
+      if (lastIndex < 0) {
+        setActiveService(desiredIndex);
+        return;
+      }
+
+      let nextIndex = desiredIndex;
+      if (desiredIndex > lastIndex + 1) nextIndex = lastIndex + 1;
+      if (desiredIndex < lastIndex - 1) nextIndex = lastIndex - 1;
+
+      if (nextIndex !== lastIndex && performance.now() - lastSwitchAt < MIN_SWITCH_INTERVAL) return;
+      setActiveService(nextIndex);
     }
 
     let scrollRaf = 0;
