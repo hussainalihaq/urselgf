@@ -46,9 +46,9 @@
     .btn-shine-effect { position: absolute; top: 0; bottom: 0; left: 0; width: 60%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent); animation: glassShine 3s infinite; }
 
     /* Services: premium dark pop-out section */
-    #services-scroll{position:relative;isolation:isolate;overflow-x:hidden;overflow-y:visible;background:radial-gradient(1200px 560px at 12% -12%,rgba(62,95,171,.38),transparent 56%),radial-gradient(980px 500px at 90% 108%,rgba(7,19,44,.96),transparent 62%),linear-gradient(180deg,#081229 0%,#0a1a39 48%,#081229 100%)}
+    #services-scroll{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(1200px 560px at 12% -12%,rgba(62,95,171,.38),transparent 56%),radial-gradient(980px 500px at 90% 108%,rgba(7,19,44,.96),transparent 62%),linear-gradient(180deg,#081229 0%,#0a1a39 48%,#081229 100%)}
     #services-scroll::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.03),transparent 35%,rgba(255,255,255,.02) 62%,transparent 100%);pointer-events:none}
-    #services-scroll::after{content:"";position:absolute;left:50%;bottom:-2.8rem;transform:translateX(-50%);width:36rem;height:12rem;border-radius:999px;background:radial-gradient(circle,rgba(28,54,103,.44),rgba(28,54,103,0) 72%);pointer-events:none}
+    #services-scroll::after{content:"";position:absolute;left:50%;bottom:-1.1rem;transform:translateX(-50%);width:28rem;height:8rem;border-radius:999px;background:radial-gradient(circle,rgba(28,54,103,.28),rgba(28,54,103,0) 74%);pointer-events:none}
     .service-sticky{top:96px;height:calc(100svh - 96px);padding:1rem 0 .7rem;align-items:flex-start}
     .service-stage{display:flex;flex-direction:column;height:100%}
     .service-stack-wrap{perspective:2200px;perspective-origin:50% 44%;transform-style:preserve-3d;position:relative;height:clamp(340px,48vh,520px);min-height:340px}
@@ -192,7 +192,7 @@
 
 <!-- ═══════════ SEQUENTIAL SCROLL SERVICES ═══════════ -->
 <section id="services-scroll" class="relative">
-  <div class="relative" id="scroll-track" style="height:220vh;">
+  <div class="relative" id="scroll-track" style="height:190vh;">
     <div class="service-sticky sticky w-full flex items-center justify-center">
       <div class="service-stage relative z-10 w-full max-w-[1240px] mx-auto px-6 md:px-10">
         <div class="text-center mb-3 md:mb-4 services-intro">
@@ -663,8 +663,8 @@
     function syncServiceTrackHeight() {
       if (!scrollTrack || !stickyPane || serviceScenes.length === 0) return;
       const stickyHeight = stickyPane.offsetHeight || Math.max(520, window.innerHeight - 96);
-      const transitionSpan = Math.max(150, Math.min(250, window.innerHeight * 0.22));
-      const exitBuffer = Math.max(4, Math.min(14, window.innerHeight * 0.015));
+      const transitionSpan = Math.max(120, Math.min(170, window.innerHeight * 0.16));
+      const exitBuffer = 0;
       const totalHeight = stickyHeight + ((serviceScenes.length - 1) * transitionSpan) + exitBuffer;
       scrollTrack.style.height = `${Math.ceil(totalHeight)}px`;
     }
