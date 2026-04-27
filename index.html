@@ -49,13 +49,13 @@
     #services-scroll{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(1200px 560px at 12% -12%,rgba(62,95,171,.38),transparent 56%),radial-gradient(980px 500px at 90% 108%,rgba(7,19,44,.96),transparent 62%),linear-gradient(180deg,#081229 0%,#0a1a39 48%,#081229 100%)}
     #services-scroll::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.03),transparent 35%,rgba(255,255,255,.02) 62%,transparent 100%);pointer-events:none}
     #services-scroll::after{content:"";position:absolute;left:50%;bottom:-9rem;transform:translateX(-50%);width:42rem;height:18rem;border-radius:999px;background:radial-gradient(circle,rgba(28,54,103,.68),rgba(28,54,103,0) 70%);pointer-events:none}
-    .service-sticky{top:96px;height:calc(100svh - 96px);padding:.85rem 0;align-items:center}
-    .service-stack-wrap{perspective:2200px;perspective-origin:50% 44%;transform-style:preserve-3d;position:relative;height:clamp(390px,56vh,590px);min-height:390px}
+    .service-sticky{top:96px;height:calc(100svh - 96px);padding:1rem 0 .7rem;align-items:flex-start}
+    .service-stack-wrap{perspective:2200px;perspective-origin:50% 44%;transform-style:preserve-3d;position:relative;height:clamp(340px,48vh,520px);min-height:340px}
     .services-intro{margin-bottom:.9rem}
     .services-eyebrow{color:#9eb7f1}
     .services-heading{color:#f4f8ff;text-shadow:0 14px 38px rgba(2,8,21,.45)}
     .services-subtitle{color:#bfd0ee}
-    .service-scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;pointer-events:none}
+    .service-scene{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:center;padding-top:.2rem;opacity:0;visibility:hidden;pointer-events:none}
     .service-scene.is-active{opacity:1;visibility:visible;pointer-events:auto}
     .service-card{position:relative;overflow:hidden;width:min(980px,100%);padding:clamp(1.15rem,2.65vw,1.95rem);border-radius:1.45rem;border:1px solid rgba(150,177,238,.34);background:linear-gradient(160deg,rgba(14,32,68,.93) 0%,rgba(12,27,58,.95) 60%,rgba(9,21,47,.96) 100%);box-shadow:0 34px 92px rgba(4,10,24,.58),inset 0 1px 0 rgba(255,255,255,.08);transform-style:preserve-3d;transform:translate3d(0,58px,-180px) rotateX(12deg) scale(.9)}
     .service-scene.is-active .service-card{animation:servicePop .78s cubic-bezier(.19,.88,.33,1) forwards}
@@ -96,8 +96,8 @@
     .service-step-dot{width:2.4rem;height:.24rem;border-radius:99px;background:rgba(140,166,222,.36);transition:all .28s ease}
     .service-step-dot.is-active{width:3.45rem;background:#d4a017}
     @media (max-width:1023px){
-      .service-sticky{padding:1.05rem 0 .62rem}
-      .service-stack-wrap{perspective:1400px;height:clamp(370px,58vh,560px)}
+      .service-sticky{padding:.95rem 0 .62rem}
+      .service-stack-wrap{perspective:1400px;height:clamp(320px,46vh,480px);min-height:320px}
       .service-card{padding:1.15rem;border-radius:1.15rem}
       .service-card::before{inset:8px;border-radius:.82rem}
       .service-title{font-size:2.2rem}
@@ -108,7 +108,8 @@
       .service-backplate.two{transform:translate3d(8px,-6px,-16px) rotateX(-1deg) rotateY(2deg)}
     }
     @media (max-width:520px){
-      .service-sticky{padding:.92rem 0 .6rem}
+      .service-sticky{padding:.88rem 0 .58rem}
+      .service-stack-wrap{height:clamp(300px,44vh,420px);min-height:300px}
       .service-title{font-size:1.88rem}
       .service-copy{font-size:.9rem;line-height:1.58}
       .scene-cta{width:100%;justify-content:center}
@@ -268,7 +269,7 @@
           </div>
         </div>
 
-        <div class="flex items-center justify-center gap-2 mt-8">
+        <div class="service-step-row flex items-center justify-center gap-2 mt-6">
           <span class="service-step-dot is-active" data-service-step="0"></span>
           <span class="service-step-dot" data-service-step="1"></span>
           <span class="service-step-dot" data-service-step="2"></span>
@@ -617,25 +618,34 @@
   document.addEventListener('DOMContentLoaded', () => {
     const scrollTrack = document.getElementById('scroll-track');
     const stickyPane = document.querySelector('.service-sticky');
+    const serviceIntro = document.querySelector('.services-intro');
     const serviceStack = document.querySelector('.service-stack-wrap');
     const serviceScenes = document.querySelectorAll('.service-scene');
+    const serviceStepRow = document.querySelector('.service-step-row');
     const serviceStepDots = document.querySelectorAll('.service-step-dot');
     let lastIndex = -1;
     let lastSwitchAt = 0;
     const MIN_SWITCH_INTERVAL = 320;
 
     function syncServiceStackHeight() {
-      if (!serviceStack || serviceScenes.length === 0) return;
+      if (!serviceStack || !stickyPane || serviceScenes.length === 0) return;
       let maxCardHeight = 0;
       serviceScenes.forEach((scene) => {
         const card = scene.querySelector('.service-card');
         if (!card) return;
         maxCardHeight = Math.max(maxCardHeight, card.scrollHeight);
       });
-      const fallbackHeight = window.innerWidth < 640 ? 460 : 540;
+      const fallbackHeight = window.innerWidth < 640 ? 320 : 420;
       const measured = maxCardHeight > 200 ? maxCardHeight : fallbackHeight;
-      const buffer = window.innerWidth < 640 ? 28 : 46;
-      serviceStack.style.height = `${measured + buffer}px`;
+      const buffer = window.innerWidth < 640 ? 20 : 34;
+      const stickyHeight = stickyPane.offsetHeight || Math.max(520, window.innerHeight - 96);
+      const introHeight = serviceIntro ? serviceIntro.offsetHeight : 0;
+      const stepHeight = serviceStepRow ? serviceStepRow.offsetHeight : 0;
+      const reserved = introHeight + stepHeight + (window.innerWidth < 640 ? 34 : 48);
+      const minHeight = window.innerWidth < 640 ? 300 : 340;
+      const availableHeight = Math.max(minHeight, stickyHeight - reserved);
+      const targetHeight = Math.min(measured + buffer, availableHeight);
+      serviceStack.style.height = `${Math.max(minHeight, targetHeight)}px`;
     }
 
     function syncServiceTrackHeight() {
