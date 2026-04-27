@@ -49,7 +49,7 @@
     #services-scroll{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(1200px 560px at 12% -12%,rgba(62,95,171,.38),transparent 56%),radial-gradient(980px 500px at 90% 108%,rgba(7,19,44,.96),transparent 62%),linear-gradient(180deg,#081229 0%,#0a1a39 48%,#081229 100%)}
     #services-scroll::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.03),transparent 35%,rgba(255,255,255,.02) 62%,transparent 100%);pointer-events:none}
     #services-scroll::after{content:"";position:absolute;left:50%;bottom:-9rem;transform:translateX(-50%);width:42rem;height:18rem;border-radius:999px;background:radial-gradient(circle,rgba(28,54,103,.68),rgba(28,54,103,0) 70%);pointer-events:none}
-    .service-sticky{top:96px;height:calc(100svh - 96px);padding:1.25rem 0 .75rem;align-items:flex-start}
+    .service-sticky{top:96px;height:calc(100svh - 96px);padding:.85rem 0;align-items:center}
     .service-stack-wrap{perspective:2200px;perspective-origin:50% 44%;transform-style:preserve-3d;position:relative;height:clamp(390px,56vh,590px);min-height:390px}
     .services-intro{margin-bottom:.9rem}
     .services-eyebrow{color:#9eb7f1}
@@ -179,7 +179,7 @@
 
 <!-- ═══════════ SEQUENTIAL SCROLL SERVICES ═══════════ -->
 <section id="services-scroll" class="relative">
-  <div class="relative" id="scroll-track" style="height:380vh;">
+  <div class="relative" id="scroll-track" style="height:300vh;">
     <div class="service-sticky sticky w-full flex items-center justify-center">
       <div class="relative z-10 w-full max-w-[1240px] mx-auto px-6 md:px-10">
         <div class="text-center mb-3 md:mb-4 services-intro">
@@ -616,6 +616,7 @@
   // Sequential Scroll (Sticky Services) Logic
   document.addEventListener('DOMContentLoaded', () => {
     const scrollTrack = document.getElementById('scroll-track');
+    const stickyPane = document.querySelector('.service-sticky');
     const serviceStack = document.querySelector('.service-stack-wrap');
     const serviceScenes = document.querySelectorAll('.service-scene');
     const serviceStepDots = document.querySelectorAll('.service-step-dot');
@@ -637,6 +638,15 @@
       serviceStack.style.height = `${measured + buffer}px`;
     }
 
+    function syncServiceTrackHeight() {
+      if (!scrollTrack || !stickyPane || serviceScenes.length === 0) return;
+      const stickyHeight = stickyPane.offsetHeight || Math.max(520, window.innerHeight - 96);
+      const transitionSpan = Math.max(240, Math.min(420, window.innerHeight * 0.42));
+      const exitBuffer = Math.max(24, Math.min(72, window.innerHeight * 0.06));
+      const totalHeight = stickyHeight + ((serviceScenes.length - 1) * transitionSpan) + exitBuffer;
+      scrollTrack.style.height = `${Math.ceil(totalHeight)}px`;
+    }
+
     function setActiveService(index) {
       if (!Number.isFinite(index)) index = 0;
       index = Math.min(serviceScenes.length - 1, Math.max(0, Math.floor(index)));
@@ -648,16 +658,16 @@
     }
 
     function updateStickyScroll() {
-      if (!scrollTrack || serviceScenes.length === 0) return;
+      if (!scrollTrack || !stickyPane || serviceScenes.length === 0) return;
 
       const paneCount = serviceScenes.length;
       const sectionRect = scrollTrack.getBoundingClientRect();
       const sectionTop = window.scrollY + sectionRect.top;
       const sectionHeight = scrollTrack.offsetHeight;
+      const stickyHeight = stickyPane.offsetHeight || Math.max(1, window.innerHeight - 96);
       const navOffset = 96;
       const start = sectionTop - navOffset;
-      const end = sectionTop + sectionHeight - window.innerHeight;
-      const available = Math.max(1, end - start);
+      const available = Math.max(1, sectionHeight - stickyHeight);
       const rawProgress = (window.scrollY - start) / available;
       if (!Number.isFinite(rawProgress)) {
         setActiveService(0);
@@ -665,7 +675,10 @@
       }
 
       const progress = Math.min(1, Math.max(0, rawProgress));
-      const desiredIndex = Math.min(paneCount - 1, Math.max(0, Math.round(progress * (paneCount - 1))));
+      const desiredIndex = Math.min(
+        paneCount - 1,
+        Math.max(0, Math.floor(Math.min(.999999, progress) * paneCount))
+      );
 
       if (lastIndex < 0) {
         setActiveService(desiredIndex);
@@ -693,16 +706,19 @@
     window.addEventListener('scroll', queueScrollUpdate, { passive: true });
     window.addEventListener('resize', () => {
       syncServiceStackHeight();
+      syncServiceTrackHeight();
       queueScrollUpdate();
     });
     window.addEventListener('load', () => {
       syncServiceStackHeight();
+      syncServiceTrackHeight();
       queueScrollUpdate();
     });
 
     if (window.ResizeObserver) {
       const ro = new ResizeObserver(() => {
         syncServiceStackHeight();
+        syncServiceTrackHeight();
         queueScrollUpdate();
       });
       serviceScenes.forEach((scene) => {
@@ -713,10 +729,12 @@
 
     // Initial call
     syncServiceStackHeight();
+    syncServiceTrackHeight();
     setActiveService(0);
     queueScrollUpdate();
     setTimeout(() => {
       syncServiceStackHeight();
+      syncServiceTrackHeight();
       queueScrollUpdate();
     }, 250);
   });
