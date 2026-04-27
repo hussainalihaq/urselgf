@@ -50,8 +50,10 @@
     #services-scroll::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.03),transparent 35%,rgba(255,255,255,.02) 62%,transparent 100%);pointer-events:none}
     #services-scroll::after{content:"";position:absolute;left:50%;bottom:-9rem;transform:translateX(-50%);width:42rem;height:18rem;border-radius:999px;background:radial-gradient(circle,rgba(28,54,103,.68),rgba(28,54,103,0) 70%);pointer-events:none}
     .service-sticky{top:96px;height:calc(100svh - 96px);padding:1rem 0 .7rem;align-items:flex-start}
+    .service-stage{display:flex;flex-direction:column;height:100%}
     .service-stack-wrap{perspective:2200px;perspective-origin:50% 44%;transform-style:preserve-3d;position:relative;height:clamp(340px,48vh,520px);min-height:340px}
     .services-intro{margin-bottom:.9rem}
+    .service-step-row{flex:0 0 auto}
     .services-eyebrow{color:#9eb7f1}
     .services-heading{color:#f4f8ff;text-shadow:0 14px 38px rgba(2,8,21,.45)}
     .services-subtitle{color:#bfd0ee}
@@ -95,6 +97,16 @@
     }
     .service-step-dot{width:2.4rem;height:.24rem;border-radius:99px;background:rgba(140,166,222,.36);transition:all .28s ease}
     .service-step-dot.is-active{width:3.45rem;background:#d4a017}
+    @media (max-height:860px){
+      .services-intro{margin-bottom:.55rem}
+      .service-stack-wrap{height:clamp(300px,44vh,440px);min-height:300px}
+      .service-title{font-size:clamp(1.95rem,4.2vw,3.05rem)}
+      .service-copy{font-size:.92rem;line-height:1.55}
+      .service-chip-row{margin-top:.85rem;gap:.42rem}
+      .service-chip{padding:.4rem .62rem;font-size:.58rem}
+      .service-actions{margin-top:1rem}
+      .service-step-row{margin-top:.9rem}
+    }
     @media (max-width:1023px){
       .service-sticky{padding:.95rem 0 .62rem}
       .service-stack-wrap{perspective:1400px;height:clamp(320px,46vh,480px);min-height:320px}
@@ -182,7 +194,7 @@
 <section id="services-scroll" class="relative">
   <div class="relative" id="scroll-track" style="height:300vh;">
     <div class="service-sticky sticky w-full flex items-center justify-center">
-      <div class="relative z-10 w-full max-w-[1240px] mx-auto px-6 md:px-10">
+      <div class="service-stage relative z-10 w-full max-w-[1240px] mx-auto px-6 md:px-10">
         <div class="text-center mb-3 md:mb-4 services-intro">
           <p class="uppercase tracking-[.28em] text-[.72rem] font-bold mb-3 services-eyebrow">Our Services</p>
           <h2 class="text-[clamp(1.45rem,3.3vw,2.2rem)] mb-2 services-heading">Built To Stand Out In The Real Market</h2>
