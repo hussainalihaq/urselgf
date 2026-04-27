@@ -45,14 +45,14 @@
     @keyframes glassShine { 0% { transform: translateX(-150%) skewX(-15deg); } 100% { transform: translateX(250%) skewX(-15deg); } }
     .btn-shine-effect { position: absolute; top: 0; bottom: 0; left: 0; width: 60%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent); animation: glassShine 3s infinite; }
 
-    /* Services: premium dark pop-out section */
-    #services-scroll{position:relative;isolation:isolate;background:radial-gradient(1200px 560px at 12% -12%,rgba(62,95,171,.38),transparent 56%),radial-gradient(980px 500px at 90% 108%,rgba(7,19,44,.96),transparent 62%),linear-gradient(180deg,#081229 0%,#0a1a39 48%,#081229 100%); padding: 112px 0 20vh;}
-    #services-scroll::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.03),transparent 35%,rgba(255,255,255,.02) 62%,transparent 100%);pointer-events:none}
-    #services-scroll::after{content:"";position:absolute;left:50%;bottom:-1.1rem;transform:translateX(-50%);width:28rem;height:8rem;border-radius:999px;background:radial-gradient(circle,rgba(28,54,103,.28),rgba(28,54,103,0) 74%);pointer-events:none}
+    /* Services: premium light pop-out section */
+    #services-scroll{position:relative;isolation:isolate;background:#f8f9fc; padding: 112px 0 20vh;}
+    #services-scroll::before{display:none;}
+    #services-scroll::after{display:none;}
     .services-intro{margin-bottom:.7rem}
-    .services-eyebrow{color:#9eb7f1}
-    .services-heading{color:#f4f8ff;text-shadow:0 14px 38px rgba(2,8,21,.45)}
-    .services-subtitle{color:#bfd0ee}
+    .services-eyebrow{color:#203a7b}
+    .services-heading{color:#182a59}
+    .services-subtitle{color:#4a5877}
     /* Cards styled via Tailwind */
   </style>
 </head>
@@ -130,202 +130,202 @@
     <div class="w-full flex flex-col" id="service-stack">
       
       <!-- Service 01 -->
-      <div class="service-card sticky mb-[15vh] w-full p-8 md:p-16 rounded-[32px] border border-white/10 bg-gradient-to-br from-[#0e1d40] to-[#081229] shadow-[0_-10px_50px_rgba(4,10,24,0.7)] origin-top will-change-transform flex flex-col md:flex-row gap-8 md:gap-16 items-center justify-between" style="top: 15vh; z-index: 10;">
+      <div class="service-card sticky mb-[15vh] w-full p-8 md:p-16 rounded-[32px] border border-[#203a7b]/10 bg-white shadow-[0_-10px_50px_rgba(32,58,123,0.12)] origin-top will-change-transform flex flex-col md:flex-row gap-8 md:gap-16 items-center justify-between" style="top: 15vh; z-index: 10;">
         
         <!-- Left Content -->
         <div class="w-full md:w-1/2 flex flex-col">
           <div class="flex items-center gap-4 mb-6">
-            <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white">
+            <div class="w-16 h-16 rounded-2xl bg-[#edf3ff] border border-[#203a7b]/10 flex items-center justify-center text-[#203a7b]">
               <span class="material-symbols-outlined text-3xl">sell</span>
             </div>
-            <span class="text-[.65rem] uppercase tracking-[.2em] text-[#93a9d6] font-bold">SERVICE 01</span>
+            <span class="text-[.65rem] uppercase tracking-[.2em] text-[#203a7b] font-bold">SERVICE 01</span>
           </div>
           
-          <h3 class="font-bold text-white mb-4 leading-tight text-[clamp(2.2rem,4vw,3.5rem)]" style="font-family:'DM Serif Display',serif">
+          <h3 class="font-bold text-[#182a59] mb-4 leading-tight text-[clamp(2.2rem,4vw,3.5rem)]" style="font-family:'DM Serif Display',serif">
             Private Labeling
           </h3>
           
-          <p class="text-[1.05rem] text-[#b4c6e4] mb-8 max-w-md leading-relaxed">
+          <p class="text-[1.05rem] text-[#4a5877] mb-8 max-w-md leading-relaxed">
             Launch your own market-facing brand with premium sourcing, packaging, and execution under one trusted trade partner.
           </p>
 
           <div class="flex flex-col gap-3.5">
             <div class="flex items-center gap-3">
-              <div class="w-1.5 h-1.5 rounded-full bg-[#d4a017]"></div>
-              <span class="text-[.8rem] text-[#dce6fa] tracking-wide">Custom Brand Design</span>
+              <div class="w-1.5 h-1.5 rounded-full bg-[#203a7b]"></div>
+              <span class="text-[.8rem] text-[#4a5877] font-semibold tracking-wide">Custom Brand Design</span>
             </div>
             <div class="flex items-center gap-3">
-              <div class="w-1.5 h-1.5 rounded-full bg-[#d4a017]"></div>
-              <span class="text-[.8rem] text-[#dce6fa] tracking-wide">Retail Packaging</span>
+              <div class="w-1.5 h-1.5 rounded-full bg-[#203a7b]"></div>
+              <span class="text-[.8rem] text-[#4a5877] font-semibold tracking-wide">Retail Packaging</span>
             </div>
             <div class="flex items-center gap-3">
-              <div class="w-1.5 h-1.5 rounded-full bg-[#d4a017]"></div>
-              <span class="text-[.8rem] text-[#dce6fa] tracking-wide">Product Positioning</span>
+              <div class="w-1.5 h-1.5 rounded-full bg-[#203a7b]"></div>
+              <span class="text-[.8rem] text-[#4a5877] font-semibold tracking-wide">Product Positioning</span>
             </div>
             <div class="flex items-center gap-3">
-              <div class="w-1.5 h-1.5 rounded-full bg-[#d4a017]"></div>
-              <span class="text-[.8rem] text-[#dce6fa] tracking-wide">Global Fulfillment</span>
+              <div class="w-1.5 h-1.5 rounded-full bg-[#203a7b]"></div>
+              <span class="text-[.8rem] text-[#4a5877] font-semibold tracking-wide">Global Fulfillment</span>
             </div>
           </div>
 
           <button type="button" onclick="openServiceModal('Private Labeling', 'Launch your own market-facing brand with premium sourcing, packaging, and execution under one trusted trade partner.')" class="group relative mt-12 inline-flex items-center gap-3 w-fit overflow-hidden">
-            <span class="relative z-10 flex items-center gap-2 text-[.72rem] uppercase tracking-[.15em] text-[#0f1c3f] bg-white px-7 py-4 rounded-full font-bold transition-all duration-300 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] group-hover:scale-[1.02]">
+            <span class="relative z-10 flex items-center gap-2 text-[.72rem] uppercase tracking-[.15em] bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white shadow-lg px-7 py-4 rounded-full font-bold transition-all duration-300 group-hover:shadow-xl group-hover:scale-[1.02]">
               I Want This
               <span class="material-symbols-outlined text-sm transition-transform duration-300 group-hover:translate-x-1">arrow_forward</span>
             </span>
-            <span class="text-[.6rem] uppercase tracking-widest text-[#93a9d6] opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap ml-2">
+            <span class="text-[.6rem] uppercase tracking-widest text-[#4a5877] opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap ml-2 font-semibold">
               Free Consultation
             </span>
           </button>
         </div>
 
         <!-- Right Visual -->
-        <div class="w-full md:w-1/2 h-[320px] md:h-[480px] rounded-3xl border border-white/5 relative overflow-hidden group">
-          <div class="absolute inset-0 bg-gradient-to-t from-[#0a1428]/90 via-[#0a1428]/20 to-transparent z-10"></div>
-          <img src="https://images.pexels.com/photos/5122338/pexels-photo-5122338.jpeg?auto=compress&cs=tinysrgb&w=800" class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" alt="Private Labeling" />
+        <div class="w-full md:w-1/2 h-[320px] md:h-[480px] rounded-3xl border border-[#203a7b]/10 relative overflow-hidden group shadow-md">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent z-10"></div>
+          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" alt="Private Labeling" />
           
           <div class="absolute bottom-6 left-6 right-6 z-20 flex gap-4">
-             <div class="flex-1 p-5 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex flex-col shadow-lg">
+             <div class="flex-1 p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex flex-col shadow-lg">
                <span class="text-3xl text-white font-bold" style="font-family:'DM Serif Display',serif">150+</span>
-               <span class="text-[.6rem] text-[#93a9d6] uppercase tracking-widest mt-1">Brands Launched</span>
+               <span class="text-[.6rem] text-white/80 uppercase tracking-widest mt-1 font-semibold">Brands Launched</span>
              </div>
-             <div class="flex-1 p-5 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex flex-col shadow-lg">
-               <span class="text-3xl text-[#d4a017] font-bold" style="font-family:'DM Serif Display',serif">45 Days</span>
-               <span class="text-[.6rem] text-[#93a9d6] uppercase tracking-widest mt-1">Avg. Time to Market</span>
+             <div class="flex-1 p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex flex-col shadow-lg">
+               <span class="text-3xl text-[#ffd700] font-bold" style="font-family:'DM Serif Display',serif">45 Days</span>
+               <span class="text-[.6rem] text-white/80 uppercase tracking-widest mt-1 font-semibold">Avg. Time to Market</span>
              </div>
           </div>
         </div>
       </div>
 
       <!-- Service 02 -->
-      <div class="service-card sticky mb-[15vh] w-full p-8 md:p-16 rounded-[32px] border border-white/10 bg-gradient-to-br from-[#0e1d40] to-[#081229] shadow-[0_-10px_50px_rgba(4,10,24,0.7)] origin-top will-change-transform flex flex-col md:flex-row gap-8 md:gap-16 items-center justify-between" style="top: calc(15vh + 30px); z-index: 11;">
+      <div class="service-card sticky mb-[15vh] w-full p-8 md:p-16 rounded-[32px] border border-[#203a7b]/10 bg-white shadow-[0_-10px_50px_rgba(32,58,123,0.12)] origin-top will-change-transform flex flex-col md:flex-row gap-8 md:gap-16 items-center justify-between" style="top: calc(15vh + 30px); z-index: 11;">
         
         <div class="w-full md:w-1/2 flex flex-col">
           <div class="flex items-center gap-4 mb-6">
-            <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white">
+            <div class="w-16 h-16 rounded-2xl bg-[#edf3ff] border border-[#203a7b]/10 flex items-center justify-center text-[#203a7b]">
               <span class="material-symbols-outlined text-3xl">directions_boat</span>
             </div>
-            <span class="text-[.65rem] uppercase tracking-[.2em] text-[#93a9d6] font-bold">SERVICE 02</span>
+            <span class="text-[.65rem] uppercase tracking-[.2em] text-[#203a7b] font-bold">SERVICE 02</span>
           </div>
           
-          <h3 class="font-bold text-white mb-4 leading-tight text-[clamp(2.2rem,4vw,3.5rem)]" style="font-family:'DM Serif Display',serif">
+          <h3 class="font-bold text-[#182a59] mb-4 leading-tight text-[clamp(2.2rem,4vw,3.5rem)]" style="font-family:'DM Serif Display',serif">
             Import & Export
           </h3>
           
-          <p class="text-[1.05rem] text-[#b4c6e4] mb-8 max-w-md leading-relaxed">
+          <p class="text-[1.05rem] text-[#4a5877] mb-8 max-w-md leading-relaxed">
             End-to-end trade operations for shipments that move cleanly from origin to destination with visibility at every checkpoint.
           </p>
 
           <div class="flex flex-col gap-3.5">
             <div class="flex items-center gap-3">
-              <div class="w-1.5 h-1.5 rounded-full bg-[#d4a017]"></div>
-              <span class="text-[.8rem] text-[#dce6fa] tracking-wide">Port Coordination</span>
+              <div class="w-1.5 h-1.5 rounded-full bg-[#203a7b]"></div>
+              <span class="text-[.8rem] text-[#4a5877] font-semibold tracking-wide">Port Coordination</span>
             </div>
             <div class="flex items-center gap-3">
-              <div class="w-1.5 h-1.5 rounded-full bg-[#d4a017]"></div>
-              <span class="text-[.8rem] text-[#dce6fa] tracking-wide">Customs Clearance</span>
+              <div class="w-1.5 h-1.5 rounded-full bg-[#203a7b]"></div>
+              <span class="text-[.8rem] text-[#4a5877] font-semibold tracking-wide">Customs Clearance</span>
             </div>
             <div class="flex items-center gap-3">
-              <div class="w-1.5 h-1.5 rounded-full bg-[#d4a017]"></div>
-              <span class="text-[.8rem] text-[#dce6fa] tracking-wide">Freight Compliance</span>
+              <div class="w-1.5 h-1.5 rounded-full bg-[#203a7b]"></div>
+              <span class="text-[.8rem] text-[#4a5877] font-semibold tracking-wide">Freight Compliance</span>
             </div>
             <div class="flex items-center gap-3">
-              <div class="w-1.5 h-1.5 rounded-full bg-[#d4a017]"></div>
-              <span class="text-[.8rem] text-[#dce6fa] tracking-wide">Live Transit Updates</span>
+              <div class="w-1.5 h-1.5 rounded-full bg-[#203a7b]"></div>
+              <span class="text-[.8rem] text-[#4a5877] font-semibold tracking-wide">Live Transit Updates</span>
             </div>
           </div>
 
           <button type="button" onclick="openServiceModal('Import & Export', 'End-to-end trade operations for shipments that move cleanly from origin to destination with visibility at every checkpoint.')" class="group relative mt-12 inline-flex items-center gap-3 w-fit overflow-hidden">
-            <span class="relative z-10 flex items-center gap-2 text-[.72rem] uppercase tracking-[.15em] text-[#0f1c3f] bg-white px-7 py-4 rounded-full font-bold transition-all duration-300 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] group-hover:scale-[1.02]">
+            <span class="relative z-10 flex items-center gap-2 text-[.72rem] uppercase tracking-[.15em] bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white shadow-lg px-7 py-4 rounded-full font-bold transition-all duration-300 group-hover:shadow-xl group-hover:scale-[1.02]">
               I Want This
               <span class="material-symbols-outlined text-sm transition-transform duration-300 group-hover:translate-x-1">arrow_forward</span>
             </span>
-            <span class="text-[.6rem] uppercase tracking-widest text-[#93a9d6] opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap ml-2">
+            <span class="text-[.6rem] uppercase tracking-widest text-[#4a5877] opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap ml-2 font-semibold">
               Free Consultation
             </span>
           </button>
         </div>
 
         <!-- Right Visual -->
-        <div class="w-full md:w-1/2 h-[320px] md:h-[480px] rounded-3xl border border-white/5 relative overflow-hidden group">
-          <div class="absolute inset-0 bg-gradient-to-t from-[#0a1428]/90 via-[#0a1428]/20 to-transparent z-10"></div>
-          <img src="https://images.pexels.com/photos/10885296/pexels-photo-10885296.jpeg?auto=compress&cs=tinysrgb&w=800" class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" alt="Import & Export" />
+        <div class="w-full md:w-1/2 h-[320px] md:h-[480px] rounded-3xl border border-[#203a7b]/10 relative overflow-hidden group shadow-md">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent z-10"></div>
+          <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" alt="Import & Export" />
           
           <div class="absolute bottom-6 left-6 right-6 z-20 flex gap-4">
-             <div class="flex-1 p-5 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex flex-col shadow-lg">
+             <div class="flex-1 p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex flex-col shadow-lg">
                <span class="text-3xl text-white font-bold" style="font-family:'DM Serif Display',serif">10K+</span>
-               <span class="text-[.6rem] text-[#93a9d6] uppercase tracking-widest mt-1">TEUs Shipped</span>
+               <span class="text-[.6rem] text-white/80 uppercase tracking-widest mt-1 font-semibold">TEUs Shipped</span>
              </div>
-             <div class="flex-1 p-5 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex flex-col shadow-lg">
-               <span class="text-3xl text-[#d4a017] font-bold" style="font-family:'DM Serif Display',serif">60+</span>
-               <span class="text-[.6rem] text-[#93a9d6] uppercase tracking-widest mt-1">Global Ports Active</span>
+             <div class="flex-1 p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex flex-col shadow-lg">
+               <span class="text-3xl text-[#ffd700] font-bold" style="font-family:'DM Serif Display',serif">60+</span>
+               <span class="text-[.6rem] text-white/80 uppercase tracking-widest mt-1 font-semibold">Global Ports Active</span>
              </div>
           </div>
         </div>
       </div>
 
       <!-- Service 03 -->
-      <div class="service-card sticky w-full p-8 md:p-16 rounded-[32px] border border-white/10 bg-gradient-to-br from-[#0e1d40] to-[#081229] shadow-[0_-10px_50px_rgba(4,10,24,0.7)] origin-top will-change-transform flex flex-col md:flex-row gap-8 md:gap-16 items-center justify-between" style="top: calc(15vh + 60px); z-index: 12;">
+      <div class="service-card sticky w-full p-8 md:p-16 rounded-[32px] border border-[#203a7b]/10 bg-white shadow-[0_-10px_50px_rgba(32,58,123,0.12)] origin-top will-change-transform flex flex-col md:flex-row gap-8 md:gap-16 items-center justify-between" style="top: calc(15vh + 60px); z-index: 12;">
         
         <div class="w-full md:w-1/2 flex flex-col">
           <div class="flex items-center gap-4 mb-6">
-            <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white">
+            <div class="w-16 h-16 rounded-2xl bg-[#edf3ff] border border-[#203a7b]/10 flex items-center justify-center text-[#203a7b]">
               <span class="material-symbols-outlined text-3xl">handshake</span>
             </div>
-            <span class="text-[.65rem] uppercase tracking-[.2em] text-[#93a9d6] font-bold">SERVICE 03</span>
+            <span class="text-[.65rem] uppercase tracking-[.2em] text-[#203a7b] font-bold">SERVICE 03</span>
           </div>
           
-          <h3 class="font-bold text-white mb-4 leading-tight text-[clamp(2.2rem,4vw,3.5rem)]" style="font-family:'DM Serif Display',serif">
+          <h3 class="font-bold text-[#182a59] mb-4 leading-tight text-[clamp(2.2rem,4vw,3.5rem)]" style="font-family:'DM Serif Display',serif">
             End-to-End Sourcing
           </h3>
           
-          <p class="text-[1.05rem] text-[#b4c6e4] mb-8 max-w-md leading-relaxed">
+          <p class="text-[1.05rem] text-[#4a5877] mb-8 max-w-md leading-relaxed">
             From source discovery to delivered stock, we run one integrated chain for quality, speed, and predictable cost control.
           </p>
 
           <div class="flex flex-col gap-3.5">
             <div class="flex items-center gap-3">
-              <div class="w-1.5 h-1.5 rounded-full bg-[#d4a017]"></div>
-              <span class="text-[.8rem] text-[#dce6fa] tracking-wide">Supplier Verification</span>
+              <div class="w-1.5 h-1.5 rounded-full bg-[#203a7b]"></div>
+              <span class="text-[.8rem] text-[#4a5877] font-semibold tracking-wide">Supplier Verification</span>
             </div>
             <div class="flex items-center gap-3">
-              <div class="w-1.5 h-1.5 rounded-full bg-[#d4a017]"></div>
-              <span class="text-[.8rem] text-[#dce6fa] tracking-wide">Lot Quality Control</span>
+              <div class="w-1.5 h-1.5 rounded-full bg-[#203a7b]"></div>
+              <span class="text-[.8rem] text-[#4a5877] font-semibold tracking-wide">Lot Quality Control</span>
             </div>
             <div class="flex items-center gap-3">
-              <div class="w-1.5 h-1.5 rounded-full bg-[#d4a017]"></div>
-              <span class="text-[.8rem] text-[#dce6fa] tracking-wide">Cost Optimization</span>
+              <div class="w-1.5 h-1.5 rounded-full bg-[#203a7b]"></div>
+              <span class="text-[.8rem] text-[#4a5877] font-semibold tracking-wide">Cost Optimization</span>
             </div>
             <div class="flex items-center gap-3">
-              <div class="w-1.5 h-1.5 rounded-full bg-[#d4a017]"></div>
-              <span class="text-[.8rem] text-[#dce6fa] tracking-wide">Single-SLA Delivery</span>
+              <div class="w-1.5 h-1.5 rounded-full bg-[#203a7b]"></div>
+              <span class="text-[.8rem] text-[#4a5877] font-semibold tracking-wide">Single-SLA Delivery</span>
             </div>
           </div>
 
           <button type="button" onclick="openServiceModal('End-to-End Sourcing', 'From source discovery to delivered stock, we run one integrated chain for quality, speed, and predictable cost control.')" class="group relative mt-12 inline-flex items-center gap-3 w-fit overflow-hidden">
-            <span class="relative z-10 flex items-center gap-2 text-[.72rem] uppercase tracking-[.15em] text-[#0f1c3f] bg-white px-7 py-4 rounded-full font-bold transition-all duration-300 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] group-hover:scale-[1.02]">
+            <span class="relative z-10 flex items-center gap-2 text-[.72rem] uppercase tracking-[.15em] bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white shadow-lg px-7 py-4 rounded-full font-bold transition-all duration-300 group-hover:shadow-xl group-hover:scale-[1.02]">
               I Want This
               <span class="material-symbols-outlined text-sm transition-transform duration-300 group-hover:translate-x-1">arrow_forward</span>
             </span>
-            <span class="text-[.6rem] uppercase tracking-widest text-[#93a9d6] opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap ml-2">
+            <span class="text-[.6rem] uppercase tracking-widest text-[#4a5877] opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap ml-2 font-semibold">
               Free Consultation
             </span>
           </button>
         </div>
 
         <!-- Right Visual -->
-        <div class="w-full md:w-1/2 h-[320px] md:h-[480px] rounded-3xl border border-white/5 relative overflow-hidden group">
-          <div class="absolute inset-0 bg-gradient-to-t from-[#0a1428]/90 via-[#0a1428]/20 to-transparent z-10"></div>
-          <img src="https://images.pexels.com/photos/16846044/pexels-photo-16846044.jpeg?auto=compress&cs=tinysrgb&w=800" class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" alt="End-to-End Sourcing" />
+        <div class="w-full md:w-1/2 h-[320px] md:h-[480px] rounded-3xl border border-[#203a7b]/10 relative overflow-hidden group shadow-md">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent z-10"></div>
+          <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=800&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" alt="End-to-End Sourcing" />
           
           <div class="absolute bottom-6 left-6 right-6 z-20 flex gap-4">
-             <div class="flex-1 p-5 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex flex-col shadow-lg">
+             <div class="flex-1 p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex flex-col shadow-lg">
                <span class="text-3xl text-white font-bold" style="font-family:'DM Serif Display',serif">300+</span>
-               <span class="text-[.6rem] text-[#93a9d6] uppercase tracking-widest mt-1">Verified Suppliers</span>
+               <span class="text-[.6rem] text-white/80 uppercase tracking-widest mt-1 font-semibold">Verified Suppliers</span>
              </div>
-             <div class="flex-1 p-5 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex flex-col shadow-lg">
-               <span class="text-3xl text-[#d4a017] font-bold" style="font-family:'DM Serif Display',serif">&lt;0.1%</span>
-               <span class="text-[.6rem] text-[#93a9d6] uppercase tracking-widest mt-1">Defect Rate</span>
+             <div class="flex-1 p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex flex-col shadow-lg">
+               <span class="text-3xl text-[#ffd700] font-bold" style="font-family:'DM Serif Display',serif">&lt;0.1%</span>
+               <span class="text-[.6rem] text-white/80 uppercase tracking-widest mt-1 font-semibold">Defect Rate</span>
              </div>
           </div>
         </div>
