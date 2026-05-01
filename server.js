@@ -2,6 +2,7 @@ const http = require('node:http');
 const fs = require('node:fs/promises');
 const path = require('node:path');
 const { randomUUID } = require('node:crypto');
+const { buildCheckoutContactRecord, buildCheckoutResponse } = require('./api/_lib/checkout');
 
 const ROOT = __dirname;
 const DATA_DIR = path.join(ROOT, 'data');
@@ -258,6 +259,8 @@ const pageRoutes = {
   '/': 'index.html',
   '/home': 'index.html',
   '/home/': 'index.html',
+  '/checkout': 'checkout/index.html',
+  '/checkout/': 'checkout/index.html',
   '/products': 'products/index.html',
   '/products/': 'products/index.html',
   '/about': 'ameer_global_about_network_refined/index.html',
@@ -418,6 +421,34 @@ async function handleApi(req, res, pathname) {
       return true;
     } catch (err) {
       json(res, 400, { error: err.message || 'Invalid request' });
+      return true;
+    }
+  }
+
+  if (req.method === 'POST' && pathname === '/api/checkout') {
+    try {
+      const body = await readBody(req);
+      const checkout = buildCheckoutContactRecord(body);
+      await insertContactRecord(checkout.contactRecord);
+
+      json(res, 201, {
+        ok: true,
+        availability: {
+          eligible: true,
+          city: checkout.availability.city.label,
+          region: checkout.availability.region,
+          postalCode: checkout.availability.postalCode
+        },
+        payment: buildCheckoutResponse(
+          checkout.paymentMethod,
+          checkout.contactRecord.product,
+          checkout.contactRecord.email
+        ),
+        submissionId: checkout.contactRecord.id
+      });
+      return true;
+    } catch (err) {
+      json(res, 400, { error: err.message || 'Unable to continue checkout.' });
       return true;
     }
   }

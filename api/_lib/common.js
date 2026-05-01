@@ -196,6 +196,7 @@ module.exports = {
   createNewsletterRecord,
   insertContact,
   json,
+  normalizeText,
   newsletterExists,
   readBody,
   supabaseInsert
