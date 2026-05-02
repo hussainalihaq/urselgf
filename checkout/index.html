@@ -3,25 +3,23 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>GTA Checkout | Ameer Global INC.</title>
-  <meta name="description" content="Interactive GTA checkout with live availability and payment handoff."/>
+  <title>Checkout | Ameer Global INC.</title>
+  <meta name="description" content="GTA checkout with live delivery availability and secure Stripe payment."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <style>
     :root{
-      --brand-900:#1f4ea5;
-      --brand-700:#3f6fd0;
-      --brand-100:#edf3ff;
+      --brand-900:#19489f;
+      --brand-700:#3e6ccc;
       --ink-900:#152545;
       --ink-700:#4f6286;
-      --ink-500:#7b8ca9;
-      --ok:#1d7a4f;
-      --warn:#a33a2d;
-      --ok-bg:#e9f8f0;
-      --warn-bg:#ffeceb;
+      --ink-500:#7a8ca9;
+      --ok:#1f7a52;
+      --ok-bg:#eafaf2;
+      --warn:#a3392f;
+      --warn-bg:#ffefee;
     }
     *{box-sizing:border-box}
     body{
@@ -29,86 +27,107 @@
       font-family:'Outfit',sans-serif;
       color:var(--ink-900);
       background:
-        radial-gradient(900px 420px at 88% -12%,rgba(84,125,221,.18),transparent 58%),
-        radial-gradient(720px 360px at -12% 20%,rgba(31,78,165,.12),transparent 56%),
-        linear-gradient(180deg,#f4f8ff,#f8fbff 52%,#f2f6fd);
+        radial-gradient(900px 420px at 95% -15%,rgba(62,108,204,.15),transparent 58%),
+        radial-gradient(760px 420px at -18% 8%,rgba(25,72,159,.1),transparent 56%),
+        linear-gradient(180deg,#f6f9ff,#f9fbff 56%,#f4f8ff);
     }
-    h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-.01em}
-    .material-symbols-outlined{font-family:'Material Symbols Outlined'!important;line-height:1!important}
+    h1,h2,h3{font-family:'Fraunces',serif;font-weight:600}
     .frost{
-      background:rgba(255,255,255,.76);
-      border:1px solid rgba(31,78,165,.12);
-      backdrop-filter:blur(14px);
-      -webkit-backdrop-filter:blur(14px);
-      box-shadow:0 22px 44px rgba(17,43,94,.08);
+      background:rgba(255,255,255,.82);
+      border:1px solid rgba(25,72,159,.12);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      box-shadow:0 24px 44px rgba(18,45,97,.08);
     }
-    .chip{border:1px solid rgba(31,78,165,.18);background:#fff}
-    .chip.on{border-color:rgba(31,78,165,.4);background:#edf3ff;color:#1f4ea5}
-    .map-region{fill:#ecf3ff;stroke:#9db8ea;stroke-width:2;transition:all .25s}
-    .map-region.on{fill:#c8ddff;stroke:#2c5ebf;filter:drop-shadow(0 6px 14px rgba(44,94,191,.24))}
-    .map-marker{fill:#f4f8ff;stroke:#365fa8;stroke-width:2.4;transition:all .22s}
-    .map-marker.on{fill:#ffd28f;stroke:#8f4d08;transform:scale(1.18)}
-    .status{border:1px solid rgba(31,78,165,.14);background:#fff}
-    .status.ok{border-color:rgba(29,122,79,.24);background:var(--ok-bg);color:var(--ok)}
-    .status.no{border-color:rgba(163,58,45,.25);background:var(--warn-bg);color:var(--warn)}
-    .pay-card{border:1px solid rgba(31,78,165,.14);background:#fff;transition:all .2s;cursor:pointer}
-    .pay-card.on{border-color:rgba(31,78,165,.46);background:linear-gradient(180deg,#fff,#eff4ff);box-shadow:0 12px 22px rgba(31,78,165,.12)}
-    .pay-locked{opacity:.45;pointer-events:none;filter:grayscale(.2)}
+    .reveal{opacity:0;transform:translateY(12px);animation:reveal .55s ease forwards}
+    .d1{animation-delay:.08s}
+    .d2{animation-delay:.16s}
+    .d3{animation-delay:.24s}
+    @keyframes reveal{to{opacity:1;transform:translateY(0)}}
+    .chip{border:1px solid rgba(25,72,159,.2);background:#fff}
+    .chip.on{background:#eaf1ff;border-color:rgba(25,72,159,.45);color:#1d4da5}
+    .status{border:1px solid rgba(25,72,159,.14);background:#fff}
+    .status.ok{border-color:rgba(31,122,82,.24);background:var(--ok-bg);color:var(--ok)}
+    .status.no{border-color:rgba(163,57,47,.24);background:var(--warn-bg);color:var(--warn)}
+    .map-region{fill:#ecf3ff;stroke:#96b3e8;stroke-width:2;transition:all .22s}
+    .map-region.on{fill:#ccddff;stroke:#295ebf;filter:drop-shadow(0 7px 12px rgba(41,94,191,.22))}
+    .map-marker{fill:#f4f8ff;stroke:#2f5ea8;stroke-width:2.4;transition:all .2s}
+    .map-marker.on{fill:#ffcb83;stroke:#8c4a08;transform:scale(1.16)}
+    .pulse{
+      transform-origin:center;
+      animation:pulse 2.2s ease infinite;
+    }
+    @keyframes pulse{
+      0%,100%{opacity:.7}
+      50%{opacity:1}
+    }
+    .qty-btn{
+      width:40px;
+      height:40px;
+      border:1px solid rgba(25,72,159,.18);
+      background:#fff;
+      border-radius:.75rem;
+      font-size:1.18rem;
+      font-weight:700;
+      color:#1d4ca2;
+    }
     .cta{
       background:linear-gradient(140deg,var(--brand-900),var(--brand-700));
       color:#fff;
-      box-shadow:0 16px 28px rgba(31,78,165,.2);
+      box-shadow:0 16px 30px rgba(25,72,159,.24);
     }
-    .qty-btn{width:40px;height:40px;border:1px solid rgba(31,78,165,.18);background:#fff;border-radius:.75rem;font-size:1.2rem;font-weight:700;color:#204ca0}
+    .money{
+      font-variant-numeric:tabular-nums;
+      font-feature-settings:"tnum";
+    }
   </style>
 </head>
 <body>
-  <nav class="sticky top-0 z-50 border-b border-[#1f4ea5]/10 bg-white/85 backdrop-blur">
+  <nav class="sticky top-0 z-50 border-b border-[#19489f]/10 bg-white/86 backdrop-blur">
     <div class="mx-auto flex max-w-[1320px] items-center justify-between px-6 py-4 md:px-10">
       <a href="/"><img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png" class="h-[52px] w-auto"/></a>
-      <a href="/products/" class="rounded-xl border border-[#1f4ea5]/16 bg-white px-4 py-2 text-[.74rem] font-bold uppercase tracking-[.14em] text-[#1f4ea5]">Back to products</a>
+      <a href="/products/" class="rounded-xl border border-[#19489f]/18 bg-white px-4 py-2 text-[.74rem] font-bold uppercase tracking-[.14em] text-[#1f4ea5]">Back to products</a>
     </div>
   </nav>
 
-  <main class="mx-auto max-w-[1320px] px-6 pb-20 pt-7 md:px-10">
-    <section class="frost rounded-[1.8rem] p-6 md:p-8">
-      <div class="grid gap-7 lg:grid-cols-[1.2fr_.8fr]">
+  <main class="mx-auto max-w-[1320px] px-6 pb-20 pt-8 md:px-10">
+    <section class="frost reveal rounded-[1.8rem] p-6 md:p-8">
+      <div class="grid gap-7 lg:grid-cols-[1.15fr_.85fr]">
         <div>
-          <span class="inline-flex items-center gap-2 rounded-full border border-[#1f4ea5]/16 bg-[#edf3ff] px-4 py-2 text-[.68rem] font-bold uppercase tracking-[.2em] text-[#2d5ebf]">
-            <span class="inline-block h-2 w-2 rounded-full bg-[#f4b84a]"></span>GTA Orders Active
+          <span class="inline-flex items-center gap-2 rounded-full border border-[#19489f]/16 bg-[#eaf1ff] px-4 py-2 text-[.68rem] font-bold uppercase tracking-[.2em] text-[#2b5dc0]">
+            <span class="inline-block h-2 w-2 rounded-full bg-[#e2b661]"></span>GTA Checkout
           </span>
-          <h1 class="mt-4 text-[clamp(2rem,5vw,4rem)] leading-[1.02] text-[#122851]">Local Checkout<br/>That Actually Verifies</h1>
-          <p class="mt-4 max-w-[62ch] text-[1.02rem] leading-relaxed text-[#51658a]">Set quantity, verify GTA delivery using city + postal code, then continue to payment. This page now calls a live availability API before allowing checkout completion.</p>
-          <div class="mt-6 flex flex-wrap gap-2 text-[.68rem] font-bold uppercase tracking-[.14em]">
-            <span class="chip rounded-full px-3 py-2 text-[#5874a6]">Step 1 Product + Quantity</span>
-            <span class="chip rounded-full px-3 py-2 text-[#5874a6]">Step 2 Availability Check</span>
-            <span class="chip rounded-full px-3 py-2 text-[#5874a6]">Step 3 Payment Method</span>
+          <h1 class="mt-4 text-[clamp(2rem,5vw,4rem)] leading-[1.02] text-[#132a54]">Complete your order in minutes</h1>
+          <p class="mt-4 max-w-[62ch] text-[1rem] leading-relaxed text-[#52688f]">Choose quantity, verify GTA delivery availability, review your CAD bill, then continue to secure Stripe payment.</p>
+          <div class="mt-6 flex flex-wrap gap-2 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#6078a5]">
+            <span class="chip rounded-full px-3 py-2">Quantity</span>
+            <span class="chip rounded-full px-3 py-2">Availability</span>
+            <span class="chip rounded-full px-3 py-2">CAD Bill</span>
+            <span class="chip rounded-full px-3 py-2">Stripe</span>
           </div>
         </div>
-        <div class="rounded-[1.3rem] border border-[#1f4ea5]/10 bg-gradient-to-b from-[#f6f9ff] to-[#eef4ff] p-5">
-          <div class="text-[.66rem] font-bold uppercase tracking-[.16em] text-[#6b7fa8]">Coverage</div>
-          <div class="mt-2 text-[1.05rem] font-semibold text-[#1a386f]">Toronto, Peel, York, Halton, Durham</div>
-          <div class="mt-4 text-[.92rem] leading-relaxed text-[#4f6286]">Delivery is available only for approved GTA city/postal combinations. Quantity affects route priority and review speed.</div>
-          <div class="mt-4 rounded-xl border border-[#1f4ea5]/10 bg-white px-3 py-2 text-[.78rem] text-[#4f6286]">
-            <strong class="text-[#1f4ea5]">Stripe handoff:</strong> Active as soon as `STRIPE_PAYMENT_LINK_URL` is configured.
-          </div>
+        <div class="rounded-[1.35rem] border border-[#19489f]/10 bg-gradient-to-b from-[#f7faff] to-[#edf4ff] p-5">
+          <div class="text-[.66rem] font-bold uppercase tracking-[.16em] text-[#6a80ab]">Delivery Scope</div>
+          <div class="mt-2 text-[1.04rem] font-semibold text-[#1a386f]">Greater Toronto Area (GTA)</div>
+          <p class="mt-3 text-[.92rem] leading-relaxed text-[#4e6389]">Toronto, Peel, York, Halton, and Durham are currently active. Availability is checked live by city + postal code.</p>
+          <div class="mt-4 rounded-xl border border-[#19489f]/12 bg-white px-3 py-2 text-[.8rem] text-[#4f6286]">All checkout totals are shown in <strong>CAD</strong> including HST.</div>
         </div>
       </div>
     </section>
 
     <section class="mt-8 grid gap-8 lg:grid-cols-[1fr_1fr]">
-      <article class="frost rounded-[1.8rem] p-6 md:p-8">
-        <p class="text-[.7rem] font-bold uppercase tracking-[.2em] text-[#5e74a1]">GTA Map</p>
-        <h2 class="mt-3 text-[2rem] text-[#142a53]">Availability Zones</h2>
-        <p class="mt-2 text-sm leading-relaxed text-[#52678d]">When your city is selected, the map and status panel update. Click city chips or use the dropdown in the form.</p>
-        <div class="mt-5 rounded-2xl border border-[#1f4ea5]/12 bg-gradient-to-b from-white to-[#f2f7ff] p-4">
+      <article class="frost reveal d1 rounded-[1.8rem] p-6 md:p-8">
+        <p class="text-[.7rem] font-bold uppercase tracking-[.2em] text-[#5f76a3]">Map</p>
+        <h2 class="mt-3 text-[2rem] text-[#142a53]">Live Availability Zones</h2>
+        <p class="mt-2 text-sm leading-relaxed text-[#52678d]">Select a city below or in the form to highlight service regions.</p>
+        <div class="mt-5 rounded-2xl border border-[#19489f]/12 bg-gradient-to-b from-white to-[#f2f7ff] p-4">
           <svg viewBox="0 0 720 380" class="w-full">
             <path class="map-region" id="region-halton" d="M82 130 L182 94 L250 101 L238 203 L120 222 L65 182 Z"></path>
             <path class="map-region" id="region-peel" d="M248 98 L360 84 L372 187 L260 205 L238 198 Z"></path>
             <path class="map-region" id="region-york" d="M310 34 L479 28 L515 112 L373 132 L308 112 Z"></path>
             <path class="map-region" id="region-toronto" d="M378 134 L503 123 L519 197 L401 210 L360 180 Z"></path>
             <path class="map-region" id="region-durham" d="M520 111 L639 87 L667 196 L540 211 L515 184 Z"></path>
-            <g>
+            <g class="pulse">
               <circle class="map-marker" data-city-key="toronto" cx="424" cy="182" r="8"></circle>
               <circle class="map-marker" data-city-key="mississauga" cx="268" cy="190" r="8"></circle>
               <circle class="map-marker" data-city-key="brampton" cx="283" cy="140" r="8"></circle>
@@ -126,22 +145,22 @@
           </svg>
         </div>
         <div class="mt-4 flex flex-wrap gap-2" id="city-chips">
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6d93]" data-city="Toronto">Toronto</button>
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6d93]" data-city="Mississauga">Mississauga</button>
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6d93]" data-city="Brampton">Brampton</button>
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6d93]" data-city="Markham">Markham</button>
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6d93]" data-city="Vaughan">Vaughan</button>
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6d93]" data-city="Oakville">Oakville</button>
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6d93]" data-city="Pickering">Pickering</button>
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6d93]" data-city="Ajax">Ajax</button>
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6d93]" data-city="Whitby">Whitby</button>
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6d93]" data-city="Oshawa">Oshawa</button>
+          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Toronto">Toronto</button>
+          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Mississauga">Mississauga</button>
+          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Brampton">Brampton</button>
+          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Markham">Markham</button>
+          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Vaughan">Vaughan</button>
+          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Oakville">Oakville</button>
+          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Pickering">Pickering</button>
+          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Ajax">Ajax</button>
+          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Whitby">Whitby</button>
+          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Oshawa">Oshawa</button>
         </div>
       </article>
 
-      <article class="frost rounded-[1.8rem] p-6 md:p-8">
+      <article class="frost reveal d2 rounded-[1.8rem] p-6 md:p-8">
         <form id="checkout-form" class="space-y-6">
-          <div class="grid gap-4 rounded-2xl border border-[#1f4ea5]/10 bg-white p-4 md:grid-cols-[140px_1fr]">
+          <div class="grid gap-4 rounded-2xl border border-[#19489f]/10 bg-white p-4 md:grid-cols-[140px_1fr]">
             <img id="product-image" src="/assets/new-mango-photo.png" alt="Product" class="h-full min-h-[110px] w-full rounded-xl object-cover"/>
             <div>
               <div class="text-[.64rem] font-bold uppercase tracking-[.14em] text-[#7086ae]">Product</div>
@@ -153,32 +172,31 @@
           <div class="grid gap-4 md:grid-cols-2">
             <div>
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="name">Full Name</label>
-              <input id="name" required type="text" class="w-full rounded-xl border border-[#1f4ea5]/14 bg-white px-4 py-3 text-sm"/>
+              <input id="name" required type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3 text-sm"/>
             </div>
             <div>
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="email">Email</label>
-              <input id="email" required type="email" class="w-full rounded-xl border border-[#1f4ea5]/14 bg-white px-4 py-3 text-sm"/>
+              <input id="email" required type="email" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3 text-sm"/>
             </div>
             <div>
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="phone">Phone</label>
-              <input id="phone" required type="tel" class="w-full rounded-xl border border-[#1f4ea5]/14 bg-white px-4 py-3 text-sm"/>
+              <input id="phone" required type="tel" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3 text-sm"/>
             </div>
             <div>
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]">Quantity</label>
               <div class="flex items-center gap-3">
                 <button id="qty-minus" type="button" class="qty-btn">-</button>
-                <input id="quantity" value="1" min="1" max="500" required type="number" class="w-full rounded-xl border border-[#1f4ea5]/14 bg-white px-4 py-3 text-sm text-center font-semibold"/>
+                <input id="quantity" value="1" min="1" max="500" required type="number" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3 text-sm text-center font-semibold"/>
                 <button id="qty-plus" type="button" class="qty-btn">+</button>
               </div>
-              <p id="qty-note" class="mt-2 text-[.78rem] text-[#6880aa]">Route profile updates when quantity changes.</p>
             </div>
             <div class="md:col-span-2">
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address1">Street Address</label>
-              <input id="address1" required type="text" class="w-full rounded-xl border border-[#1f4ea5]/14 bg-white px-4 py-3 text-sm"/>
+              <input id="address1" required type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3 text-sm"/>
             </div>
             <div>
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="city">Delivery City</label>
-              <select id="city" required class="w-full rounded-xl border border-[#1f4ea5]/14 bg-white px-4 py-3 text-sm">
+              <select id="city" required class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3 text-sm">
                 <option value="">Select city</option>
                 <option>Toronto</option>
                 <option>Mississauga</option>
@@ -199,50 +217,48 @@
             </div>
             <div>
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="postal">Postal Code</label>
-              <input id="postal" required placeholder="M5V 2T6" type="text" class="w-full rounded-xl border border-[#1f4ea5]/14 bg-white px-4 py-3 text-sm uppercase"/>
+              <input id="postal" required placeholder="M5V 2T6" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3 text-sm uppercase"/>
             </div>
             <div class="md:col-span-2">
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address2">Unit / Suite</label>
-              <input id="address2" type="text" class="w-full rounded-xl border border-[#1f4ea5]/14 bg-white px-4 py-3 text-sm"/>
+              <input id="address2" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3 text-sm"/>
             </div>
           </div>
 
-          <div id="availability-panel" class="status rounded-2xl p-4" data-state="idle">
+          <div id="availability-panel" class="status rounded-2xl p-4">
             <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <div>
                 <div class="text-[.66rem] font-bold uppercase tracking-[.14em]">Availability</div>
-                <p id="availability-text" class="mt-1 text-sm text-[#51668c]">Check GTA availability to unlock payment methods.</p>
+                <p id="availability-text" class="mt-1 text-sm text-[#51668c]">Check availability to continue.</p>
                 <p id="availability-profile" class="mt-2 text-[.78rem] text-[#6f85ab]"></p>
               </div>
-              <button id="check-availability" type="button" class="rounded-xl border border-[#1f4ea5]/16 bg-white px-4 py-3 text-[.7rem] font-bold uppercase tracking-[.14em] text-[#1f4ea5]">Check now</button>
+              <button id="check-availability" type="button" class="rounded-xl border border-[#19489f]/16 bg-white px-4 py-3 text-[.7rem] font-bold uppercase tracking-[.14em] text-[#1f4ea5]">Check now</button>
             </div>
           </div>
 
-          <section id="payment-wrap" class="pay-locked space-y-4">
-            <h3 class="text-[1.2rem] text-[#17325f]">Payment Method</h3>
-            <div class="grid gap-3 md:grid-cols-3">
-              <label class="pay-card on rounded-2xl p-4" data-pay="stripe">
-                <input type="radio" name="pay" value="stripe" checked hidden/>
-                <div class="text-[.65rem] font-bold uppercase tracking-[.14em] text-[#6580af]">Primary</div>
-                <div class="mt-2 text-[1rem] font-semibold text-[#1a386f]">Stripe Checkout</div>
-              </label>
-              <label class="pay-card rounded-2xl p-4" data-pay="interac">
-                <input type="radio" name="pay" value="interac" hidden/>
-                <div class="text-[.65rem] font-bold uppercase tracking-[.14em] text-[#6580af]">Alternative</div>
-                <div class="mt-2 text-[1rem] font-semibold text-[#1a386f]">Interac</div>
-              </label>
-              <label class="pay-card rounded-2xl p-4" data-pay="invoice">
-                <input type="radio" name="pay" value="invoice" hidden/>
-                <div class="text-[.65rem] font-bold uppercase tracking-[.14em] text-[#6580af]">Trade Desk</div>
-                <div class="mt-2 text-[1rem] font-semibold text-[#1a386f]">Invoice</div>
-              </label>
+          <section class="rounded-2xl border border-[#19489f]/12 bg-white p-4 reveal d3">
+            <div class="flex items-start justify-between gap-3">
+              <h3 class="text-[1.1rem] text-[#17325f]">Bill Summary (CAD)</h3>
+              <span class="rounded-full bg-[#edf3ff] px-3 py-1 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#305fbf]">Tax Included</span>
+            </div>
+            <div class="mt-3 space-y-2 text-sm text-[#51668c]">
+              <div class="flex items-center justify-between"><span>Unit price</span><strong id="bill-unit" class="money text-[#17325f]">$0.00</strong></div>
+              <div class="flex items-center justify-between"><span>Quantity</span><strong id="bill-qty" class="money text-[#17325f]">1</strong></div>
+              <div class="flex items-center justify-between"><span>Subtotal</span><strong id="bill-subtotal" class="money text-[#17325f]">$0.00</strong></div>
+              <div class="flex items-center justify-between"><span>HST (13%)</span><strong id="bill-hst" class="money text-[#17325f]">$0.00</strong></div>
+              <div class="mt-2 border-t border-[#19489f]/12 pt-2 flex items-center justify-between"><span class="font-semibold text-[#17325f]">Total</span><strong id="bill-total" class="money text-[1.04rem] text-[#17325f]">$0.00</strong></div>
             </div>
           </section>
 
-          <div class="flex flex-col gap-3 sm:flex-row">
-            <button id="continue-pay" type="button" class="rounded-xl border border-[#1f4ea5]/18 bg-white px-5 py-3 text-[.72rem] font-bold uppercase tracking-[.14em] text-[#1f4ea5]" disabled>Continue to payment</button>
-            <button id="complete-order" type="submit" class="cta rounded-xl px-5 py-3 text-[.72rem] font-bold uppercase tracking-[.14em]" disabled>Continue to Stripe checkout</button>
-          </div>
+          <section id="payment-wrap" class="rounded-2xl border border-[#19489f]/12 bg-[#f7faff] p-4 opacity-45 pointer-events-none">
+            <h3 class="text-[1.05rem] text-[#17325f]">Payment Method</h3>
+            <div class="mt-3 rounded-xl border border-[#19489f]/14 bg-white p-4">
+              <div class="text-[.64rem] font-bold uppercase tracking-[.14em] text-[#6680af]">Secure Checkout</div>
+              <div class="mt-1 text-[1rem] font-semibold text-[#1a386f]">Stripe</div>
+            </div>
+          </section>
+
+          <button id="complete-order" type="submit" class="cta rounded-xl px-5 py-3 text-[.72rem] font-bold uppercase tracking-[.14em]" disabled>Continue to Stripe checkout</button>
           <p id="checkout-status" class="text-sm text-[#596f96]">Availability is required before checkout submission.</p>
         </form>
       </article>
@@ -251,15 +267,15 @@
 
   <script>
     const productCatalog = {
-      'Sindhri Mangoes': { unit: '6kg box', origin: 'Sindh, Pakistan', image: '/assets/sindhri-mangoes.png' },
-      'Anwar Ratol Mangoes': { unit: '4kg box', origin: 'Punjab, Pakistan', image: '/assets/anwar-ratol-mangoes.png' },
-      'Chaunsa Mangoes': { unit: '5kg box', origin: 'Multan, Pakistan', image: '/assets/chaunsa-mangoes.png' },
-      'Chaunsa Mango Premium Box': { unit: '5kg box', origin: 'Multan, Pakistan', image: '/assets/chaunsa-mangoes.png' },
-      'Anwar Ratol Mango Reserve': { unit: '4kg box', origin: 'Punjab, Pakistan', image: '/assets/anwar-ratol-mangoes.png' },
-      'Sindhri Mango Estate Selection': { unit: '6kg box', origin: 'Sindh, Pakistan', image: '/assets/sindhri-mangoes.png' },
-      'Himalayan Salt': { unit: 'Bulk or retail packs', origin: 'Khewra, Pakistan', image: '/assets/himalayan-salt.png' },
-      'EcoWare Naturals': { unit: 'Trade case', origin: 'Pakistan', image: '/assets/eco-utensils.png' },
-      'De-Icing Salt': { unit: 'Bulk pallet', origin: 'Pakistan', image: '/assets/deicing-salt.png' }
+      'Sindhri Mangoes': { unit: '6kg box', origin: 'Sindh, Pakistan', image: '/assets/sindhri-mangoes.png', price: 38 },
+      'Anwar Ratol Mangoes': { unit: '4kg box', origin: 'Punjab, Pakistan', image: '/assets/anwar-ratol-mangoes.png', price: 45 },
+      'Chaunsa Mangoes': { unit: '5kg box', origin: 'Multan, Pakistan', image: '/assets/chaunsa-mangoes.png', price: 52 },
+      'Chaunsa Mango Premium Box': { unit: '5kg box', origin: 'Multan, Pakistan', image: '/assets/chaunsa-mangoes.png', price: 52 },
+      'Anwar Ratol Mango Reserve': { unit: '4kg box', origin: 'Punjab, Pakistan', image: '/assets/anwar-ratol-mangoes.png', price: 45 },
+      'Sindhri Mango Estate Selection': { unit: '6kg box', origin: 'Sindh, Pakistan', image: '/assets/sindhri-mangoes.png', price: 38 },
+      'Himalayan Salt': { unit: 'Bulk or retail packs', origin: 'Khewra, Pakistan', image: '/assets/himalayan-salt.png', price: 29 },
+      'EcoWare Naturals': { unit: 'Trade case', origin: 'Pakistan', image: '/assets/eco-utensils.png', price: 24 },
+      'De-Icing Salt': { unit: 'Bulk pallet', origin: 'Pakistan', image: '/assets/deicing-salt.png', price: 32 }
     };
 
     const regionMap = {
@@ -280,9 +296,15 @@
       oshawa: 'durham'
     };
 
+    const currencyFormatter = new Intl.NumberFormat('en-CA', {
+      style: 'currency',
+      currency: 'CAD',
+      minimumFractionDigits: 2
+    });
+
     const params = new URLSearchParams(window.location.search);
     const product = params.get('product') || 'Ameer Global Product';
-    const profile = productCatalog[product] || { unit: 'Trade pack', origin: 'Pakistan', image: '/assets/new-mango-photo.png' };
+    const profile = productCatalog[product] || { unit: 'Trade pack', origin: 'Pakistan', image: '/assets/new-mango-photo.png', price: 30 };
 
     const productImage = document.getElementById('product-image');
     const summaryProduct = document.getElementById('summary-product');
@@ -291,20 +313,24 @@
     const cityField = document.getElementById('city');
     const postalField = document.getElementById('postal');
     const quantityField = document.getElementById('quantity');
-    const checkoutStatus = document.getElementById('checkout-status');
     const availabilityPanel = document.getElementById('availability-panel');
     const availabilityText = document.getElementById('availability-text');
     const availabilityProfile = document.getElementById('availability-profile');
-    const continuePay = document.getElementById('continue-pay');
     const completeOrder = document.getElementById('complete-order');
+    const checkoutStatus = document.getElementById('checkout-status');
     const paymentWrap = document.getElementById('payment-wrap');
-    const payCards = Array.from(document.querySelectorAll('.pay-card'));
-    const payInputs = Array.from(document.querySelectorAll('input[name="pay"]'));
     const chips = Array.from(document.querySelectorAll('#city-chips [data-city]'));
     const markers = Array.from(document.querySelectorAll('.map-marker'));
     const regions = Array.from(document.querySelectorAll('.map-region'));
 
-    let availability = { ok: false, eligible: false, cityKey: '' };
+    const billUnit = document.getElementById('bill-unit');
+    const billQty = document.getElementById('bill-qty');
+    const billSubtotal = document.getElementById('bill-subtotal');
+    const billHst = document.getElementById('bill-hst');
+    const billTotal = document.getElementById('bill-total');
+
+    let availability = { eligible: false };
+    let latestBilling = null;
 
     productImage.src = profile.image;
     summaryProduct.textContent = product;
@@ -315,6 +341,35 @@
       return String(value || '').trim().toLowerCase().replace(/\s+/g, '-');
     }
 
+    function quantityValue() {
+      const parsed = Number.parseInt(quantityField.value || '1', 10);
+      if (!Number.isFinite(parsed)) return 1;
+      return Math.max(1, Math.min(500, parsed));
+    }
+
+    function billingFromQuantity() {
+      const qty = quantityValue();
+      const unit = profile.price || 30;
+      const subtotal = Number((qty * unit).toFixed(2));
+      const hst = Number((subtotal * 0.13).toFixed(2));
+      return {
+        unitPriceCad: unit,
+        quantity: qty,
+        subtotalCad: subtotal,
+        hstCad: hst,
+        totalCad: Number((subtotal + hst).toFixed(2))
+      };
+    }
+
+    function renderBilling(data) {
+      const model = data || billingFromQuantity();
+      billUnit.textContent = currencyFormatter.format(model.unitPriceCad || 0);
+      billQty.textContent = String(model.quantity || quantityValue());
+      billSubtotal.textContent = currencyFormatter.format(model.subtotalCad || 0);
+      billHst.textContent = currencyFormatter.format(model.hstCad || 0);
+      billTotal.textContent = currencyFormatter.format(model.totalCad || 0);
+    }
+
     function highlight(cityValue) {
       const key = slugifyCity(cityValue);
       const region = regionMap[key] || '';
@@ -323,41 +378,37 @@
       regions.forEach((path) => path.classList.toggle('on', path.id === `region-${region}`));
     }
 
-    function selectedPayment() {
-      const hit = payInputs.find((input) => input.checked);
-      return hit ? hit.value : 'stripe';
-    }
-
-    function updatePayCards() {
-      const method = selectedPayment();
-      payCards.forEach((card) => card.classList.toggle('on', card.dataset.pay === method));
-      if (method === 'stripe') completeOrder.textContent = 'Continue to Stripe checkout';
-      if (method === 'interac') completeOrder.textContent = 'Submit for Interac';
-      if (method === 'invoice') completeOrder.textContent = 'Request invoice';
-    }
-
-    function markDirty() {
-      availability = { ok: false, eligible: false, cityKey: '' };
-      availabilityPanel.classList.remove('ok', 'no');
-      availabilityText.textContent = 'Check GTA availability to unlock payment methods.';
-      availabilityProfile.textContent = '';
-      continuePay.disabled = true;
+    function lockPayment() {
+      paymentWrap.classList.add('opacity-45', 'pointer-events-none');
       completeOrder.disabled = true;
-      paymentWrap.classList.add('pay-locked');
+    }
+
+    function unlockPayment() {
+      paymentWrap.classList.remove('opacity-45', 'pointer-events-none');
+      completeOrder.disabled = false;
+    }
+
+    function resetAvailability() {
+      availability = { eligible: false };
+      availabilityPanel.classList.remove('ok', 'no');
+      availabilityText.textContent = 'Check availability to continue.';
+      availabilityProfile.textContent = '';
       checkoutStatus.textContent = 'Availability is required before checkout submission.';
+      lockPayment();
+      latestBilling = null;
+      renderBilling();
     }
 
     async function checkAvailability() {
-      highlight(cityField.value);
-      availabilityText.textContent = 'Checking availability...';
-      availabilityProfile.textContent = '';
-
       const payload = {
         product,
         city: cityField.value.trim(),
         postalCode: postalField.value.trim(),
-        quantity: quantityField.value.trim()
+        quantity: String(quantityValue())
       };
+
+      availabilityText.textContent = 'Checking availability...';
+      availabilityProfile.textContent = '';
 
       try {
         const response = await fetch('/api/availability', {
@@ -366,69 +417,76 @@
           body: JSON.stringify(payload)
         });
         const result = await response.json();
-        const cityKey = slugifyCity(payload.city);
-
-        availability = {
-          ok: response.ok,
-          eligible: Boolean(result.eligible),
-          cityKey
-        };
 
         availabilityPanel.classList.remove('ok', 'no');
         availabilityPanel.classList.add(response.ok ? 'ok' : 'no');
-        availabilityText.textContent = response.ok ? `${result.city} is available for GTA order delivery.` : (result.reason || 'Not available.');
-        availabilityProfile.textContent = response.ok
-          ? `${result.profile.label} · ${result.profile.leadTime} · ${result.profile.detail}`
-          : '';
 
-        const unlocked = response.ok && result.eligible;
-        continuePay.disabled = !unlocked;
-        completeOrder.disabled = !unlocked;
-        paymentWrap.classList.toggle('pay-locked', !unlocked);
-        checkoutStatus.textContent = unlocked
-          ? `Availability confirmed for ${result.city}. Choose payment and continue.`
-          : 'Availability failed. Update city, postal code, or quantity.';
+        if (!response.ok) {
+          availability = { eligible: false };
+          availabilityText.textContent = result.reason || 'Delivery not available for this address.';
+          availabilityProfile.textContent = '';
+          checkoutStatus.textContent = 'Update city/postal code and try again.';
+          lockPayment();
+          latestBilling = null;
+          renderBilling();
+          return;
+        }
+
+        availability = { eligible: Boolean(result.eligible) };
+        availabilityText.textContent = `${result.city} is available for delivery.`;
+        availabilityProfile.textContent = `${result.profile.label} · ${result.profile.leadTime} · ${result.profile.detail}`;
+        checkoutStatus.textContent = 'Availability confirmed. Continue to Stripe.';
+        highlight(result.city);
+        latestBilling = result.billing || null;
+        renderBilling(latestBilling);
+
+        if (result.eligible) {
+          unlockPayment();
+        } else {
+          lockPayment();
+        }
       } catch (error) {
         availabilityPanel.classList.remove('ok');
         availabilityPanel.classList.add('no');
         availabilityText.textContent = 'Network error while checking availability.';
         availabilityProfile.textContent = '';
-        continuePay.disabled = true;
-        completeOrder.disabled = true;
-        paymentWrap.classList.add('pay-locked');
+        checkoutStatus.textContent = 'Please try again.';
+        availability = { eligible: false };
+        lockPayment();
       }
     }
 
     document.getElementById('qty-minus').addEventListener('click', () => {
-      const current = Math.max(1, Number.parseInt(quantityField.value || '1', 10) || 1);
-      quantityField.value = String(Math.max(1, current - 1));
-      markDirty();
+      quantityField.value = String(Math.max(1, quantityValue() - 1));
+      resetAvailability();
     });
+
     document.getElementById('qty-plus').addEventListener('click', () => {
-      const current = Math.min(500, Number.parseInt(quantityField.value || '1', 10) || 1);
-      quantityField.value = String(Math.min(500, current + 1));
-      markDirty();
+      quantityField.value = String(Math.min(500, quantityValue() + 1));
+      resetAvailability();
     });
-    quantityField.addEventListener('input', markDirty);
-    cityField.addEventListener('change', () => { highlight(cityField.value); markDirty(); });
-    postalField.addEventListener('input', markDirty);
+
+    quantityField.addEventListener('input', () => {
+      quantityField.value = String(quantityValue());
+      resetAvailability();
+    });
+
+    cityField.addEventListener('change', () => {
+      highlight(cityField.value);
+      resetAvailability();
+    });
+
+    postalField.addEventListener('input', resetAvailability);
 
     chips.forEach((chip) => {
       chip.addEventListener('click', () => {
         cityField.value = chip.dataset.city;
         highlight(cityField.value);
-        markDirty();
+        resetAvailability();
       });
     });
 
-    payInputs.forEach((input) => input.addEventListener('change', updatePayCards));
-    updatePayCards();
-
     document.getElementById('check-availability').addEventListener('click', checkAvailability);
-    continuePay.addEventListener('click', () => {
-      if (continuePay.disabled) return;
-      paymentWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
 
     document.getElementById('checkout-form').addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -446,12 +504,12 @@
         name: document.getElementById('name').value.trim(),
         email: document.getElementById('email').value.trim(),
         phone: document.getElementById('phone').value.trim(),
-        quantity: quantityField.value.trim(),
+        quantity: String(quantityValue()),
         addressLine1: document.getElementById('address1').value.trim(),
         addressLine2: document.getElementById('address2').value.trim(),
         city: cityField.value.trim(),
         postalCode: postalField.value.trim(),
-        paymentMethod: selectedPayment(),
+        paymentMethod: 'stripe',
         notes: ''
       };
 
@@ -462,25 +520,39 @@
           body: JSON.stringify(payload)
         });
         const result = await response.json();
+
         if (!response.ok) {
           checkoutStatus.textContent = result.error || 'Unable to continue checkout.';
           completeOrder.disabled = false;
-          updatePayCards();
+          completeOrder.textContent = 'Continue to Stripe checkout';
           return;
         }
-        checkoutStatus.textContent = result.payment.message || 'Checkout submitted.';
+
+        if (result.billing) {
+          latestBilling = result.billing;
+          renderBilling(latestBilling);
+        }
+
+        checkoutStatus.textContent = result.payment && result.payment.message
+          ? result.payment.message
+          : 'Checkout submitted.';
+
         if (result.payment && result.payment.status === 'redirect' && result.payment.url) {
           window.location.href = result.payment.url;
           return;
         }
+
         completeOrder.disabled = false;
-        updatePayCards();
+        completeOrder.textContent = 'Continue to Stripe checkout';
       } catch (error) {
         checkoutStatus.textContent = 'Network error. Please try again.';
         completeOrder.disabled = false;
-        updatePayCards();
+        completeOrder.textContent = 'Continue to Stripe checkout';
       }
     });
+
+    renderBilling();
+    lockPayment();
   </script>
 </body>
 </html>

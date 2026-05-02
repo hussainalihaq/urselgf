@@ -26,6 +26,7 @@ module.exports = async function handler(req, res) {
         region: checkout.availability.region,
         postalCode: checkout.availability.postalCode
       },
+      billing: checkout.billing,
       payment: buildCheckoutResponse(
         checkout.paymentMethod,
         checkout.contactRecord.product,

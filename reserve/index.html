@@ -35,6 +35,10 @@
       -webkit-backdrop-filter:blur(14px);
       box-shadow:0 22px 44px rgba(17,43,94,.08);
     }
+    .reveal{opacity:0;transform:translateY(12px);animation:reveal .55s ease forwards}
+    .d1{animation-delay:.08s}
+    .d2{animation-delay:.16s}
+    @keyframes reveal{to{opacity:1;transform:translateY(0)}}
     .pill{border:1px solid rgba(31,78,165,.16);background:#fff}
     .cta{
       background:linear-gradient(140deg,var(--brand-900),var(--brand-700));
@@ -53,18 +57,18 @@
   </nav>
 
   <main class="mx-auto max-w-[1260px] px-6 pb-20 pt-8 md:px-10">
-    <section class="frost rounded-[1.8rem] p-6 md:p-8">
+    <section class="frost reveal rounded-[1.8rem] p-6 md:p-8">
       <div class="grid gap-7 lg:grid-cols-[1.1fr_.9fr]">
         <div>
           <span class="inline-flex items-center gap-2 rounded-full border border-[#1f4ea5]/14 bg-[#edf3ff] px-4 py-2 text-[.68rem] font-bold uppercase tracking-[.2em] text-[#2d5ebf]">
             <span class="inline-block h-2 w-2 rounded-full bg-[#f3b247]"></span>Reserve Queue
           </span>
-          <h1 class="mt-4 text-[clamp(2rem,5vw,3.9rem)] leading-[1.03] text-[#132a53]">Reserve Allocation<br/>Before It Sells Out</h1>
-          <p class="mt-4 max-w-[62ch] text-[1rem] leading-relaxed text-[#52678d]">Use this reserve flow for non-mango products and for mango waitlist requests. No immediate payment is required. We confirm stock windows and follow up directly.</p>
+          <h1 class="mt-4 text-[clamp(2rem,5vw,3.9rem)] leading-[1.03] text-[#132a53]">Reserve Product<br/>Allocation</h1>
+          <p class="mt-4 max-w-[62ch] text-[1rem] leading-relaxed text-[#52678d]">Use reserve for non-mango products and mango waitlist requests. No immediate payment is required. We confirm quantity windows and follow up directly.</p>
           <div class="mt-6 flex flex-wrap gap-2 text-[.68rem] font-bold uppercase tracking-[.14em]">
             <span class="pill rounded-full px-3 py-2 text-[#5a6d93]">Priority Allocation</span>
             <span class="pill rounded-full px-3 py-2 text-[#5a6d93]">No Upfront Charge</span>
-            <span class="pill rounded-full px-3 py-2 text-[#5a6d93]">Trade Desk Follow-up</span>
+            <span class="pill rounded-full px-3 py-2 text-[#5a6d93]">Direct Follow-up</span>
           </div>
         </div>
         <div class="rounded-[1.4rem] border border-[#1f4ea5]/10 bg-gradient-to-b from-[#f7faff] to-[#edf3ff] p-5">
@@ -79,7 +83,7 @@
     </section>
 
     <section class="mt-8 grid gap-8 lg:grid-cols-[.9fr_1.1fr]">
-      <article class="frost rounded-[1.8rem] p-6 md:p-8">
+      <article class="frost reveal d1 rounded-[1.8rem] p-6 md:p-8">
         <img id="product-image" src="/assets/new-mango-photo.png" alt="Reserved product" class="h-[240px] w-full rounded-2xl object-cover"/>
         <div class="mt-5">
           <div class="text-[.66rem] font-bold uppercase tracking-[.15em] text-[#6f86b0]">Selected Product</div>
@@ -96,7 +100,7 @@
         </div>
       </article>
 
-      <article class="frost rounded-[1.8rem] p-6 md:p-8">
+      <article class="frost reveal d2 rounded-[1.8rem] p-6 md:p-8">
         <form id="reserve-form" class="space-y-5">
           <div class="grid gap-4 md:grid-cols-2">
             <div>
@@ -200,7 +204,7 @@
       };
 
       try {
-        const response = await fetch('/api/contact', {
+        const response = await fetch('/api/reserve', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)

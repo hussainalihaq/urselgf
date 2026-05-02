@@ -431,6 +431,59 @@ async function handleApi(req, res, pathname) {
     }
   }
 
+  if (req.method === 'POST' && pathname === '/api/reserve') {
+    try {
+      const body = await readBody(req);
+      const name = normalizeText(body.name);
+      const email = normalizeText(body.email).toLowerCase();
+      const subject = normalizeText(body.subject);
+      const message = normalizeText(body.message);
+      const source = normalizeText(body.source) || 'reserve-page';
+      const product = normalizeText(body.product);
+      const intent = 'reserve';
+
+      if (!name || name.length < 2) {
+        json(res, 400, { error: 'Name must be at least 2 characters.' });
+        return true;
+      }
+
+      if (!validateEmail(email)) {
+        json(res, 400, { error: 'Valid email is required.' });
+        return true;
+      }
+
+      if (!subject || subject.length < 3) {
+        json(res, 400, { error: 'Subject must be at least 3 characters.' });
+        return true;
+      }
+
+      if (!message || message.length < 10) {
+        json(res, 400, { error: 'Message must be at least 10 characters.' });
+        return true;
+      }
+
+      const record = {
+        id: randomUUID(),
+        name,
+        email,
+        subject,
+        message,
+        source,
+        product,
+        intent,
+        createdAt: new Date().toISOString()
+      };
+
+      await insertContactRecord(record);
+
+      json(res, 201, { ok: true, message: 'Reserve request submitted successfully.', submissionId: record.id });
+      return true;
+    } catch (err) {
+      json(res, 400, { error: err.message || 'Invalid request' });
+      return true;
+    }
+  }
+
   if (req.method === 'POST' && pathname === '/api/availability') {
     try {
       const body = await readBody(req);
@@ -457,6 +510,7 @@ async function handleApi(req, res, pathname) {
           region: checkout.availability.region,
           postalCode: checkout.availability.postalCode
         },
+        billing: checkout.billing,
         payment: buildCheckoutResponse(
           checkout.paymentMethod,
           checkout.contactRecord.product,

@@ -21,9 +21,19 @@ const GTA_CITIES = [
 ];
 
 const PAYMENT_METHOD_LABELS = {
-  stripe: 'Stripe Checkout',
-  interac: 'Interac e-Transfer',
-  invoice: 'Trade Invoice'
+  stripe: 'Stripe Checkout'
+};
+
+const PRODUCT_PRICES_CAD = {
+  'Sindhri Mangoes': 38,
+  'Anwar Ratol Mangoes': 45,
+  'Chaunsa Mangoes': 52,
+  'Chaunsa Mango Premium Box': 52,
+  'Anwar Ratol Mango Reserve': 45,
+  'Sindhri Mango Estate Selection': 38,
+  'Himalayan Salt': 29,
+  'EcoWare Naturals': 24,
+  'De-Icing Salt': 32
 };
 
 const FULFILLMENT_PROFILES = [
@@ -89,6 +99,29 @@ function resolvePaymentMethod(value) {
   return Object.prototype.hasOwnProperty.call(PAYMENT_METHOD_LABELS, method) ? method : '';
 }
 
+function resolveUnitPrice(product) {
+  return PRODUCT_PRICES_CAD[product] || 30;
+}
+
+function buildBilling(product, quantityValue) {
+  const quantity = normalizeQuantity(quantityValue) || 1;
+  const unitPriceCad = resolveUnitPrice(product);
+  const subtotalCad = Number((unitPriceCad * quantity).toFixed(2));
+  const hstRate = 0.13;
+  const hstCad = Number((subtotalCad * hstRate).toFixed(2));
+  const totalCad = Number((subtotalCad + hstCad).toFixed(2));
+
+  return {
+    currency: 'CAD',
+    unitPriceCad,
+    quantity,
+    subtotalCad,
+    hstRate,
+    hstCad,
+    totalCad
+  };
+}
+
 function getFulfillmentProfile(quantityValue) {
   const quantity = normalizeQuantity(quantityValue) || 1;
   return FULFILLMENT_PROFILES.find((profile) => quantity <= profile.maxQuantity) || FULFILLMENT_PROFILES[FULFILLMENT_PROFILES.length - 1];
@@ -111,9 +144,10 @@ function getAvailability(cityValue, postalCodeValue) {
 
 function buildAvailabilityResponse(body) {
   const availability = getAvailability(body.city, body.postalCode);
-  const quantity = normalizeQuantity(body.quantity);
+  const quantity = normalizeQuantity(body.quantity) || 1;
   const product = normalizeText(body.product) || 'Ameer Global order';
   const profile = getFulfillmentProfile(quantity);
+  const billing = buildBilling(product, quantity);
 
   if (!availability.city) {
     return {
@@ -155,7 +189,8 @@ function buildAvailabilityResponse(body) {
     postalCode: availability.postalCode,
     quantity: quantity || 1,
     product,
-    profile
+    profile,
+    billing
   };
 }
 
@@ -168,11 +203,12 @@ function buildCheckoutContactRecord(body) {
   const addressLine2 = normalizeText(body.addressLine2);
   const notes = normalizeText(body.notes);
   const availability = getAvailability(body.city, body.postalCode);
+  const billing = buildBilling(product, quantity);
 
   if (!quantity) throw new Error('Quantity must be at least 1.');
   if (!phone || phone.length < 7) throw new Error('Phone number is required.');
   if (!addressLine1 || addressLine1.length < 5) throw new Error('Street address is required.');
-  if (!paymentMethod) throw new Error('Select a payment method.');
+  if (!paymentMethod) throw new Error('Stripe payment is required for checkout.');
   if (!availability.city) throw new Error('Choose a GTA delivery city.');
   if (!availability.hasValidPostal) throw new Error('Enter a valid Canadian postal code.');
   if (!availability.eligible) throw new Error('Orders are currently available only within the Greater Toronto Area.');
@@ -187,11 +223,15 @@ function buildCheckoutContactRecord(body) {
     `Delivery city: ${availability.city.label}`,
     `Region: ${availability.region}`,
     `Postal code: ${availability.postalCode}`,
+    `Currency: ${billing.currency}`,
+    `Unit price: CAD ${billing.unitPriceCad.toFixed(2)}`,
+    `Subtotal: CAD ${billing.subtotalCad.toFixed(2)}`,
+    `HST (13%): CAD ${billing.hstCad.toFixed(2)}`,
+    `Estimated total: CAD ${billing.totalCad.toFixed(2)}`,
     `Address line 1: ${addressLine1}`,
     `Address line 2: ${addressLine2 || 'N/A'}`,
     `Phone: ${phone}`,
     `Payment method: ${paymentLabel}`,
-    `Stripe redirect configured: ${STRIPE_PAYMENT_LINK_URL ? 'Yes' : 'No'}`,
     `Additional notes: ${notes || 'N/A'}`
   ];
 
@@ -207,6 +247,7 @@ function buildCheckoutContactRecord(body) {
 
   return {
     availability,
+    billing,
     contactRecord,
     paymentMethod,
     quantity
@@ -215,6 +256,10 @@ function buildCheckoutContactRecord(body) {
 
 function buildCheckoutResponse(paymentMethod, product, email) {
   const paymentLabel = PAYMENT_METHOD_LABELS[paymentMethod];
+
+  if (paymentMethod !== 'stripe') {
+    throw new Error('Unsupported payment method.');
+  }
 
   if (paymentMethod === 'stripe' && STRIPE_PAYMENT_LINK_URL) {
     const url = new URL(STRIPE_PAYMENT_LINK_URL);
@@ -234,23 +279,19 @@ function buildCheckoutResponse(paymentMethod, product, email) {
       label: paymentLabel,
       status: 'pending',
       url: '',
-      message: 'Stripe handoff is ready in code but the live payment link is not configured yet.'
+      message: 'Your order was received. Secure Stripe payment details will be sent shortly.'
     };
   }
 
-  return {
-    method: paymentMethod,
-    label: paymentLabel,
-    status: 'manual',
-    url: '',
-    message: `${paymentLabel} selected. Our GTA order desk will confirm the next payment step.`
-  };
+  throw new Error('Unable to prepare payment response.');
 }
 
 module.exports = {
   GTA_CITIES,
+  PRODUCT_PRICES_CAD,
   PAYMENT_METHOD_LABELS,
   buildAvailabilityResponse,
+  buildBilling,
   buildCheckoutContactRecord,
   buildCheckoutResponse,
   getAvailability,
