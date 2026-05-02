@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="dns-prefetch" href="https://images.pexels.com"/>
   <link rel="dns-prefetch" href="https://images.unsplash.com"/>
-  <link rel="dns-prefetch" href="https://lh3.googleusercontent.com"/>
 <title>Ameer Global | The Digital Estate</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
@@ -43,6 +42,12 @@
         }
         @keyframes draw {
             to { stroke-dashoffset: 0; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+        }
+        @media (max-width: 768px) {
+            .glass-nav { backdrop-filter: none; -webkit-backdrop-filter: none; }
         }
     </style>
 <script id="tailwind-config">
@@ -229,10 +234,10 @@
 <div class="md:col-span-7 relative">
 <div class="grid grid-cols-2 gap-6 items-start">
 <div class="pt-24">
-<img alt="monochrome vintage-style photography of a busy trading port from the early 20th century with tall ships" class="w-full aspect-[3/4] object-cover rounded-xl shadow-2xl grayscale transition-all hover:grayscale-0 duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYAfVzlRNfYYh8MUIcpNbQUJOPGaTSbMK52YYWUqZrL7u30_qLH_8E2_Effqh4aGT5myG4mJclsM7R1Ztzw2_AwsIksP6zq6JqNthPfVfKtzNBXVJo1oazZNIaIzdWVYD3QbPEZEyigRr2wKA5p5FKt_wl1C4r8qYhvxJ-NywwoV2dWeTIMy_iDetUSGqYbmjCcMd0eRsP-AQ49Ks8_tNjKVV6L-WX9IyEpDOnxJGj7cifIo7EQZDHESX-lSv7dpbvYzPy1M0Rc8k" decoding="async" loading="eager" fetchpriority="high"/>
+<img alt="Ameer Global shipping operations" class="w-full aspect-[3/4] object-cover rounded-xl shadow-2xl grayscale transition-all hover:grayscale-0 duration-700" src="/assets/service-2.jpg" decoding="async" loading="eager" fetchpriority="high"/>
 </div>
 <div class="space-y-6">
-<img alt="close up of premium aged wood merchant desk with an antique brass compass and aged parchment map" class="w-full aspect-square object-cover rounded-xl shadow-xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXRjs1I3V2XpTqKfkAuqvq8MJZJX6AE7iJVnQVmuzpc68mcqighdPz5k20c4CTc8SfBHgscMLvWfV8LjYCzAUlluSCiy3RqjGSPEtg7ZC21_vxaU_pNc0kUr119cBCZjtZdIiph6aF1fQPAJKCIBJe5wV8FXQBSY0_OrD5EYOwsoePwg07lyUg2xHZpzoWM3gP-r9jamsgqJdDfANlbhdieWR-Vo8K3iRTMs1WGRbFWkGjCIVwBUci0eWtfWT8lOvXZIhiqUe-OM4" decoding="async" loading="lazy" fetchpriority="low"/>
+<img alt="Ameer Global supply chain desk operations" class="w-full aspect-square object-cover rounded-xl shadow-xl" src="/assets/service-1.jpg" decoding="async" loading="lazy" fetchpriority="low"/>
 <div class="p-8 bg-surface-container-lowest border border-outline-variant/15 rounded-lg flex flex-col items-center justify-center min-h-[160px]">
 <!-- Minimalist Maritime Illustration -->
 <svg class="w-16 h-16 text-secondary/40 mb-2 animate-float" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -260,7 +265,7 @@
 </div>
 <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6 h-auto md:h-[800px]">
 <div class="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-xl">
-<img alt="vibrant sunset view of a futuristic mega-port in Singapore with neon crane lights and calm water" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqt6aVilcD4eD8IOVpl3PLKbBpo4lq6fkD4WlZ6D4De-zRf3d5iTjxWxV3qBczaJ55Jzz23qKaACXEnvwYMX3rQiif-4-tnQN79b2uHwsTjli6oBPSafQV4cakpw_I4VdVicclGacDfM2dTeGpPwwvYxJ9SzR9Us-QXp5Uuw0hZFPqVLdaFoqSDfHtBBxT4N167wkk2SqMCgagS3dRB8SW6I5M4CeKHpxg68pIMa8535mwVq7arwZAT5p9D0ekyLVg09z-rF0ga4U" decoding="async" loading="lazy" fetchpriority="low"/>
+<img alt="Ameer Global Asia-Pacific hub operations" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="/assets/service-3.jpg" decoding="async" loading="lazy" fetchpriority="low"/>
 <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-60"></div>
 <div class="absolute bottom-10 left-10 text-white">
 <h3 class="text-xl font-display mb-2">Asia-Pacific Hub</h3>
@@ -268,7 +273,7 @@
 </div>
 </div>
 <div class="md:col-span-2 relative group overflow-hidden rounded-xl">
-<img alt="high-end luxury office interior in London with dark oak panels and floor-to-ceiling windows overlooking the Thames" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL1au9PLeh6Gh4HBYJjvtZChTigQLzuTCx-UB6-nCDgZ-zTa4uZb0KmZjutgXGBKV1gjeql_PHz57AWh1YTMtyuBtVsdf2o4SfKS-lHxa1R6rT6rGISVGMvNaw8jF9yHppreI0L_8pisNEvliFEG_Ix938XHijvwWVvJFJlNc5NRVJL3CjeHCsukevYvTzLCNCHE-y4an1rt1qH9yTe3z-2YzO9Yg9fL9HxqjnKnR6DTVync6RCL4Y4IXkcGab9jDCavm5G2UG_ZE" decoding="async" loading="lazy" fetchpriority="low"/>
+<img alt="Ameer Global European command operations" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="/assets/service-1.jpg" decoding="async" loading="lazy" fetchpriority="low"/>
 <div class="absolute inset-0 bg-gradient-to-t from-secondary/80 via-transparent to-transparent opacity-40"></div>
 <div class="absolute bottom-10 left-10 text-white">
 <h3 class="text-xl font-display mb-2">European Command</h3>
