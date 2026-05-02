@@ -51,7 +51,7 @@
     .status.no{border-color:rgba(163,57,47,.24);background:var(--warn-bg);color:var(--warn)}
     .map-region{fill:#ecf3ff;stroke:#96b3e8;stroke-width:2;transition:all .22s}
     .map-region.on{fill:#ccddff;stroke:#295ebf;filter:drop-shadow(0 7px 12px rgba(41,94,191,.22))}
-    .map-marker{fill:#f4f8ff;stroke:#2f5ea8;stroke-width:2.4;transition:all .2s}
+    .map-marker{fill:#f4f8ff;stroke:#2f5ea8;stroke-width:2.4;transition:all .2s;cursor:pointer}
     .map-marker.on{fill:#ffcb83;stroke:#8c4a08;transform:scale(1.16)}
     .pulse{
       transform-origin:center;
@@ -79,6 +79,23 @@
     .money{
       font-variant-numeric:tabular-nums;
       font-feature-settings:"tnum";
+    }
+    .map-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .map-scroll svg{min-width:640px}
+    .city-chip-row{
+      display:flex;
+      flex-wrap:nowrap;
+      gap:.5rem;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+      padding-bottom:.35rem;
+    }
+    .city-chip-row::-webkit-scrollbar{display:none}
+    @media (max-width: 768px){
+      input,select,textarea,button{font-size:16px}
+      .frost{border-radius:1.1rem}
+      .qty-btn{width:46px;height:46px}
+      .map-scroll svg{min-width:700px}
     }
   </style>
 </head>
@@ -121,12 +138,13 @@
         <h2 class="mt-3 text-[2rem] text-[#142a53]">Live Availability Zones</h2>
         <p class="mt-2 text-sm leading-relaxed text-[#52678d]">Select a city below or in the form to highlight service regions.</p>
         <div class="mt-5 rounded-2xl border border-[#19489f]/12 bg-gradient-to-b from-white to-[#f2f7ff] p-4">
+          <div class="map-scroll">
           <svg viewBox="0 0 720 380" class="w-full">
-            <path class="map-region" id="region-halton" d="M82 130 L182 94 L250 101 L238 203 L120 222 L65 182 Z"></path>
-            <path class="map-region" id="region-peel" d="M248 98 L360 84 L372 187 L260 205 L238 198 Z"></path>
-            <path class="map-region" id="region-york" d="M310 34 L479 28 L515 112 L373 132 L308 112 Z"></path>
-            <path class="map-region" id="region-toronto" d="M378 134 L503 123 L519 197 L401 210 L360 180 Z"></path>
-            <path class="map-region" id="region-durham" d="M520 111 L639 87 L667 196 L540 211 L515 184 Z"></path>
+            <path class="map-region" data-default-city="Oakville" id="region-halton" d="M82 130 L182 94 L250 101 L238 203 L120 222 L65 182 Z"></path>
+            <path class="map-region" data-default-city="Mississauga" id="region-peel" d="M248 98 L360 84 L372 187 L260 205 L238 198 Z"></path>
+            <path class="map-region" data-default-city="Vaughan" id="region-york" d="M310 34 L479 28 L515 112 L373 132 L308 112 Z"></path>
+            <path class="map-region" data-default-city="Toronto" id="region-toronto" d="M378 134 L503 123 L519 197 L401 210 L360 180 Z"></path>
+            <path class="map-region" data-default-city="Pickering" id="region-durham" d="M520 111 L639 87 L667 196 L540 211 L515 184 Z"></path>
             <g class="pulse">
               <circle class="map-marker" data-city-key="toronto" cx="424" cy="182" r="8"></circle>
               <circle class="map-marker" data-city-key="mississauga" cx="268" cy="190" r="8"></circle>
@@ -143,8 +161,9 @@
               <circle class="map-marker" data-city-key="oshawa" cx="650" cy="181" r="8"></circle>
             </g>
           </svg>
+          </div>
         </div>
-        <div class="mt-4 flex flex-wrap gap-2" id="city-chips">
+        <div class="mt-4 city-chip-row" id="city-chips">
           <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Toronto">Toronto</button>
           <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Mississauga">Mississauga</button>
           <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Brampton">Brampton</button>
@@ -258,7 +277,7 @@
             </div>
           </section>
 
-          <button id="complete-order" type="submit" class="cta rounded-xl px-5 py-3 text-[.72rem] font-bold uppercase tracking-[.14em]" disabled>Continue to Stripe checkout</button>
+          <button id="complete-order" type="submit" class="cta sticky bottom-3 z-10 rounded-xl px-5 py-3 text-[.72rem] font-bold uppercase tracking-[.14em] md:static" disabled>Continue to Stripe checkout</button>
           <p id="checkout-status" class="text-sm text-[#596f96]">Availability is required before checkout submission.</p>
         </form>
       </article>
@@ -378,6 +397,12 @@
       regions.forEach((path) => path.classList.toggle('on', path.id === `region-${region}`));
     }
 
+    function setCity(cityValue) {
+      cityField.value = cityValue;
+      highlight(cityField.value);
+      resetAvailability();
+    }
+
     function lockPayment() {
       paymentWrap.classList.add('opacity-45', 'pointer-events-none');
       completeOrder.disabled = true;
@@ -480,9 +505,25 @@
 
     chips.forEach((chip) => {
       chip.addEventListener('click', () => {
-        cityField.value = chip.dataset.city;
-        highlight(cityField.value);
-        resetAvailability();
+        setCity(chip.dataset.city);
+      });
+    });
+
+    markers.forEach((marker) => {
+      marker.addEventListener('click', () => {
+        const city = marker.dataset.cityKey
+          .split('-')
+          .map((piece) => piece.charAt(0).toUpperCase() + piece.slice(1))
+          .join(' ');
+        setCity(city);
+      });
+    });
+
+    regions.forEach((region) => {
+      region.style.cursor = 'pointer';
+      region.addEventListener('click', () => {
+        const city = region.dataset.defaultCity;
+        if (city) setCity(city);
       });
     });
 
