@@ -2,7 +2,11 @@ const http = require('node:http');
 const fs = require('node:fs/promises');
 const path = require('node:path');
 const { randomUUID } = require('node:crypto');
-const { buildCheckoutContactRecord, buildCheckoutResponse } = require('./api/_lib/checkout');
+const {
+  buildAvailabilityResponse,
+  buildCheckoutContactRecord,
+  buildCheckoutResponse
+} = require('./api/_lib/checkout');
 
 const ROOT = __dirname;
 const DATA_DIR = path.join(ROOT, 'data');
@@ -261,6 +265,8 @@ const pageRoutes = {
   '/home/': 'index.html',
   '/checkout': 'checkout/index.html',
   '/checkout/': 'checkout/index.html',
+  '/reserve': 'reserve/index.html',
+  '/reserve/': 'reserve/index.html',
   '/products': 'products/index.html',
   '/products/': 'products/index.html',
   '/about': 'ameer_global_about_network_refined/index.html',
@@ -421,6 +427,18 @@ async function handleApi(req, res, pathname) {
       return true;
     } catch (err) {
       json(res, 400, { error: err.message || 'Invalid request' });
+      return true;
+    }
+  }
+
+  if (req.method === 'POST' && pathname === '/api/availability') {
+    try {
+      const body = await readBody(req);
+      const result = buildAvailabilityResponse(body);
+      json(res, result.ok ? 200 : 400, result);
+      return true;
+    } catch (err) {
+      json(res, 400, { error: err.message || 'Unable to check availability.' });
       return true;
     }
   }

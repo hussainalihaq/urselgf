@@ -26,6 +26,37 @@ const PAYMENT_METHOD_LABELS = {
   invoice: 'Trade Invoice'
 };
 
+const FULFILLMENT_PROFILES = [
+  {
+    maxQuantity: 3,
+    code: 'priority',
+    label: 'Priority Local Dispatch',
+    leadTime: 'Same-day confirmation',
+    detail: 'Best for smaller household or gift orders inside our GTA route.'
+  },
+  {
+    maxQuantity: 10,
+    code: 'scheduled',
+    label: 'Scheduled Delivery Route',
+    leadTime: '1 business day review',
+    detail: 'Handled through the next GTA delivery cycle with route planning.'
+  },
+  {
+    maxQuantity: 25,
+    code: 'trade',
+    label: 'Trade Desk Coordination',
+    leadTime: '1-2 business days review',
+    detail: 'Larger volumes are still eligible, but we stage delivery timing manually.'
+  },
+  {
+    maxQuantity: 500,
+    code: 'bulk',
+    label: 'Bulk Allocation Review',
+    leadTime: 'Custom follow-up required',
+    detail: 'High-volume requests are screened for inventory staging and delivery windows.'
+  }
+];
+
 function normalizePostalCode(value) {
   return normalizeText(value).toUpperCase().replace(/\s+/g, '');
 }
@@ -58,6 +89,11 @@ function resolvePaymentMethod(value) {
   return Object.prototype.hasOwnProperty.call(PAYMENT_METHOD_LABELS, method) ? method : '';
 }
 
+function getFulfillmentProfile(quantityValue) {
+  const quantity = normalizeQuantity(quantityValue) || 1;
+  return FULFILLMENT_PROFILES.find((profile) => quantity <= profile.maxQuantity) || FULFILLMENT_PROFILES[FULFILLMENT_PROFILES.length - 1];
+}
+
 function getAvailability(cityValue, postalCodeValue) {
   const city = findCity(cityValue);
   const postalCode = normalizePostalCode(postalCodeValue);
@@ -70,6 +106,56 @@ function getAvailability(cityValue, postalCodeValue) {
     eligible,
     hasValidPostal,
     region: city ? city.region : ''
+  };
+}
+
+function buildAvailabilityResponse(body) {
+  const availability = getAvailability(body.city, body.postalCode);
+  const quantity = normalizeQuantity(body.quantity);
+  const product = normalizeText(body.product) || 'Ameer Global order';
+  const profile = getFulfillmentProfile(quantity);
+
+  if (!availability.city) {
+    return {
+      ok: false,
+      eligible: false,
+      reason: 'Choose a GTA delivery city.',
+      postalCode: availability.postalCode
+    };
+  }
+
+  if (!availability.hasValidPostal) {
+    return {
+      ok: false,
+      eligible: false,
+      reason: 'Enter a valid Canadian postal code.',
+      city: availability.city.label,
+      region: availability.region,
+      postalCode: availability.postalCode
+    };
+  }
+
+  if (!availability.eligible) {
+    return {
+      ok: false,
+      eligible: false,
+      reason: 'This postal code falls outside our active Greater Toronto Area order window.',
+      city: availability.city.label,
+      region: availability.region,
+      postalCode: availability.postalCode
+    };
+  }
+
+  return {
+    ok: true,
+    eligible: true,
+    city: availability.city.label,
+    cityKey: availability.city.key,
+    region: availability.region,
+    postalCode: availability.postalCode,
+    quantity: quantity || 1,
+    product,
+    profile
   };
 }
 
@@ -164,9 +250,11 @@ function buildCheckoutResponse(paymentMethod, product, email) {
 module.exports = {
   GTA_CITIES,
   PAYMENT_METHOD_LABELS,
+  buildAvailabilityResponse,
   buildCheckoutContactRecord,
   buildCheckoutResponse,
   getAvailability,
+  getFulfillmentProfile,
   normalizePostalCode,
   resolvePaymentMethod
 };
