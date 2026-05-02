@@ -136,7 +136,7 @@
       </div>
     </section>
 
-    <section class="mt-8 grid gap-8 lg:grid-cols-[1fr_1fr]">
+    <section class="mt-8 grid gap-8 lg:grid-cols-[.9fr_1.1fr]">
       <article class="frost reveal d1 rounded-[1.8rem] p-6 md:p-8">
         <p class="text-[.7rem] font-bold uppercase tracking-[.2em] text-[#5f76a3]">Map</p>
         <h2 class="mt-3 text-[2rem] text-[#142a53]">Live Availability Zones</h2>
@@ -181,7 +181,7 @@
         </div>
       </article>
 
-      <article class="frost reveal d2 rounded-[1.8rem] p-6 md:p-8">
+      <article class="frost reveal d2 rounded-[1.8rem] p-7 md:p-10">
         <form id="checkout-form" class="space-y-6">
           <div class="grid gap-4 rounded-2xl border border-[#19489f]/10 bg-white p-4 md:grid-cols-[140px_1fr]">
             <img id="product-image" src="/assets/new-mango-photo.png" alt="Product" class="h-full min-h-[110px] w-full rounded-xl object-cover"/>
@@ -195,31 +195,31 @@
           <div class="grid gap-4 md:grid-cols-2">
             <div>
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="name">Full Name</label>
-              <input id="name" required type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3 text-sm"/>
+              <input id="name" required type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
             </div>
             <div>
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="email">Email</label>
-              <input id="email" required type="email" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3 text-sm"/>
+              <input id="email" required type="email" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
             </div>
             <div>
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="phone">Phone</label>
-              <input id="phone" required type="tel" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3 text-sm"/>
+              <input id="phone" required type="tel" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
             </div>
             <div>
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]">Quantity</label>
               <div class="flex items-center gap-3">
                 <button id="qty-minus" type="button" class="qty-btn">-</button>
-                <input id="quantity" value="1" min="1" max="500" required type="number" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3 text-sm text-center font-semibold"/>
+                <input id="quantity" value="1" min="1" max="500" required type="number" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base text-center font-semibold"/>
                 <button id="qty-plus" type="button" class="qty-btn">+</button>
               </div>
             </div>
             <div class="md:col-span-2">
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address1">Street Address</label>
-              <input id="address1" required type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3 text-sm"/>
+              <input id="address1" required type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
             </div>
             <div>
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="city">Delivery City</label>
-              <select id="city" required class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3 text-sm">
+              <select id="city" required class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base">
                 <option value="">Select city</option>
                 <option>Toronto</option>
                 <option>Mississauga</option>
@@ -240,11 +240,11 @@
             </div>
             <div>
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="postal">Postal Code</label>
-              <input id="postal" required placeholder="M5V 2T6" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3 text-sm uppercase"/>
+              <input id="postal" required placeholder="M5V 2T6" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base uppercase"/>
             </div>
             <div class="md:col-span-2">
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address2">Unit / Suite</label>
-              <input id="address2" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3 text-sm"/>
+              <input id="address2" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
             </div>
           </div>
 
@@ -281,7 +281,7 @@
             </div>
           </section>
 
-          <button id="complete-order" type="submit" class="cta sticky bottom-3 z-10 rounded-xl px-5 py-3 text-[.72rem] font-bold uppercase tracking-[.14em] md:static" disabled>Continue to Stripe checkout</button>
+          <button id="complete-order" type="submit" class="cta sticky bottom-3 z-10 rounded-xl px-6 py-3.5 text-[.74rem] font-bold uppercase tracking-[.14em] md:static" disabled>Continue to Stripe checkout</button>
           <p id="checkout-status" class="text-sm text-[#596f96]">Availability is required before checkout submission.</p>
         </form>
       </article>
