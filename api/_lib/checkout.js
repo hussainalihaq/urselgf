@@ -103,19 +103,22 @@ function resolveUnitPrice(product) {
   return PRODUCT_PRICES_CAD[product] || 30;
 }
 
-function buildBilling(product, quantityValue) {
+function buildBilling(product, quantityValue, fulfillment) {
   const quantity = normalizeQuantity(quantityValue) || 1;
   const unitPriceCad = resolveUnitPrice(product);
   const subtotalCad = Number((unitPriceCad * quantity).toFixed(2));
+  const shippingCad = fulfillment === 'delivery' ? 15.00 : 0;
+  const preTaxCad = subtotalCad + shippingCad;
   const hstRate = 0.13;
-  const hstCad = Number((subtotalCad * hstRate).toFixed(2));
-  const totalCad = Number((subtotalCad + hstCad).toFixed(2));
+  const hstCad = Number((preTaxCad * hstRate).toFixed(2));
+  const totalCad = Number((preTaxCad + hstCad).toFixed(2));
 
   return {
     currency: 'CAD',
     unitPriceCad,
     quantity,
     subtotalCad,
+    shippingCad,
     hstRate,
     hstCad,
     totalCad
@@ -127,7 +130,17 @@ function getFulfillmentProfile(quantityValue) {
   return FULFILLMENT_PROFILES.find((profile) => quantity <= profile.maxQuantity) || FULFILLMENT_PROFILES[FULFILLMENT_PROFILES.length - 1];
 }
 
-function getAvailability(cityValue, postalCodeValue) {
+function getAvailability(cityValue, postalCodeValue, fulfillment) {
+  if (fulfillment === 'pickup') {
+    return {
+      city: { label: 'Mississauga', key: 'mississauga', region: 'Peel' },
+      postalCode: 'N/A',
+      eligible: true,
+      hasValidPostal: true,
+      region: 'Peel'
+    };
+  }
+
   const city = findCity(cityValue);
   const postalCode = normalizePostalCode(postalCodeValue);
   const hasValidPostal = validatePostalCode(postalCode);
@@ -143,48 +156,51 @@ function getAvailability(cityValue, postalCodeValue) {
 }
 
 function buildAvailabilityResponse(body) {
-  const availability = getAvailability(body.city, body.postalCode);
+  const fulfillment = normalizeText(body.fulfillment) || 'pickup';
+  const availability = getAvailability(body.city, body.postalCode, fulfillment);
   const quantity = normalizeQuantity(body.quantity) || 1;
   const product = normalizeText(body.product) || 'Ameer Global order';
   const profile = getFulfillmentProfile(quantity);
-  const billing = buildBilling(product, quantity);
+  const billing = buildBilling(product, quantity, fulfillment);
 
-  if (!availability.city) {
-    return {
-      ok: false,
-      eligible: false,
-      reason: 'Choose a GTA delivery city.',
-      postalCode: availability.postalCode
-    };
-  }
+  if (fulfillment === 'delivery') {
+    if (!availability.city) {
+      return {
+        ok: false,
+        eligible: false,
+        reason: 'Choose a GTA delivery city.',
+        postalCode: availability.postalCode
+      };
+    }
 
-  if (!availability.hasValidPostal) {
-    return {
-      ok: false,
-      eligible: false,
-      reason: 'Enter a valid Canadian postal code.',
-      city: availability.city.label,
-      region: availability.region,
-      postalCode: availability.postalCode
-    };
-  }
+    if (!availability.hasValidPostal) {
+      return {
+        ok: false,
+        eligible: false,
+        reason: 'Enter a valid Canadian postal code.',
+        city: availability.city.label,
+        region: availability.region,
+        postalCode: availability.postalCode
+      };
+    }
 
-  if (!availability.eligible) {
-    return {
-      ok: false,
-      eligible: false,
-      reason: 'This postal code falls outside our active Greater Toronto Area order window.',
-      city: availability.city.label,
-      region: availability.region,
-      postalCode: availability.postalCode
-    };
+    if (!availability.eligible) {
+      return {
+        ok: false,
+        eligible: false,
+        reason: 'This postal code falls outside our active Greater Toronto Area order window.',
+        city: availability.city.label,
+        region: availability.region,
+        postalCode: availability.postalCode
+      };
+    }
   }
 
   return {
     ok: true,
     eligible: true,
-    city: availability.city.label,
-    cityKey: availability.city.key,
+    city: availability.city ? availability.city.label : 'Mississauga',
+    cityKey: availability.city ? availability.city.key : 'mississauga',
     region: availability.region,
     postalCode: availability.postalCode,
     quantity: quantity || 1,
@@ -198,38 +214,48 @@ function buildCheckoutContactRecord(body) {
   const product = normalizeText(body.product) || 'Ameer Global order';
   const quantity = normalizeQuantity(body.quantity);
   const paymentMethod = resolvePaymentMethod(body.paymentMethod);
+  const fulfillment = normalizeText(body.fulfillment) || 'pickup';
   const phone = normalizePhone(body.phone);
   const addressLine1 = normalizeText(body.addressLine1);
   const addressLine2 = normalizeText(body.addressLine2);
   const notes = normalizeText(body.notes);
-  const availability = getAvailability(body.city, body.postalCode);
-  const billing = buildBilling(product, quantity);
+  const availability = getAvailability(body.city, body.postalCode, fulfillment);
+  const billing = buildBilling(product, quantity, fulfillment);
 
   if (!quantity) throw new Error('Quantity must be at least 1.');
   if (!phone || phone.length < 7) throw new Error('Phone number is required.');
-  if (!addressLine1 || addressLine1.length < 5) throw new Error('Street address is required.');
   if (!paymentMethod) throw new Error('Stripe payment is required for checkout.');
-  if (!availability.city) throw new Error('Choose a GTA delivery city.');
-  if (!availability.hasValidPostal) throw new Error('Enter a valid Canadian postal code.');
-  if (!availability.eligible) throw new Error('Orders are currently available only within the Greater Toronto Area.');
+  
+  if (fulfillment === 'delivery') {
+    if (!addressLine1 || addressLine1.length < 5) throw new Error('Street address is required for delivery.');
+    if (!availability.city) throw new Error('Choose a GTA delivery city.');
+    if (!availability.hasValidPostal) throw new Error('Enter a valid Canadian postal code.');
+    if (!availability.eligible) throw new Error('Orders are currently available only within the Greater Toronto Area.');
+  }
 
   const paymentLabel = PAYMENT_METHOD_LABELS[paymentMethod];
-  const subject = `CHECKOUT REQUEST: ${product}`;
+  const subject = `CHECKOUT REQUEST: ${product} (${fulfillment.toUpperCase()})`;
+  
+  const fulfillmentDetails = fulfillment === 'pickup' 
+    ? 'Fulfillment: LOCAL PICKUP\nLocation: Ameer Global Distribution Center, 5900 Dixie Rd, Mississauga, ON'
+    : `Fulfillment: DELIVERY\nDelivery city: ${availability.city ? availability.city.label : 'Unknown'}\nRegion: ${availability.region}\nPostal code: ${availability.postalCode}\nAddress line 1: ${addressLine1}\nAddress line 2: ${addressLine2 || 'N/A'}`;
+
   const messageLines = [
     'New checkout request from the GTA order page.',
     '',
     `Product: ${product}`,
     `Quantity: ${quantity}`,
-    `Delivery city: ${availability.city.label}`,
-    `Region: ${availability.region}`,
-    `Postal code: ${availability.postalCode}`,
+    fulfillmentDetails,
+    '',
     `Currency: ${billing.currency}`,
     `Unit price: CAD ${billing.unitPriceCad.toFixed(2)}`,
     `Subtotal: CAD ${billing.subtotalCad.toFixed(2)}`,
+    `Shipping: CAD ${billing.shippingCad.toFixed(2)}`,
     `HST (13%): CAD ${billing.hstCad.toFixed(2)}`,
     `Estimated total: CAD ${billing.totalCad.toFixed(2)}`,
-    `Address line 1: ${addressLine1}`,
-    `Address line 2: ${addressLine2 || 'N/A'}`,
+    '',
+    `Customer Name: ${normalizeText(body.name)}`,
+    `Email: ${normalizeText(body.email)}`,
     `Phone: ${phone}`,
     `Payment method: ${paymentLabel}`,
     `Additional notes: ${notes || 'N/A'}`

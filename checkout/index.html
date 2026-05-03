@@ -138,11 +138,18 @@
 
     <section class="mt-8 grid items-start gap-8 xl:grid-cols-[minmax(760px,1.25fr)_minmax(460px,.75fr)]">
       <article class="frost reveal d1 max-w-[760px] rounded-[1.8rem] p-6 md:p-8 xl:order-2">
-        <p class="text-[.7rem] font-bold uppercase tracking-[.2em] text-[#5f76a3]">Map</p>
-        <h2 class="mt-3 text-[2rem] text-[#142a53]">Live Availability Zones</h2>
-        <p class="mt-2 text-sm leading-relaxed text-[#52678d]">Select a city below or in the form to highlight service regions.</p>
+        <p class="text-[.7rem] font-bold uppercase tracking-[.2em] text-[#5f76a3]">Location</p>
+        <h2 id="map-title" class="mt-3 text-[2rem] text-[#142a53]">Distribution Center</h2>
+        <p id="map-desc" class="mt-2 text-sm leading-relaxed text-[#52678d]">Pickup your order from our Mississauga distribution facility.</p>
         <div class="mt-5 rounded-2xl border border-[#19489f]/12 bg-gradient-to-b from-white to-[#f2f7ff] p-4">
-          <div class="map-scroll">
+          
+          <!-- Pickup Map (Google Maps) -->
+          <div id="pickup-map-container" class="w-full overflow-hidden rounded-xl h-[380px] bg-[#eef3fc]">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2887.4111304550186!2d-79.62939988450284!3d43.63964227912177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b3fc28d61d1fb%3A0xc6222b1156e542!2s5900%20Dixie%20Rd%2C%20Mississauga%2C%20ON%20L5T%202Y2!5e0!3m2!1sen!2sca!4v1680000000000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+
+          <!-- Delivery Map (SVG) -->
+          <div id="delivery-map-container" class="map-scroll hidden">
           <svg viewBox="0 0 720 380" class="w-full">
             <path class="map-region" data-default-city="Oakville" id="region-halton" d="M82 130 L182 94 L250 101 L238 203 L120 222 L65 182 Z"></path>
             <path class="map-region" data-default-city="Mississauga" id="region-peel" d="M248 98 L360 84 L372 187 L260 205 L238 198 Z"></path>
@@ -165,9 +172,10 @@
               <circle class="map-marker" data-city-key="oshawa" cx="650" cy="181" r="8"></circle>
             </g>
           </svg>
+          </svg>
           </div>
         </div>
-        <div class="mt-4 city-chip-row" id="city-chips">
+        <div class="mt-4 city-chip-row hidden" id="city-chips">
           <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Toronto">Toronto</button>
           <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Mississauga">Mississauga</button>
           <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Brampton">Brampton</button>
@@ -183,6 +191,12 @@
 
       <article class="frost reveal d2 w-full rounded-[1.8rem] p-7 md:p-10 xl:order-1">
         <form id="checkout-form" class="space-y-6">
+          
+          <div class="mb-6 rounded-2xl border border-[#19489f]/14 bg-[#f7faff] p-2 flex gap-1">
+            <button type="button" id="tab-pickup" class="w-1/2 rounded-xl bg-white py-3 text-[.8rem] font-bold uppercase tracking-[.1em] text-[#1a386f] shadow-sm ring-1 ring-[#19489f]/10 transition-all">Pickup (Free)</button>
+            <button type="button" id="tab-delivery" class="w-1/2 rounded-xl py-3 text-[.8rem] font-bold uppercase tracking-[.1em] text-[#5f76a3] transition-all hover:text-[#1a386f]">Delivery (GTA)</button>
+          </div>
+
           <div class="grid gap-4 rounded-2xl border border-[#19489f]/10 bg-white p-4 md:grid-cols-[140px_1fr]">
             <img id="product-image" src="/assets/new-mango-photo.png" alt="Product" class="h-full min-h-[110px] w-full rounded-xl object-cover"/>
             <div>
@@ -213,13 +227,16 @@
                 <button id="qty-plus" type="button" class="qty-btn">+</button>
               </div>
             </div>
+          </div>
+
+          <div id="delivery-fields" class="grid gap-4 md:grid-cols-2 hidden">
             <div class="md:col-span-2">
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address1">Street Address</label>
-              <input id="address1" required type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
+              <input id="address1" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
             </div>
             <div>
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="city">Delivery City</label>
-              <select id="city" required class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base">
+              <select id="city" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base">
                 <option value="">Select city</option>
                 <option>Toronto</option>
                 <option>Mississauga</option>
@@ -240,18 +257,18 @@
             </div>
             <div>
               <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="postal">Postal Code</label>
-              <input id="postal" required placeholder="M5V 2T6" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base uppercase"/>
+              <input id="postal" placeholder="M5V 2T6" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base uppercase"/>
             </div>
             <div class="md:col-span-2">
-              <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address2">Unit / Suite</label>
+              <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address2">Unit / Suite (Optional)</label>
               <input id="address2" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
             </div>
           </div>
 
-          <div id="availability-panel" class="status rounded-2xl p-4">
+          <div id="availability-panel" class="status rounded-2xl p-4 hidden">
             <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <div>
-                <div class="text-[.66rem] font-bold uppercase tracking-[.14em]">Availability</div>
+                <div class="text-[.66rem] font-bold uppercase tracking-[.14em]">Delivery Availability</div>
                 <p id="availability-text" class="mt-1 text-sm text-[#51668c]">Check availability to continue.</p>
                 <p id="availability-profile" class="mt-2 text-[.78rem] text-[#6f85ab]"></p>
               </div>
@@ -268,6 +285,7 @@
               <div class="flex items-center justify-between"><span>Unit price</span><strong id="bill-unit" class="money text-[#17325f]">$0.00</strong></div>
               <div class="flex items-center justify-between"><span>Quantity</span><strong id="bill-qty" class="money text-[#17325f]">1</strong></div>
               <div class="flex items-center justify-between"><span>Subtotal</span><strong id="bill-subtotal" class="money text-[#17325f]">$0.00</strong></div>
+              <div id="bill-shipping-row" class="flex items-center justify-between hidden"><span>Shipping (GTA)</span><strong id="bill-shipping" class="money text-[#17325f]">$15.00</strong></div>
               <div class="flex items-center justify-between"><span>HST (13%)</span><strong id="bill-hst" class="money text-[#17325f]">$0.00</strong></div>
               <div class="mt-2 border-t border-[#19489f]/12 pt-2 flex items-center justify-between"><span class="font-semibold text-[#17325f]">Total</span><strong id="bill-total" class="money text-[1.04rem] text-[#17325f]">$0.00</strong></div>
             </div>
@@ -281,8 +299,8 @@
             </div>
           </section>
 
-          <button id="complete-order" type="submit" class="cta sticky bottom-3 z-10 rounded-xl px-6 py-3.5 text-[.74rem] font-bold uppercase tracking-[.14em] md:static" disabled>Continue to Stripe checkout</button>
-          <p id="checkout-status" class="text-sm text-[#596f96]">Availability is required before checkout submission.</p>
+          <button id="complete-order" type="submit" class="cta sticky bottom-3 z-10 rounded-xl px-6 py-3.5 text-[.74rem] font-bold uppercase tracking-[.14em] md:static">Continue to Stripe checkout</button>
+          <p id="checkout-status" class="text-sm text-[#596f96]">Ready to proceed.</p>
         </form>
       </article>
     </section>
@@ -352,7 +370,8 @@
     const billHst = document.getElementById('bill-hst');
     const billTotal = document.getElementById('bill-total');
 
-    let availability = { eligible: false };
+    let fulfillment = 'pickup'; // default
+    let availability = { eligible: true }; // pickup is always eligible
     let latestBilling = null;
 
     productImage.src = profile.image;
@@ -374,13 +393,16 @@
       const qty = quantityValue();
       const unit = profile.price || 30;
       const subtotal = Number((qty * unit).toFixed(2));
-      const hst = Number((subtotal * 0.13).toFixed(2));
+      const shipping = fulfillment === 'delivery' ? 15.00 : 0;
+      const preTax = subtotal + shipping;
+      const hst = Number((preTax * 0.13).toFixed(2));
       return {
         unitPriceCad: unit,
         quantity: qty,
         subtotalCad: subtotal,
+        shippingCad: shipping,
         hstCad: hst,
-        totalCad: Number((subtotal + hst).toFixed(2))
+        totalCad: Number((preTax + hst).toFixed(2))
       };
     }
 
@@ -389,6 +411,15 @@
       billUnit.textContent = currencyFormatter.format(model.unitPriceCad || 0);
       billQty.textContent = String(model.quantity || quantityValue());
       billSubtotal.textContent = currencyFormatter.format(model.subtotalCad || 0);
+      
+      const billShippingRow = document.getElementById('bill-shipping-row');
+      if (model.shippingCad > 0) {
+        billShippingRow.classList.remove('hidden');
+        document.getElementById('bill-shipping').textContent = currencyFormatter.format(model.shippingCad);
+      } else {
+        billShippingRow.classList.add('hidden');
+      }
+
       billHst.textContent = currencyFormatter.format(model.hstCad || 0);
       billTotal.textContent = currencyFormatter.format(model.totalCad || 0);
     }
@@ -418,6 +449,15 @@
     }
 
     function resetAvailability() {
+      if (fulfillment === 'pickup') {
+        availability = { eligible: true };
+        checkoutStatus.textContent = 'Ready to proceed.';
+        unlockPayment();
+        latestBilling = null;
+        renderBilling();
+        return;
+      }
+      
       availability = { eligible: false };
       availabilityPanel.classList.remove('ok', 'no');
       availabilityText.textContent = 'Check availability to continue.';
@@ -429,8 +469,11 @@
     }
 
     async function checkAvailability() {
+      if (fulfillment === 'pickup') return;
+
       const payload = {
         product,
+        fulfillment,
         city: cityField.value.trim(),
         postalCode: postalField.value.trim(),
         quantity: String(quantityValue())
@@ -533,6 +576,67 @@
 
     document.getElementById('check-availability').addEventListener('click', checkAvailability);
 
+    // Fulfillment Toggles
+    const tabPickup = document.getElementById('tab-pickup');
+    const tabDelivery = document.getElementById('tab-delivery');
+    const deliveryFields = document.getElementById('delivery-fields');
+    const pickupMap = document.getElementById('pickup-map-container');
+    const deliveryMap = document.getElementById('delivery-map-container');
+    const mapTitle = document.getElementById('map-title');
+    const mapDesc = document.getElementById('map-desc');
+    const address1 = document.getElementById('address1');
+    const citySelect = document.getElementById('city');
+    const postalInput = document.getElementById('postal');
+
+    function setFulfillment(method) {
+      fulfillment = method;
+      if (method === 'pickup') {
+        tabPickup.classList.add('bg-white', 'shadow-sm', 'ring-1', 'ring-[#19489f]/10', 'text-[#1a386f]');
+        tabPickup.classList.remove('text-[#5f76a3]');
+        tabDelivery.classList.remove('bg-white', 'shadow-sm', 'ring-1', 'ring-[#19489f]/10', 'text-[#1a386f]');
+        tabDelivery.classList.add('text-[#5f76a3]');
+        
+        deliveryFields.classList.add('hidden');
+        availabilityPanel.classList.add('hidden');
+        cityChips.classList.add('hidden');
+        
+        pickupMap.classList.remove('hidden');
+        deliveryMap.classList.add('hidden');
+        mapTitle.textContent = 'Distribution Center';
+        mapDesc.textContent = 'Pickup your order from our Mississauga distribution facility.';
+        
+        address1.required = false;
+        citySelect.required = false;
+        postalInput.required = false;
+      } else {
+        tabDelivery.classList.add('bg-white', 'shadow-sm', 'ring-1', 'ring-[#19489f]/10', 'text-[#1a386f]');
+        tabDelivery.classList.remove('text-[#5f76a3]');
+        tabPickup.classList.remove('bg-white', 'shadow-sm', 'ring-1', 'ring-[#19489f]/10', 'text-[#1a386f]');
+        tabPickup.classList.add('text-[#5f76a3]');
+        
+        deliveryFields.classList.remove('hidden');
+        availabilityPanel.classList.remove('hidden');
+        cityChips.classList.remove('hidden');
+        
+        pickupMap.classList.add('hidden');
+        deliveryMap.classList.remove('hidden');
+        mapTitle.textContent = 'Live Availability Zones';
+        mapDesc.textContent = 'Select a city below or in the form to highlight service regions.';
+        
+        address1.required = true;
+        citySelect.required = true;
+        postalInput.required = true;
+      }
+      resetAvailability();
+    }
+
+    tabPickup.addEventListener('click', () => setFulfillment('pickup'));
+    tabDelivery.addEventListener('click', () => setFulfillment('delivery'));
+    
+    // Initial Setup
+    const cityChips = document.getElementById('city-chips');
+    setFulfillment('pickup');
+
     document.getElementById('checkout-form').addEventListener('submit', async (event) => {
       event.preventDefault();
       if (!availability.eligible) {
@@ -546,6 +650,7 @@
 
       const payload = {
         product,
+        fulfillment,
         name: document.getElementById('name').value.trim(),
         email: document.getElementById('email').value.trim(),
         phone: document.getElementById('phone').value.trim(),
@@ -597,7 +702,7 @@
     });
 
     renderBilling();
-    lockPayment();
+    unlockPayment(); // unlock initially because pickup is default
   </script>
 </body>
 </html>
