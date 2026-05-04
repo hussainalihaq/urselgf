@@ -236,7 +236,7 @@
       <article class="frost reveal d2 w-full rounded-[1.8rem] p-7 md:p-10 xl:order-1 flex flex-col justify-center">
         
         <!-- PROGRESS BAR -->
-        <div class="mb-10 flex items-center justify-between text-[.75rem] font-bold uppercase tracking-[.14em]">
+        <div id="progress-bar" class="mb-10 flex items-center justify-between text-[.75rem] font-bold uppercase tracking-[.14em]">
           <div class="flex items-center gap-2 text-[#1a386f]" id="prog-1"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#1a386f] text-white transition-colors duration-300">1</span> <span class="hidden md:inline">Details</span></div>
           <div class="h-px flex-1 bg-[#19489f]/15 mx-2 md:mx-4"></div>
           <div class="flex items-center gap-2 text-[#8b9cbd] transition-colors duration-300" id="prog-2"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#eaf1ff] text-[#8b9cbd] transition-colors duration-300">2</span> <span class="hidden md:inline">Location</span></div>
@@ -320,7 +320,15 @@
               </div>
             </div>
 
-            <div class="pt-4">
+            <div id="pickup-actions" class="pt-4 flex flex-col gap-3 hidden">
+              <div class="rounded-xl border border-[#19489f]/10 bg-[#f7faff] p-4 flex justify-between items-center mb-2">
+                <span class="text-[.8rem] font-bold text-[#51668c] uppercase tracking-wider">Total (inc. Tax)</span>
+                <span id="quick-total" class="text-[1.2rem] font-bold text-[#1f4ea5]">$0.00</span>
+              </div>
+              <button id="btn-pickup-pay" type="submit" class="cta w-full rounded-xl px-6 py-4 text-[.8rem] font-bold uppercase tracking-[.14em]">Pay via Stripe</button>
+            </div>
+
+            <div id="delivery-actions" class="pt-4 hidden">
               <button type="button" onclick="goToStep(2)" class="cta w-full rounded-xl px-6 py-4 text-[.8rem] font-bold uppercase tracking-[.14em]">Continue to Verification</button>
             </div>
           </div>
@@ -424,10 +432,7 @@
     const product = params.get('product') || 'Premium Mangoes';
     const profile = productCatalog[product] || { unit: 'Trade pack', origin: 'Pakistan', image: '/assets/new-mango-photo.png', price: 30 };
 
-    const productImage = document.getElementById('product-image');
-    const summaryProduct = document.getElementById('summary-product');
-    const summaryUnit = document.getElementById('summary-unit');
-    const summaryOrigin = document.getElementById('summary-origin');
+
     const cityField = document.getElementById('city');
     const postalField = document.getElementById('postal');
     const quantityField = document.getElementById('quantity');
@@ -451,7 +456,6 @@
     let availability = { eligible: true }; // pickup is always eligible
     let latestBilling = null;
 
-    productImage.src = profile.image;
     document.getElementById('product-image-large').src = profile.image;
     
     document.getElementById('summary-product-large').textContent = product;
@@ -501,6 +505,7 @@
 
       billHst.textContent = currencyFormatter.format(model.hstCad || 0);
       billTotal.textContent = currencyFormatter.format(model.totalCad || 0);
+      document.getElementById('quick-total').textContent = currencyFormatter.format(model.totalCad || 0);
     }
 
     function highlight(cityValue) {
@@ -670,7 +675,7 @@
 
     const urlParams = new URLSearchParams(window.location.search);
     const passedFulfillment = urlParams.get('fulfillment');
-       function setFulfillment(method) {
+    function setFulfillment(method) {
       fulfillment = method;
       if (method === 'pickup') {
         tabPickup.classList.add('bg-white', 'text-[#1a386f]', 'shadow-sm', 'ring-1', 'ring-[#19489f]/10');
@@ -686,6 +691,10 @@
         mapTitle.textContent = 'Distribution Center';
         mapDesc.textContent = 'Pickup your order from our Mississauga distribution facility.';
         availability = { eligible: true };
+        
+        document.getElementById('pickup-actions').classList.remove('hidden');
+        document.getElementById('delivery-actions').classList.add('hidden');
+        document.getElementById('progress-bar').classList.add('hidden');
         
         // Remove required attributes from address fields
         address1.removeAttribute('required');
@@ -705,6 +714,10 @@
         mapTitle.textContent = 'Delivery Zones';
         mapDesc.textContent = 'We currently deliver to the selected GTA regions below.';
         availability = { eligible: false };
+        
+        document.getElementById('pickup-actions').classList.add('hidden');
+        document.getElementById('delivery-actions').classList.remove('hidden');
+        document.getElementById('progress-bar').classList.remove('hidden');
         
         // Add required attributes for address fields
         address1.setAttribute('required', 'true');
@@ -802,9 +815,10 @@
         return;
       }
 
-      const btn = document.getElementById('complete-order');
+      const btn = document.getElementById(fulfillment === 'pickup' ? 'btn-pickup-pay' : 'complete-order');
       btn.disabled = true;
       btn.textContent = 'Processing...';
+      const prevTextStatus = checkoutStatus.textContent;
       checkoutStatus.textContent = 'Submitting checkout securely...';
 
       const payload = {
@@ -831,7 +845,7 @@
         const result = await response.json();
 
         if (!response.ok) {
-          checkoutStatus.textContent = result.error || 'Unable to continue checkout.';
+          if (fulfillment === 'delivery') checkoutStatus.textContent = result.error || 'Unable to continue checkout.';
           btn.disabled = false;
           btn.textContent = 'Pay via Stripe';
           return;
@@ -842,9 +856,11 @@
           renderBilling(latestBilling);
         }
 
-        checkoutStatus.textContent = result.payment && result.payment.message
-          ? result.payment.message
-          : 'Checkout submitted. Redirecting...';
+        if (fulfillment === 'delivery') {
+          checkoutStatus.textContent = result.payment && result.payment.message
+            ? result.payment.message
+            : 'Checkout submitted. Redirecting...';
+        }
 
         if (result.payment && result.payment.status === 'redirect' && result.payment.url) {
           window.location.href = result.payment.url;
