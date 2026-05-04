@@ -32,6 +32,15 @@
         linear-gradient(180deg,#f6f9ff,#f9fbff 56%,#f4f8ff);
     }
     h1,h2,h3{font-family:'Fraunces',serif;font-weight:600}
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
     .frost{
       background:rgba(255,255,255,.82);
       border:1px solid rgba(25,72,159,.12);
@@ -138,169 +147,227 @@
 
     <section class="mt-8 grid items-start gap-8 xl:grid-cols-[minmax(760px,1.25fr)_minmax(460px,.75fr)]">
       <article class="frost reveal d1 max-w-[760px] rounded-[1.8rem] p-6 md:p-8 xl:order-2">
-        <p class="text-[.7rem] font-bold uppercase tracking-[.2em] text-[#5f76a3]">Location</p>
-        <h2 id="map-title" class="mt-3 text-[2rem] text-[#142a53]">Distribution Center</h2>
-        <p id="map-desc" class="mt-2 text-sm leading-relaxed text-[#52678d]">Pickup your order from our Mississauga distribution facility.</p>
-        <div class="mt-5 rounded-2xl border border-[#19489f]/12 bg-gradient-to-b from-white to-[#f2f7ff] p-4">
-          
-          <!-- Pickup Map (Google Maps) -->
-          <div id="pickup-map-container" class="w-full overflow-hidden rounded-xl h-[380px] bg-[#eef3fc]">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2887.4111304550186!2d-79.62939988450284!3d43.63964227912177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b3fc28d61d1fb%3A0xc6222b1156e542!2s5900%20Dixie%20Rd%2C%20Mississauga%2C%20ON%20L5T%202Y2!5e0!3m2!1sen!2sca!4v1680000000000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        
+        <!-- STEP 1 VISUAL: Product Info -->
+        <div id="left-step-1" class="animate-fade-in">
+          <div class="h-[320px] w-full rounded-2xl overflow-hidden mb-6 border border-[#19489f]/10 shadow-sm">
+            <img id="product-image-large" src="/assets/new-mango-photo.png" alt="Product" class="h-full w-full object-cover" />
           </div>
-
-          <!-- Delivery Map (SVG) -->
-          <div id="delivery-map-container" class="map-scroll hidden">
-          <svg viewBox="0 0 720 380" class="w-full">
-            <path class="map-region" data-default-city="Oakville" id="region-halton" d="M82 130 L182 94 L250 101 L238 203 L120 222 L65 182 Z"></path>
-            <path class="map-region" data-default-city="Mississauga" id="region-peel" d="M248 98 L360 84 L372 187 L260 205 L238 198 Z"></path>
-            <path class="map-region" data-default-city="Vaughan" id="region-york" d="M310 34 L479 28 L515 112 L373 132 L308 112 Z"></path>
-            <path class="map-region" data-default-city="Toronto" id="region-toronto" d="M378 134 L503 123 L519 197 L401 210 L360 180 Z"></path>
-            <path class="map-region" data-default-city="Pickering" id="region-durham" d="M520 111 L639 87 L667 196 L540 211 L515 184 Z"></path>
-            <g class="pulse">
-              <circle class="map-marker" data-city-key="toronto" cx="424" cy="182" r="8"></circle>
-              <circle class="map-marker" data-city-key="mississauga" cx="268" cy="190" r="8"></circle>
-              <circle class="map-marker" data-city-key="brampton" cx="283" cy="140" r="8"></circle>
-              <circle class="map-marker" data-city-key="vaughan" cx="392" cy="108" r="8"></circle>
-              <circle class="map-marker" data-city-key="markham" cx="468" cy="120" r="8"></circle>
-              <circle class="map-marker" data-city-key="richmond-hill" cx="432" cy="98" r="8"></circle>
-              <circle class="map-marker" data-city-key="oakville" cx="176" cy="186" r="8"></circle>
-              <circle class="map-marker" data-city-key="milton" cx="160" cy="150" r="8"></circle>
-              <circle class="map-marker" data-city-key="burlington" cx="114" cy="178" r="8"></circle>
-              <circle class="map-marker" data-city-key="pickering" cx="558" cy="184" r="8"></circle>
-              <circle class="map-marker" data-city-key="ajax" cx="590" cy="185" r="8"></circle>
-              <circle class="map-marker" data-city-key="whitby" cx="620" cy="184" r="8"></circle>
-              <circle class="map-marker" data-city-key="oshawa" cx="650" cy="181" r="8"></circle>
-            </g>
-          </svg>
-          </svg>
+          <p class="text-[.7rem] font-bold uppercase tracking-[.2em] text-[#5f76a3]">Selected Product</p>
+          <h2 id="summary-product-large" class="mt-2 text-[2rem] text-[#142a53]">Ameer Global Product</h2>
+          <div class="mt-3 flex gap-3 text-[.8rem] font-semibold text-[#4f6286] uppercase tracking-[.1em]">
+            <span id="summary-unit-large" class="rounded-xl border border-[#19489f]/10 bg-[#f7faff] px-4 py-2">Trade pack</span>
+            <span id="summary-origin-large" class="rounded-xl border border-[#19489f]/10 bg-[#f7faff] px-4 py-2">Pakistan</span>
           </div>
         </div>
-        <div class="mt-4 city-chip-row hidden" id="city-chips">
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Toronto">Toronto</button>
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Mississauga">Mississauga</button>
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Brampton">Brampton</button>
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Markham">Markham</button>
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Vaughan">Vaughan</button>
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Oakville">Oakville</button>
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Pickering">Pickering</button>
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Ajax">Ajax</button>
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Whitby">Whitby</button>
-          <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Oshawa">Oshawa</button>
+
+        <!-- STEP 2 VISUAL: Map -->
+        <div id="left-step-2" class="hidden animate-fade-in">
+          <p class="text-[.7rem] font-bold uppercase tracking-[.2em] text-[#5f76a3]">Location</p>
+          <h2 id="map-title" class="mt-3 text-[2rem] text-[#142a53]">Distribution Center</h2>
+          <p id="map-desc" class="mt-2 text-sm leading-relaxed text-[#52678d]">Pickup your order from our Mississauga distribution facility.</p>
+          <div class="mt-5 rounded-2xl border border-[#19489f]/12 bg-gradient-to-b from-white to-[#f2f7ff] p-4 shadow-sm">
+            
+            <div id="pickup-map-container" class="w-full overflow-hidden rounded-xl h-[340px] bg-[#eef3fc]">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2887.4111304550186!2d-79.62939988450284!3d43.63964227912177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b3fc28d61d1fb%3A0xc6222b1156e542!2s5900%20Dixie%20Rd%2C%20Mississauga%2C%20ON%20L5T%202Y2!5e0!3m2!1sen!2sca!4v1680000000000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <div id="delivery-map-container" class="map-scroll hidden">
+            <svg viewBox="0 0 720 380" class="w-full">
+              <path class="map-region" data-default-city="Oakville" id="region-halton" d="M82 130 L182 94 L250 101 L238 203 L120 222 L65 182 Z"></path>
+              <path class="map-region" data-default-city="Mississauga" id="region-peel" d="M248 98 L360 84 L372 187 L260 205 L238 198 Z"></path>
+              <path class="map-region" data-default-city="Vaughan" id="region-york" d="M310 34 L479 28 L515 112 L373 132 L308 112 Z"></path>
+              <path class="map-region" data-default-city="Toronto" id="region-toronto" d="M378 134 L503 123 L519 197 L401 210 L360 180 Z"></path>
+              <path class="map-region" data-default-city="Pickering" id="region-durham" d="M520 111 L639 87 L667 196 L540 211 L515 184 Z"></path>
+              <g class="pulse">
+                <circle class="map-marker" data-city-key="toronto" cx="424" cy="182" r="8"></circle>
+                <circle class="map-marker" data-city-key="mississauga" cx="268" cy="190" r="8"></circle>
+                <circle class="map-marker" data-city-key="brampton" cx="283" cy="140" r="8"></circle>
+                <circle class="map-marker" data-city-key="vaughan" cx="392" cy="108" r="8"></circle>
+                <circle class="map-marker" data-city-key="markham" cx="468" cy="120" r="8"></circle>
+                <circle class="map-marker" data-city-key="richmond-hill" cx="432" cy="98" r="8"></circle>
+                <circle class="map-marker" data-city-key="oakville" cx="176" cy="186" r="8"></circle>
+                <circle class="map-marker" data-city-key="milton" cx="160" cy="150" r="8"></circle>
+                <circle class="map-marker" data-city-key="burlington" cx="114" cy="178" r="8"></circle>
+                <circle class="map-marker" data-city-key="pickering" cx="558" cy="184" r="8"></circle>
+                <circle class="map-marker" data-city-key="ajax" cx="590" cy="185" r="8"></circle>
+                <circle class="map-marker" data-city-key="whitby" cx="620" cy="184" r="8"></circle>
+                <circle class="map-marker" data-city-key="oshawa" cx="650" cy="181" r="8"></circle>
+              </g>
+            </svg>
+            </div>
+          </div>
+          <div class="mt-4 city-chip-row hidden" id="city-chips">
+            <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Toronto">Toronto</button>
+            <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Mississauga">Mississauga</button>
+            <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Brampton">Brampton</button>
+            <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Markham">Markham</button>
+            <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Vaughan">Vaughan</button>
+            <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Oakville">Oakville</button>
+            <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Pickering">Pickering</button>
+            <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Ajax">Ajax</button>
+            <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Whitby">Whitby</button>
+            <button type="button" class="chip rounded-full px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#5a6e94]" data-city="Oshawa">Oshawa</button>
+          </div>
         </div>
-      </article>
 
-      <article class="frost reveal d2 w-full rounded-[1.8rem] p-7 md:p-10 xl:order-1">
-        <form id="checkout-form" class="space-y-6">
-          
-          <div class="mb-6 rounded-2xl border border-[#19489f]/14 bg-[#f7faff] p-2 flex gap-1">
-            <button type="button" id="tab-pickup" class="w-1/2 rounded-xl bg-white py-3 text-[.8rem] font-bold uppercase tracking-[.1em] text-[#1a386f] shadow-sm ring-1 ring-[#19489f]/10 transition-all">Pickup (Free)</button>
-            <button type="button" id="tab-delivery" class="w-1/2 rounded-xl py-3 text-[.8rem] font-bold uppercase tracking-[.1em] text-[#5f76a3] transition-all hover:text-[#1a386f]">Delivery (GTA)</button>
-          </div>
-
-          <div class="grid gap-4 rounded-2xl border border-[#19489f]/10 bg-white p-4 md:grid-cols-[140px_1fr]">
-            <img id="product-image" src="/assets/new-mango-photo.png" alt="Product" class="h-full min-h-[110px] w-full rounded-xl object-cover"/>
-            <div>
-              <div class="text-[.64rem] font-bold uppercase tracking-[.14em] text-[#7086ae]">Product</div>
-              <div id="summary-product" class="mt-1 text-[1.05rem] font-semibold text-[#1a386f]">Ameer Global Product</div>
-              <div class="mt-2 text-sm text-[#4f6286]"><span id="summary-unit">Trade pack</span> · <span id="summary-origin">Pakistan</span></div>
+        <!-- STEP 3 VISUAL: Bill Summary -->
+        <div id="left-step-3" class="hidden animate-fade-in flex-col justify-center h-full min-h-[450px]">
+          <section class="rounded-3xl border border-[#19489f]/12 bg-white p-8 shadow-sm">
+            <div class="flex items-center justify-between gap-3 border-b border-[#19489f]/10 pb-6">
+              <h3 class="text-[1.4rem] font-semibold text-[#17325f]">Order Summary</h3>
+              <span class="rounded-full bg-[#edf3ff] px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#305fbf]">CAD</span>
             </div>
-          </div>
-
-          <div class="grid gap-4 md:grid-cols-2">
-            <div>
-              <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="name">Full Name</label>
-              <input id="name" required type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
-            </div>
-            <div>
-              <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="email">Email</label>
-              <input id="email" required type="email" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
-            </div>
-            <div>
-              <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="phone">Phone</label>
-              <input id="phone" required type="tel" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
-            </div>
-            <div>
-              <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]">Quantity</label>
-              <div class="flex items-center gap-3">
-                <button id="qty-minus" type="button" class="qty-btn">-</button>
-                <input id="quantity" value="1" min="1" max="500" required type="number" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base text-center font-semibold"/>
-                <button id="qty-plus" type="button" class="qty-btn">+</button>
-              </div>
-            </div>
-          </div>
-
-          <div id="delivery-fields" class="grid gap-4 md:grid-cols-2 hidden">
-            <div class="md:col-span-2">
-              <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address1">Street Address</label>
-              <input id="address1" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
-            </div>
-            <div>
-              <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="city">Delivery City</label>
-              <select id="city" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base">
-                <option value="">Select city</option>
-                <option>Toronto</option>
-                <option>Mississauga</option>
-                <option>Brampton</option>
-                <option>Caledon</option>
-                <option>Vaughan</option>
-                <option>Markham</option>
-                <option>Richmond Hill</option>
-                <option>Oakville</option>
-                <option>Milton</option>
-                <option>Burlington</option>
-                <option>Halton Hills</option>
-                <option>Pickering</option>
-                <option>Ajax</option>
-                <option>Whitby</option>
-                <option>Oshawa</option>
-              </select>
-            </div>
-            <div>
-              <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="postal">Postal Code</label>
-              <input id="postal" placeholder="M5V 2T6" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base uppercase"/>
-            </div>
-            <div class="md:col-span-2">
-              <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address2">Unit / Suite (Optional)</label>
-              <input id="address2" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
-            </div>
-          </div>
-
-          <div id="availability-panel" class="status rounded-2xl p-4 hidden">
-            <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-              <div>
-                <div class="text-[.66rem] font-bold uppercase tracking-[.14em]">Delivery Availability</div>
-                <p id="availability-text" class="mt-1 text-sm text-[#51668c]">Check availability to continue.</p>
-                <p id="availability-profile" class="mt-2 text-[.78rem] text-[#6f85ab]"></p>
-              </div>
-              <button id="check-availability" type="button" class="rounded-xl border border-[#19489f]/16 bg-white px-4 py-3 text-[.7rem] font-bold uppercase tracking-[.14em] text-[#1f4ea5]">Check now</button>
-            </div>
-          </div>
-
-          <section class="rounded-2xl border border-[#19489f]/12 bg-white p-4 reveal d3">
-            <div class="flex items-start justify-between gap-3">
-              <h3 class="text-[1.1rem] text-[#17325f]">Bill Summary (CAD)</h3>
-              <span class="rounded-full bg-[#edf3ff] px-3 py-1 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#305fbf]">Tax Included</span>
-            </div>
-            <div class="mt-3 space-y-2 text-sm text-[#51668c]">
+            <div class="mt-6 space-y-4 text-[1.05rem] text-[#51668c]">
               <div class="flex items-center justify-between"><span>Unit price</span><strong id="bill-unit" class="money text-[#17325f]">$0.00</strong></div>
               <div class="flex items-center justify-between"><span>Quantity</span><strong id="bill-qty" class="money text-[#17325f]">1</strong></div>
               <div class="flex items-center justify-between"><span>Subtotal</span><strong id="bill-subtotal" class="money text-[#17325f]">$0.00</strong></div>
               <div id="bill-shipping-row" class="flex items-center justify-between hidden"><span>Shipping (GTA)</span><strong id="bill-shipping" class="money text-[#17325f]">$15.00</strong></div>
               <div class="flex items-center justify-between"><span>HST (13%)</span><strong id="bill-hst" class="money text-[#17325f]">$0.00</strong></div>
-              <div class="mt-2 border-t border-[#19489f]/12 pt-2 flex items-center justify-between"><span class="font-semibold text-[#17325f]">Total</span><strong id="bill-total" class="money text-[1.04rem] text-[#17325f]">$0.00</strong></div>
+              <div class="mt-6 border-t border-[#19489f]/12 pt-6 flex items-center justify-between"><span class="font-bold text-[#17325f]">Total</span><strong id="bill-total" class="money text-[1.6rem] text-[#1f4ea5]">$0.00</strong></div>
             </div>
           </section>
+        </div>
 
-          <section id="payment-wrap" class="rounded-2xl border border-[#19489f]/12 bg-[#f7faff] p-4 opacity-45 pointer-events-none">
-            <h3 class="text-[1.05rem] text-[#17325f]">Payment Method</h3>
-            <div class="mt-3 rounded-xl border border-[#19489f]/14 bg-white p-4">
-              <div class="text-[.64rem] font-bold uppercase tracking-[.14em] text-[#6680af]">Secure Checkout</div>
-              <div class="mt-1 text-[1rem] font-semibold text-[#1a386f]">Stripe</div>
+      </article>
+
+      <article class="frost reveal d2 w-full rounded-[1.8rem] p-7 md:p-10 xl:order-1 flex flex-col justify-center">
+        
+        <!-- PROGRESS BAR -->
+        <div class="mb-10 flex items-center justify-between text-[.75rem] font-bold uppercase tracking-[.14em]">
+          <div class="flex items-center gap-2 text-[#1a386f]" id="prog-1"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#1a386f] text-white transition-colors duration-300">1</span> <span class="hidden md:inline">Details</span></div>
+          <div class="h-px flex-1 bg-[#19489f]/15 mx-2 md:mx-4"></div>
+          <div class="flex items-center gap-2 text-[#8b9cbd] transition-colors duration-300" id="prog-2"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#eaf1ff] text-[#8b9cbd] transition-colors duration-300">2</span> <span class="hidden md:inline">Location</span></div>
+          <div class="h-px flex-1 bg-[#19489f]/15 mx-2 md:mx-4"></div>
+          <div class="flex items-center gap-2 text-[#8b9cbd] transition-colors duration-300" id="prog-3"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#eaf1ff] text-[#8b9cbd] transition-colors duration-300">3</span> <span class="hidden md:inline">Payment</span></div>
+        </div>
+
+        <form id="checkout-form" class="relative">
+          
+          <!-- STEP 1 FORM: Contact & Quantity -->
+          <div id="form-step-1" class="space-y-6 animate-fade-in">
+            <div class="mb-4">
+              <h2 class="text-[1.8rem] text-[#142a53]">Your Details</h2>
+              <p class="text-[#52678d] text-sm">Please provide your contact information to start the order.</p>
             </div>
-          </section>
 
-          <button id="complete-order" type="submit" class="cta sticky bottom-3 z-10 rounded-xl px-6 py-3.5 text-[.74rem] font-bold uppercase tracking-[.14em] md:static">Continue to Stripe checkout</button>
-          <p id="checkout-status" class="text-sm text-[#596f96]">Ready to proceed.</p>
+            <div class="grid gap-4 md:grid-cols-2">
+              <div class="md:col-span-2">
+                <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="name">Full Name</label>
+                <input id="name" required type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
+              </div>
+              <div class="md:col-span-2">
+                <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="email">Email</label>
+                <input id="email" required type="email" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
+              </div>
+              <div class="md:col-span-2">
+                <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="phone">Phone</label>
+                <input id="phone" required type="tel" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
+              </div>
+              <div class="md:col-span-2 mt-2">
+                <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]">Quantity</label>
+                <div class="flex items-center gap-3">
+                  <button id="qty-minus" type="button" class="qty-btn h-[52px] w-[52px]">-</button>
+                  <input id="quantity" value="1" min="1" max="500" required type="number" class="h-[52px] w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-lg text-center font-bold text-[#142a53]"/>
+                  <button id="qty-plus" type="button" class="qty-btn h-[52px] w-[52px]">+</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4">
+              <button type="button" onclick="goToStep(2)" class="cta w-full rounded-xl px-6 py-4 text-[.8rem] font-bold uppercase tracking-[.14em]">Continue to Location</button>
+            </div>
+          </div>
+
+          <!-- STEP 2 FORM: Fulfillment -->
+          <div id="form-step-2" class="hidden space-y-6 animate-fade-in">
+            <div class="mb-4">
+              <h2 class="text-[1.8rem] text-[#142a53]">Order Fulfillment</h2>
+              <p class="text-[#52678d] text-sm">Choose how you would like to receive your order.</p>
+            </div>
+
+            <div class="mb-6 rounded-2xl border border-[#19489f]/14 bg-[#f7faff] p-2 flex gap-1">
+              <button type="button" id="tab-pickup" class="w-1/2 rounded-xl bg-white py-4 text-[.8rem] font-bold uppercase tracking-[.1em] text-[#1a386f] shadow-sm ring-1 ring-[#19489f]/10 transition-all">Pickup (Free)</button>
+              <button type="button" id="tab-delivery" class="w-1/2 rounded-xl py-4 text-[.8rem] font-bold uppercase tracking-[.1em] text-[#5f76a3] transition-all hover:text-[#1a386f]">Delivery (GTA)</button>
+            </div>
+
+            <div id="delivery-fields" class="grid gap-4 md:grid-cols-2 hidden">
+              <div class="md:col-span-2">
+                <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address1">Street Address</label>
+                <input id="address1" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
+              </div>
+              <div>
+                <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="city">Delivery City</label>
+                <select id="city" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base text-[#142a53]">
+                  <option value="">Select city</option>
+                  <option>Toronto</option>
+                  <option>Mississauga</option>
+                  <option>Brampton</option>
+                  <option>Caledon</option>
+                  <option>Vaughan</option>
+                  <option>Markham</option>
+                  <option>Richmond Hill</option>
+                  <option>Oakville</option>
+                  <option>Milton</option>
+                  <option>Burlington</option>
+                  <option>Halton Hills</option>
+                  <option>Pickering</option>
+                  <option>Ajax</option>
+                  <option>Whitby</option>
+                  <option>Oshawa</option>
+                </select>
+              </div>
+              <div>
+                <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="postal">Postal Code</label>
+                <input id="postal" placeholder="M5V 2T6" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base uppercase"/>
+              </div>
+              <div class="md:col-span-2">
+                <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address2">Unit / Suite (Optional)</label>
+                <input id="address2" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
+              </div>
+            </div>
+
+            <div id="availability-panel" class="status rounded-2xl p-4 hidden">
+              <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <div class="text-[.66rem] font-bold uppercase tracking-[.14em]">Delivery Check</div>
+                  <p id="availability-text" class="mt-1 text-sm text-[#51668c]">Verify delivery availability.</p>
+                  <p id="availability-profile" class="mt-2 text-[.78rem] text-[#6f85ab]"></p>
+                </div>
+                <button id="check-availability" type="button" class="rounded-xl border border-[#19489f]/16 bg-white px-4 py-3 text-[.7rem] font-bold uppercase tracking-[.14em] text-[#1f4ea5]">Check now</button>
+              </div>
+            </div>
+
+            <div class="pt-4 flex gap-3">
+              <button type="button" onclick="goToStep(1)" class="w-1/3 rounded-xl border border-[#19489f]/20 bg-white px-4 py-4 text-[.8rem] font-bold uppercase tracking-[.14em] text-[#5f76a3] hover:bg-[#f7faff]">Back</button>
+              <button type="button" id="btn-next-step3" onclick="goToStep(3)" class="cta w-2/3 rounded-xl px-6 py-4 text-[.8rem] font-bold uppercase tracking-[.14em]">Review & Pay</button>
+            </div>
+          </div>
+
+          <!-- STEP 3 FORM: Payment -->
+          <div id="form-step-3" class="hidden space-y-6 animate-fade-in">
+            <div class="mb-4">
+              <h2 class="text-[1.8rem] text-[#142a53]">Payment</h2>
+              <p class="text-[#52678d] text-sm">Review your total and proceed to secure checkout.</p>
+            </div>
+
+            <section id="payment-wrap" class="rounded-2xl border border-[#19489f]/12 bg-[#f7faff] p-6 text-center">
+              <div class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-[#19489f]/10 mb-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1f4ea5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              </div>
+              <h3 class="text-[1.2rem] font-semibold text-[#17325f]">Secure Checkout via Stripe</h3>
+              <p class="mt-2 text-sm text-[#51668c]">You will be redirected to our encrypted Stripe payment portal to complete your transaction safely.</p>
+            </section>
+
+            <div class="pt-4 flex flex-col gap-3">
+              <div class="flex gap-3">
+                <button type="button" onclick="goToStep(2)" class="w-1/3 rounded-xl border border-[#19489f]/20 bg-white px-4 py-4 text-[.8rem] font-bold uppercase tracking-[.14em] text-[#5f76a3] hover:bg-[#f7faff]">Back</button>
+                <button id="complete-order" type="submit" class="cta w-2/3 rounded-xl px-6 py-4 text-[.8rem] font-bold uppercase tracking-[.14em]">Pay via Stripe</button>
+              </div>
+              <p id="checkout-status" class="text-center text-sm font-semibold text-[#1f4ea5]">Ready to proceed.</p>
+            </div>
+          </div>
+
         </form>
       </article>
     </section>
@@ -375,9 +442,11 @@
     let latestBilling = null;
 
     productImage.src = profile.image;
-    summaryProduct.textContent = product;
-    summaryUnit.textContent = profile.unit;
-    summaryOrigin.textContent = profile.origin;
+    document.getElementById('product-image-large').src = profile.image;
+    
+    document.getElementById('summary-product-large').textContent = product;
+    document.getElementById('summary-unit-large').textContent = profile.unit;
+    document.getElementById('summary-origin-large').textContent = profile.origin;
 
     function slugifyCity(value) {
       return String(value || '').trim().toLowerCase().replace(/\s+/g, '-');
@@ -637,6 +706,66 @@
     const cityChips = document.getElementById('city-chips');
     setFulfillment('pickup');
 
+    // --- Step Navigation Logic ---
+    let currentStep = 1;
+
+    function updateProgressUI(step) {
+      const p1 = document.getElementById('prog-1');
+      const p2 = document.getElementById('prog-2');
+      const p3 = document.getElementById('prog-3');
+
+      // Reset all to inactive
+      [p1, p2, p3].forEach(p => {
+        p.classList.remove('text-[#1a386f]');
+        p.classList.add('text-[#8b9cbd]');
+        p.querySelector('span').classList.remove('bg-[#1a386f]', 'text-white');
+        p.querySelector('span').classList.add('bg-[#eaf1ff]', 'text-[#8b9cbd]');
+      });
+
+      // Activate up to current step
+      for(let i=1; i<=step; i++) {
+        const p = document.getElementById(`prog-${i}`);
+        p.classList.remove('text-[#8b9cbd]');
+        p.classList.add('text-[#1a386f]');
+        p.querySelector('span').classList.remove('bg-[#eaf1ff]', 'text-[#8b9cbd]');
+        p.querySelector('span').classList.add('bg-[#1a386f]', 'text-white');
+      }
+    }
+
+    function goToStep(step) {
+      // Validate Step 1 before proceeding
+      if (step === 2 && currentStep === 1) {
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        if (!name || !email || !phone) {
+          alert('Please fill out your Name, Email, and Phone number to continue.');
+          return;
+        }
+      }
+
+      // Validate Step 2 before proceeding
+      if (step === 3 && currentStep === 2) {
+        if (!availability.eligible) {
+          alert('Please check delivery availability before proceeding.');
+          return;
+        }
+      }
+
+      currentStep = step;
+      updateProgressUI(step);
+
+      // Hide all steps
+      [1, 2, 3].forEach(i => {
+        document.getElementById(`form-step-${i}`).classList.add('hidden');
+        document.getElementById(`left-step-${i}`).classList.add('hidden');
+      });
+
+      // Show current step
+      document.getElementById(`form-step-${step}`).classList.remove('hidden');
+      document.getElementById(`left-step-${step}`).classList.remove('hidden');
+    }
+
     document.getElementById('checkout-form').addEventListener('submit', async (event) => {
       event.preventDefault();
       if (!availability.eligible) {
@@ -644,9 +773,10 @@
         return;
       }
 
-      completeOrder.disabled = true;
-      completeOrder.textContent = 'Processing...';
-      checkoutStatus.textContent = 'Submitting checkout...';
+      const btn = document.getElementById('complete-order');
+      btn.disabled = true;
+      btn.textContent = 'Processing...';
+      checkoutStatus.textContent = 'Submitting checkout securely...';
 
       const payload = {
         product,
@@ -673,8 +803,8 @@
 
         if (!response.ok) {
           checkoutStatus.textContent = result.error || 'Unable to continue checkout.';
-          completeOrder.disabled = false;
-          completeOrder.textContent = 'Continue to Stripe checkout';
+          btn.disabled = false;
+          btn.textContent = 'Pay via Stripe';
           return;
         }
 
@@ -685,24 +815,24 @@
 
         checkoutStatus.textContent = result.payment && result.payment.message
           ? result.payment.message
-          : 'Checkout submitted.';
+          : 'Checkout submitted. Redirecting...';
 
         if (result.payment && result.payment.status === 'redirect' && result.payment.url) {
           window.location.href = result.payment.url;
           return;
         }
 
-        completeOrder.disabled = false;
-        completeOrder.textContent = 'Continue to Stripe checkout';
+        btn.disabled = false;
+        btn.textContent = 'Pay via Stripe';
       } catch (error) {
         checkoutStatus.textContent = 'Network error. Please try again.';
-        completeOrder.disabled = false;
-        completeOrder.textContent = 'Continue to Stripe checkout';
+        btn.disabled = false;
+        btn.textContent = 'Pay via Stripe';
       }
     });
 
     renderBilling();
-    unlockPayment(); // unlock initially because pickup is default
+    updateProgressUI(1);
   </script>
 </body>
 </html>
