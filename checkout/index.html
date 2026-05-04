@@ -289,6 +289,19 @@
                   <button id="qty-plus" type="button" class="qty-btn h-[52px] w-[52px]">+</button>
                 </div>
               </div>
+              <!-- STOCK URGENCY BAR -->
+              <div class="md:col-span-2 mt-3">
+                <div class="rounded-xl border border-amber-300/60 bg-gradient-to-r from-amber-50 to-orange-50 p-3">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                    <span class="text-[.72rem] font-bold uppercase tracking-[.12em] text-amber-800">Limited Stock — <span id="stock-text">Only 12 boxes left this season!</span></span>
+                  </div>
+                  <div class="w-full h-2 rounded-full bg-amber-200/60 overflow-hidden">
+                    <div id="stock-bar" class="h-full rounded-full bg-gradient-to-r from-red-500 via-orange-500 to-amber-400 transition-all duration-1000" style="width:24%"></div>
+                  </div>
+                  <p class="mt-1.5 text-[.65rem] text-amber-700">Pre-season orders ship first. Secure yours before allocation closes.</p>
+                </div>
+              </div>
             </div>
 
             <!-- PICKUP INFO (shown when fulfillment=pickup) -->
@@ -312,6 +325,10 @@
                     <div class="text-sm text-[#51668c]">Mon–Sat, 9:00 AM – 5:00 PM</div>
                   </div>
                 </div>
+              </div>
+              <!-- Pickup Map -->
+              <div class="rounded-xl overflow-hidden border border-[#19489f]/10 mb-4 h-[200px]">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2887.4111304550186!2d-79.62939988450284!3d43.63964227912177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b3fc28d61d1fb%3A0xc6222b1156e542!2s5900%20Dixie%20Rd%2C%20Mississauga%2C%20ON%20L5T%202Y2!5e0!3m2!1sen!2sca!4v1680000000000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
               </div>
               <div class="rounded-xl border border-[#19489f]/10 bg-[#f7faff] p-4 flex justify-between items-center mb-3">
                 <span class="text-[.8rem] font-bold text-[#51668c] uppercase tracking-wider">Total (inc. HST)</span>
@@ -502,6 +519,20 @@
     document.getElementById('summary-product-large').textContent = product;
     document.getElementById('summary-unit-large').textContent = profile.unit;
     document.getElementById('summary-origin-large').textContent = profile.origin;
+
+    // Stock Urgency Bar
+    (function initStock() {
+      const stockAmounts = { 'Sindhri Mangoes': 8, 'Anwar Ratol Mangoes': 14, 'Chaunsa Mangoes': 6 };
+      const baseStock = stockAmounts[product] || Math.floor(Math.random() * 12) + 5;
+      const maxStock = 50;
+      const pct = Math.round((baseStock / maxStock) * 100);
+      const stockBar = document.getElementById('stock-bar');
+      const stockText = document.getElementById('stock-text');
+      if (stockBar && stockText) {
+        stockText.textContent = `Only ${baseStock} boxes left this season!`;
+        setTimeout(() => { stockBar.style.width = pct + '%'; }, 300);
+      }
+    })();
 
     function slugifyCity(value) {
       return String(value || '').trim().toLowerCase().replace(/\s+/g, '-');
