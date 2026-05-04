@@ -250,7 +250,7 @@
           <div id="form-step-1" class="space-y-6 animate-fade-in">
             <div class="mb-4">
               <h2 class="text-[1.8rem] text-[#142a53]">Your Details</h2>
-              <p class="text-[#52678d] text-sm">Please provide your contact information to start the order.</p>
+              <p class="text-[#52678d] text-sm">Please provide your contact and fulfillment preferences.</p>
             </div>
 
             <div class="grid gap-4 md:grid-cols-2">
@@ -276,57 +276,65 @@
               </div>
             </div>
 
+            <div class="pt-4 border-t border-[#19489f]/10 mt-4">
+              <h3 class="text-[1.1rem] font-bold text-[#142a53] mb-4">How would you like to receive your order?</h3>
+              <div class="mb-6 rounded-2xl border border-[#19489f]/14 bg-[#f7faff] p-2 flex gap-1">
+                <button type="button" id="tab-pickup" class="w-1/2 rounded-xl bg-white py-4 text-[.8rem] font-bold uppercase tracking-[.1em] text-[#1a386f] shadow-sm ring-1 ring-[#19489f]/10 transition-all">Pickup (Free)</button>
+                <button type="button" id="tab-delivery" class="w-1/2 rounded-xl py-4 text-[.8rem] font-bold uppercase tracking-[.1em] text-[#5f76a3] transition-all hover:text-[#1a386f]">Delivery (GTA)</button>
+              </div>
+
+              <div id="delivery-fields" class="grid gap-4 md:grid-cols-2 hidden">
+                <div class="md:col-span-2">
+                  <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address1">Street Address</label>
+                  <input id="address1" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
+                </div>
+                <div>
+                  <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="city">Delivery City</label>
+                  <select id="city" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base text-[#142a53]">
+                    <option value="">Select city</option>
+                    <option>Toronto</option>
+                    <option>Mississauga</option>
+                    <option>Brampton</option>
+                    <option>Caledon</option>
+                    <option>Vaughan</option>
+                    <option>Markham</option>
+                    <option>Richmond Hill</option>
+                    <option>Oakville</option>
+                    <option>Milton</option>
+                    <option>Burlington</option>
+                    <option>Halton Hills</option>
+                    <option>Pickering</option>
+                    <option>Ajax</option>
+                    <option>Whitby</option>
+                    <option>Oshawa</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="postal">Postal Code</label>
+                  <input id="postal" placeholder="M5V 2T6" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base uppercase"/>
+                </div>
+                <div class="md:col-span-2">
+                  <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address2">Unit / Suite (Optional)</label>
+                  <input id="address2" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
+                </div>
+              </div>
+            </div>
+
             <div class="pt-4">
-              <button type="button" onclick="goToStep(2)" class="cta w-full rounded-xl px-6 py-4 text-[.8rem] font-bold uppercase tracking-[.14em]">Continue to Location</button>
+              <button type="button" onclick="goToStep(2)" class="cta w-full rounded-xl px-6 py-4 text-[.8rem] font-bold uppercase tracking-[.14em]">Continue to Verification</button>
             </div>
           </div>
 
-          <!-- STEP 2 FORM: Fulfillment -->
+          <!-- STEP 2 FORM: Verification -->
           <div id="form-step-2" class="hidden space-y-6 animate-fade-in">
             <div class="mb-4">
-              <h2 class="text-[1.8rem] text-[#142a53]">Order Fulfillment</h2>
-              <p class="text-[#52678d] text-sm">Choose how you would like to receive your order.</p>
+              <h2 class="text-[1.8rem] text-[#142a53]">Verify Location</h2>
+              <p class="text-[#52678d] text-sm">Please review your fulfillment details before proceeding.</p>
             </div>
 
-            <div class="mb-6 rounded-2xl border border-[#19489f]/14 bg-[#f7faff] p-2 flex gap-1">
-              <button type="button" id="tab-pickup" class="w-1/2 rounded-xl bg-white py-4 text-[.8rem] font-bold uppercase tracking-[.1em] text-[#1a386f] shadow-sm ring-1 ring-[#19489f]/10 transition-all">Pickup (Free)</button>
-              <button type="button" id="tab-delivery" class="w-1/2 rounded-xl py-4 text-[.8rem] font-bold uppercase tracking-[.1em] text-[#5f76a3] transition-all hover:text-[#1a386f]">Delivery (GTA)</button>
-            </div>
-
-            <div id="delivery-fields" class="grid gap-4 md:grid-cols-2 hidden">
-              <div class="md:col-span-2">
-                <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address1">Street Address</label>
-                <input id="address1" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
-              </div>
-              <div>
-                <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="city">Delivery City</label>
-                <select id="city" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base text-[#142a53]">
-                  <option value="">Select city</option>
-                  <option>Toronto</option>
-                  <option>Mississauga</option>
-                  <option>Brampton</option>
-                  <option>Caledon</option>
-                  <option>Vaughan</option>
-                  <option>Markham</option>
-                  <option>Richmond Hill</option>
-                  <option>Oakville</option>
-                  <option>Milton</option>
-                  <option>Burlington</option>
-                  <option>Halton Hills</option>
-                  <option>Pickering</option>
-                  <option>Ajax</option>
-                  <option>Whitby</option>
-                  <option>Oshawa</option>
-                </select>
-              </div>
-              <div>
-                <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="postal">Postal Code</label>
-                <input id="postal" placeholder="M5V 2T6" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base uppercase"/>
-              </div>
-              <div class="md:col-span-2">
-                <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address2">Unit / Suite (Optional)</label>
-                <input id="address2" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
-              </div>
+            <div id="pickup-info-panel" class="status rounded-2xl p-4 bg-[#f7faff] border border-[#19489f]/14">
+               <div class="text-[.8rem] font-bold uppercase tracking-[.14em] text-[#1a386f] mb-2">Local Pickup Selected</div>
+               <p class="text-sm text-[#51668c]">Your order will be prepared for pickup at our Mississauga Distribution Center. Open Mon-Sat, 9AM to 5PM. No further verification required.</p>
             </div>
 
             <div id="availability-panel" class="status rounded-2xl p-4 hidden">
@@ -413,7 +421,7 @@
     });
 
     const params = new URLSearchParams(window.location.search);
-    const product = params.get('product') || 'Ameer Global Product';
+    const product = params.get('product') || 'Premium Mangoes';
     const profile = productCatalog[product] || { unit: 'Trade pack', origin: 'Pakistan', image: '/assets/new-mango-photo.png', price: 30 };
 
     const productImage = document.getElementById('product-image');
@@ -662,47 +670,49 @@
 
     const urlParams = new URLSearchParams(window.location.search);
     const passedFulfillment = urlParams.get('fulfillment');
-    
-    function setFulfillment(method) {
+       function setFulfillment(method) {
       fulfillment = method;
       if (method === 'pickup') {
-        tabPickup.classList.add('bg-white', 'shadow-sm', 'ring-1', 'ring-[#19489f]/10', 'text-[#1a386f]');
-        tabPickup.classList.remove('text-[#5f76a3]');
-        tabDelivery.classList.remove('bg-white', 'shadow-sm', 'ring-1', 'ring-[#19489f]/10', 'text-[#1a386f]');
-        tabDelivery.classList.add('text-[#5f76a3]');
-        
+        tabPickup.classList.add('bg-white', 'text-[#1a386f]', 'shadow-sm', 'ring-1', 'ring-[#19489f]/10');
+        tabPickup.classList.remove('text-[#5f76a3]', 'hover:text-[#1a386f]');
+        tabDelivery.classList.remove('bg-white', 'text-[#1a386f]', 'shadow-sm', 'ring-1', 'ring-[#19489f]/10');
+        tabDelivery.classList.add('text-[#5f76a3]', 'hover:text-[#1a386f]');
         deliveryFields.classList.add('hidden');
+        document.getElementById('pickup-info-panel').classList.remove('hidden');
         availabilityPanel.classList.add('hidden');
-        cityChips.classList.add('hidden');
-        
         pickupMap.classList.remove('hidden');
         deliveryMap.classList.add('hidden');
+        cityChips.classList.add('hidden');
         mapTitle.textContent = 'Distribution Center';
         mapDesc.textContent = 'Pickup your order from our Mississauga distribution facility.';
+        availability = { eligible: true };
         
-        address1.required = false;
-        citySelect.required = false;
-        postalInput.required = false;
+        // Remove required attributes from address fields
+        address1.removeAttribute('required');
+        cityField.removeAttribute('required');
+        postalInput.removeAttribute('required');
       } else {
-        tabDelivery.classList.add('bg-white', 'shadow-sm', 'ring-1', 'ring-[#19489f]/10', 'text-[#1a386f]');
-        tabDelivery.classList.remove('text-[#5f76a3]');
-        tabPickup.classList.remove('bg-white', 'shadow-sm', 'ring-1', 'ring-[#19489f]/10', 'text-[#1a386f]');
-        tabPickup.classList.add('text-[#5f76a3]');
-        
+        tabDelivery.classList.add('bg-white', 'text-[#1a386f]', 'shadow-sm', 'ring-1', 'ring-[#19489f]/10');
+        tabDelivery.classList.remove('text-[#5f76a3]', 'hover:text-[#1a386f]');
+        tabPickup.classList.remove('bg-white', 'text-[#1a386f]', 'shadow-sm', 'ring-1', 'ring-[#19489f]/10');
+        tabPickup.classList.add('text-[#5f76a3]', 'hover:text-[#1a386f]');
         deliveryFields.classList.remove('hidden');
+        document.getElementById('pickup-info-panel').classList.add('hidden');
         availabilityPanel.classList.remove('hidden');
-        cityChips.classList.remove('hidden');
-        
         pickupMap.classList.add('hidden');
         deliveryMap.classList.remove('hidden');
-        mapTitle.textContent = 'Live Availability Zones';
-        mapDesc.textContent = 'Select a city below or in the form to highlight service regions.';
+        cityChips.classList.remove('hidden');
+        mapTitle.textContent = 'Delivery Zones';
+        mapDesc.textContent = 'We currently deliver to the selected GTA regions below.';
+        availability = { eligible: false };
         
-        address1.required = true;
-        citySelect.required = true;
-        postalInput.required = true;
+        // Add required attributes for address fields
+        address1.setAttribute('required', 'true');
+        cityField.setAttribute('required', 'true');
+        postalInput.setAttribute('required', 'true');
       }
-      resetAvailability();
+      if (latestBilling) renderBilling(latestBilling);
+      else renderBilling();
     }
 
     tabPickup.addEventListener('click', () => setFulfillment('pickup'));
@@ -751,6 +761,15 @@
         if (!name || !email || !phone) {
           alert('Please fill out your Name, Email, and Phone number to continue.');
           return;
+        }
+
+        if (fulfillment === 'delivery') {
+          if (!address1.value.trim() || !cityField.value || !postalInput.value.trim()) {
+            alert('Please fill out your complete delivery address.');
+            return;
+          }
+          // Auto-trigger availability check
+          document.getElementById('check-availability').click();
         }
       }
 
