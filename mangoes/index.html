@@ -207,7 +207,7 @@
               </div>
             </div>
             <div class="flex flex-wrap gap-4">
-              <a href="/checkout/?product=Sindhri%20Mangoes&intent=buy" class="group relative inline-flex items-center gap-2 px-8 py-3.5 bg-[#203a7b] text-white rounded-xl text-[.75rem] font-bold uppercase tracking-widest shadow-xl hover:-translate-y-1 transition-all">
+              <a href="javascript:void(0)" onclick="openFulfillmentModal('Sindhri Mangoes')" class="group relative inline-flex items-center gap-2 px-8 py-3.5 bg-[#203a7b] text-white rounded-xl text-[.75rem] font-bold uppercase tracking-widest shadow-xl hover:-translate-y-1 transition-all">
                 Purchase Order <span class="material-symbols-outlined text-base">shopping_cart</span>
                 <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-[220px] opacity-0 group-hover:opacity-100 transition-opacity bg-[#1b2847] text-white text-[.65rem] normal-case tracking-normal font-normal rounded-lg p-3 shadow-xl z-50 text-center invisible group-hover:visible">
                   <strong>Purchase Order:</strong> Secure your order immediately. Quantities are limited, and your purchase will be confirmed upon checkout.
@@ -244,7 +244,7 @@
               </div>
             </div>
             <div class="flex flex-wrap gap-4">
-              <a href="/checkout/?product=Anwar%20Ratol%20Mangoes&intent=buy" class="group relative inline-flex items-center gap-2 px-8 py-3.5 bg-[#203a7b] text-white rounded-xl text-[.75rem] font-bold uppercase tracking-widest shadow-xl hover:-translate-y-1 transition-all">
+              <a href="javascript:void(0)" onclick="openFulfillmentModal('Anwar Ratol Mangoes')" class="group relative inline-flex items-center gap-2 px-8 py-3.5 bg-[#203a7b] text-white rounded-xl text-[.75rem] font-bold uppercase tracking-widest shadow-xl hover:-translate-y-1 transition-all">
                 Purchase Order <span class="material-symbols-outlined text-base">shopping_cart</span>
                 <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-[220px] opacity-0 group-hover:opacity-100 transition-opacity bg-[#1b2847] text-white text-[.65rem] normal-case tracking-normal font-normal rounded-lg p-3 shadow-xl z-50 text-center invisible group-hover:visible">
                   <strong>Purchase Order:</strong> Secure your order immediately. Quantities are limited, and your purchase will be confirmed upon checkout.
@@ -293,7 +293,7 @@
               </div>
             </div>
             <div class="flex flex-wrap gap-4">
-              <a href="/checkout/?product=Chaunsa%20Mangoes&intent=buy" class="group relative inline-flex items-center gap-2 px-8 py-3.5 bg-[#203a7b] text-white rounded-xl text-[.75rem] font-bold uppercase tracking-widest shadow-xl hover:-translate-y-1 transition-all">
+              <a href="javascript:void(0)" onclick="openFulfillmentModal('Chaunsa Mangoes')" class="group relative inline-flex items-center gap-2 px-8 py-3.5 bg-[#203a7b] text-white rounded-xl text-[.75rem] font-bold uppercase tracking-widest shadow-xl hover:-translate-y-1 transition-all">
                 Purchase Order <span class="material-symbols-outlined text-base">shopping_cart</span>
                 <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-[220px] opacity-0 group-hover:opacity-100 transition-opacity bg-[#1b2847] text-white text-[.65rem] normal-case tracking-normal font-normal rounded-lg p-3 shadow-xl z-50 text-center invisible group-hover:visible">
                   <strong>Purchase Order:</strong> Secure your order immediately. Quantities are limited, and your purchase will be confirmed upon checkout.
@@ -413,7 +413,72 @@
   <div class="max-w-[1280px] mx-auto px-6 md:px-10 mt-14 pt-6 border-t border-[#203a7b]/8"><p class="text-center text-[.68rem] uppercase tracking-[.2em] text-[#6e7b97]">© 1866–2026 Ameer Global INC.</p></div>
 </footer>
 
+<!-- FULFILLMENT MODAL -->
+<div id="fulfillment-modal" class="fixed inset-0 z-[100] hidden items-center justify-center">
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeFulfillmentModal()"></div>
+  <div class="relative bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl mx-4 transition-all duration-300 scale-95 opacity-0" id="fulfillment-modal-inner">
+    <button onclick="closeFulfillmentModal()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors">
+      <span class="material-symbols-outlined text-gray-500">close</span>
+    </button>
+    <h3 class="text-[1.8rem] text-[#142a53] mb-2 leading-tight" style="font-family:'DM Serif Display',serif">How would you like to receive your order?</h3>
+    <p class="text-[#52678d] text-sm mb-6">Please select your preferred fulfillment method to continue to checkout.</p>
+    
+    <div class="flex flex-col gap-3">
+      <a id="btn-modal-pickup" href="#" class="w-full flex items-center gap-4 p-4 rounded-xl border border-[#19489f]/20 hover:bg-[#f7faff] transition-colors group">
+        <div class="w-12 h-12 rounded-full bg-[#eef3fc] flex items-center justify-center text-[#1a386f] group-hover:scale-110 transition-transform">
+          <span class="material-symbols-outlined">storefront</span>
+        </div>
+        <div>
+          <div class="font-bold text-[#142a53]">Local Pickup</div>
+          <div class="text-xs text-[#52678d]">Mississauga Distribution Center (Free)</div>
+        </div>
+      </a>
+      
+      <a id="btn-modal-delivery" href="#" class="w-full flex items-center gap-4 p-4 rounded-xl border border-[#19489f]/20 hover:bg-[#f7faff] transition-colors group">
+        <div class="w-12 h-12 rounded-full bg-[#eef3fc] flex items-center justify-center text-[#1a386f] group-hover:scale-110 transition-transform">
+          <span class="material-symbols-outlined">local_shipping</span>
+        </div>
+        <div>
+          <div class="font-bold text-[#142a53]">GTA Delivery</div>
+          <div class="text-xs text-[#52678d]">Flat rate $15.00 shipping fee</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
 <script>
+  function openFulfillmentModal(productName) {
+    const modal = document.getElementById('fulfillment-modal');
+    const inner = document.getElementById('fulfillment-modal-inner');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    
+    // Animate in
+    setTimeout(() => {
+      inner.classList.remove('scale-95', 'opacity-0');
+      inner.classList.add('scale-100', 'opacity-100');
+    }, 10);
+    
+    const encProduct = encodeURIComponent(productName);
+    document.getElementById('btn-modal-pickup').href = `/checkout/?product=${encProduct}&fulfillment=pickup&intent=buy`;
+    document.getElementById('btn-modal-delivery').href = `/checkout/?product=${encProduct}&fulfillment=delivery&intent=buy`;
+  }
+  
+  function closeFulfillmentModal() {
+    const modal = document.getElementById('fulfillment-modal');
+    const inner = document.getElementById('fulfillment-modal-inner');
+    
+    // Animate out
+    inner.classList.remove('scale-100', 'opacity-100');
+    inner.classList.add('scale-95', 'opacity-0');
+    
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }, 300);
+  }
+
   const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('active')}),{threshold:.08});
   document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 </script>
