@@ -196,6 +196,21 @@
                 <circle class="map-marker" data-city-key="whitby" cx="620" cy="184" r="8"></circle>
                 <circle class="map-marker" data-city-key="oshawa" cx="650" cy="181" r="8"></circle>
               </g>
+              <g font-family="Outfit,sans-serif" font-size="11" font-weight="600" fill="#1a386f" text-anchor="middle">
+                <text x="424" y="200">Toronto</text>
+                <text x="268" y="208">Mississauga</text>
+                <text x="283" y="128">Brampton</text>
+                <text x="392" y="96">Vaughan</text>
+                <text x="468" y="138">Markham</text>
+                <text x="432" y="86" font-size="9">Richmond Hill</text>
+                <text x="176" y="204">Oakville</text>
+                <text x="160" y="168">Milton</text>
+                <text x="114" y="196">Burlington</text>
+                <text x="558" y="202">Pickering</text>
+                <text x="590" y="173">Ajax</text>
+                <text x="620" y="202">Whitby</text>
+                <text x="650" y="169">Oshawa</text>
+              </g>
             </svg>
             </div>
           </div>
@@ -276,14 +291,39 @@
               </div>
             </div>
 
-            <div class="pt-4 border-t border-[#19489f]/10 mt-4">
-              <h3 class="text-[1.1rem] font-bold text-[#142a53] mb-4">How would you like to receive your order?</h3>
-              <div class="mb-6 rounded-2xl border border-[#19489f]/14 bg-[#f7faff] p-2 flex gap-1">
-                <button type="button" id="tab-pickup" class="w-1/2 rounded-xl bg-white py-4 text-[.8rem] font-bold uppercase tracking-[.1em] text-[#1a386f] shadow-sm ring-1 ring-[#19489f]/10 transition-all">Pickup (Free)</button>
-                <button type="button" id="tab-delivery" class="w-1/2 rounded-xl py-4 text-[.8rem] font-bold uppercase tracking-[.1em] text-[#5f76a3] transition-all hover:text-[#1a386f]">Delivery (GTA)</button>
+            <!-- PICKUP INFO (shown when fulfillment=pickup) -->
+            <div id="pickup-section" class="hidden pt-4 border-t border-[#19489f]/10 mt-4">
+              <div class="rounded-2xl border border-[#19489f]/14 bg-[#f7faff] p-5 mb-4">
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-10 h-10 rounded-full bg-[#eef3fc] flex items-center justify-center text-[#1a386f]">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  </div>
+                  <div>
+                    <div class="text-[.8rem] font-bold uppercase tracking-[.14em] text-[#1a386f]">Pickup Location</div>
+                    <div class="text-sm text-[#51668c]">5900 Dixie Rd, Mississauga, ON L5T 2Y2</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-[#eef3fc] flex items-center justify-center text-[#1a386f]">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  </div>
+                  <div>
+                    <div class="text-[.8rem] font-bold uppercase tracking-[.14em] text-[#1a386f]">Hours</div>
+                    <div class="text-sm text-[#51668c]">Mon–Sat, 9:00 AM – 5:00 PM</div>
+                  </div>
+                </div>
               </div>
+              <div class="rounded-xl border border-[#19489f]/10 bg-[#f7faff] p-4 flex justify-between items-center mb-3">
+                <span class="text-[.8rem] font-bold text-[#51668c] uppercase tracking-wider">Total (inc. HST)</span>
+                <span id="quick-total" class="text-[1.2rem] font-bold text-[#1f4ea5]">$0.00</span>
+              </div>
+              <button id="btn-pickup-pay" type="submit" class="cta w-full rounded-xl px-6 py-4 text-[.8rem] font-bold uppercase tracking-[.14em]">Pay via Stripe</button>
+            </div>
 
-              <div id="delivery-fields" class="grid gap-4 md:grid-cols-2 hidden">
+            <!-- DELIVERY FIELDS (shown when fulfillment=delivery) -->
+            <div id="delivery-section" class="hidden pt-4 border-t border-[#19489f]/10 mt-4">
+              <h3 class="text-[1.1rem] font-bold text-[#142a53] mb-4">Delivery Address (GTA)</h3>
+              <div id="delivery-fields" class="grid gap-4 md:grid-cols-2">
                 <div class="md:col-span-2">
                   <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address1">Street Address</label>
                   <input id="address1" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
@@ -292,21 +332,31 @@
                   <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="city">Delivery City</label>
                   <select id="city" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base text-[#142a53]">
                     <option value="">Select city</option>
-                    <option>Toronto</option>
-                    <option>Mississauga</option>
-                    <option>Brampton</option>
-                    <option>Caledon</option>
-                    <option>Vaughan</option>
-                    <option>Markham</option>
-                    <option>Richmond Hill</option>
-                    <option>Oakville</option>
-                    <option>Milton</option>
-                    <option>Burlington</option>
-                    <option>Halton Hills</option>
-                    <option>Pickering</option>
-                    <option>Ajax</option>
-                    <option>Whitby</option>
-                    <option>Oshawa</option>
+                    <optgroup label="Toronto">
+                      <option>Toronto</option>
+                    </optgroup>
+                    <optgroup label="Peel Region">
+                      <option>Mississauga</option>
+                      <option>Brampton</option>
+                      <option>Caledon</option>
+                    </optgroup>
+                    <optgroup label="York Region">
+                      <option>Vaughan</option>
+                      <option>Markham</option>
+                      <option>Richmond Hill</option>
+                    </optgroup>
+                    <optgroup label="Halton Region">
+                      <option>Oakville</option>
+                      <option>Milton</option>
+                      <option>Burlington</option>
+                      <option>Halton Hills</option>
+                    </optgroup>
+                    <optgroup label="Durham Region">
+                      <option>Pickering</option>
+                      <option>Ajax</option>
+                      <option>Whitby</option>
+                      <option>Oshawa</option>
+                    </optgroup>
                   </select>
                 </div>
                 <div>
@@ -318,18 +368,9 @@
                   <input id="address2" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
                 </div>
               </div>
-            </div>
-
-            <div id="pickup-actions" class="pt-4 flex flex-col gap-3 hidden">
-              <div class="rounded-xl border border-[#19489f]/10 bg-[#f7faff] p-4 flex justify-between items-center mb-2">
-                <span class="text-[.8rem] font-bold text-[#51668c] uppercase tracking-wider">Total (inc. Tax)</span>
-                <span id="quick-total" class="text-[1.2rem] font-bold text-[#1f4ea5]">$0.00</span>
+              <div class="pt-4">
+                <button type="button" onclick="goToStep(2)" class="cta w-full rounded-xl px-6 py-4 text-[.8rem] font-bold uppercase tracking-[.14em]">Continue to Verification</button>
               </div>
-              <button id="btn-pickup-pay" type="submit" class="cta w-full rounded-xl px-6 py-4 text-[.8rem] font-bold uppercase tracking-[.14em]">Pay via Stripe</button>
-            </div>
-
-            <div id="delivery-actions" class="pt-4 hidden">
-              <button type="button" onclick="goToStep(2)" class="cta w-full rounded-xl px-6 py-4 text-[.8rem] font-bold uppercase tracking-[.14em]">Continue to Verification</button>
             </div>
           </div>
 
@@ -660,30 +701,30 @@
 
     document.getElementById('check-availability').addEventListener('click', checkAvailability);
 
-    // Fulfillment Toggles
-    const tabPickup = document.getElementById('tab-pickup');
-    const tabDelivery = document.getElementById('tab-delivery');
-    const deliveryFields = document.getElementById('delivery-fields');
+    // Fulfillment Setup (based on URL param, no toggle needed)
     const pickupMap = document.getElementById('pickup-map-container');
     const deliveryMap = document.getElementById('delivery-map-container');
     const cityChips = document.getElementById('city-chips');
     const mapTitle = document.getElementById('map-title');
     const mapDesc = document.getElementById('map-desc');
     const address1 = document.getElementById('address1');
-    const citySelect = document.getElementById('city');
     const postalInput = document.getElementById('postal');
 
     const urlParams = new URLSearchParams(window.location.search);
     const passedFulfillment = urlParams.get('fulfillment');
+
     function setFulfillment(method) {
       fulfillment = method;
+      const pickupSection = document.getElementById('pickup-section');
+      const deliverySection = document.getElementById('delivery-section');
+      const progressBar = document.getElementById('progress-bar');
+      const pickupInfoPanel = document.getElementById('pickup-info-panel');
+
       if (method === 'pickup') {
-        tabPickup.classList.add('bg-white', 'text-[#1a386f]', 'shadow-sm', 'ring-1', 'ring-[#19489f]/10');
-        tabPickup.classList.remove('text-[#5f76a3]', 'hover:text-[#1a386f]');
-        tabDelivery.classList.remove('bg-white', 'text-[#1a386f]', 'shadow-sm', 'ring-1', 'ring-[#19489f]/10');
-        tabDelivery.classList.add('text-[#5f76a3]', 'hover:text-[#1a386f]');
-        deliveryFields.classList.add('hidden');
-        document.getElementById('pickup-info-panel').classList.remove('hidden');
+        pickupSection.classList.remove('hidden');
+        deliverySection.classList.add('hidden');
+        progressBar.classList.add('hidden');
+        if (pickupInfoPanel) pickupInfoPanel.classList.remove('hidden');
         availabilityPanel.classList.add('hidden');
         pickupMap.classList.remove('hidden');
         deliveryMap.classList.add('hidden');
@@ -691,35 +732,18 @@
         mapTitle.textContent = 'Distribution Center';
         mapDesc.textContent = 'Pickup your order from our Mississauga distribution facility.';
         availability = { eligible: true };
-        
-        document.getElementById('pickup-actions').classList.remove('hidden');
-        document.getElementById('delivery-actions').classList.add('hidden');
-        document.getElementById('progress-bar').classList.add('hidden');
-        
-        // Remove required attributes from address fields
-        address1.removeAttribute('required');
-        cityField.removeAttribute('required');
-        postalInput.removeAttribute('required');
       } else {
-        tabDelivery.classList.add('bg-white', 'text-[#1a386f]', 'shadow-sm', 'ring-1', 'ring-[#19489f]/10');
-        tabDelivery.classList.remove('text-[#5f76a3]', 'hover:text-[#1a386f]');
-        tabPickup.classList.remove('bg-white', 'text-[#1a386f]', 'shadow-sm', 'ring-1', 'ring-[#19489f]/10');
-        tabPickup.classList.add('text-[#5f76a3]', 'hover:text-[#1a386f]');
-        deliveryFields.classList.remove('hidden');
-        document.getElementById('pickup-info-panel').classList.add('hidden');
+        pickupSection.classList.add('hidden');
+        deliverySection.classList.remove('hidden');
+        progressBar.classList.remove('hidden');
+        if (pickupInfoPanel) pickupInfoPanel.classList.add('hidden');
         availabilityPanel.classList.remove('hidden');
         pickupMap.classList.add('hidden');
         deliveryMap.classList.remove('hidden');
         cityChips.classList.remove('hidden');
         mapTitle.textContent = 'Delivery Zones';
-        mapDesc.textContent = 'We currently deliver to the selected GTA regions below.';
+        mapDesc.textContent = 'We deliver across the Greater Toronto Area.';
         availability = { eligible: false };
-        
-        document.getElementById('pickup-actions').classList.add('hidden');
-        document.getElementById('delivery-actions').classList.remove('hidden');
-        document.getElementById('progress-bar').classList.remove('hidden');
-        
-        // Add required attributes for address fields
         address1.setAttribute('required', 'true');
         cityField.setAttribute('required', 'true');
         postalInput.setAttribute('required', 'true');
@@ -728,10 +752,7 @@
       else renderBilling();
     }
 
-    tabPickup.addEventListener('click', () => setFulfillment('pickup'));
-    tabDelivery.addEventListener('click', () => setFulfillment('delivery'));
-    
-    // Initial Setup
+    // Initialize based on URL
     if (passedFulfillment === 'delivery') {
       setFulfillment('delivery');
     } else {
