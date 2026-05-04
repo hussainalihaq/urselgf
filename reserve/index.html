@@ -63,20 +63,14 @@
     <section class="frost reveal rounded-[1.8rem] p-6 md:p-8">
       <div class="grid gap-7 lg:grid-cols-[1.1fr_.9fr]">
         <div>
-          <h1 class="mt-2 text-[clamp(2rem,5vw,3.9rem)] leading-[1.03] text-[#132a53]">Reserve Your<br/>Order</h1>
-          <p class="mt-4 max-w-[62ch] text-[1rem] leading-relaxed text-[#52678d]">Interested in a product? Reserve it now — no upfront payment needed. We'll confirm availability and reach out to you directly with next steps.</p>
-          <div class="mt-6 flex flex-wrap gap-2 text-[.68rem] font-bold uppercase tracking-[.14em]">
-            <span class="pill rounded-full px-3 py-2 text-[#5a6d93]">No Upfront Payment</span>
-            <span class="pill rounded-full px-3 py-2 text-[#5a6d93]">Priority Queue</span>
-            <span class="pill rounded-full px-3 py-2 text-[#5a6d93]">We Follow Up</span>
-          </div>
+          <h1 class="mt-2 text-[clamp(2rem,5vw,3.9rem)] leading-[1.03] text-[#132a53]">Reserve Now,<br/>Pay Later</h1>
         </div>
         <div class="rounded-[1.4rem] border border-[#1f4ea5]/10 bg-gradient-to-b from-[#f7faff] to-[#edf3ff] p-5">
           <div class="text-[.66rem] font-bold uppercase tracking-[.16em] text-[#6f86b0]">How it works</div>
           <ol class="mt-3 space-y-3 text-sm text-[#50658c]">
-            <li><strong class="text-[#1d3f86]">1.</strong> Fill out the form with your product and quantity.</li>
-            <li><strong class="text-[#1d3f86]">2.</strong> Our team checks availability and confirms your order.</li>
-            <li><strong class="text-[#1d3f86]">3.</strong> We contact you with pricing, timeline, and payment options.</li>
+            <li><strong class="text-[#1d3f86]">1.</strong> Give info</li>
+            <li><strong class="text-[#1d3f86]">2.</strong> Tell quantity</li>
+            <li><strong class="text-[#1d3f86]">3.</strong> We will get back to you when shipment is here</li>
           </ol>
         </div>
       </div>
@@ -88,7 +82,10 @@
         <div class="mt-5">
           <div class="text-[.66rem] font-bold uppercase tracking-[.15em] text-[#6f86b0]">Selected Product</div>
           <h2 id="product-name" class="mt-2 text-[1.7rem] text-[#16305d]">Product</h2>
-          <p class="mt-2 text-sm leading-relaxed text-[#52678d]">Submit your interest and we'll get back to you with availability, pricing, and delivery timeline.</p>
+          <div class="mt-4 flex flex-wrap gap-2 text-[.7rem] font-bold text-[#4f6286] uppercase tracking-[.1em]">
+            <span id="summary-unit" class="w-fit rounded-xl border border-[#1f4ea5]/10 bg-[#f7faff] px-3 py-1.5">Trade pack</span>
+            <span id="summary-origin" class="w-fit rounded-xl border border-[#1f4ea5]/10 bg-[#f7faff] px-3 py-1.5">Pakistan</span>
+          </div>
         </div>
         <div class="mt-5 rounded-xl border border-[#1f4ea5]/12 bg-white p-4">
           <div class="text-[.66rem] font-bold uppercase tracking-[.15em] text-[#6f86b0]">Quantity</div>
@@ -146,15 +143,15 @@
 
   <script>
     const productCatalog = {
-      'Sindhri Mangoes': '/assets/sindhri-mangoes.png',
-      'Anwar Ratol Mangoes': '/assets/anwar-ratol-mangoes.png',
-      'Chaunsa Mangoes': '/assets/chaunsa-mangoes.png',
-      'Chaunsa Mango Premium Box': '/assets/chaunsa-mangoes.png',
-      'Anwar Ratol Mango Reserve': '/assets/anwar-ratol-mangoes.png',
-      'Sindhri Mango Estate Selection': '/assets/sindhri-mangoes.png',
-      'Himalayan Salt': '/assets/himalayan-salt.png',
-      'EcoWare Naturals': '/assets/eco-utensils.png',
-      'De-Icing Salt': '/assets/deicing-salt.png'
+      'Sindhri Mangoes': { unit: '6kg box', origin: 'Sindh, Pakistan', image: '/assets/sindhri-mangoes.png' },
+      'Anwar Ratol Mangoes': { unit: '4kg box', origin: 'Punjab, Pakistan', image: '/assets/anwar-ratol-mangoes.png' },
+      'Chaunsa Mangoes': { unit: '5kg box', origin: 'Multan, Pakistan', image: '/assets/chaunsa-mangoes.png' },
+      'Chaunsa Mango Premium Box': { unit: '5kg box', origin: 'Multan, Pakistan', image: '/assets/chaunsa-mangoes.png' },
+      'Anwar Ratol Mango Reserve': { unit: '4kg box', origin: 'Punjab, Pakistan', image: '/assets/anwar-ratol-mangoes.png' },
+      'Sindhri Mango Estate Selection': { unit: '6kg box', origin: 'Sindh, Pakistan', image: '/assets/sindhri-mangoes.png' },
+      'Himalayan Salt': { unit: 'Bulk or retail packs', origin: 'Khewra, Pakistan', image: '/assets/himalayan-salt.png' },
+      'EcoWare Naturals': { unit: 'Trade case', origin: 'Pakistan', image: '/assets/eco-utensils.png' },
+      'De-Icing Salt': { unit: 'Bulk pallet', origin: 'Pakistan', image: '/assets/deicing-salt.png' }
     };
 
     const params = new URLSearchParams(window.location.search);
@@ -164,8 +161,13 @@
     const status = document.getElementById('reserve-status');
     const submitButton = document.getElementById('submit-reserve');
 
+    const profile = productCatalog[product] || { unit: 'Trade pack', origin: 'Global', image: '/assets/new-mango-photo.png' };
+
     document.getElementById('product-name').textContent = product;
-    document.getElementById('product-image').src = productCatalog[product] || '/assets/new-mango-photo.png';
+    document.getElementById('product-image').src = profile.image;
+    
+    if (document.getElementById('summary-unit')) document.getElementById('summary-unit').textContent = profile.unit;
+    if (document.getElementById('summary-origin')) document.getElementById('summary-origin').textContent = profile.origin;
 
     document.getElementById('qty-minus').addEventListener('click', () => {
       const current = Math.max(1, Number.parseInt(qtyField.value || '1', 10) || 1);
