@@ -11,14 +11,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <style>
     :root{
-      --brand-900:#19489f;
-      --brand-700:#3e6ccc;
-      --ink-900:#152545;
-      --ink-700:#4f6286;
-      --ink-500:#7a8ca9;
+      --brand-900:#203a7b;
+      --brand-700:#2a4f9f;
+      --ink-900:#1b2847;
+      --ink-700:#4a5877;
+      --ink-500:#6e7b97;
       --ok:#1f7a52;
       --ok-bg:#eafaf2;
       --warn:#a3392f;
@@ -27,14 +28,16 @@
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:'Outfit',sans-serif;
+      font-family:'Plus Jakarta Sans',sans-serif;
       color:var(--ink-900);
-      background:
-        radial-gradient(900px 420px at 95% -15%,rgba(62,108,204,.15),transparent 58%),
-        radial-gradient(760px 420px at -18% 8%,rgba(25,72,159,.1),transparent 56%),
-        linear-gradient(180deg,#f6f9ff,#f9fbff 56%,#f4f8ff);
+      background:#f4f6fb;
     }
-    h1,h2,h3{font-family:'Fraunces',serif;font-weight:600}
+    h1,h2,h3{font-family:'DM Serif Display',serif;font-weight:400;letter-spacing:-.01em;line-height:1.1}
+    .material-symbols-outlined{font-family:'Material Symbols Outlined'!important;font-weight:normal!important;font-style:normal!important;line-height:1!important;letter-spacing:normal!important;text-transform:none!important;display:inline-block;direction:ltr}
+    .form-input{width:100%;border:1.5px solid rgba(32,58,123,.12);border-radius:14px;background:#fff;padding:14px 18px;font-size:15px;font-family:inherit;color:#1b2847;transition:border-color .2s,box-shadow .2s}
+    .form-input:focus{outline:none;border-color:#203a7b;box-shadow:0 0 0 3px rgba(32,58,123,.08)}
+    .form-input::placeholder{color:#9aa8c4}
+    .form-label{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#6e7b97;margin-bottom:8px}
     
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(8px); }
@@ -45,11 +48,10 @@
     }
 
     .frost{
-      background:rgba(255,255,255,.82);
-      border:1px solid rgba(25,72,159,.12);
-      backdrop-filter:blur(12px);
-      -webkit-backdrop-filter:blur(12px);
-      box-shadow:0 24px 44px rgba(18,45,97,.08);
+      background:#fff;
+      border:1px solid rgba(32,58,123,.06);
+      box-shadow:0 16px 48px rgba(20,42,88,.08);
+      border-radius:1.5rem;
     }
     .reveal{opacity:0;transform:translateY(12px);animation:reveal .55s ease forwards}
     .d1{animation-delay:.08s}
@@ -84,10 +86,12 @@
       color:#1d4ca2;
     }
     .cta{
-      background:linear-gradient(140deg,var(--brand-900),var(--brand-700));
+      background:linear-gradient(140deg,#203a7b,#2a4f9f);
       color:#fff;
-      box-shadow:0 16px 30px rgba(25,72,159,.24);
+      box-shadow:0 16px 40px rgba(32,58,123,.25);
+      transition:all .3s;
     }
+    .cta:hover{transform:translateY(-2px);box-shadow:0 20px 50px rgba(32,58,123,.3)}
     .money{
       font-variant-numeric:tabular-nums;
       font-feature-settings:"tnum";
@@ -116,10 +120,11 @@
   </style>
 </head>
 <body>
-  <nav class="sticky top-0 z-50 border-b border-[#19489f]/10 bg-white/86 backdrop-blur">
-    <div class="mx-auto flex max-w-[1320px] items-center justify-between px-6 md:px-10" style="height:96px">
+  <!-- NAV -->
+  <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-[#203a7b]/10 shadow-[0_4px_24px_rgba(20,42,88,.06)]">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-10 flex items-center justify-between" style="height:96px">
       <a href="/"><img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png" class="h-[64px] md:h-[72px] w-auto object-contain" decoding="async"/></a>
-      <div class="flex items-center gap-1 bg-[#edf3ff]/80 border border-[#19489f]/12 rounded-full px-1 py-1 backdrop-blur-sm">
+      <div class="flex items-center gap-1 bg-[#edf3ff]/80 border border-[#203a7b]/12 rounded-full px-1 py-1 backdrop-blur-sm">
         <a href="/" class="px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[.65rem] sm:text-[.78rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Home</a>
         <a href="/products/" class="px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[.65rem] sm:text-[.78rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Products</a>
         <a href="/mangoes/" class="px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[.65rem] sm:text-[.78rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.09em] text-white bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] shadow-md">Mangoes</a>
@@ -127,31 +132,23 @@
     </div>
   </nav>
 
-  <main class="mx-auto max-w-[1580px] px-6 pb-20 pt-8 md:px-10">
-    <section class="frost reveal rounded-[1.8rem] p-6 md:p-8 overflow-hidden relative">
-      <div class="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-gradient-to-bl from-amber-100/40 to-transparent -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
-      <div class="grid gap-7 lg:grid-cols-[1.15fr_.85fr] relative z-10">
-        <div>
-          <div class="flex items-center gap-2 mb-3">
-            <span class="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-            <span class="text-[.7rem] font-bold uppercase tracking-[.18em] text-green-700">Season 2026 · Now Shipping</span>
-          </div>
-          <h1 class="mt-2 text-[clamp(2rem,5vw,3.6rem)] leading-[1.05] text-[#2d5ebf]">Your <span class="italic" style="color:#d4a017">Mangoes</span> Are Almost Here</h1>
-          <p class="mt-4 max-w-[55ch] text-[1rem] leading-relaxed text-[#4e6a9a]">Just a few details and your premium Pakistani mangoes will be on their way. Fresh from Ameer Farms, Multan.</p>
-          <div class="mt-6 flex flex-wrap gap-2">
-            <span class="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[.66rem] font-bold uppercase tracking-[.12em] border border-amber-300/50 bg-amber-50 text-amber-800">🥭 Hand-picked</span>
-            <span class="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[.66rem] font-bold uppercase tracking-[.12em] border border-blue-200/50 bg-blue-50 text-blue-800">❄️ Cold-chain shipped</span>
-            <span class="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[.66rem] font-bold uppercase tracking-[.12em] border border-green-200/50 bg-green-50 text-green-800">✅ Secure checkout</span>
-          </div>
+  <!-- HERO BANNER -->
+  <section class="relative pt-[96px]">
+    <div class="relative h-[300px] md:h-[380px] overflow-hidden">
+      <img id="hero-bg-img" src="/assets/mango-hero-user.jpg" alt="Fresh mangoes" class="absolute inset-0 w-full h-full object-cover" decoding="async"/>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#0a1428]/90 via-[#0a1428]/50 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 right-0 p-6 md:p-10 max-w-[1280px] mx-auto">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur-md border border-white/20 px-4 py-1.5 mb-4">
+          <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+          <span class="text-[.7rem] font-bold uppercase tracking-[.18em] text-green-200">Season 2026 · Now Shipping</span>
         </div>
-        <div class="rounded-[1.35rem] border border-[#19489f]/10 bg-gradient-to-b from-[#f7faff] to-[#edf4ff] p-5">
-          <div class="text-[.66rem] font-bold uppercase tracking-[.16em] text-[#6a80ab]">Fulfillment</div>
-          <div class="mt-2 text-[1.04rem] font-semibold text-[#1a386f]">Greater Toronto Area (GTA)</div>
-          <p class="mt-3 text-[.92rem] leading-relaxed text-[#4e6389]">Free pickup from Mississauga, or $15 flat-rate delivery across Toronto, Peel, York, Halton & Durham.</p>
-          <div class="mt-4 rounded-xl border border-[#19489f]/12 bg-white px-3 py-2 text-[.8rem] text-[#4f6286]">All totals shown in <strong>CAD</strong> including HST.</div>
-        </div>
+        <h1 class="text-[clamp(2rem,5vw,3.6rem)] text-white mb-2">Order Your <span class="italic" style="color:#f0c850">Mangoes</span></h1>
+        <p class="text-white/70 text-lg font-light max-w-lg">Pickup from Mississauga or get GTA delivery. Secure checkout via Stripe.</p>
       </div>
-    </section>
+    </div>
+  </section>
+
+  <main class="max-w-[1280px] mx-auto px-6 md:px-10 -mt-6 relative z-10 pb-24">
 
     <section class="mt-8 grid items-start gap-8 xl:grid-cols-[minmax(760px,1.25fr)_minmax(460px,.75fr)]">
       <article class="frost reveal d1 max-w-[760px] rounded-[1.8rem] p-6 md:p-8 xl:order-2">
@@ -527,6 +524,7 @@
     let latestBilling = null;
 
     document.getElementById('product-image-large').src = profile.image;
+    if (document.getElementById('hero-bg-img')) document.getElementById('hero-bg-img').src = profile.image;
     
     document.getElementById('summary-product-large').textContent = product;
     document.getElementById('summary-unit-large').textContent = profile.unit;

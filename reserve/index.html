@@ -11,247 +11,297 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <style>
-    :root{
-      --brand-900:#1f4ea5;
-      --brand-700:#4472cf;
-      --ink-900:#182a4d;
-      --ink-700:#4e6288;
-      --ink-500:#7787a5;
-    }
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:'Outfit',sans-serif;
-      color:var(--ink-900);
-      background:
-        radial-gradient(940px 480px at 94% -12%,rgba(84,125,221,.16),transparent 60%),
-        radial-gradient(800px 420px at -20% 10%,rgba(31,78,165,.12),transparent 58%),
-        linear-gradient(180deg,#f5f8ff,#f9fbff 48%,#f4f7fd);
-    }
-    h1,h2,h3{font-family:'Fraunces',serif;font-weight:600}
-    .frost{
-      background:rgba(255,255,255,.8);
-      border:1px solid rgba(31,78,165,.12);
-      backdrop-filter:blur(14px);
-      -webkit-backdrop-filter:blur(14px);
-      box-shadow:0 22px 44px rgba(17,43,94,.08);
-    }
-    .reveal{opacity:0;transform:translateY(12px);animation:reveal .55s ease forwards}
-    .d1{animation-delay:.08s}
-    .d2{animation-delay:.16s}
-    @keyframes reveal{to{opacity:1;transform:translateY(0)}}
-    .pill{border:1px solid rgba(31,78,165,.16);background:#fff}
-    .cta{
-      background:linear-gradient(140deg,var(--brand-900),var(--brand-700));
-      color:#fff;
-      box-shadow:0 16px 28px rgba(31,78,165,.2);
-    }
-    .qty-btn{width:42px;height:42px;border:1px solid rgba(31,78,165,.18);background:#fff;border-radius:.8rem;font-size:1.2rem;font-weight:700;color:#204ca0}
+    body{margin:0;font-family:'Plus Jakarta Sans',sans-serif;color:#1b2847;background:#f4f6fb;overflow-x:hidden}
+    h1,h2,h3{font-family:'DM Serif Display',serif;font-weight:400;letter-spacing:-.01em;line-height:1.1}
+    .material-symbols-outlined{font-family:'Material Symbols Outlined'!important;font-weight:normal!important;font-style:normal!important;line-height:1!important;letter-spacing:normal!important;text-transform:none!important;display:inline-block;direction:ltr}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .fade-up{animation:fadeUp .6s cubic-bezier(.16,1,.3,1) forwards}
+    .fade-up-d1{animation-delay:.1s;opacity:0}
+    .fade-up-d2{animation-delay:.2s;opacity:0}
+    .fade-up-d3{animation-delay:.3s;opacity:0}
+    .qty-btn{width:44px;height:44px;border:1.5px solid rgba(32,58,123,.15);background:#fff;border-radius:12px;font-size:1.2rem;font-weight:700;color:#203a7b;cursor:pointer;transition:all .2s}
+    .qty-btn:hover{background:#edf3ff;border-color:#203a7b}
+    .form-input{width:100%;border:1.5px solid rgba(32,58,123,.12);border-radius:14px;background:#fff;padding:14px 18px;font-size:15px;font-family:inherit;color:#1b2847;transition:border-color .2s,box-shadow .2s}
+    .form-input:focus{outline:none;border-color:#203a7b;box-shadow:0 0 0 3px rgba(32,58,123,.08)}
+    .form-input::placeholder{color:#9aa8c4}
+    .form-label{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#6e7b97;margin-bottom:8px}
   </style>
 </head>
 <body>
-  <nav class="sticky top-0 z-50 border-b border-[#1f4ea5]/10 bg-white/85 backdrop-blur">
-    <div class="mx-auto flex max-w-[1260px] items-center justify-between px-6 md:px-10" style="height:96px">
-      <a href="/"><img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png" class="h-[64px] md:h-[72px] w-auto object-contain" decoding="async"/></a>
-      <div class="flex items-center gap-1 bg-[#edf3ff]/80 border border-[#1f4ea5]/12 rounded-full px-1 py-1 backdrop-blur-sm">
-        <a href="/" class="px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[.65rem] sm:text-[.78rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Home</a>
-        <a href="/products/" class="px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[.65rem] sm:text-[.78rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Products</a>
-        <a href="/mangoes/" class="px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[.65rem] sm:text-[.78rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.09em] text-white bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] shadow-md">Mangoes</a>
+
+<!-- NAV -->
+<nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-[#203a7b]/10 shadow-[0_4px_24px_rgba(20,42,88,.06)]">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 flex items-center justify-between" style="height:96px">
+    <a href="/"><img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png" class="h-[64px] md:h-[72px] w-auto object-contain" decoding="async"/></a>
+    <div class="flex items-center gap-1 bg-[#edf3ff]/80 border border-[#203a7b]/12 rounded-full px-1 py-1 backdrop-blur-sm">
+      <a href="/" class="px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[.65rem] sm:text-[.78rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Home</a>
+      <a href="/products/" class="px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[.65rem] sm:text-[.78rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Products</a>
+      <a href="/mangoes/" class="px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[.65rem] sm:text-[.78rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.09em] text-white bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] shadow-md">Mangoes</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO BANNER -->
+<section class="relative pt-[96px]">
+  <div class="relative h-[340px] md:h-[420px] overflow-hidden">
+    <img id="hero-bg" src="/assets/mango-hero-user.jpg" alt="Fresh Pakistani mangoes" class="absolute inset-0 w-full h-full object-cover" decoding="async"/>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#0a1428]/90 via-[#0a1428]/50 to-transparent"></div>
+    <div class="absolute bottom-0 left-0 right-0 p-6 md:p-10 max-w-[1280px] mx-auto">
+      <div class="fade-up">
+        <div class="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur-md border border-white/20 px-4 py-1.5 mb-4">
+          <span class="w-2 h-2 rounded-full bg-[#d4a017] animate-pulse"></span>
+          <span class="text-[.7rem] font-bold uppercase tracking-[.18em] text-[#fef3c0]">No Payment Required</span>
+        </div>
+        <h1 class="text-[clamp(2.2rem,5.5vw,4rem)] text-white mb-3">Reserve Your <span class="italic" style="color:#f0c850">Harvest</span></h1>
+        <p class="text-white/75 text-lg font-light max-w-lg">Secure your spot — pay nothing today. We'll contact you the moment your shipment arrives in Canada.</p>
       </div>
     </div>
-  </nav>
+  </div>
+</section>
 
-  <main class="mx-auto max-w-[1260px] px-6 pb-20 pt-8 md:px-10">
-    <section class="frost reveal rounded-[1.8rem] p-6 md:p-8 overflow-hidden relative">
-      <div class="absolute top-0 right-0 w-[280px] h-[280px] rounded-full bg-gradient-to-bl from-amber-100/30 to-transparent -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
-      <div class="grid gap-7 lg:grid-cols-[1.1fr_.9fr] relative z-10">
-        <div>
-          <div class="flex items-center gap-2 mb-3">
-            <span class="inline-block w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-            <span class="text-[.7rem] font-bold uppercase tracking-[.18em] text-amber-700">No Payment Required</span>
-          </div>
-          <h1 class="mt-2 text-[clamp(2rem,5vw,3.9rem)] leading-[1.03] text-[#2d5ebf]">Reserve Your <span class="italic" style="color:#d4a017">Mangoes</span></h1>
-          <p class="mt-3 max-w-[50ch] text-[1rem] leading-relaxed text-[#4e6a9a]">Secure your spot in the queue — no upfront payment. We’ll reach out when your shipment lands in Canada.</p>
-          <div class="mt-5 flex flex-wrap gap-2">
-            <span class="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[.66rem] font-bold uppercase tracking-[.12em] border border-green-200/50 bg-green-50 text-green-800">✅ $0 upfront</span>
-            <span class="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[.66rem] font-bold uppercase tracking-[.12em] border border-blue-200/50 bg-blue-50 text-blue-800">📦 We notify you</span>
-            <span class="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[.66rem] font-bold uppercase tracking-[.12em] border border-amber-300/50 bg-amber-50 text-amber-800">🥭 Fresh harvest</span>
-          </div>
+<!-- MAIN CONTENT -->
+<main class="max-w-[1280px] mx-auto px-6 md:px-10 -mt-8 relative z-10 pb-24">
+
+  <!-- HOW IT WORKS -->
+  <div class="grid grid-cols-3 gap-4 mb-10 fade-up fade-up-d1">
+    <div class="bg-white rounded-2xl p-5 shadow-[0_8px_32px_rgba(20,42,88,.06)] border border-[#203a7b]/6 text-center">
+      <div class="w-12 h-12 mx-auto rounded-full bg-[#edf3ff] flex items-center justify-center mb-3">
+        <span class="material-symbols-outlined text-[#203a7b]">edit_note</span>
+      </div>
+      <div class="text-[.7rem] font-bold uppercase tracking-wider text-[#203a7b] mb-1">Step 1</div>
+      <p class="text-[.78rem] text-[#4a5877] leading-snug">Pick variety & quantity</p>
+    </div>
+    <div class="bg-white rounded-2xl p-5 shadow-[0_8px_32px_rgba(20,42,88,.06)] border border-[#203a7b]/6 text-center">
+      <div class="w-12 h-12 mx-auto rounded-full bg-[#edf3ff] flex items-center justify-center mb-3">
+        <span class="material-symbols-outlined text-[#203a7b]">verified</span>
+      </div>
+      <div class="text-[.7rem] font-bold uppercase tracking-wider text-[#203a7b] mb-1">Step 2</div>
+      <p class="text-[.78rem] text-[#4a5877] leading-snug">We confirm your spot</p>
+    </div>
+    <div class="bg-white rounded-2xl p-5 shadow-[0_8px_32px_rgba(20,42,88,.06)] border border-[#203a7b]/6 text-center">
+      <div class="w-12 h-12 mx-auto rounded-full bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] flex items-center justify-center mb-3">
+        <span class="material-symbols-outlined text-white">local_shipping</span>
+      </div>
+      <div class="text-[.7rem] font-bold uppercase tracking-wider text-[#203a7b] mb-1">Step 3</div>
+      <p class="text-[.78rem] text-[#4a5877] leading-snug">Mangoes arrive, we call you</p>
+    </div>
+  </div>
+
+  <!-- PRODUCT + FORM -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 fade-up fade-up-d2">
+
+    <!-- PRODUCT CARD -->
+    <div class="lg:col-span-5">
+      <div class="bg-white rounded-3xl overflow-hidden shadow-[0_16px_48px_rgba(20,42,88,.08)] border border-[#203a7b]/6 sticky top-[120px]">
+        <div class="aspect-[4/3] overflow-hidden">
+          <img id="product-image" src="/assets/new-mango-photo.png" alt="Product" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"/>
         </div>
-        <div class="rounded-[1.4rem] border border-[#1f4ea5]/10 bg-gradient-to-b from-[#f7faff] to-[#edf3ff] p-5">
-          <div class="text-[.66rem] font-bold uppercase tracking-[.16em] text-[#6f86b0]">How it works</div>
-          <div class="mt-4 space-y-4">
-            <div class="flex items-start gap-3">
-              <div class="flex-shrink-0 w-8 h-8 rounded-full bg-[#eef3fc] flex items-center justify-center text-[.75rem] font-bold text-[#1d3f86]">1</div>
-              <div><div class="text-[.82rem] font-semibold text-[#1d3f86]">Tell us what you want</div><p class="text-[.78rem] text-[#50658c] mt-0.5">Pick your variety & quantity</p></div>
-            </div>
-            <div class="flex items-start gap-3">
-              <div class="flex-shrink-0 w-8 h-8 rounded-full bg-[#eef3fc] flex items-center justify-center text-[.75rem] font-bold text-[#1d3f86]">2</div>
-              <div><div class="text-[.82rem] font-semibold text-[#1d3f86]">We confirm availability</div><p class="text-[.78rem] text-[#50658c] mt-0.5">Your spot is secured in the queue</p></div>
-            </div>
-            <div class="flex items-start gap-3">
-              <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] flex items-center justify-center text-[.75rem] font-bold text-white">3</div>
-              <div><div class="text-[.82rem] font-semibold text-[#1d3f86]">Mangoes arrive, we call you</div><p class="text-[.78rem] text-[#50658c] mt-0.5">Pay & pick up or get delivery</p></div>
+        <div class="p-6">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="inline-block px-3 py-1 rounded-full bg-[#fef3c0] text-[#9a7510] text-[.65rem] font-bold uppercase tracking-[.14em]">Premium</span>
+            <span id="summary-origin" class="inline-block px-3 py-1 rounded-full bg-[#edf3ff] text-[#203a7b] text-[.65rem] font-bold uppercase tracking-[.14em]">Pakistan</span>
+          </div>
+          <h2 id="product-name" class="text-[1.8rem] text-[#182a59] mt-2">Product</h2>
+          <div class="flex items-center gap-2 mt-3">
+            <span class="material-symbols-outlined text-[#d4a017] text-lg">inventory_2</span>
+            <span id="summary-unit" class="text-[.85rem] text-[#4a5877] font-medium">Trade pack</span>
+          </div>
+
+          <!-- QUANTITY -->
+          <div class="mt-6 pt-6 border-t border-[#203a7b]/8">
+            <div class="text-[.7rem] font-bold uppercase tracking-[.15em] text-[#6e7b97] mb-3">How many boxes?</div>
+            <div class="flex items-center gap-3">
+              <button id="qty-minus" type="button" class="qty-btn">−</button>
+              <input id="quantity" type="number" min="1" max="1000" value="1" class="flex-1 h-[44px] rounded-xl border-1.5 border-[#203a7b]/12 bg-[#f8f9fc] px-4 text-center text-lg font-bold text-[#182a59] focus:outline-none focus:border-[#203a7b]"/>
+              <button id="qty-plus" type="button" class="qty-btn">+</button>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="mt-8 grid gap-8 lg:grid-cols-[.9fr_1.1fr]">
-      <article class="frost reveal d1 rounded-[1.8rem] p-6 md:p-8">
-        <img id="product-image" src="/assets/new-mango-photo.png" alt="Product" class="h-[240px] w-full rounded-2xl object-cover"/>
-        <div class="mt-5">
-          <div class="text-[.66rem] font-bold uppercase tracking-[.15em] text-[#6f86b0]">Selected Product</div>
-          <h2 id="product-name" class="mt-2 text-[1.7rem] text-[#16305d]">Product</h2>
-          <div class="mt-4 flex flex-wrap gap-2 text-[.7rem] font-bold text-[#4f6286] uppercase tracking-[.1em]">
-            <span id="summary-unit" class="w-fit rounded-xl border border-[#1f4ea5]/10 bg-[#f7faff] px-3 py-1.5">Trade pack</span>
-            <span id="summary-origin" class="w-fit rounded-xl border border-[#1f4ea5]/10 bg-[#f7faff] px-3 py-1.5">Pakistan</span>
-          </div>
+    <!-- RESERVATION FORM -->
+    <div class="lg:col-span-7">
+      <div class="bg-white rounded-3xl shadow-[0_16px_48px_rgba(20,42,88,.08)] border border-[#203a7b]/6 p-6 md:p-8">
+        <div class="mb-8">
+          <h2 class="text-[1.6rem] text-[#182a59]">Complete Your Reservation</h2>
+          <p class="text-[#6e7b97] text-sm mt-1">Fill in your details and we'll handle the rest. No payment needed.</p>
         </div>
-        <div class="mt-5 rounded-xl border border-[#1f4ea5]/12 bg-white p-4">
-          <div class="text-[.66rem] font-bold uppercase tracking-[.15em] text-[#6f86b0]">How Many Boxes?</div>
-          <div class="mt-3 flex items-center gap-3">
-            <button id="qty-minus" type="button" class="qty-btn">-</button>
-            <input id="quantity" type="number" min="1" max="1000" value="1" class="w-full rounded-xl border border-[#1f4ea5]/14 px-4 py-3 text-center text-sm font-semibold"/>
-            <button id="qty-plus" type="button" class="qty-btn">+</button>
-          </div>
-        </div>
-      </article>
 
-      <article class="frost reveal d2 rounded-[1.8rem] p-6 md:p-8">
         <form id="reserve-form" class="space-y-5">
           <div class="grid gap-5 md:grid-cols-2">
             <div>
-              <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="name">Full Name</label>
-              <input id="name" required type="text" class="w-full rounded-xl border border-[#1f4ea5]/14 bg-white px-4 py-3.5 text-base"/>
+              <label class="form-label" for="name">Full Name</label>
+              <input id="name" required type="text" class="form-input" placeholder="Your full name"/>
             </div>
             <div>
-              <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="email">Email</label>
-              <input id="email" required type="email" class="w-full rounded-xl border border-[#1f4ea5]/14 bg-white px-4 py-3.5 text-base"/>
+              <label class="form-label" for="email">Email</label>
+              <input id="email" required type="email" class="form-input" placeholder="you@email.com"/>
             </div>
             <div>
-              <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="phone">Phone</label>
-              <input id="phone" required type="tel" class="w-full rounded-xl border border-[#1f4ea5]/14 bg-white px-4 py-3.5 text-base"/>
+              <label class="form-label" for="phone">Phone</label>
+              <input id="phone" required type="tel" class="form-input" placeholder="+1 (___) ___-____"/>
             </div>
             <div>
-              <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="company">Company (Optional)</label>
-              <input id="company" type="text" class="w-full rounded-xl border border-[#1f4ea5]/14 bg-white px-4 py-3.5 text-base"/>
+              <label class="form-label" for="company">Company <span class="font-normal text-[#9aa8c4]">(Optional)</span></label>
+              <input id="company" type="text" class="form-input" placeholder="Business name"/>
             </div>
             <div>
-              <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="marketCity">City</label>
-              <input id="marketCity" required type="text" class="w-full rounded-xl border border-[#1f4ea5]/14 bg-white px-4 py-3.5 text-base"/>
+              <label class="form-label" for="marketCity">City</label>
+              <input id="marketCity" required type="text" class="form-input" placeholder="Toronto"/>
             </div>
             <div>
-              <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="marketCountry">Country</label>
-              <input id="marketCountry" required type="text" class="w-full rounded-xl border border-[#1f4ea5]/14 bg-white px-4 py-3.5 text-base"/>
+              <label class="form-label" for="marketCountry">Country</label>
+              <input id="marketCountry" required type="text" class="form-input" placeholder="Canada"/>
             </div>
             <div class="md:col-span-2">
-              <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="window">Preferred Delivery Window</label>
-              <input id="window" required type="text" placeholder="e.g. July 2026, Week 2" class="w-full rounded-xl border border-[#1f4ea5]/14 bg-white px-4 py-3.5 text-base"/>
+              <label class="form-label" for="window">Preferred Delivery Window</label>
+              <input id="window" required type="text" class="form-input" placeholder="e.g. July 2026, Week 2"/>
             </div>
             <div class="md:col-span-2">
-              <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="notes">Notes</label>
-              <textarea id="notes" rows="4" class="w-full rounded-xl border border-[#1f4ea5]/14 bg-white px-4 py-3.5 text-base" placeholder="Any special requirements, packaging preferences, or questions."></textarea>
+              <label class="form-label" for="notes">Notes <span class="font-normal text-[#9aa8c4]">(Optional)</span></label>
+              <textarea id="notes" rows="3" class="form-input resize-none" placeholder="Any special requirements or questions"></textarea>
             </div>
           </div>
 
-          <button type="submit" id="submit-reserve" class="cta w-full rounded-xl px-6 py-4 text-[.78rem] font-bold uppercase tracking-[.14em]">Reserve My Mangoes 🥭</button>
-          <p id="reserve-status" class="mt-3 text-center text-sm text-[#596f96]">No payment required. We’ll follow up with availability and pricing.</p>
-        </form>
-      </article>
-    </section>
-  </main>
+          <!-- SUMMARY BAR -->
+          <div class="rounded-2xl bg-gradient-to-r from-[#f8f9fc] to-[#edf3ff] border border-[#203a7b]/8 p-5 mt-2">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div>
+                <div class="text-[.65rem] font-bold uppercase tracking-[.16em] text-[#6e7b97]">Reservation Summary</div>
+                <div class="text-[1rem] font-semibold text-[#182a59] mt-1" id="summary-line">1× Product</div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-green-600 text-lg">check_circle</span>
+                <span class="text-[.78rem] font-semibold text-green-700">$0 due today</span>
+              </div>
+            </div>
+          </div>
 
-  <script>
-    const productCatalog = {
-      'Sindhri Mangoes': { unit: '6kg box', origin: 'Sindh, Pakistan', image: '/assets/sindhri-mangoes.png' },
-      'Anwar Ratol Mangoes': { unit: '4kg box', origin: 'Punjab, Pakistan', image: '/assets/anwar-ratol-mangoes.png' },
-      'Chaunsa Mangoes': { unit: '5kg box', origin: 'Multan, Pakistan', image: '/assets/chaunsa-mangoes.png' },
-      'Chaunsa Mango Premium Box': { unit: '5kg box', origin: 'Multan, Pakistan', image: '/assets/chaunsa-mangoes.png' },
-      'Anwar Ratol Mango Reserve': { unit: '4kg box', origin: 'Punjab, Pakistan', image: '/assets/anwar-ratol-mangoes.png' },
-      'Sindhri Mango Estate Selection': { unit: '6kg box', origin: 'Sindh, Pakistan', image: '/assets/sindhri-mangoes.png' },
-      'Himalayan Salt': { unit: 'Bulk or retail packs', origin: 'Khewra, Pakistan', image: '/assets/himalayan-salt.png' },
-      'EcoWare Naturals': { unit: 'Trade case', origin: 'Pakistan', image: '/assets/eco-utensils.png' },
-      'De-Icing Salt': { unit: 'Bulk pallet', origin: 'Pakistan', image: '/assets/deicing-salt.png' }
+          <button type="submit" id="submit-reserve" class="w-full bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white rounded-2xl px-8 py-4.5 text-[.82rem] font-bold uppercase tracking-[.12em] shadow-[0_16px_40px_rgba(32,58,123,.25)] hover:-translate-y-0.5 hover:shadow-[0_20px_50px_rgba(32,58,123,.3)] transition-all duration-300 flex items-center justify-center gap-2">
+            Reserve My Order
+            <span class="material-symbols-outlined text-lg">arrow_forward</span>
+          </button>
+          <p id="reserve-status" class="text-center text-[.78rem] text-[#6e7b97]">No payment required. We'll follow up with availability and pricing.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="border-t border-[#203a7b]/10 pt-16 pb-8 bg-white/60">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 grid grid-cols-1 md:grid-cols-4 gap-10">
+    <div class="md:col-span-2"><img alt="Ameer Global Logo" class="h-[48px] object-contain mb-6" src="/assets/logo-transparent-final.png" decoding="async"/><p class="text-[#4a5877] text-sm leading-relaxed max-w-xs">Premium Trading · Global Reach · Trusted Quality.</p></div>
+    <div><h4 class="text-[.7rem] font-bold uppercase tracking-[.15em] text-[#182a59] mb-5">Explore</h4><ul class="space-y-3 text-sm text-[#4a5877]"><li><a href="/">Home</a></li><li><a href="/products/">Products</a></li><li><a href="/about/">About</a></li></ul></div>
+    <div><h4 class="text-[.7rem] font-bold uppercase tracking-[.15em] text-[#182a59] mb-5">Contact</h4><ul class="space-y-3 text-sm text-[#4a5877]"><li><a href="/contact/">Inquiries</a></li></ul></div>
+  </div>
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 mt-14 pt-6 border-t border-[#203a7b]/8"><p class="text-center text-[.68rem] uppercase tracking-[.2em] text-[#6e7b97]">© 1866–2026 Ameer Global INC.</p></div>
+</footer>
+
+<script>
+  const productCatalog = {
+    'Sindhri Mangoes': { unit: '6kg box', origin: 'Sindh, Pakistan', image: '/assets/sindhri-mangoes.jpg' },
+    'Anwar Ratol Mangoes': { unit: '4kg box', origin: 'Punjab, Pakistan', image: '/assets/anwar-ratol-mangoes.jpg' },
+    'Chaunsa Mangoes': { unit: '5kg box', origin: 'Multan, Pakistan', image: '/assets/chaunsa-mangoes.jpg' },
+    'Chaunsa Mango Premium Box': { unit: '5kg box', origin: 'Multan, Pakistan', image: '/assets/chaunsa-mangoes.jpg' },
+    'Anwar Ratol Mango Reserve': { unit: '4kg box', origin: 'Punjab, Pakistan', image: '/assets/anwar-ratol-mangoes.jpg' },
+    'Sindhri Mango Estate Selection': { unit: '6kg box', origin: 'Sindh, Pakistan', image: '/assets/sindhri-mangoes.jpg' },
+    'Himalayan Salt': { unit: 'Bulk or retail packs', origin: 'Khewra, Pakistan', image: '/assets/himalayan-salt.jpg' },
+    'EcoWare Naturals': { unit: 'Trade case', origin: 'Pakistan', image: '/assets/eco-utensils.jpg' },
+    'De-Icing Salt': { unit: 'Bulk pallet', origin: 'Pakistan', image: '/assets/deicing-salt.jpg' }
+  };
+
+  const params = new URLSearchParams(window.location.search);
+  const product = params.get('product') || 'Ameer Global Product';
+  const intent = params.get('intent') || 'reserve';
+  const qtyField = document.getElementById('quantity');
+  const status = document.getElementById('reserve-status');
+  const submitButton = document.getElementById('submit-reserve');
+  const summaryLine = document.getElementById('summary-line');
+
+  const profile = productCatalog[product] || { unit: 'Trade pack', origin: 'Global', image: '/assets/new-mango-photo.png' };
+
+  document.getElementById('product-name').textContent = product;
+  document.getElementById('product-image').src = profile.image;
+  document.getElementById('hero-bg').src = profile.image;
+  if (document.getElementById('summary-unit')) document.getElementById('summary-unit').textContent = profile.unit;
+  if (document.getElementById('summary-origin')) document.getElementById('summary-origin').textContent = profile.origin;
+
+  function updateSummary() {
+    const qty = Math.max(1, parseInt(qtyField.value) || 1);
+    summaryLine.textContent = `${qty}× ${product}`;
+  }
+  updateSummary();
+
+  document.getElementById('qty-minus').addEventListener('click', () => {
+    const current = Math.max(1, Number.parseInt(qtyField.value || '1', 10) || 1);
+    qtyField.value = String(Math.max(1, current - 1));
+    updateSummary();
+  });
+
+  document.getElementById('qty-plus').addEventListener('click', () => {
+    const current = Math.min(1000, Number.parseInt(qtyField.value || '1', 10) || 1);
+    qtyField.value = String(Math.min(1000, current + 1));
+    updateSummary();
+  });
+
+  qtyField.addEventListener('input', updateSummary);
+
+  document.getElementById('reserve-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    submitButton.disabled = true;
+    submitButton.innerHTML = '<span class="material-symbols-outlined animate-spin text-lg">progress_activity</span> Submitting...';
+    status.textContent = 'Sending reserve request...';
+
+    const payload = {
+      name: document.getElementById('name').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      subject: `Reserve Request: ${product}`,
+      message: [
+        `Product: ${product}`,
+        `Quantity: ${qtyField.value.trim()}`,
+        `Phone: ${document.getElementById('phone').value.trim()}`,
+        `Company: ${document.getElementById('company').value.trim() || 'N/A'}`,
+        `City: ${document.getElementById('marketCity').value.trim()}`,
+        `Country: ${document.getElementById('marketCountry').value.trim()}`,
+        `Delivery window: ${document.getElementById('window').value.trim()}`,
+        `Notes: ${document.getElementById('notes').value.trim()}`
+      ].join('\n'),
+      source: 'reserve-page',
+      product,
+      intent
     };
 
-    const params = new URLSearchParams(window.location.search);
-    const product = params.get('product') || 'Ameer Global Product';
-    const intent = params.get('intent') || 'reserve';
-    const qtyField = document.getElementById('quantity');
-    const status = document.getElementById('reserve-status');
-    const submitButton = document.getElementById('submit-reserve');
-
-    const profile = productCatalog[product] || { unit: 'Trade pack', origin: 'Global', image: '/assets/new-mango-photo.png' };
-
-    document.getElementById('product-name').textContent = product;
-    document.getElementById('product-image').src = profile.image;
-    
-    if (document.getElementById('summary-unit')) document.getElementById('summary-unit').textContent = profile.unit;
-    if (document.getElementById('summary-origin')) document.getElementById('summary-origin').textContent = profile.origin;
-
-    document.getElementById('qty-minus').addEventListener('click', () => {
-      const current = Math.max(1, Number.parseInt(qtyField.value || '1', 10) || 1);
-      qtyField.value = String(Math.max(1, current - 1));
-    });
-
-    document.getElementById('qty-plus').addEventListener('click', () => {
-      const current = Math.min(1000, Number.parseInt(qtyField.value || '1', 10) || 1);
-      qtyField.value = String(Math.min(1000, current + 1));
-    });
-
-    document.getElementById('reserve-form').addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      submitButton.disabled = true;
-      submitButton.textContent = 'Submitting...';
-      status.textContent = 'Sending reserve request...';
-
-      const payload = {
-        name: document.getElementById('name').value.trim(),
-        email: document.getElementById('email').value.trim(),
-        subject: `Reserve Request: ${product}`,
-        message: [
-          `Product: ${product}`,
-          `Quantity: ${qtyField.value.trim()}`,
-          `Phone: ${document.getElementById('phone').value.trim()}`,
-          `Company: ${document.getElementById('company').value.trim() || 'N/A'}`,
-          `City: ${document.getElementById('marketCity').value.trim()}`,
-          `Country: ${document.getElementById('marketCountry').value.trim()}`,
-          `Delivery window: ${document.getElementById('window').value.trim()}`,
-          `Notes: ${document.getElementById('notes').value.trim()}`
-        ].join('\n'),
-        source: 'reserve-page',
-        product,
-        intent
-      };
-
-      try {
-        const response = await fetch('/api/reserve', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        const result = await response.json();
-        if (!response.ok) {
-          status.textContent = result.error || 'Unable to submit reserve request.';
-          submitButton.disabled = false;
-          submitButton.textContent = 'Submit reserve request';
-          return;
-        }
-
-        status.textContent = result.message || 'Reserve request sent.';
+    try {
+      const response = await fetch('/api/reserve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        status.textContent = result.error || 'Unable to submit reserve request.';
         submitButton.disabled = false;
-        submitButton.textContent = 'Submit reserve request';
-      } catch (error) {
-        status.textContent = 'Network error. Please try again.';
-        submitButton.disabled = false;
-        submitButton.textContent = 'Submit reserve request';
+        submitButton.innerHTML = 'Reserve My Order <span class="material-symbols-outlined text-lg">arrow_forward</span>';
+        return;
       }
-    });
-  </script>
+
+      status.textContent = result.message || '✓ Reserve request sent successfully!';
+      status.classList.add('text-green-700', 'font-semibold');
+      submitButton.disabled = false;
+      submitButton.innerHTML = 'Reserve My Order <span class="material-symbols-outlined text-lg">arrow_forward</span>';
+    } catch (error) {
+      status.textContent = 'Network error. Please try again.';
+      submitButton.disabled = false;
+      submitButton.innerHTML = 'Reserve My Order <span class="material-symbols-outlined text-lg">arrow_forward</span>';
+    }
+  });
+</script>
 </body>
 </html>
