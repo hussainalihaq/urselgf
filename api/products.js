@@ -5,21 +5,21 @@ const products = [
     id: 'mango-chaunsa',
     name: 'Chaunsa Mango Premium Box',
     origin: 'Multan, Pakistan',
-    unit: '5kg box',
+    unit: '1.8 kg (4 lb approx) box',
     category: 'fresh-produce'
   },
   {
     id: 'mango-anwar-ratol',
     name: 'Anwar Ratol Mango Reserve',
     origin: 'Punjab, Pakistan',
-    unit: '4kg box',
+    unit: '1.8 kg (4 lb approx) box',
     category: 'fresh-produce'
   },
   {
     id: 'mango-sindhri',
     name: 'Sindhri Mango Estate Selection',
     origin: 'Sindh, Pakistan',
-    unit: '6kg box',
+    unit: '1.8 kg (4 lb approx) box',
     category: 'fresh-produce'
   }
 ];

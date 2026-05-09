@@ -156,24 +156,37 @@
       <!-- PRODUCT CARD -->
       <div class="lg:col-span-5">
         <div class="bg-white rounded-3xl overflow-hidden shadow-[0_16px_48px_rgba(20,42,88,.08)] border border-[#203a7b]/6 sticky top-[120px]">
-          <div class="aspect-[4/3] overflow-hidden">
-            <img id="product-image-large" src="/assets/new-mango-photo.png" alt="Product" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"/>
+          <!-- Creative gradient header instead of image -->
+          <div class="relative bg-gradient-to-br from-[#1b2f6b] via-[#203a7b] to-[#2a5faf] p-8 pb-10 text-center overflow-hidden">
+            <div class="absolute inset-0 opacity-[0.07]" style="background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><circle cx=%2230%22 cy=%2230%22 r=%2228%22 fill=%22none%22 stroke=%22white%22 stroke-width=%220.5%22/></svg>');background-size:60px 60px"></div>
+            <div class="relative z-10">
+              <div class="w-20 h-20 mx-auto rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center mb-5 shadow-lg">
+                <span class="material-symbols-outlined text-[#f0c850] text-4xl" style="font-variation-settings:'FILL' 1">eco</span>
+              </div>
+              <div class="flex items-center justify-center gap-2 mb-3">
+                <span class="inline-block px-3 py-1 rounded-full bg-[#f0c850]/20 text-[#f0c850] text-[.6rem] font-bold uppercase tracking-[.18em] border border-[#f0c850]/30">Premium Import</span>
+                <span id="summary-origin-large" class="inline-block px-3 py-1 rounded-full bg-white/10 text-white/80 text-[.6rem] font-bold uppercase tracking-[.18em] border border-white/15">Pakistan</span>
+              </div>
+              <h2 id="summary-product-large" class="text-[1.8rem] text-white leading-tight" style="font-family:'DM Serif Display',serif">Ameer Global Product</h2>
+            </div>
           </div>
           <div class="p-6">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="inline-block px-3 py-1 rounded-full bg-[#fef3c0] text-[#9a7510] text-[.65rem] font-bold uppercase tracking-[.14em]">Premium</span>
-              <span id="summary-origin-large" class="inline-block px-3 py-1 rounded-full bg-[#edf3ff] text-[#203a7b] text-[.65rem] font-bold uppercase tracking-[.14em]">Pakistan</span>
-            </div>
-            <h2 id="summary-product-large" class="text-[1.8rem] text-[#182a59] mt-2">Ameer Global Product</h2>
-            <div class="flex items-center gap-2 mt-3">
-              <span class="material-symbols-outlined text-[#d4a017] text-lg">inventory_2</span>
-              <span id="summary-unit-large" class="text-[.85rem] text-[#4a5877] font-medium uppercase tracking-wider">Trade pack</span>
+            <!-- Specs row -->
+            <div class="grid grid-cols-2 gap-3 mb-5">
+              <div class="rounded-xl bg-[#f8f9fc] border border-[#203a7b]/6 p-3 text-center">
+                <span class="material-symbols-outlined text-[#203a7b] text-lg mb-1" style="font-variation-settings:'FILL' 1">scale</span>
+                <div id="summary-unit-large" class="text-[.72rem] font-bold text-[#182a59] uppercase tracking-wider">1.8 kg (4 lb approx) box</div>
+              </div>
+              <div class="rounded-xl bg-[#f8f9fc] border border-[#203a7b]/6 p-3 text-center">
+                <span class="material-symbols-outlined text-[#203a7b] text-lg mb-1" style="font-variation-settings:'FILL' 1">verified</span>
+                <div class="text-[.72rem] font-bold text-[#182a59] uppercase tracking-wider">Air Freighted</div>
+              </div>
             </div>
             
-            <p id="product-catchphrase" class="text-[#203a7b] text-[1rem] font-medium italic mt-4"></p>
+            <p id="product-catchphrase" class="text-[#203a7b] text-[.95rem] font-medium italic leading-relaxed border-l-[3px] border-[#f0c850] pl-4 py-1 mb-5"></p>
 
             <!-- QUANTITY -->
-            <div class="mt-6 pt-6 border-t border-[#203a7b]/8">
+            <div class="pt-5 border-t border-[#203a7b]/8">
               <div class="text-[.7rem] font-bold uppercase tracking-[.15em] text-[#6e7b97] mb-3">How many boxes?</div>
               <div class="flex items-center gap-3">
                 <button id="qty-minus" type="button" class="w-[44px] h-[44px] border-[1.5px] border-[#203a7b]/15 bg-white rounded-xl text-[1.2rem] font-bold text-[#203a7b] hover:bg-[#edf3ff] hover:border-[#203a7b] transition-all" onclick="const q=document.getElementById('quantity');q.value=Math.max(1,(parseInt(q.value)||1)-1);q.dispatchEvent(new Event('input'))">−</button>
@@ -394,12 +407,12 @@
 
   <script>
     const productCatalog = {
-      'Sindhri Mangoes': { unit: '6kg box', origin: 'Sindh, Pakistan', image: '/assets/sindhri-mangoes.png', price: 38 },
-      'Anwar Ratol Mangoes': { unit: '4kg box', origin: 'Punjab, Pakistan', image: '/assets/anwar-ratol-mangoes.png', price: 45 },
-      'Chaunsa Mangoes': { unit: '5kg box', origin: 'Multan, Pakistan', image: '/assets/chaunsa-mangoes.png', price: 52 },
-      'Chaunsa Mango Premium Box': { unit: '5kg box', origin: 'Multan, Pakistan', image: '/assets/chaunsa-mangoes.png', price: 52 },
-      'Anwar Ratol Mango Reserve': { unit: '4kg box', origin: 'Punjab, Pakistan', image: '/assets/anwar-ratol-mangoes.png', price: 45 },
-      'Sindhri Mango Estate Selection': { unit: '6kg box', origin: 'Sindh, Pakistan', image: '/assets/sindhri-mangoes.png', price: 38 },
+      'Sindhri Mangoes': { unit: '1.8 kg (4 lb approx) box', origin: 'Sindh, Pakistan', image: '/assets/sindhri-mangoes.png', price: 38 },
+      'Anwar Ratol Mangoes': { unit: '1.8 kg (4 lb approx) box', origin: 'Punjab, Pakistan', image: '/assets/anwar-ratol-mangoes.png', price: 45 },
+      'Chaunsa Mangoes': { unit: '1.8 kg (4 lb approx) box', origin: 'Multan, Pakistan', image: '/assets/chaunsa-mangoes.png', price: 52 },
+      'Chaunsa Mango Premium Box': { unit: '1.8 kg (4 lb approx) box', origin: 'Multan, Pakistan', image: '/assets/chaunsa-mangoes.png', price: 52 },
+      'Anwar Ratol Mango Reserve': { unit: '1.8 kg (4 lb approx) box', origin: 'Punjab, Pakistan', image: '/assets/anwar-ratol-mangoes.png', price: 45 },
+      'Sindhri Mango Estate Selection': { unit: '1.8 kg (4 lb approx) box', origin: 'Sindh, Pakistan', image: '/assets/sindhri-mangoes.png', price: 38 },
       'Himalayan Salt': { unit: 'Bulk or retail packs', origin: 'Khewra, Pakistan', image: '/assets/himalayan-salt.png', price: 29 },
       'EcoWare Naturals': { unit: 'Trade case', origin: 'Pakistan', image: '/assets/eco-utensils.png', price: 24 },
       'De-Icing Salt': { unit: 'Bulk pallet', origin: 'Pakistan', image: '/assets/deicing-salt.png', price: 32 }
@@ -457,7 +470,7 @@
     let availability = { eligible: true }; // pickup is always eligible
     let latestBilling = null;
 
-    document.getElementById('product-image-large').src = profile.image;
+    // Image elements removed — using creative gradient card instead
     if (document.getElementById('hero-bg-img')) document.getElementById('hero-bg-img').src = profile.image;
     
     document.getElementById('summary-product-large').textContent = product;
