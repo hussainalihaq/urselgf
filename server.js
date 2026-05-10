@@ -496,7 +496,7 @@ async function handleApi(req, res, pathname) {
     }
   }
 
-  if (req.method === 'POST' && pathname === '/api/checkout') {
+  if (req.method === 'POST' && (pathname === '/api/checkout' || pathname === '/api/checkout/')) {
     try {
       const body = await readBody(req);
       const checkout = buildCheckoutContactRecord(body);
