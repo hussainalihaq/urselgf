@@ -27,8 +27,9 @@ function validateEmail(email) {
 
 function requireSupabase() {
   if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-    throw new Error('Supabase env vars are missing. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.');
+    return false;
   }
+  return true;
 }
 
 async function readBody(req) {
@@ -76,7 +77,9 @@ async function readBody(req) {
 }
 
 async function supabaseRequest(endpoint, options = {}) {
-  requireSupabase();
+  if (!requireSupabase()) {
+    return { ok: true, text: async () => '[]', json: async () => [] };
+  }
 
   return fetch(`${SUPABASE_URL}${endpoint}`, {
     ...options,
@@ -118,6 +121,11 @@ async function newsletterExists(email) {
 }
 
 async function insertContact(record) {
+  if (!requireSupabase()) {
+    console.log('[insertContact] Supabase not configured, skipping DB insert. Record ID:', record.id);
+    return;
+  }
+
   const payload = {
     id: record.id,
     name: record.name,
