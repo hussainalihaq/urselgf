@@ -160,12 +160,12 @@
           <div class="relative bg-gradient-to-br from-[#1b2f6b] via-[#203a7b] to-[#2a5faf] p-8 pb-10 text-center overflow-hidden">
             <div class="absolute inset-0 opacity-[0.07]" style="background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><circle cx=%2230%22 cy=%2230%22 r=%2228%22 fill=%22none%22 stroke=%22white%22 stroke-width=%220.5%22/></svg>');background-size:60px 60px"></div>
             <div class="relative z-10">
-              <div class="w-20 h-20 mx-auto rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center mb-5 shadow-lg">
-                <span class="material-symbols-outlined text-[#f0c850] text-4xl" style="font-variation-settings:'FILL' 1">eco</span>
+              <div class="w-24 h-24 mx-auto rounded-full bg-white backdrop-blur-sm border border-white/20 flex items-center justify-center mb-5 shadow-lg overflow-hidden">
+                <img src="/assets/ameer-farms-logo.png" alt="Ameer Farms Logo" class="w-full h-full object-cover">
               </div>
               <div class="flex items-center justify-center gap-2 mb-3">
                 <span class="inline-block px-3 py-1 rounded-full bg-[#f0c850]/20 text-[#f0c850] text-[.6rem] font-bold uppercase tracking-[.18em] border border-[#f0c850]/30">Premium Import</span>
-                <span id="summary-origin-large" class="inline-block px-3 py-1 rounded-full bg-white/10 text-white/80 text-[.6rem] font-bold uppercase tracking-[.18em] border border-white/15">Pakistan</span>
+                <span id="summary-origin-large" class="inline-block px-3 py-1 rounded-full bg-white/10 text-white/80 text-[.6rem] font-bold uppercase tracking-[.18em] border border-white/15">Multan, Pakistan</span>
               </div>
               <h2 id="summary-product-large" class="text-[1.8rem] text-white leading-tight" style="font-family:'DM Serif Display',serif">Ameer Global Product</h2>
             </div>
@@ -481,11 +481,11 @@
     const catchphraseEl = document.getElementById('product-catchphrase');
     if (catchphraseEl) {
       if (product.includes('Anwar Ratol')) {
-        catchphraseEl.textContent = 'Most people hear about it. Very few taste the real one. You\'re lucky if you get it.';
+        catchphraseEl.textContent = 'MOST PEOPLE HEAR ABOUT IT. VERY FEW TASTE THE REAL ONE. YOU\'RE LUCKY IF YOU GET IT.';
       } else if (product.includes('Sindhri')) {
-        catchphraseEl.textContent = 'Bigger, smoother, richer, and naturally honeyed. Once you taste peak-season Sindhri, the early ones don\'t compare.';
+        catchphraseEl.textContent = 'BIGGER, SMOOTHER, RICHER, AND NATURALLY HONEYED. ONCE YOU TASTE PEAK-SEASON SINDHRI, THE EARLY ONES DON\'T COMPARE.';
       } else if (product.includes('Chaunsa')) {
-        catchphraseEl.textContent = 'The king arrives late. And steals the whole season.';
+        catchphraseEl.textContent = 'THE KING ARRIVES LATE. AND STEALS THE WHOLE SEASON.';
       } else {
         catchphraseEl.textContent = '';
       }
