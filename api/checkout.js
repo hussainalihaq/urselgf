@@ -113,6 +113,16 @@ module.exports = async function handler(req, res) {
       submissionId: checkout.contactRecord.id
     });
   } catch (error) {
-    json(res, 400, { error: error.message || 'Unable to continue checkout.' });
+    const errMsg = error.message || 'Unable to continue checkout.';
+    const errType = error.type || error.constructor?.name || 'Unknown';
+    console.error('[checkout] Error:', errType, errMsg);
+    
+    // If Stripe key is missing, provide a clear message
+    if (!stripe) {
+      json(res, 500, { error: 'Payment system is not configured. Contact the site administrator.' });
+      return;
+    }
+    
+    json(res, 400, { error: errMsg });
   }
 };
