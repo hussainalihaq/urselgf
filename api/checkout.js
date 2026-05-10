@@ -42,7 +42,7 @@ module.exports = async function handler(req, res) {
             },
             unit_amount: Math.round(checkout.billing.unitPriceCad * 100),
           },
-          quantity: checkout.quantity,
+          quantity: checkout.billing.quantity,
         }
       ];
 
@@ -85,6 +85,7 @@ module.exports = async function handler(req, res) {
           phone: body.phone || '',
           fulfillment: body.fulfillment || '',
           city: checkout.availability.city ? checkout.availability.city.label : '',
+          postalCode: checkout.availability.postalCode || '',
           addressLine1: body.addressLine1 || '',
           addressLine2: body.addressLine2 || ''
         }
