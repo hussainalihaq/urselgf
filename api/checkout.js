@@ -1,5 +1,9 @@
 const { insertContact, json, readBody } = require('./_lib/common');
 const { buildCheckoutContactRecord, buildCheckoutResponse } = require('./_lib/checkout');
+const Stripe = require('stripe');
+
+const stripeKey = process.env.STRIPE_SECRET_KEY;
+const stripe = stripeKey ? new Stripe(stripeKey) : null;
 
 module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') {
@@ -18,20 +22,93 @@ module.exports = async function handler(req, res) {
     const checkout = buildCheckoutContactRecord(body);
     await insertContact(checkout.contactRecord);
 
+    let paymentResponse = buildCheckoutResponse(
+      checkout.paymentMethod,
+      checkout.contactRecord.product,
+      checkout.contactRecord.email
+    );
+
+    if (checkout.paymentMethod === 'stripe' && stripe) {
+      const protocol = req.headers['x-forwarded-proto'] || 'https';
+      const host = req.headers.host || 'ameerglobal.ca';
+      const baseUrl = `${protocol}://${host}`;
+
+      const lineItems = [
+        {
+          price_data: {
+            currency: checkout.billing.currency.toLowerCase(),
+            product_data: {
+              name: checkout.contactRecord.product,
+            },
+            unit_amount: Math.round(checkout.billing.unitPriceCad * 100),
+          },
+          quantity: checkout.quantity,
+        }
+      ];
+
+      if (checkout.billing.shippingCad > 0) {
+        lineItems.push({
+          price_data: {
+            currency: checkout.billing.currency.toLowerCase(),
+            product_data: {
+              name: 'Delivery Fee',
+            },
+            unit_amount: Math.round(checkout.billing.shippingCad * 100),
+          },
+          quantity: 1,
+        });
+      }
+
+      if (checkout.billing.hstCad > 0) {
+        lineItems.push({
+          price_data: {
+            currency: checkout.billing.currency.toLowerCase(),
+            product_data: {
+              name: 'HST (13%)',
+            },
+            unit_amount: Math.round(checkout.billing.hstCad * 100),
+          },
+          quantity: 1,
+        });
+      }
+
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        customer_email: checkout.contactRecord.email,
+        line_items: lineItems,
+        mode: 'payment',
+        success_url: `${baseUrl}/checkout/success.html`,
+        cancel_url: `${baseUrl}/checkout/`,
+        metadata: {
+          submissionId: checkout.contactRecord.id,
+          customerName: body.name || '',
+          phone: body.phone || '',
+          fulfillment: body.fulfillment || '',
+          city: checkout.availability.city ? checkout.availability.city.label : '',
+          addressLine1: body.addressLine1 || '',
+          addressLine2: body.addressLine2 || ''
+        }
+      });
+
+      paymentResponse = {
+        method: checkout.paymentMethod,
+        label: paymentResponse.label,
+        status: 'redirect',
+        url: session.url,
+        message: `Redirecting to secure payment for ${checkout.contactRecord.product}.`
+      };
+    }
+
     json(res, 201, {
       ok: true,
       availability: {
         eligible: true,
-        city: checkout.availability.city.label,
-        region: checkout.availability.region,
-        postalCode: checkout.availability.postalCode
+        city: checkout.availability.city ? checkout.availability.city.label : '',
+        region: checkout.availability.region || '',
+        postalCode: checkout.availability.postalCode || ''
       },
       billing: checkout.billing,
-      payment: buildCheckoutResponse(
-        checkout.paymentMethod,
-        checkout.contactRecord.product,
-        checkout.contactRecord.email
-      ),
+      payment: paymentResponse,
       submissionId: checkout.contactRecord.id
     });
   } catch (error) {
