@@ -508,16 +508,32 @@
       };
 
       try {
-        const response = await fetch('/api/checkout', {
+        const endpoint = '/api/checkout/';
+        const response = await fetch(endpoint, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+          },
           body: JSON.stringify(payload)
         });
-        const result = await response.json();
+        const raw = await response.text();
+        let result = {};
+        try {
+          result = raw ? JSON.parse(raw) : {};
+        } catch {
+          result = {};
+        }
 
         if (!response.ok) {
-          checkoutStatus.textContent = result.error || 'Unable to continue checkout.';
+          const fallback = `Checkout failed (${response.status}).`;
+          checkoutStatus.textContent = result.error || fallback;
           checkoutStatus.style.color = '#a3392f';
+          console.error('[checkout] API error', {
+            endpoint,
+            status: response.status,
+            body: raw
+          });
           btn.disabled = false;
           btn.textContent = 'Pay via Stripe →';
           return;
@@ -534,8 +550,11 @@
         btn.disabled = false;
         btn.textContent = 'Pay via Stripe →';
       } catch (error) {
-        checkoutStatus.textContent = 'Network error. Please try again.';
+        const protocol = window.location.protocol;
+        const hint = protocol === 'file:' ? ' Open checkout from your live site URL, not a local file.' : '';
+        checkoutStatus.textContent = `Network error: ${error.message || 'Request failed.'}${hint}`;
         checkoutStatus.style.color = '#a3392f';
+        console.error('[checkout] Network error', error);
         btn.disabled = false;
         btn.textContent = 'Pay via Stripe →';
       }
