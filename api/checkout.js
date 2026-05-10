@@ -20,7 +20,13 @@ module.exports = async function handler(req, res) {
   try {
     const body = await readBody(req);
     const checkout = buildCheckoutContactRecord(body);
-    await insertContact(checkout.contactRecord);
+    let contactStored = true;
+    try {
+      await insertContact(checkout.contactRecord);
+    } catch (insertError) {
+      contactStored = false;
+      console.error('[checkout] Contact insert warning:', insertError?.message || insertError);
+    }
 
     let paymentResponse = buildCheckoutResponse(
       checkout.paymentMethod,
@@ -102,6 +108,7 @@ module.exports = async function handler(req, res) {
 
     json(res, 201, {
       ok: true,
+      contactStored,
       availability: {
         eligible: true,
         city: checkout.availability.city ? checkout.availability.city.label : '',
