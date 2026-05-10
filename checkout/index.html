@@ -202,80 +202,65 @@
       <div class="lg:col-span-7">
         <div class="bg-white rounded-3xl shadow-[0_16px_48px_rgba(20,42,88,.08)] border border-[#203a7b]/6 p-6 md:p-8">
           
-          <!-- PROGRESS BAR -->
-          <div id="progress-bar" class="mb-10 flex items-center justify-between text-[.75rem] font-bold uppercase tracking-[.14em]">
-            <div class="flex items-center gap-2 text-[#1a386f]" id="prog-1"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#1a386f] text-white transition-colors duration-300">1</span> <span class="hidden md:inline">Details</span></div>
-            <div class="h-px flex-1 bg-[#19489f]/15 mx-2 md:mx-4"></div>
-            <div class="flex items-center gap-2 text-[#8b9cbd] transition-colors duration-300" id="prog-2"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#eaf1ff] text-[#8b9cbd] transition-colors duration-300">2</span> <span class="hidden md:inline">Location</span></div>
-            <div class="h-px flex-1 bg-[#19489f]/15 mx-2 md:mx-4"></div>
-            <div class="flex items-center gap-2 text-[#8b9cbd] transition-colors duration-300" id="prog-3"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-[#eaf1ff] text-[#8b9cbd] transition-colors duration-300">3</span> <span class="hidden md:inline">Payment</span></div>
-          </div>
-
-          <form id="checkout-form" class="relative">
-<div id="form-step-1" class="space-y-6 animate-fade-in">
-            <div class="mb-4">
-              <h2 class="text-[1.8rem] text-[#142a53]">Who's Getting These Mangoes?</h2>
-              <p class="text-[#52678d] text-sm">Tell us where to reach you so we can confirm your order.</p>
-            </div>
-
-            <div class="grid gap-4 md:grid-cols-2">
-              <div class="md:col-span-2">
-                <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="name">Full Name</label>
-                <input id="name" required type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
-              </div>
-              <div class="md:col-span-2">
-                <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="email">Email</label>
-                <input id="email" required type="email" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
-              </div>
-              <div class="md:col-span-2">
-                <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="phone">Phone</label>
-                <input id="phone" required type="tel" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
-              </div>
-              
-              </div>
-            </div>
-
-            <!-- PICKUP INFO (shown when fulfillment=pickup) -->
-            <div id="pickup-section" class="hidden pt-4 border-t border-[#19489f]/10 mt-4">
-              <div class="rounded-2xl border border-[#19489f]/14 bg-[#f7faff] p-5 mb-4">
-                <div class="flex items-center gap-3 mb-3">
-                  <div class="w-10 h-10 rounded-full bg-[#eef3fc] flex items-center justify-center text-[#1a386f]">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                  </div>
-                  <div>
-                    <div class="text-[.8rem] font-bold uppercase tracking-[.14em] text-[#1a386f]">Pickup Location</div>
-                    <div class="text-sm text-[#51668c]">5900 Dixie Rd, Mississauga, ON L5T 2Y2</div>
-                    <a href="https://maps.google.com/?q=5900+Dixie+Rd,+Mississauga,+ON+L5T+2Y2" target="_blank" rel="noopener" class="inline-flex items-center gap-1 mt-1 text-[.72rem] font-semibold text-[#1f4ea5] hover:underline">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                      Open in Google Maps
-                    </a>
-                  </div>
+          <form id="checkout-form" class="space-y-6">
+            <!-- SECTION: Customer Details -->
+            <div>
+              <h2 class="text-[1.8rem] text-[#142a53] mb-1">Who's Getting These Mangoes?</h2>
+              <p class="text-[#52678d] text-sm mb-5">Tell us where to reach you so we can confirm your order.</p>
+              <div class="grid gap-4 md:grid-cols-2">
+                <div class="md:col-span-2">
+                  <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="name">Full Name</label>
+                  <input id="name" required type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
                 </div>
-                <div class="flex items-center gap-3">
-                  <div class="w-10 h-10 rounded-full bg-[#eef3fc] flex items-center justify-center text-[#1a386f]">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                  </div>
-                  <div>
-                    <div class="text-[.8rem] font-bold uppercase tracking-[.14em] text-[#1a386f]">Hours</div>
-                    <div class="text-sm text-[#51668c]">Mon–Sat, 9:00 AM – 5:00 PM</div>
-                  </div>
+                <div>
+                  <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="email">Email</label>
+                  <input id="email" required type="email" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
+                </div>
+                <div>
+                  <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="phone">Phone</label>
+                  <input id="phone" required type="tel" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
                 </div>
               </div>
-              <!-- Pickup Map -->
-              <div class="rounded-xl overflow-hidden border border-[#19489f]/10 mb-4 h-[200px]">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2887.4111304550186!2d-79.62939988450284!3d43.63964227912177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b3fc28d61d1fb%3A0xc6222b1156e542!2s5900%20Dixie%20Rd%2C%20Mississauga%2C%20ON%20L5T%202Y2!5e0!3m2!1sen!2sca!4v1680000000000!5m2!1sen!2sca" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-              </div>
-              <div class="rounded-xl border border-[#19489f]/10 bg-[#f7faff] p-4 flex justify-between items-center mb-3">
-                <span class="text-[.8rem] font-bold text-[#51668c] uppercase tracking-wider">Total (inc. HST)</span>
-                <span id="quick-total" class="text-[1.2rem] font-bold text-[#1f4ea5]">$0.00</span>
-              </div>
-              <button id="btn-pickup-pay" type="submit" class="cta w-full rounded-xl px-6 py-4 text-[.8rem] font-bold uppercase tracking-[.14em]">Pay via Stripe</button>
             </div>
 
-            <!-- DELIVERY FIELDS (shown when fulfillment=delivery) -->
-            <div id="delivery-section" class="hidden pt-4 border-t border-[#19489f]/10 mt-4">
-              <h3 class="text-[1.1rem] font-bold text-[#142a53] mb-4">Delivery Address (GTA)</h3>
-              <div id="delivery-fields" class="grid gap-4 md:grid-cols-2">
+            <!-- SECTION: Fulfillment Toggle -->
+            <div class="pt-2 border-t border-[#19489f]/10">
+              <label class="mb-3 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]">How do you want your order?</label>
+              <div class="flex gap-3">
+                <button type="button" id="btn-toggle-pickup" class="flex-1 rounded-xl border-2 border-[#203a7b] bg-[#edf3ff] px-4 py-3 text-[.8rem] font-bold uppercase tracking-[.1em] text-[#203a7b] transition-all">🏬 Pickup</button>
+                <button type="button" id="btn-toggle-delivery" class="flex-1 rounded-xl border-2 border-[#19489f]/15 bg-white px-4 py-3 text-[.8rem] font-bold uppercase tracking-[.1em] text-[#8b9cbd] transition-all">🚚 Delivery</button>
+              </div>
+            </div>
+
+            <!-- PICKUP INFO -->
+            <div id="pickup-section" class="rounded-2xl border border-[#19489f]/14 bg-[#f7faff] p-5">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 rounded-full bg-[#eef3fc] flex items-center justify-center text-[#1a386f]">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                </div>
+                <div>
+                  <div class="text-[.8rem] font-bold uppercase tracking-[.14em] text-[#1a386f]">Pickup Location</div>
+                  <div class="text-sm text-[#51668c]">5900 Dixie Rd, Mississauga, ON L5T 2Y2</div>
+                  <a href="https://maps.google.com/?q=5900+Dixie+Rd,+Mississauga,+ON+L5T+2Y2" target="_blank" rel="noopener" class="inline-flex items-center gap-1 mt-1 text-[.72rem] font-semibold text-[#1f4ea5] hover:underline">
+                    Open in Google Maps →
+                  </a>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-[#eef3fc] flex items-center justify-center text-[#1a386f]">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <div>
+                  <div class="text-[.8rem] font-bold uppercase tracking-[.14em] text-[#1a386f]">Hours</div>
+                  <div class="text-sm text-[#51668c]">Mon–Sat, 9:00 AM – 5:00 PM</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- DELIVERY FIELDS -->
+            <div id="delivery-section" class="hidden">
+              <h3 class="text-[1.1rem] font-bold text-[#142a53] mb-4">Delivery Address (GTA Only)</h3>
+              <div class="grid gap-4 md:grid-cols-2">
                 <div class="md:col-span-2">
                   <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address1">Street Address</label>
                   <input id="address1" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
@@ -308,52 +293,10 @@
                   <input id="address2" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
                 </div>
               </div>
-              <div class="pt-4">
-                <button type="button" onclick="goToStep(2)" class="cta w-full rounded-xl px-6 py-4 text-[.8rem] font-bold uppercase tracking-[.14em]">Continue to Verification</button>
-              </div>
-            </div>
-          </div>
-
-          
-<!-- STEP 2 FORM: Verification -->
-          <div id="form-step-2" class="hidden space-y-6 animate-fade-in">
-            <div class="mb-4">
-              <h2 class="text-[1.8rem] text-[#142a53]">Verify Location</h2>
-              <p class="text-[#52678d] text-sm">Please review your fulfillment details before proceeding.</p>
             </div>
 
-            <div id="pickup-info-panel" class="status rounded-2xl p-4 bg-[#f7faff] border border-[#19489f]/14">
-               <div class="text-[.8rem] font-bold uppercase tracking-[.14em] text-[#1a386f] mb-2">Local Pickup Selected</div>
-               <p class="text-sm text-[#51668c]">Your order will be prepared for pickup at our Mississauga Distribution Center. Open Mon-Sat, 9AM to 5PM. No further verification required.</p>
-            </div>
-
-            <div id="availability-panel" class="status rounded-2xl p-4 hidden">
-              <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                <div>
-                  <div class="text-[.66rem] font-bold uppercase tracking-[.14em]">Delivery Check</div>
-                  <p id="availability-text" class="mt-1 text-sm text-[#51668c]">Verify delivery availability.</p>
-                  <p id="availability-profile" class="mt-2 text-[.78rem] text-[#6f85ab]"></p>
-                </div>
-                <button id="check-availability" type="button" class="rounded-xl border border-[#19489f]/16 bg-white px-4 py-3 text-[.7rem] font-bold uppercase tracking-[.14em] text-[#1f4ea5]">Check now</button>
-              </div>
-            </div>
-
-            <div class="pt-4 flex gap-3">
-              <button type="button" onclick="goToStep(1)" class="w-1/3 rounded-xl border border-[#19489f]/20 bg-white px-4 py-4 text-[.8rem] font-bold uppercase tracking-[.14em] text-[#5f76a3] hover:bg-[#f7faff]">Back</button>
-              <button type="button" id="btn-next-step3" onclick="goToStep(3)" class="cta w-2/3 rounded-xl px-6 py-4 text-[.8rem] font-bold uppercase tracking-[.14em]">Review & Pay</button>
-            </div>
-          </div>
-
-          
-<!-- STEP 3 FORM: Payment -->
-          <div id="form-step-3" class="hidden space-y-6 animate-fade-in">
-            <div class="mb-4">
-              <h2 class="text-[1.8rem] text-[#142a53]">Payment</h2>
-              <p class="text-[#52678d] text-sm">Review your total and proceed to secure checkout.</p>
-            </div>
-
-            
-            <section class="rounded-3xl border border-[#19489f]/12 bg-[#f7faff] p-6 shadow-sm mb-6">
+            <!-- ORDER SUMMARY -->
+            <section class="rounded-3xl border border-[#19489f]/12 bg-[#f7faff] p-6 shadow-sm">
               <div class="flex items-center justify-between gap-3 border-b border-[#19489f]/10 pb-4">
                 <h3 class="text-[1.2rem] font-semibold text-[#17325f]">Order Summary</h3>
                 <span class="rounded-full bg-white border border-[#19489f]/10 px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#305fbf]">CAD</span>
@@ -367,7 +310,9 @@
                 <div class="mt-4 border-t border-[#19489f]/12 pt-4 flex items-center justify-between"><span class="font-bold text-[#17325f]">Total</span><strong id="bill-total" class="money text-[1.4rem] text-[#1f4ea5]">$0.00</strong></div>
               </div>
             </section>
-<section id="payment-wrap" class="rounded-2xl border border-[#19489f]/12 bg-[#f7faff] p-6 text-center">
+
+            <!-- SECURE CHECKOUT BADGE -->
+            <section class="rounded-2xl border border-[#19489f]/12 bg-[#f7faff] p-6 text-center">
               <div class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-[#19489f]/10 mb-4">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1f4ea5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
               </div>
@@ -375,16 +320,9 @@
               <p class="mt-2 text-sm text-[#51668c]">You will be redirected to our encrypted Stripe payment portal to complete your transaction safely.</p>
             </section>
 
-            <div class="pt-4 flex flex-col gap-3">
-              <div class="flex gap-3">
-                <button type="button" onclick="goToStep(2)" class="w-1/3 rounded-xl border border-[#19489f]/20 bg-white px-4 py-4 text-[.8rem] font-bold uppercase tracking-[.14em] text-[#5f76a3] hover:bg-[#f7faff]">Back</button>
-                <button id="complete-order" type="submit" class="cta w-2/3 rounded-xl px-6 py-4 text-[.8rem] font-bold uppercase tracking-[.14em]">Pay via Stripe</button>
-              </div>
-              <p id="checkout-status" class="text-center text-sm font-semibold text-[#1f4ea5]">Ready to proceed.</p>
-            </div>
-          </div>
-
-        
+            <!-- PAY BUTTON -->
+            <button id="complete-order" type="submit" class="cta w-full rounded-xl px-6 py-4.5 text-[.85rem] font-bold uppercase tracking-[.14em]">Pay via Stripe →</button>
+            <p id="checkout-status" class="text-center text-sm font-semibold text-[#1f4ea5]"></p>
           </form>
         </div>
       </div>
@@ -394,77 +332,28 @@
 
   <script>
     const productCatalog = {
-      'Sindhri Mangoes': { unit: '1.8 kg (4 lb approx) box', origin: 'Sindh, Pakistan', image: '/assets/sindhri-mangoes.png', price: 38 },
-      'Anwar Ratol Mangoes': { unit: '1.8 kg (4 lb approx) box', origin: 'Punjab, Pakistan', image: '/assets/anwar-ratol-mangoes.png', price: 45 },
-      'Chaunsa Mangoes': { unit: '1.8 kg (4 lb approx) box', origin: 'Multan, Pakistan', image: '/assets/chaunsa-mangoes.png', price: 52 },
-      'Chaunsa Mango Premium Box': { unit: '1.8 kg (4 lb approx) box', origin: 'Multan, Pakistan', image: '/assets/chaunsa-mangoes.png', price: 52 },
-      'Anwar Ratol Mango Reserve': { unit: '1.8 kg (4 lb approx) box', origin: 'Punjab, Pakistan', image: '/assets/anwar-ratol-mangoes.png', price: 45 },
-      'Sindhri Mango Estate Selection': { unit: '1.8 kg (4 lb approx) box', origin: 'Sindh, Pakistan', image: '/assets/sindhri-mangoes.png', price: 38 },
-      'Himalayan Salt': { unit: 'Bulk or retail packs', origin: 'Khewra, Pakistan', image: '/assets/himalayan-salt.png', price: 29 },
-      'EcoWare Naturals': { unit: 'Trade case', origin: 'Pakistan', image: '/assets/eco-utensils.png', price: 24 },
-      'De-Icing Salt': { unit: 'Bulk pallet', origin: 'Pakistan', image: '/assets/deicing-salt.png', price: 32 }
+      'Sindhri Mangoes': { unit: '1.8 kg (4 lb approx) box', origin: 'Multan, Pakistan', price: 38 },
+      'Anwar Ratol Mangoes': { unit: '1.8 kg (4 lb approx) box', origin: 'Multan, Pakistan', price: 45 },
+      'Chaunsa Mangoes': { unit: '1.8 kg (4 lb approx) box', origin: 'Multan, Pakistan', price: 52 },
+      'Chaunsa Mango Premium Box': { unit: '1.8 kg (4 lb approx) box', origin: 'Multan, Pakistan', price: 52 },
+      'Anwar Ratol Mango Reserve': { unit: '1.8 kg (4 lb approx) box', origin: 'Multan, Pakistan', price: 45 },
+      'Sindhri Mango Estate Selection': { unit: '1.8 kg (4 lb approx) box', origin: 'Multan, Pakistan', price: 38 },
+      'Himalayan Salt': { unit: 'Bulk or retail packs', origin: 'Khewra, Pakistan', price: 29 },
+      'EcoWare Naturals': { unit: 'Trade case', origin: 'Pakistan', price: 24 },
+      'De-Icing Salt': { unit: 'Bulk pallet', origin: 'Pakistan', price: 32 }
     };
 
-    const regionMap = {
-      toronto: 'toronto',
-      mississauga: 'peel',
-      brampton: 'peel',
-      caledon: 'peel',
-      vaughan: 'york',
-      markham: 'york',
-      'richmond-hill': 'york',
-      oakville: 'halton',
-      milton: 'halton',
-      burlington: 'halton',
-      'halton-hills': 'halton',
-      pickering: 'durham',
-      ajax: 'durham',
-      whitby: 'durham',
-      oshawa: 'durham'
-    };
-
-    const currencyFormatter = new Intl.NumberFormat('en-CA', {
-      style: 'currency',
-      currency: 'CAD',
-      minimumFractionDigits: 2
-    });
-
+    const currencyFormatter = new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 2 });
     const params = new URLSearchParams(window.location.search);
     const product = params.get('product') || 'Premium Mangoes';
-    const profile = productCatalog[product] || { unit: 'Trade pack', origin: 'Pakistan', image: '/assets/new-mango-photo.png', price: 30 };
+    const profile = productCatalog[product] || { unit: 'Trade pack', origin: 'Multan, Pakistan', price: 30 };
 
-
-    const cityField = document.getElementById('city');
-    const postalField = document.getElementById('postal');
-    const quantityField = document.getElementById('quantity');
-    const availabilityPanel = document.getElementById('availability-panel');
-    const availabilityText = document.getElementById('availability-text');
-    const availabilityProfile = document.getElementById('availability-profile');
-    const completeOrder = document.getElementById('complete-order');
-    const checkoutStatus = document.getElementById('checkout-status');
-    const paymentWrap = document.getElementById('payment-wrap');
-    const chips = Array.from(document.querySelectorAll('#city-chips [data-city]'));
-    const markers = Array.from(document.querySelectorAll('.map-marker'));
-    const regions = Array.from(document.querySelectorAll('.map-region'));
-
-    const billUnit = document.getElementById('bill-unit');
-    const billQty = document.getElementById('bill-qty');
-    const billSubtotal = document.getElementById('bill-subtotal');
-    const billHst = document.getElementById('bill-hst');
-    const billTotal = document.getElementById('bill-total');
-
-    let fulfillment = 'pickup'; // default
-    let availability = { eligible: true }; // pickup is always eligible
-    let latestBilling = null;
-
-    // Image elements removed — using creative gradient card instead
-    if (document.getElementById('hero-bg-img')) document.getElementById('hero-bg-img').src = profile.image;
-    
+    // Set product info in card
     document.getElementById('summary-product-large').textContent = product;
     document.getElementById('summary-unit-large').textContent = profile.unit;
     document.getElementById('summary-origin-large').textContent = profile.origin;
-    
-    // Inject dynamic catchphrase
+
+    // Inject catchphrase
     const catchphraseEl = document.getElementById('product-catchphrase');
     if (catchphraseEl) {
       if (product.includes('Anwar Ratol')) {
@@ -478,23 +367,15 @@
       }
     }
 
-    // Stock Urgency Bar
-    (function initStock() {
-      const stockAmounts = { 'Sindhri Mangoes': 8, 'Anwar Ratol Mangoes': 14, 'Chaunsa Mangoes': 6 };
-      const baseStock = stockAmounts[product] || Math.floor(Math.random() * 12) + 5;
-      const maxStock = 50;
-      const pct = Math.round((baseStock / maxStock) * 100);
-      const stockBar = document.getElementById('stock-bar');
-      const stockText = document.getElementById('stock-text');
-      if (stockBar && stockText) {
-        stockText.textContent = `Only ${baseStock} boxes left this season!`;
-        setTimeout(() => { stockBar.style.width = pct + '%'; }, 300);
-      }
-    })();
-
-    function slugifyCity(value) {
-      return String(value || '').trim().toLowerCase().replace(/\s+/g, '-');
-    }
+    // State
+    let fulfillment = 'pickup';
+    const quantityField = document.getElementById('quantity');
+    const billUnit = document.getElementById('bill-unit');
+    const billQty = document.getElementById('bill-qty');
+    const billSubtotal = document.getElementById('bill-subtotal');
+    const billHst = document.getElementById('bill-hst');
+    const billTotal = document.getElementById('bill-total');
+    const checkoutStatus = document.getElementById('checkout-status');
 
     function quantityValue() {
       const parsed = Number.parseInt(quantityField.value || '1', 10);
@@ -502,345 +383,126 @@
       return Math.max(1, Math.min(500, parsed));
     }
 
-    function billingFromQuantity() {
+    function renderBilling() {
       const qty = quantityValue();
       const unit = profile.price || 30;
       const subtotal = Number((qty * unit).toFixed(2));
       const shipping = fulfillment === 'delivery' ? 15.00 : 0;
       const preTax = subtotal + shipping;
       const hst = Number((preTax * 0.13).toFixed(2));
-      return {
-        unitPriceCad: unit,
-        quantity: qty,
-        subtotalCad: subtotal,
-        shippingCad: shipping,
-        hstCad: hst,
-        totalCad: Number((preTax + hst).toFixed(2))
-      };
-    }
+      const total = Number((preTax + hst).toFixed(2));
 
-    function renderBilling(data) {
-      const model = data || billingFromQuantity();
-      billUnit.textContent = currencyFormatter.format(model.unitPriceCad || 0);
-      billQty.textContent = String(model.quantity || quantityValue());
-      billSubtotal.textContent = currencyFormatter.format(model.subtotalCad || 0);
-      
+      billUnit.textContent = currencyFormatter.format(unit);
+      billQty.textContent = String(qty);
+      billSubtotal.textContent = currencyFormatter.format(subtotal);
+
       const billShippingRow = document.getElementById('bill-shipping-row');
-      if (model.shippingCad > 0) {
+      if (shipping > 0) {
         billShippingRow.classList.remove('hidden');
-        document.getElementById('bill-shipping').textContent = currencyFormatter.format(model.shippingCad);
+        document.getElementById('bill-shipping').textContent = currencyFormatter.format(shipping);
       } else {
         billShippingRow.classList.add('hidden');
       }
 
-      billHst.textContent = currencyFormatter.format(model.hstCad || 0);
-      billTotal.textContent = currencyFormatter.format(model.totalCad || 0);
-      document.getElementById('quick-total').textContent = currencyFormatter.format(model.totalCad || 0);
+      billHst.textContent = currencyFormatter.format(hst);
+      billTotal.textContent = currencyFormatter.format(total);
     }
 
-    function highlight(cityValue) {
-      const key = slugifyCity(cityValue);
-      const region = regionMap[key] || '';
-      chips.forEach((chip) => chip.classList.toggle('on', chip.dataset.city.toLowerCase() === String(cityValue || '').toLowerCase()));
-      markers.forEach((marker) => marker.classList.toggle('on', marker.dataset.cityKey === key));
-      regions.forEach((path) => path.classList.toggle('on', path.id === `region-${region}`));
-    }
-
-    function setCity(cityValue) {
-      cityField.value = cityValue;
-      highlight(cityField.value);
-      resetAvailability();
-    }
-
-    function lockPayment() {
-      paymentWrap.classList.add('opacity-45', 'pointer-events-none');
-      completeOrder.disabled = true;
-    }
-
-    function unlockPayment() {
-      paymentWrap.classList.remove('opacity-45', 'pointer-events-none');
-      completeOrder.disabled = false;
-    }
-
-    function resetAvailability() {
-      if (fulfillment === 'pickup') {
-        availability = { eligible: true };
-        checkoutStatus.textContent = 'Ready to proceed.';
-        unlockPayment();
-        latestBilling = null;
-        renderBilling();
-        return;
-      }
-      
-      availability = { eligible: false };
-      availabilityPanel.classList.remove('ok', 'no');
-      availabilityText.textContent = 'Check availability to continue.';
-      availabilityProfile.textContent = '';
-      checkoutStatus.textContent = 'Availability is required before checkout submission.';
-      lockPayment();
-      latestBilling = null;
-      renderBilling();
-    }
-
-    async function checkAvailability() {
-      if (fulfillment === 'pickup') return;
-
-      const payload = {
-        product,
-        fulfillment,
-        city: cityField.value.trim(),
-        postalCode: postalField.value.trim(),
-        quantity: String(quantityValue())
-      };
-
-      availabilityText.textContent = 'Checking availability...';
-      availabilityProfile.textContent = '';
-
-      try {
-        const response = await fetch('/api/availability', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        const result = await response.json();
-
-        availabilityPanel.classList.remove('ok', 'no');
-        availabilityPanel.classList.add(response.ok ? 'ok' : 'no');
-
-        if (!response.ok) {
-          availability = { eligible: false };
-          availabilityText.textContent = result.reason || 'Delivery not available for this address.';
-          availabilityProfile.textContent = '';
-          checkoutStatus.textContent = 'Update city/postal code and try again.';
-          lockPayment();
-          latestBilling = null;
-          renderBilling();
-          return;
-        }
-
-        availability = { eligible: Boolean(result.eligible) };
-        availabilityText.textContent = `${result.city} is available for delivery.`;
-        availabilityProfile.textContent = `${result.profile.label} · ${result.profile.leadTime} · ${result.profile.detail}`;
-        checkoutStatus.textContent = 'Availability confirmed. Continue to Stripe.';
-        highlight(result.city);
-        latestBilling = result.billing || null;
-        renderBilling(latestBilling);
-
-        if (result.eligible) {
-          unlockPayment();
-        } else {
-          lockPayment();
-        }
-      } catch (error) {
-        availabilityPanel.classList.remove('ok');
-        availabilityPanel.classList.add('no');
-        availabilityText.textContent = 'Network error while checking availability.';
-        availabilityProfile.textContent = '';
-        checkoutStatus.textContent = 'Please try again.';
-        availability = { eligible: false };
-        lockPayment();
-      }
-    }
-
-    document.getElementById('qty-minus').addEventListener('click', () => {
-      quantityField.value = String(Math.max(1, quantityValue() - 1));
-      resetAvailability();
-    });
-
-    document.getElementById('qty-plus').addEventListener('click', () => {
-      quantityField.value = String(Math.min(500, quantityValue() + 1));
-      resetAvailability();
-    });
-
-    quantityField.addEventListener('input', () => {
-      quantityField.value = String(quantityValue());
-      resetAvailability();
-    });
-
-    cityField.addEventListener('change', () => {
-      highlight(cityField.value);
-      resetAvailability();
-    });
-
-    postalField.addEventListener('input', resetAvailability);
-
-    chips.forEach((chip) => {
-      chip.addEventListener('click', () => {
-        setCity(chip.dataset.city);
-      });
-    });
-
-    markers.forEach((marker) => {
-      marker.addEventListener('click', () => {
-        const city = marker.dataset.cityKey
-          .split('-')
-          .map((piece) => piece.charAt(0).toUpperCase() + piece.slice(1))
-          .join(' ');
-        setCity(city);
-      });
-    });
-
-    regions.forEach((region) => {
-      region.style.cursor = 'pointer';
-      region.addEventListener('click', () => {
-        const city = region.dataset.defaultCity;
-        if (city) setCity(city);
-      });
-    });
-
-    document.getElementById('check-availability').addEventListener('click', checkAvailability);
-
-    // Fulfillment Setup (based on URL param, no toggle needed)
-    const pickupMap = document.getElementById('pickup-map-container');
-    const deliveryMap = document.getElementById('delivery-map-container');
-    const cityChips = document.getElementById('city-chips');
-    const mapTitle = document.getElementById('map-title');
-    const mapDesc = document.getElementById('map-desc');
-    const address1 = document.getElementById('address1');
-    const postalInput = document.getElementById('postal');
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const passedFulfillment = urlParams.get('fulfillment');
+    // Fulfillment Toggle
+    const btnPickup = document.getElementById('btn-toggle-pickup');
+    const btnDelivery = document.getElementById('btn-toggle-delivery');
+    const pickupSection = document.getElementById('pickup-section');
+    const deliverySection = document.getElementById('delivery-section');
 
     function setFulfillment(method) {
       fulfillment = method;
-      const pickupSection = document.getElementById('pickup-section');
-      const deliverySection = document.getElementById('delivery-section');
-      const progressBar = document.getElementById('progress-bar');
-      const pickupInfoPanel = document.getElementById('pickup-info-panel');
-
       if (method === 'pickup') {
         pickupSection.classList.remove('hidden');
         deliverySection.classList.add('hidden');
-        progressBar.classList.add('hidden');
-        if (pickupInfoPanel) pickupInfoPanel.classList.remove('hidden');
-        availabilityPanel.classList.add('hidden');
-        pickupMap.classList.remove('hidden');
-        deliveryMap.classList.add('hidden');
-        cityChips.classList.add('hidden');
-        mapTitle.textContent = 'Distribution Center';
-        mapDesc.textContent = 'Pickup your order from our Mississauga distribution facility.';
-        availability = { eligible: true };
+        btnPickup.classList.add('border-[#203a7b]', 'bg-[#edf3ff]', 'text-[#203a7b]');
+        btnPickup.classList.remove('border-[#19489f]/15', 'bg-white', 'text-[#8b9cbd]');
+        btnDelivery.classList.remove('border-[#203a7b]', 'bg-[#edf3ff]', 'text-[#203a7b]');
+        btnDelivery.classList.add('border-[#19489f]/15', 'bg-white', 'text-[#8b9cbd]');
       } else {
         pickupSection.classList.add('hidden');
         deliverySection.classList.remove('hidden');
-        progressBar.classList.remove('hidden');
-        if (pickupInfoPanel) pickupInfoPanel.classList.add('hidden');
-        availabilityPanel.classList.remove('hidden');
-        pickupMap.classList.add('hidden');
-        deliveryMap.classList.remove('hidden');
-        cityChips.classList.remove('hidden');
-        mapTitle.textContent = 'Delivery Zones';
-        mapDesc.textContent = 'We deliver across the Greater Toronto Area.';
-        availability = { eligible: false };
-        address1.setAttribute('required', 'true');
-        cityField.setAttribute('required', 'true');
-        postalInput.setAttribute('required', 'true');
+        btnDelivery.classList.add('border-[#203a7b]', 'bg-[#edf3ff]', 'text-[#203a7b]');
+        btnDelivery.classList.remove('border-[#19489f]/15', 'bg-white', 'text-[#8b9cbd]');
+        btnPickup.classList.remove('border-[#203a7b]', 'bg-[#edf3ff]', 'text-[#203a7b]');
+        btnPickup.classList.add('border-[#19489f]/15', 'bg-white', 'text-[#8b9cbd]');
       }
-      if (latestBilling) renderBilling(latestBilling);
-      else renderBilling();
+      renderBilling();
     }
 
-    // Initialize based on URL
+    btnPickup.addEventListener('click', () => setFulfillment('pickup'));
+    btnDelivery.addEventListener('click', () => setFulfillment('delivery'));
+
+    // Init from URL
+    const passedFulfillment = params.get('fulfillment');
     if (passedFulfillment === 'delivery') {
       setFulfillment('delivery');
     } else {
       setFulfillment('pickup');
     }
 
-    // --- Step Navigation Logic ---
-    let currentStep = 1;
+    // Quantity handlers
+    document.getElementById('qty-minus').addEventListener('click', () => {
+      quantityField.value = String(Math.max(1, quantityValue() - 1));
+      renderBilling();
+    });
+    document.getElementById('qty-plus').addEventListener('click', () => {
+      quantityField.value = String(Math.min(500, quantityValue() + 1));
+      renderBilling();
+    });
+    quantityField.addEventListener('input', () => {
+      quantityField.value = String(quantityValue());
+      renderBilling();
+    });
 
-    function updateProgressUI(step) {
-      const p1 = document.getElementById('prog-1');
-      const p2 = document.getElementById('prog-2');
-      const p3 = document.getElementById('prog-3');
-
-      // Reset all to inactive
-      [p1, p2, p3].forEach(p => {
-        p.classList.remove('text-[#1a386f]');
-        p.classList.add('text-[#8b9cbd]');
-        p.querySelector('span').classList.remove('bg-[#1a386f]', 'text-white');
-        p.querySelector('span').classList.add('bg-[#eaf1ff]', 'text-[#8b9cbd]');
-      });
-
-      // Activate up to current step
-      for(let i=1; i<=step; i++) {
-        const p = document.getElementById(`prog-${i}`);
-        p.classList.remove('text-[#8b9cbd]');
-        p.classList.add('text-[#1a386f]');
-        p.querySelector('span').classList.remove('bg-[#eaf1ff]', 'text-[#8b9cbd]');
-        p.querySelector('span').classList.add('bg-[#1a386f]', 'text-white');
-      }
-    }
-
-    function goToStep(step) {
-      // Validate Step 1 before proceeding
-      if (step === 2 && currentStep === 1) {
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-        if (!name || !email || !phone) {
-          alert('Please fill out your Name, Email, and Phone number to continue.');
-          return;
-        }
-
-        if (fulfillment === 'delivery') {
-          if (!address1.value.trim() || !cityField.value || !postalInput.value.trim()) {
-            alert('Please fill out your complete delivery address.');
-            return;
-          }
-          // Auto-trigger availability check
-          document.getElementById('check-availability').click();
-        }
-      }
-
-      // Validate Step 2 before proceeding
-      if (step === 3 && currentStep === 2) {
-        if (!availability.eligible) {
-          alert('Please check delivery availability before proceeding.');
-          return;
-        }
-      }
-
-      currentStep = step;
-      updateProgressUI(step);
-
-      // Hide all steps
-      [1, 2, 3].forEach(i => {
-        document.getElementById(`form-step-${i}`).classList.add('hidden');
-        document.getElementById(`left-step-${i}`).classList.add('hidden');
-      });
-
-      // Show current step
-      document.getElementById(`form-step-${step}`).classList.remove('hidden');
-      document.getElementById(`left-step-${step}`).classList.remove('hidden');
-    }
-
+    // FORM SUBMIT — validates, calls API, redirects to Stripe
     document.getElementById('checkout-form').addEventListener('submit', async (event) => {
       event.preventDefault();
-      if (!availability.eligible) {
-        checkoutStatus.textContent = 'Run availability check before submitting.';
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+
+      if (!name || !email || !phone) {
+        checkoutStatus.textContent = 'Please fill out your Name, Email, and Phone.';
+        checkoutStatus.style.color = '#a3392f';
         return;
       }
 
-      const btn = document.getElementById(fulfillment === 'pickup' ? 'btn-pickup-pay' : 'complete-order');
+      const address1 = document.getElementById('address1').value.trim();
+      const city = document.getElementById('city').value.trim();
+      const postal = document.getElementById('postal').value.trim();
+      const address2 = document.getElementById('address2').value.trim();
+
+      if (fulfillment === 'delivery') {
+        if (!address1 || !city || !postal) {
+          checkoutStatus.textContent = 'Please fill out your complete delivery address.';
+          checkoutStatus.style.color = '#a3392f';
+          return;
+        }
+      }
+
+      const btn = document.getElementById('complete-order');
       btn.disabled = true;
       btn.textContent = 'Processing...';
-      const prevTextStatus = checkoutStatus.textContent;
       checkoutStatus.textContent = 'Submitting checkout securely...';
+      checkoutStatus.style.color = '#1f4ea5';
 
       const payload = {
         product,
         fulfillment,
-        name: document.getElementById('name').value.trim(),
-        email: document.getElementById('email').value.trim(),
-        phone: document.getElementById('phone').value.trim(),
+        name,
+        email,
+        phone,
         quantity: String(quantityValue()),
-        addressLine1: document.getElementById('address1').value.trim(),
-        addressLine2: document.getElementById('address2').value.trim(),
-        city: cityField.value.trim(),
-        postalCode: postalField.value.trim(),
+        addressLine1: address1,
+        addressLine2: address2,
+        city,
+        postalCode: postal,
         paymentMethod: 'stripe',
         notes: ''
       };
@@ -854,39 +516,32 @@
         const result = await response.json();
 
         if (!response.ok) {
-          if (fulfillment === 'delivery') checkoutStatus.textContent = result.error || 'Unable to continue checkout.';
+          checkoutStatus.textContent = result.error || 'Unable to continue checkout.';
+          checkoutStatus.style.color = '#a3392f';
           btn.disabled = false;
-          btn.textContent = 'Pay via Stripe';
+          btn.textContent = 'Pay via Stripe →';
           return;
         }
 
-        if (result.billing) {
-          latestBilling = result.billing;
-          renderBilling(latestBilling);
-        }
-
-        if (fulfillment === 'delivery') {
-          checkoutStatus.textContent = result.payment && result.payment.message
-            ? result.payment.message
-            : 'Checkout submitted. Redirecting...';
-        }
-
         if (result.payment && result.payment.status === 'redirect' && result.payment.url) {
+          checkoutStatus.textContent = 'Redirecting to Stripe...';
           window.location.href = result.payment.url;
           return;
         }
 
+        // Fallback if no redirect URL
+        checkoutStatus.textContent = result.payment ? result.payment.message : 'Order received. You will be contacted shortly.';
         btn.disabled = false;
-        btn.textContent = 'Pay via Stripe';
+        btn.textContent = 'Pay via Stripe →';
       } catch (error) {
         checkoutStatus.textContent = 'Network error. Please try again.';
+        checkoutStatus.style.color = '#a3392f';
         btn.disabled = false;
-        btn.textContent = 'Pay via Stripe';
+        btn.textContent = 'Pay via Stripe →';
       }
     });
 
     renderBilling();
-    updateProgressUI(1);
   </script>
 </body>
 </html>
