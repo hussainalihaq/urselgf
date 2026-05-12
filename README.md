@@ -4,6 +4,8 @@ This repo now includes:
 - Frontend pages based on your provided designs (`/home`, `/products`, `/about`, `/contact`)
 - Backend APIs (`/api/health`, `/api/products`, `/api/newsletter`, `/api/contact`)
 - File-based data storage in `data/*.json`
+- Stripe checkout + webhook order pipeline (`/api/checkout`, `/api/stripe-webhook`)
+- Admin stats endpoint (`/api/admin-stats`)
 
 ## Run locally
 
@@ -24,6 +26,9 @@ Server runs on `http://localhost:3000` by default.
 - `GET /api/products`
 - `POST /api/newsletter`
 - `POST /api/contact`
+- `POST /api/checkout`
+- `POST /api/stripe-webhook`
+- `GET /api/admin-stats` (requires `x-admin-key` header)
 
 ## API payloads
 
@@ -88,3 +93,73 @@ alter table public.contacts
 ```
 
 Without these two columns, contact submissions still work, but order-specific tracking fields are skipped in Supabase.
+
+## Stripe Production Setup
+
+Set these environment variables in Vercel:
+
+- `STRIPE_SECRET_KEY` (`sk_live_...` in production)
+- `STRIPE_WEBHOOK_SECRET` (from Stripe webhook endpoint)
+- `ADMIN_STATS_KEY` (your private key for `/api/admin-stats`)
+- `RESEND_API_KEY` (for email automation)
+- `ORDER_EMAIL_FROM` (verified sender, e.g. `orders@yourdomain.com`)
+- `ORDER_EMAIL_ADMIN_TO` (your receiving email)
+
+Optional Supabase table names:
+
+- `SUPABASE_ORDERS_TABLE` (default: `orders`)
+- `SUPABASE_INVENTORY_TABLE` (default: `inventory`)
+
+### Stripe Dashboard Steps
+
+1. Go to Developers -> Webhooks.
+2. Add endpoint: `https://your-domain.com/api/stripe-webhook`.
+3. Subscribe to event: `checkout.session.completed`.
+4. Copy webhook signing secret and set `STRIPE_WEBHOOK_SECRET`.
+5. Switch your API key from test to live when going live.
+
+### Supabase Order Tables (Optional but recommended)
+
+```sql
+create table if not exists public.orders (
+  order_number text primary key,
+  submission_id text not null,
+  stripe_session_id text unique not null,
+  payment_intent_id text,
+  customer_name text,
+  customer_email text,
+  phone text,
+  product text,
+  quantity integer not null default 1,
+  fulfillment text,
+  city text,
+  postal_code text,
+  address_line_1 text,
+  address_line_2 text,
+  amount_total numeric(10,2) not null default 0,
+  currency text not null default 'CAD',
+  status text not null default 'pending_payment',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.inventory (
+  product text primary key,
+  stock_on_hand integer not null default 0,
+  updated_at timestamptz not null default now()
+);
+```
+
+Order numbers are generated automatically as:
+
+- `AMG-YYYYMMDD-0001`
+- `AMG-YYYYMMDD-0002`
+- etc.
+
+### Admin Stats API
+
+Example:
+
+```bash
+curl -H "x-admin-key: YOUR_ADMIN_STATS_KEY" https://your-domain.com/api/admin-stats
+```

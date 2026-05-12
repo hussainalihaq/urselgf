@@ -1,5 +1,6 @@
 const { insertContact, json, readBody } = require('./_lib/common');
 const { buildCheckoutContactRecord, buildCheckoutResponse } = require('./_lib/checkout');
+const { createPendingOrder, generateOrderNumber } = require('./_lib/orders');
 const Stripe = require('stripe');
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
@@ -20,6 +21,7 @@ module.exports = async function handler(req, res) {
   try {
     const body = await readBody(req);
     const checkout = buildCheckoutContactRecord(body);
+    const orderNumber = await generateOrderNumber();
     let contactStored = true;
     try {
       await insertContact(checkout.contactRecord);
@@ -86,6 +88,7 @@ module.exports = async function handler(req, res) {
         success_url: `${baseUrl}/checkout/success.html`,
         cancel_url: `${baseUrl}/checkout/`,
         metadata: {
+          orderNumber,
           submissionId: checkout.contactRecord.id,
           customerName: body.name || '',
           phone: body.phone || '',
@@ -104,6 +107,28 @@ module.exports = async function handler(req, res) {
         url: session.url,
         message: `Redirecting to secure payment for ${checkout.contactRecord.product}.`
       };
+
+      try {
+        await createPendingOrder({
+          orderNumber,
+          submissionId: checkout.contactRecord.id,
+          stripeSessionId: session.id,
+          customerName: body.name || '',
+          customerEmail: checkout.contactRecord.email,
+          phone: body.phone || '',
+          product: checkout.contactRecord.product,
+          quantity: checkout.billing.quantity,
+          fulfillment: body.fulfillment || 'pickup',
+          city: checkout.availability.city ? checkout.availability.city.label : '',
+          postalCode: checkout.availability.postalCode || '',
+          addressLine1: body.addressLine1 || '',
+          addressLine2: body.addressLine2 || '',
+          amountTotal: checkout.billing.totalCad,
+          currency: checkout.billing.currency
+        });
+      } catch (orderError) {
+        console.error('[checkout] Pending order create warning:', orderError?.message || orderError);
+      }
     }
 
     json(res, 201, {
@@ -116,6 +141,7 @@ module.exports = async function handler(req, res) {
         postalCode: checkout.availability.postalCode || ''
       },
       billing: checkout.billing,
+      orderNumber,
       payment: paymentResponse,
       submissionId: checkout.contactRecord.id
     });
