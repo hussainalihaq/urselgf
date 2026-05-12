@@ -218,6 +218,13 @@
     @keyframes shimmer{0%{background-position:-1000px 0}100%{background-position:1000px 0}}
     .gold-shimmer{background:linear-gradient(90deg,transparent 0%,rgba(212,160,23,.1) 50%,transparent 100%);background-size:1000px 100%;animation:shimmer 4s ease-in-out infinite}
     .season-bar{height:8px;border-radius:999px;background:rgba(24,42,89,.06)}.season-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--mango-gold),var(--mango-amber))}
+    @media (max-width: 768px){
+      .nav-links-mobile-hide{display:none}
+      .nav-cta-mobile-hide{display:none}
+      .mobile-order-link{display:inline-block}
+      .mobile-quickbar{display:flex}
+      .group .pointer-events-none{display:none}
+    }
   </style>
 </head>
 <body>
@@ -226,13 +233,14 @@
 <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-[#203a7b]/10 shadow-[0_4px_24px_rgba(20,42,88,.06)]">
   <div class="max-w-[1280px] mx-auto px-6 md:px-10 flex items-center justify-between" style="height:96px">
     <a href="/"><img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png" class="h-[64px] md:h-[72px] w-auto object-contain" decoding="async"/></a>
-    <div class="flex items-center gap-1 bg-[#edf3ff]/80 border border-[#203a7b]/12 rounded-full px-1 py-1">
+    <div class="nav-links-mobile-hide flex items-center gap-1 bg-[#edf3ff]/80 border border-[#203a7b]/12 rounded-full px-1 py-1">
       <a href="/" class="px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[.65rem] sm:text-[.78rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Home</a>
       <a href="/products/" class="px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[.65rem] sm:text-[.78rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.09em] text-white bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] shadow-md">Products</a>
       <a href="/about/" class="px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[.65rem] sm:text-[.78rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">About</a>
       <a href="/contact/" class="hidden sm:inline-block px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Contact</a>
     </div>
-    <a href="/contact/" class="bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl text-[.6rem] sm:text-[.75rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.1em] shadow-lg hover:-translate-y-0.5 transition-all">Inquire</a>
+    <a href="/contact/" class="nav-cta-mobile-hide bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl text-[.6rem] sm:text-[.75rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.1em] shadow-lg hover:-translate-y-0.5 transition-all">Inquire</a>
+    <a href="#varieties" class="mobile-order-link hidden text-[.72rem] font-bold uppercase tracking-[.12em] text-[#203a7b]">Order</a>
   </div>
 </nav>
 
@@ -634,6 +642,24 @@
     </div>
   </section>
 
+  <!-- LOCAL CITY LINKS -->
+  <section class="py-16 px-6 md:px-10 bg-[#f8f9fc] border-y border-[#203a7b]/8">
+    <div class="max-w-[1100px] mx-auto">
+      <h3 class="text-[1.4rem] mb-4">Pakistani Mangoes by GTA City</h3>
+      <p class="text-[#4a5877] text-sm mb-6">Find delivery details and order links for your area.</p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm font-semibold">
+        <a href="/mangoes/toronto/" class="rounded-xl border border-[#203a7b]/15 bg-white px-4 py-3 hover:bg-[#edf3ff]">Toronto</a>
+        <a href="/mangoes/mississauga/" class="rounded-xl border border-[#203a7b]/15 bg-white px-4 py-3 hover:bg-[#edf3ff]">Mississauga</a>
+        <a href="/mangoes/brampton/" class="rounded-xl border border-[#203a7b]/15 bg-white px-4 py-3 hover:bg-[#edf3ff]">Brampton</a>
+        <a href="/mangoes/markham/" class="rounded-xl border border-[#203a7b]/15 bg-white px-4 py-3 hover:bg-[#edf3ff]">Markham</a>
+        <a href="/mangoes/vaughan/" class="rounded-xl border border-[#203a7b]/15 bg-white px-4 py-3 hover:bg-[#edf3ff]">Vaughan</a>
+        <a href="/mangoes/oakville/" class="rounded-xl border border-[#203a7b]/15 bg-white px-4 py-3 hover:bg-[#edf3ff]">Oakville</a>
+        <a href="/mangoes/burlington/" class="rounded-xl border border-[#203a7b]/15 bg-white px-4 py-3 hover:bg-[#edf3ff]">Burlington</a>
+        <a href="/mangoes/" class="rounded-xl border border-[#203a7b]/15 bg-white px-4 py-3 hover:bg-[#edf3ff]">All GTA Areas</a>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <!-- FOOTER -->
@@ -645,6 +671,12 @@
   </div>
   <div class="max-w-[1280px] mx-auto px-6 md:px-10 mt-14 pt-6 border-t border-[#203a7b]/8"><p class="text-center text-[.68rem] uppercase tracking-[.2em] text-[#6e7b97]">© 1866–2026 Ameer Global INC.</p></div>
 </footer>
+
+<!-- MOBILE QUICK ACTIONS -->
+<div class="mobile-quickbar hidden fixed bottom-0 left-0 right-0 z-[90] bg-white/95 backdrop-blur border-t border-[#203a7b]/10 p-3 gap-3">
+  <a href="#varieties" class="flex-1 text-center rounded-xl border border-[#203a7b]/20 px-4 py-3 text-[.75rem] font-bold uppercase tracking-[.12em] text-[#203a7b]">View Varieties</a>
+  <button type="button" onclick="openFulfillmentModal('Sindhri Mangoes')" class="flex-1 rounded-xl bg-[#203a7b] px-4 py-3 text-[.75rem] font-bold uppercase tracking-[.12em] text-white">Buy Now</button>
+</div>
 
 <!-- FULFILLMENT MODAL -->
 <div id="fulfillment-modal" class="fixed inset-0 z-[100] hidden items-center justify-center">
