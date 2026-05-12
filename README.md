@@ -6,6 +6,7 @@ This repo now includes:
 - File-based data storage in `data/*.json`
 - Stripe checkout + webhook order pipeline (`/api/checkout`, `/api/stripe-webhook`)
 - Admin stats endpoint (`/api/admin-stats`)
+- SEO keyword and execution files for GTA mango ranking (`/seo`)
 
 ## Run locally
 
@@ -163,3 +164,8 @@ Example:
 ```bash
 curl -H "x-admin-key: YOUR_ADMIN_STATS_KEY" https://your-domain.com/api/admin-stats
 ```
+
+## SEO Files
+
+- `seo/keywords-gta-mangoes.csv`: prioritized keyword clusters for GTA mango intent.
+- `seo/seo-gta-mango-execution.md`: practical execution checklist to improve rankings.

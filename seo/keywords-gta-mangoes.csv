@@ -1,0 +1,34 @@
+cluster,keyword,intent,priority,target_url,content_type
+brand,ameer global mangoes,navigational,P0,https://ameerglobal.ca/mangoes/,landing-page
+brand,ameer global pakistani mangoes,navigational,P0,https://ameerglobal.ca/mangoes/,landing-page
+high-intent,buy pakistani mangoes toronto,transactional,P0,https://ameerglobal.ca/mangoes/,landing-page
+high-intent,pakistani mangoes toronto,transactional,P0,https://ameerglobal.ca/mangoes/,landing-page
+high-intent,mango delivery toronto,transactional,P0,https://ameerglobal.ca/mangoes/,landing-page
+high-intent,mango delivery gta,transactional,P0,https://ameerglobal.ca/mangoes/,landing-page
+high-intent,buy mangoes mississauga,transactional,P0,https://ameerglobal.ca/mangoes/,landing-page
+high-intent,pakistani mangoes mississauga,transactional,P0,https://ameerglobal.ca/mangoes/,landing-page
+variety,sindhri mangoes toronto,transactional,P1,https://ameerglobal.ca/mangoes/,section-on-page
+variety,chaunsa mangoes toronto,transactional,P1,https://ameerglobal.ca/mangoes/,section-on-page
+variety,anwar ratol mangoes toronto,transactional,P1,https://ameerglobal.ca/mangoes/,section-on-page
+variety,sindhri mangoes gta,transactional,P1,https://ameerglobal.ca/mangoes/,section-on-page
+variety,chaunsa mangoes gta,transactional,P1,https://ameerglobal.ca/mangoes/,section-on-page
+variety,anwar ratol mangoes gta,transactional,P1,https://ameerglobal.ca/mangoes/,section-on-page
+local-toronto,mangoes scarborough,transactional,P1,https://ameerglobal.ca/mangoes/,faq
+local-toronto,mangoes north york,transactional,P1,https://ameerglobal.ca/mangoes/,faq
+local-york,mangoes markham,transactional,P1,https://ameerglobal.ca/mangoes/,faq
+local-york,mangoes vaughan,transactional,P1,https://ameerglobal.ca/mangoes/,faq
+local-peel,mangoes brampton,transactional,P1,https://ameerglobal.ca/mangoes/,faq
+local-halton,mangoes oakville,transactional,P1,https://ameerglobal.ca/mangoes/,faq
+local-halton,mangoes burlington,transactional,P1,https://ameerglobal.ca/mangoes/,faq
+pickup,pakistani mango pickup mississauga,transactional,P1,https://ameerglobal.ca/checkout/,checkout
+pickup,mango pickup gta,transactional,P2,https://ameerglobal.ca/checkout/,checkout
+delivery,mango delivery mississauga,transactional,P1,https://ameerglobal.ca/mangoes/,landing-page
+delivery,mango delivery brampton,transactional,P1,https://ameerglobal.ca/mangoes/,landing-page
+delivery,mango delivery markham,transactional,P1,https://ameerglobal.ca/mangoes/,landing-page
+delivery,mango delivery vaughan,transactional,P1,https://ameerglobal.ca/mangoes/,landing-page
+season,pakistani mango season canada,informational,P2,https://ameerglobal.ca/mangoes/,blog-or-faq
+season,mango season toronto,informational,P2,https://ameerglobal.ca/mangoes/,blog-or-faq
+trust,best pakistani mangoes in toronto,commercial,P1,https://ameerglobal.ca/mangoes/,landing-page
+trust,fresh imported mangoes toronto,commercial,P1,https://ameerglobal.ca/mangoes/,landing-page
+generic,buy mangoes gta,transactional,P1,https://ameerglobal.ca/mangoes/,landing-page
+generic,mangoes near me gta,transactional,P1,https://ameerglobal.ca/mangoes/,landing-page
