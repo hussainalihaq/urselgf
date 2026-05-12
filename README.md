@@ -169,3 +169,5 @@ curl -H "x-admin-key: YOUR_ADMIN_STATS_KEY" https://your-domain.com/api/admin-st
 
 - `seo/keywords-gta-mangoes.csv`: prioritized keyword clusters for GTA mango intent.
 - `seo/seo-gta-mango-execution.md`: practical execution checklist to improve rankings.
+- `seo/seo-roadmap-4-days.md`: short sprint plan for immediate SEO action.
+- `seo/easy-seo-framework.md`: simple weekly framework to maintain growth.
