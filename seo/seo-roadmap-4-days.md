@@ -17,7 +17,7 @@
 
 ## Day 2: Local SEO Signals
 - Optimize Google Business Profile:
-  - Add exact services: GTA delivery + Mississauga pickup.
+  - Add exact services: delivery to eligible GTA towns + Mississauga pickup.
   - Add mango variety terms in services/posts.
   - Add city service areas matching landing pages.
 - Publish 1 GBP post:
