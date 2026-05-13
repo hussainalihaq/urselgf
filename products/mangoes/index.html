@@ -10,6 +10,7 @@
   <link rel="dns-prefetch" href="https://images.unsplash.com"/>
 <title>Ameer Farms - Mangoes</title>
 <script src="/assets/tailwind.js"></script>
+<script defer src="/assets/mobile-nav.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400..700;1,400..700&amp;family=Manrope:wght@300..700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -103,15 +104,40 @@
 <a aria-label="Ameer Global Home" class="flex items-center" href="/">
 <img alt="Ameer Global Logo" class="h-12 md:h-14 w-auto" src="/assets/logo-transparent-final.png?v=1" decoding="async"/>
 </a>
+<button id="mobile-nav-toggle" type="button" class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-xl border border-[#18301d]/20 bg-white/70 text-[#18301d]" aria-label="Open menu" aria-controls="mobile-nav-drawer" aria-expanded="false">
+<span class="material-symbols-outlined text-[22px]">menu</span>
+</button>
 <nav class="hidden md:flex gap-8 items-center font-serif text-lg tracking-tight selection:bg-[#2e4632]">
 <a class="text-[#1b1c19]/60 dark:text-[#fbf9f4]/60 hover:text-[#18301d] dark:hover:text-white transition-opacity duration-300" href="/about/">Heritage</a>
 <a class="text-[#1b1c19]/60 dark:text-[#fbf9f4]/60 hover:text-[#18301d] dark:hover:text-white transition-opacity duration-300" href="/products/">Orchards</a>
 <a class="text-[#18301d] dark:text-white border-b border-[#18301d] pb-1 hover:text-[#18301d] dark:hover:text-white transition-opacity duration-300" href="/mangoes/">Varieties</a>
 <a class="text-[#1b1c19]/60 dark:text-[#fbf9f4]/60 hover:text-[#18301d] dark:hover:text-white transition-opacity duration-300" href="/contact/">Journal</a>
 </nav>
-<a class="bg-primary text-on-primary px-6 py-2 rounded font-label tracking-wide hover:bg-primary-container transition-colors duration-300 inline-block" href="/contact/">Order Now</a>
+<a class="bg-primary text-on-primary px-6 py-2 rounded font-label tracking-wide hover:bg-primary-container transition-colors duration-300 hidden md:inline-block" href="/contact/">Order Now</a>
 </div>
 </header>
+<div id="mobile-nav-overlay" class="hidden fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm opacity-0 transition-opacity duration-200 md:hidden" aria-hidden="true"></div>
+<aside id="mobile-nav-drawer" class="fixed z-[70] inset-y-0 left-0 w-[86vw] max-w-[360px] -translate-x-full transition-transform duration-200 md:hidden bg-white shadow-[0_30px_80px_rgba(0,0,0,.35)] border-r border-[#18301d]/10" aria-hidden="true">
+<div class="h-full flex flex-col">
+<div class="px-6 pt-6 pb-4 flex items-center justify-between border-b border-[#18301d]/10">
+<a href="/" class="inline-flex items-center gap-3">
+<img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png?v=1" class="h-10 w-auto object-contain" decoding="async"/>
+</a>
+<button id="mobile-nav-close" type="button" class="inline-flex items-center justify-center w-11 h-11 rounded-xl border border-[#18301d]/10 bg-white text-[#18301d]" aria-label="Close menu">
+<span class="material-symbols-outlined text-[22px]">close</span>
+</button>
+</div>
+<nav class="px-6 py-6 flex-1" aria-label="Mobile Navigation">
+<a href="/" class="block px-4 py-3 rounded-xl font-semibold text-[#18301d] hover:bg-[#edf3ff]/70 transition">Home</a>
+<a href="/products/" class="mt-2 block px-4 py-3 rounded-xl font-semibold text-[#18301d] bg-[#edf3ff]/70">Products</a>
+<a href="/about/" class="mt-2 block px-4 py-3 rounded-xl font-semibold text-[#18301d] hover:bg-[#edf3ff]/70 transition">About</a>
+<a href="/contact/" class="mt-2 block px-4 py-3 rounded-xl font-semibold text-[#18301d] hover:bg-[#edf3ff]/70 transition">Contact</a>
+</nav>
+<div class="px-6 pb-6">
+<a href="/contact/" class="w-full inline-flex items-center justify-center gap-2 bg-primary text-on-primary px-5 py-3 rounded-xl text-[.78rem] font-semibold uppercase tracking-[.1em] shadow-lg">Order Now</a>
+</div>
+</div>
+</aside>
 <main class="flex-grow pt-24">
 <!-- Hero Section -->
 <section class="relative min-h-[921px] flex items-center justify-center overflow-hidden">

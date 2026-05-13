@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
 <head>
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png?v=20260513"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=20260513"/>
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png?v=20260513"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png?v=20260513"/>
+  <link rel="manifest" href="/site.webmanifest?v=20260513"/>
+  <link rel="shortcut icon" href="/favicon-32.png?v=20260513"/>
   <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png"/>
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png"/>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   
@@ -33,6 +37,7 @@
   <meta property="twitter:description" content="Explore Ameer Global's premium product lines — Pakistani Mangoes, Himalayan Pink Salt, EcoWare Naturals, and Industrial De-Icing Salt."/>
   <meta property="twitter:image" content="https://ameerglobal.ca/assets/logo-transparent-final.png"/>
   <script src="/assets/tailwind.js"></script>
+  <script defer src="/assets/mobile-nav.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <style>
@@ -53,15 +58,42 @@
 <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-[#203a7b]/10 shadow-[0_4px_24px_rgba(20,42,88,.06)]">
   <div class="max-w-[1280px] mx-auto px-6 md:px-10 flex items-center justify-between" style="height:96px">
     <a href="/"><img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png" class="h-[64px] md:h-[72px] w-auto object-contain" decoding="async"/></a>
-    <div class="flex items-center gap-1 bg-[#edf3ff]/80 border border-[#203a7b]/12 rounded-full px-1 py-1">
+    <button id="mobile-nav-toggle" type="button" class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-xl border border-[#203a7b]/15 bg-white/70 backdrop-blur shadow-sm text-[#182a59]" aria-label="Open menu" aria-controls="mobile-nav-drawer" aria-expanded="false">
+      <span class="material-symbols-outlined text-[22px]">menu</span>
+    </button>
+    <div class="hidden md:flex items-center gap-1 bg-[#edf3ff]/80 border border-[#203a7b]/12 rounded-full px-1 py-1">
       <a href="/" class="px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[.65rem] sm:text-[.78rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Home</a>
       <a href="/products/" class="px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[.65rem] sm:text-[.78rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.09em] text-white bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] shadow-md">Products</a>
       <a href="/about/" class="px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[.65rem] sm:text-[.78rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">About</a>
       <a href="/contact/" class="hidden sm:inline-block px-5 py-2 rounded-full text-[.78rem] font-semibold uppercase tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Contact</a>
     </div>
-    <a href="/contact/" class="bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl text-[.6rem] sm:text-[.75rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.1em] shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">Inquire</a>
+    <a href="/contact/" class="hidden md:inline-flex bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl text-[.6rem] sm:text-[.75rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.1em] shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">Inquire</a>
   </div>
 </nav>
+
+<!-- Mobile Drawer -->
+<div id="mobile-nav-overlay" class="hidden fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm opacity-0 transition-opacity duration-200 md:hidden" aria-hidden="true"></div>
+<aside id="mobile-nav-drawer" class="fixed z-[70] inset-y-0 left-0 w-[86vw] max-w-[360px] -translate-x-full transition-transform duration-200 md:hidden bg-white shadow-[0_30px_80px_rgba(0,0,0,.35)] border-r border-[#203a7b]/10" aria-hidden="true">
+  <div class="h-full flex flex-col">
+    <div class="px-6 pt-6 pb-4 flex items-center justify-between border-b border-[#203a7b]/10">
+      <a href="/" class="inline-flex items-center gap-3">
+        <img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png" class="h-10 w-auto object-contain" decoding="async"/>
+      </a>
+      <button id="mobile-nav-close" type="button" class="inline-flex items-center justify-center w-11 h-11 rounded-xl border border-[#203a7b]/12 bg-[#edf3ff]/60 text-[#182a59]" aria-label="Close menu">
+        <span class="material-symbols-outlined text-[22px]">close</span>
+      </button>
+    </div>
+    <nav class="px-6 py-6 flex-1" aria-label="Mobile Navigation">
+      <a href="/" class="block px-4 py-3 rounded-xl font-semibold text-[#182a59] hover:bg-[#edf3ff]/70 transition">Home</a>
+      <a href="/products/" class="mt-2 block px-4 py-3 rounded-xl font-semibold text-[#182a59] bg-[#edf3ff]/70">Products</a>
+      <a href="/about/" class="mt-2 block px-4 py-3 rounded-xl font-semibold text-[#182a59] hover:bg-[#edf3ff]/70 transition">About</a>
+      <a href="/contact/" class="mt-2 block px-4 py-3 rounded-xl font-semibold text-[#182a59] hover:bg-[#edf3ff]/70 transition">Contact</a>
+    </nav>
+    <div class="px-6 pb-6">
+      <a href="/contact/" class="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white px-5 py-3 rounded-xl text-[.78rem] font-semibold uppercase tracking-[.1em] shadow-lg">Inquire</a>
+    </div>
+  </div>
+</aside>
 
 <main style="padding-top:96px">
 

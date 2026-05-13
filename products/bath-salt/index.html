@@ -11,6 +11,7 @@
   <link rel="dns-prefetch" href="https://lh3.googleusercontent.com"/>
 <title>Bath Salt & Wellness | Ameer Global</title>
   <script src="/assets/tailwind.js"></script>
+  <script defer src="/assets/mobile-nav.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet"/>
   <style>
     body { font-family: 'Manrope', sans-serif; }
@@ -25,16 +26,49 @@
     <nav class="site-nav-shell max-w-[1280px] mx-auto px-6 md:px-10 py-4">
       <a class="inline-flex items-center site-logo-wrap" href="/"><img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png?v=1" decoding="async"/></a>
       <div class="site-nav-right">
+        <button id="mobile-nav-toggle" type="button" class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-xl border border-black/10 bg-white/60 backdrop-blur shadow-sm text-[#182a59]" aria-label="Open menu" aria-controls="mobile-nav-drawer" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7H20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M4 12H20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M4 17H20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </button>
         <div aria-label="Primary Navigation" class="site-nav-links hidden md:flex items-center" role="navigation">
           <a class="site-nav-link" href="/">Home</a>
           <a class="site-nav-link site-nav-link-active" href="/products/">Products</a>
           <a class="site-nav-link" href="/about/">About</a>
           <a class="site-nav-link" href="/contact/">Contact</a>
         </div>
-        <a class="site-nav-cta bg-primary text-on-primary px-5 py-2 rounded-lg font-label text-xs uppercase tracking-widest inline-block" href="/contact/">Inquire Now</a>
+        <a class="site-nav-cta bg-primary text-on-primary px-5 py-2 rounded-lg font-label text-xs uppercase tracking-widest hidden md:inline-block" href="/contact/">Inquire Now</a>
       </div>
     </nav>
   </header>
+
+  <div id="mobile-nav-overlay" class="hidden fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm opacity-0 transition-opacity duration-200 md:hidden" aria-hidden="true"></div>
+  <aside id="mobile-nav-drawer" class="fixed z-[70] inset-y-0 left-0 w-[86vw] max-w-[360px] -translate-x-full transition-transform duration-200 md:hidden bg-white shadow-[0_30px_80px_rgba(0,0,0,.35)] border-r border-black/10" aria-hidden="true">
+    <div class="h-full flex flex-col">
+      <div class="px-6 pt-6 pb-4 flex items-center justify-between border-b border-black/10">
+        <a href="/" class="inline-flex items-center gap-3">
+          <img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png?v=1" class="h-10 w-auto object-contain" decoding="async"/>
+        </a>
+        <button id="mobile-nav-close" type="button" class="inline-flex items-center justify-center w-11 h-11 rounded-xl border border-black/10 bg-white text-[#182a59]" aria-label="Close menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6L18 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <nav class="px-6 py-6 flex-1" aria-label="Mobile Navigation">
+        <a href="/" class="block px-4 py-3 rounded-xl font-semibold text-[#182a59] hover:bg-[#edf3ff]/70 transition">Home</a>
+        <a href="/products/" class="mt-2 block px-4 py-3 rounded-xl font-semibold text-[#182a59] bg-[#edf3ff]/70">Products</a>
+        <a href="/about/" class="mt-2 block px-4 py-3 rounded-xl font-semibold text-[#182a59] hover:bg-[#edf3ff]/70 transition">About</a>
+        <a href="/contact/" class="mt-2 block px-4 py-3 rounded-xl font-semibold text-[#182a59] hover:bg-[#edf3ff]/70 transition">Contact</a>
+      </nav>
+      <div class="px-6 pb-6">
+        <a href="/contact/" class="w-full inline-flex items-center justify-center gap-2 bg-primary text-on-primary px-5 py-3 rounded-xl text-[.78rem] font-semibold uppercase tracking-[.1em] shadow-lg">Inquire Now</a>
+      </div>
+    </div>
+  </aside>
 
   <main>
     <section class="hero py-24 md:py-32 px-6 md:px-10 text-white">
