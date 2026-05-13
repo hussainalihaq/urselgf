@@ -28,6 +28,12 @@
   </div>
   <div class="grid" id="stats"></div>
   <div class="wrap">
+    <h3>Connections</h3>
+    <table>
+      <tbody id="diag-body"></tbody>
+    </table>
+  </div>
+  <div class="wrap">
     <h3>Recent Orders</h3>
     <table>
       <thead>
@@ -45,6 +51,24 @@
 
     function statCard(label, value) {
       return `<div class="card"><div class="label">${label}</div><div class="value">${value}</div></div>`;
+    }
+
+    function setError(message) {
+      document.getElementById('stats').innerHTML = `<div class="card"><div class="label">Dashboard Error</div><div class="value" style="font-size:1rem;color:#9f2b1f">${message}</div></div>`;
+    }
+
+    async function loadDiagnostics() {
+      const res = await fetch('/api/admin/diagnostics');
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed loading diagnostics');
+      const rows = [];
+      rows.push(['Supabase configured', data.supabase.configured ? 'Yes' : 'No']);
+      rows.push(['Supabase URL valid', data.supabase.urlValid ? 'Yes' : 'No']);
+      rows.push(['Orders table reachable', data.supabase.ordersTableReachable === true ? 'Yes' : (data.supabase.ordersTableReachable === false ? `No (${data.supabase.ordersTableError || 'error'})` : 'N/A')]);
+      rows.push(['Inventory table reachable', data.supabase.inventoryTableReachable === true ? 'Yes' : (data.supabase.inventoryTableReachable === false ? `No (${data.supabase.inventoryTableError || 'error'})` : 'N/A')]);
+      rows.push(['Stripe key configured', data.stripe.configured ? 'Yes' : 'No']);
+      rows.push(['Stripe webhook secret', data.stripe.webhookSecretConfigured ? 'Yes' : 'No']);
+      document.getElementById('diag-body').innerHTML = rows.map(([k,v]) => `<tr><th>${k}</th><td>${v}</td></tr>`).join('');
     }
 
     async function loadDashboard() {
@@ -82,10 +106,14 @@
       window.location.href = '/admin/login/';
     });
 
-    ensureSession().then(loadDashboard).catch((err) => {
-      alert(err.message);
-    });
+    ensureSession()
+      .then(async () => {
+        await loadDashboard();
+        await loadDiagnostics();
+      })
+      .catch((err) => {
+        setError(err.message || 'Unable to load admin dashboard.');
+      });
   </script>
 </body>
 </html>
-

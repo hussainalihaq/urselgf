@@ -18,7 +18,8 @@ const SUPABASE_CONTACTS_TABLE = process.env.SUPABASE_CONTACTS_TABLE || 'contacts
 const SUPABASE_NEWSLETTER_TABLE = process.env.SUPABASE_NEWSLETTER_TABLE || 'newsletter_subscribers';
 const SUPABASE_ORDERS_TABLE = process.env.SUPABASE_ORDERS_TABLE || 'orders';
 const SUPABASE_INVENTORY_TABLE = process.env.SUPABASE_INVENTORY_TABLE || 'inventory';
-const USE_SUPABASE = Boolean(SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY);
+const SUPABASE_URL_VALID = /^https?:\/\//i.test(SUPABASE_URL);
+const USE_SUPABASE = Boolean(SUPABASE_URL_VALID && SUPABASE_SERVICE_ROLE_KEY);
 const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'managingdirector@ameerglobal.ca').toLowerCase();
 const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || SUPABASE_SERVICE_ROLE_KEY || 'ameer-admin-dev-secret';
 const ADMIN_SESSION_COOKIE = 'ag_admin_session';
@@ -269,6 +270,9 @@ async function getRecords(filename) {
 }
 
 async function supabaseRequest(endpoint, options = {}) {
+  if (!USE_SUPABASE) {
+    throw new Error('Supabase is not configured. Check NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.');
+  }
   const response = await fetch(`${SUPABASE_URL}${endpoint}`, {
     ...options,
     headers: {
@@ -558,9 +562,60 @@ async function handleApi(req, res, pathname) {
       service: 'ameerglobal-api',
       uptime: process.uptime(),
       supabaseActive: USE_SUPABASE,
+      supabaseUrlValid: SUPABASE_URL_VALID,
       storageMode: USE_SUPABASE ? 'supabase' : 'local-json'
     });
     return true;
+  }
+
+  if (req.method === 'GET' && pathname === '/api/admin/diagnostics') {
+    try {
+      const admin = readAdminFromRequest(req);
+      if (!admin) {
+        json(res, 401, { error: 'Unauthorized' });
+        return true;
+      }
+
+      const diagnostics = {
+        adminEmail: ADMIN_EMAIL,
+        baseUrl: BASE_URL,
+        supabase: {
+          configured: USE_SUPABASE,
+          urlValid: SUPABASE_URL_VALID,
+          hasServiceRoleKey: Boolean(SUPABASE_SERVICE_ROLE_KEY),
+          ordersTable: SUPABASE_ORDERS_TABLE,
+          inventoryTable: SUPABASE_INVENTORY_TABLE
+        },
+        stripe: {
+          configured: Boolean(stripe),
+          webhookSecretConfigured: Boolean(STRIPE_WEBHOOK_SECRET)
+        }
+      };
+
+      if (USE_SUPABASE) {
+        try {
+          await supabaseSelect(SUPABASE_ORDERS_TABLE, '?select=id&limit=1');
+          diagnostics.supabase.ordersTableReachable = true;
+        } catch (err) {
+          diagnostics.supabase.ordersTableReachable = false;
+          diagnostics.supabase.ordersTableError = err.message;
+        }
+
+        try {
+          await supabaseSelect(SUPABASE_INVENTORY_TABLE, '?select=id&limit=1');
+          diagnostics.supabase.inventoryTableReachable = true;
+        } catch (err) {
+          diagnostics.supabase.inventoryTableReachable = false;
+          diagnostics.supabase.inventoryTableError = err.message;
+        }
+      }
+
+      json(res, 200, diagnostics);
+      return true;
+    } catch (err) {
+      json(res, 500, { error: err.message || 'Unable to load diagnostics.' });
+      return true;
+    }
   }
 
   if (req.method === 'GET' && pathname === '/api/products') {

@@ -25,6 +25,7 @@
     <button id="logout-btn">Logout</button>
   </div>
   <div class="wrap">
+    <div id="orders-msg" style="margin-bottom:10px;font-size:.9rem;color:#9f2b1f"></div>
     <table>
       <thead>
         <tr>
@@ -50,7 +51,12 @@
         body: JSON.stringify({ id, fulfillment_status: status, admin_note: note })
       });
       const data = await res.json();
-      if (!res.ok) alert(data.error || 'Update failed');
+      const msg = document.getElementById('orders-msg');
+      if (!res.ok) {
+        msg.textContent = data.error || 'Update failed';
+        return;
+      }
+      msg.textContent = 'Order updated.';
     }
 
     async function loadOrders() {
@@ -91,8 +97,9 @@
       window.location.href = '/admin/login/';
     });
 
-    ensureSession().then(loadOrders).catch((err) => alert(err.message));
+    ensureSession().then(loadOrders).catch((err) => {
+      document.getElementById('orders-msg').textContent = err.message || 'Unable to load orders.';
+    });
   </script>
 </body>
 </html>
-

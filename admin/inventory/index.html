@@ -25,6 +25,7 @@
     <button id="logout-btn">Logout</button>
   </div>
   <div id="cards" class="grid"></div>
+  <div id="inventory-msg" style="padding:0 16px 16px;font-size:.9rem;color:#9f2b1f"></div>
   <script>
     async function ensureSession() {
       const res = await fetch('/api/admin/session');
@@ -49,9 +50,10 @@
       });
       const data = await res.json();
       if (!res.ok) {
-        alert(data.error || 'Update failed');
+        document.getElementById('inventory-msg').textContent = data.error || 'Update failed';
         return;
       }
+      document.getElementById('inventory-msg').textContent = 'Inventory updated.';
       await loadInventory();
     }
 
@@ -87,8 +89,9 @@
       window.location.href = '/admin/login/';
     });
 
-    ensureSession().then(loadInventory).catch((err) => alert(err.message));
+    ensureSession().then(loadInventory).catch((err) => {
+      document.getElementById('inventory-msg').textContent = err.message || 'Unable to load inventory.';
+    });
   </script>
 </body>
 </html>
-
