@@ -5,14 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Login | Ameer Global</title>
   <style>
-    body{margin:0;font-family:Arial,sans-serif;background:#f7f4ed;color:#1f2f2a}
+    :root{--green:#1c4f3a;--gold:#d4a017;--cream:#f7f4ed;--ink:#1f2f2a}
+    body{margin:0;font-family:Arial,sans-serif;background:radial-gradient(900px 400px at 90% -10%,rgba(212,160,23,.16),transparent 60%),var(--cream);color:var(--ink)}
     .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-    .card{width:100%;max-width:420px;background:#fff;border:1px solid #d9d5c8;border-radius:14px;padding:28px;box-shadow:0 16px 40px rgba(23,38,31,.12)}
-    h1{margin:0 0 8px;font-size:1.6rem;color:#1d4d3a}
+    .card{width:100%;max-width:430px;background:#fff;border:1px solid #d9d5c8;border-radius:16px;padding:30px;box-shadow:0 24px 60px rgba(23,38,31,.16)}
+    h1{margin:0 0 8px;font-size:1.65rem;color:var(--green)}
     p{margin:0 0 18px;color:#51675e;font-size:.95rem}
-    label{display:block;font-size:.78rem;font-weight:700;margin:0 0 8px;letter-spacing:.06em;text-transform:uppercase;color:#586d64}
+    .logo{height:46px;margin-bottom:12px}
+    label{display:block;font-size:.74rem;font-weight:700;margin:0 0 8px;letter-spacing:.07em;text-transform:uppercase;color:#586d64}
     input{width:100%;padding:12px;border:1px solid #cfd7d3;border-radius:10px;font-size:1rem}
-    button{margin-top:16px;width:100%;padding:12px;border:0;border-radius:10px;background:#1d4d3a;color:#fff;font-weight:700;cursor:pointer}
+    input:focus{outline:none;border-color:#2f6b52;box-shadow:0 0 0 3px rgba(47,107,82,.15)}
+    button{margin-top:16px;width:100%;padding:12px;border:0;border-radius:10px;background:linear-gradient(135deg,var(--green),#2d6f52);color:#fff;font-weight:700;cursor:pointer}
+    .badge{display:inline-block;padding:4px 10px;border-radius:999px;background:rgba(212,160,23,.15);color:#6f4c00;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
     .msg{margin-top:12px;font-size:.9rem}
     .err{color:#9f2b1f}
   </style>
@@ -20,11 +24,15 @@
 <body>
   <div class="wrap">
     <div class="card">
+      <img class="logo" src="/assets/logo-transparent-final.png" alt="Ameer Global"/>
+      <div class="badge">Internal Admin</div>
       <h1>Admin Access</h1>
-      <p>Only the managing director email is allowed.</p>
+      <p>Only the managing director email and admin passcode are allowed.</p>
       <form id="login-form">
         <label for="email">Admin Email</label>
         <input id="email" type="email" required placeholder="managingdirector@ameerglobal.ca"/>
+        <label for="code" style="margin-top:12px">Admin Passcode</label>
+        <input id="code" type="password" required placeholder="Enter secure admin code"/>
         <button type="submit">Sign In</button>
       </form>
       <div id="msg" class="msg"></div>
@@ -39,10 +47,11 @@
       msg.className = 'msg';
       try {
         const email = document.getElementById('email').value.trim();
+        const code = document.getElementById('code').value.trim();
         const res = await fetch('/api/admin/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email })
+          body: JSON.stringify({ email, code })
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Login failed');
@@ -55,4 +64,3 @@
   </script>
 </body>
 </html>
-

@@ -21,6 +21,7 @@ const SUPABASE_INVENTORY_TABLE = process.env.SUPABASE_INVENTORY_TABLE || 'invent
 const SUPABASE_URL_VALID = /^https?:\/\//i.test(SUPABASE_URL);
 const USE_SUPABASE = Boolean(SUPABASE_URL_VALID && SUPABASE_SERVICE_ROLE_KEY);
 const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'managingdirector@ameerglobal.ca').toLowerCase();
+const ADMIN_LOGIN_CODE = process.env.ADMIN_LOGIN_CODE || '';
 const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || SUPABASE_SERVICE_ROLE_KEY || 'ameer-admin-dev-secret';
 const ADMIN_SESSION_COOKIE = 'ag_admin_session';
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY || '';
@@ -195,14 +196,24 @@ function parseCookies(req) {
   return out;
 }
 
-function signAdminSession(email, expiresAt) {
-  return createHmac('sha256', ADMIN_SESSION_SECRET).update(`${email}|${expiresAt}`).digest('hex');
+function getUserAgentSignature(req) {
+  return createHmac('sha256', ADMIN_SESSION_SECRET)
+    .update(String(req.headers['user-agent'] || 'unknown'))
+    .digest('hex')
+    .slice(0, 24);
 }
 
-function createAdminSessionToken(email) {
-  const expiresAt = Date.now() + 1000 * 60 * 60 * 12;
-  const signature = signAdminSession(email, String(expiresAt));
-  return `${email}|${expiresAt}|${signature}`;
+function signAdminSession(email, expiresAt, uaSignature) {
+  return createHmac('sha256', ADMIN_SESSION_SECRET)
+    .update(`${email}|${expiresAt}|${uaSignature}`)
+    .digest('hex');
+}
+
+function createAdminSessionToken(email, req) {
+  const expiresAt = Date.now() + 1000 * 60 * 60 * 2;
+  const uaSignature = getUserAgentSignature(req);
+  const signature = signAdminSession(email, String(expiresAt), uaSignature);
+  return `${email}|${expiresAt}|${uaSignature}|${signature}`;
 }
 
 function safeEqual(a, b) {
@@ -216,17 +227,19 @@ function readAdminFromRequest(req) {
   const cookies = parseCookies(req);
   const token = cookies[ADMIN_SESSION_COOKIE];
   if (!token) return null;
-  const [email, expiresAt, signature] = token.split('|');
-  if (!email || !expiresAt || !signature) return null;
+  const [email, expiresAt, uaSignature, signature] = token.split('|');
+  if (!email || !expiresAt || !uaSignature || !signature) return null;
   if (email.toLowerCase() !== ADMIN_EMAIL) return null;
   if (Date.now() > Number(expiresAt)) return null;
-  const expected = signAdminSession(email.toLowerCase(), expiresAt);
+  const currentUaSignature = getUserAgentSignature(req);
+  if (!safeEqual(uaSignature, currentUaSignature)) return null;
+  const expected = signAdminSession(email.toLowerCase(), expiresAt, uaSignature);
   if (!safeEqual(signature, expected)) return null;
   return { email: email.toLowerCase(), expiresAt: Number(expiresAt) };
 }
 
-function setAdminSessionCookie(res, email) {
-  const token = createAdminSessionToken(email.toLowerCase());
+function setAdminSessionCookie(req, res, email) {
+  const token = createAdminSessionToken(email.toLowerCase(), req);
   const secure = process.env.NODE_ENV === 'production' ? '; Secure' : '';
   res.setHeader(
     'Set-Cookie',
@@ -579,6 +592,10 @@ async function handleApi(req, res, pathname) {
       const diagnostics = {
         adminEmail: ADMIN_EMAIL,
         baseUrl: BASE_URL,
+        auth: {
+          loginCodeConfigured: Boolean(ADMIN_LOGIN_CODE),
+          sessionSecretConfigured: Boolean(ADMIN_SESSION_SECRET)
+        },
         supabase: {
           configured: USE_SUPABASE,
           urlValid: SUPABASE_URL_VALID,
@@ -625,7 +642,11 @@ async function handleApi(req, res, pathname) {
 
   if (req.method === 'GET' && pathname === '/api/admin/session') {
     const admin = readAdminFromRequest(req);
-    json(res, 200, { authenticated: Boolean(admin), email: admin ? admin.email : null });
+    json(res, 200, {
+      authenticated: Boolean(admin),
+      email: admin ? admin.email : null,
+      expiresAt: admin ? admin.expiresAt : null
+    });
     return true;
   }
 
@@ -633,11 +654,20 @@ async function handleApi(req, res, pathname) {
     try {
       const body = await readBody(req);
       const email = normalizeText(body.email).toLowerCase();
+      const code = normalizeText(body.code);
       if (email !== ADMIN_EMAIL) {
         json(res, 403, { error: 'Access denied for this email.' });
         return true;
       }
-      setAdminSessionCookie(res, email);
+      if (!ADMIN_LOGIN_CODE) {
+        json(res, 500, { error: 'Admin login code is not configured on server.' });
+        return true;
+      }
+      if (code !== ADMIN_LOGIN_CODE) {
+        json(res, 403, { error: 'Invalid admin passcode.' });
+        return true;
+      }
+      setAdminSessionCookie(req, res, email);
       json(res, 200, { ok: true, email });
       return true;
     } catch (err) {
