@@ -15,7 +15,7 @@
     button{margin-top:8px;padding:8px 10px}
   </style>
 </head>
-<body>
+<body style="visibility:hidden">
   <div class="top">
     <div>
       <a href="/admin/">Dashboard</a>
@@ -27,9 +27,21 @@
   <div id="cards" class="grid"></div>
   <div id="inventory-msg" style="padding:0 16px 16px;font-size:.9rem;color:#9f2b1f"></div>
   <script>
+    async function fetchJson(url, options) {
+      const res = await fetch(url, options);
+      const text = await res.text();
+      let data = {};
+      try {
+        data = text ? JSON.parse(text) : {};
+      } catch {
+        throw new Error(`Non-JSON response from ${url}`);
+      }
+      if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+      return data;
+    }
+
     async function ensureSession() {
-      const res = await fetch('/api/admin/session');
-      const data = await res.json();
+      const data = await fetchJson('/api/admin/session');
       if (!data.authenticated) window.location.href = '/admin/login/';
     }
 
@@ -37,7 +49,7 @@
       const amount = document.getElementById(`amount-${id}`).value;
       const low = document.getElementById(`low-${id}`).value;
       const remaining = document.getElementById(`remaining-${id}`).value;
-      const res = await fetch('/api/admin/inventory/update', {
+      await fetchJson('/api/admin/inventory-update', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -48,19 +60,12 @@
           low_stock_threshold: low
         })
       });
-      const data = await res.json();
-      if (!res.ok) {
-        document.getElementById('inventory-msg').textContent = data.error || 'Update failed';
-        return;
-      }
       document.getElementById('inventory-msg').textContent = 'Inventory updated.';
       await loadInventory();
     }
 
     async function loadInventory() {
-      const res = await fetch('/api/admin/inventory');
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed loading inventory');
+      const data = await fetchJson('/api/admin/inventory');
       const items = (data.inventory || []).slice(0, 3);
       document.getElementById('cards').innerHTML = items.map((item) => `
         <div class="card">
@@ -89,9 +94,15 @@
       window.location.href = '/admin/login/';
     });
 
-    ensureSession().then(loadInventory).catch((err) => {
-      document.getElementById('inventory-msg').textContent = err.message || 'Unable to load inventory.';
-    });
+    ensureSession()
+      .then(() => {
+        document.body.style.visibility = 'visible';
+        return loadInventory();
+      })
+      .catch((err) => {
+        document.body.style.visibility = 'visible';
+        document.getElementById('inventory-msg').textContent = err.message || 'Unable to load inventory.';
+      });
   </script>
 </body>
 </html>
