@@ -91,24 +91,34 @@ function normalizeInventory(row) {
 }
 
 async function listOrders() {
-  const rows = hasSupabase()
-    ? await (async () => {
-        const res = await sb(`/rest/v1/${ORDERS_TABLE}?select=*&order=created_at.desc&limit=500`);
-        if (!res.ok) throw new Error(await res.text());
-        return await res.json();
-      })()
-    : await readArray(ORDERS_FILE);
+  let rows;
+  if (hasSupabase()) {
+    try {
+      const res = await sb(`/rest/v1/${ORDERS_TABLE}?select=*&order=created_at.desc&limit=500`);
+      if (!res.ok) throw new Error(await res.text());
+      rows = await res.json();
+    } catch {
+      rows = await readArray(ORDERS_FILE);
+    }
+  } else {
+    rows = await readArray(ORDERS_FILE);
+  }
   return rows.map(normalizeOrder).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 }
 
 async function listInventory() {
-  const rows = hasSupabase()
-    ? await (async () => {
-        const res = await sb(`/rest/v1/${INVENTORY_TABLE}?select=*`);
-        if (!res.ok) throw new Error(await res.text());
-        return await res.json();
-      })()
-    : await readArray(INVENTORY_FILE);
+  let rows;
+  if (hasSupabase()) {
+    try {
+      const res = await sb(`/rest/v1/${INVENTORY_TABLE}?select=*`);
+      if (!res.ok) throw new Error(await res.text());
+      rows = await res.json();
+    } catch {
+      rows = await readArray(INVENTORY_FILE);
+    }
+  } else {
+    rows = await readArray(INVENTORY_FILE);
+  }
   return rows.map(normalizeInventory).slice(0, 3);
 }
 
