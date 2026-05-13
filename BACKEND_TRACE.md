@@ -148,6 +148,12 @@ Card details do **not** go to your website or Supabase. Card data stays in Strip
 4. Admin pages call `/api/admin/session` to confirm the cookie.
 5. Dashboard, orders, inventory, and diagnostics load through `/api/admin/*`.
 
+Default hardcoded fallback values:
+
+- Admin email: `managingdirector@ameerglobal.ca`
+- Admin passcode: `AmeerGlobal1966`
+- If `ADMIN_SESSION_SECRET` is not set, the code uses a built-in fallback secret for convenience
+
 ## Environment Variable Matrix
 
 | Variable | Required | Where to get it | What breaks if missing |
@@ -164,8 +170,8 @@ Card details do **not** go to your website or Supabase. Card data stays in Strip
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Required for clean production client setup | Stripe Dashboard -> Developers -> API keys -> Publishable key | Client-side Stripe integrations and future hosted flows |
 | `STRIPE_WEBHOOK_SECRET` | Yes for webhook | Stripe Dashboard -> Developers -> Webhooks -> endpoint signing secret | Paid orders cannot be securely finalized |
 | `ADMIN_EMAIL` | Yes | Manually set to `managingdirector@ameerglobal.ca` | Admin login access policy |
-| `ADMIN_LOGIN_CODE` | Yes | Manually create a strong passcode | Admin login cannot work |
-| `ADMIN_SESSION_SECRET` | Yes | Manually create a long random secret | Admin session signing cannot work safely |
+| `ADMIN_LOGIN_CODE` | Optional but recommended in Vercel | Manually create a strong passcode | Falls back to `AmeerGlobal1966`, which is convenient but weaker |
+| `ADMIN_SESSION_SECRET` | Optional but recommended in Vercel | Manually create a long random secret | Falls back to a built-in secret, which is convenient but weaker |
 | `RESEND_API_KEY` | Optional | Resend Dashboard -> API Keys | Order notification emails will not send |
 | `ORDER_EMAIL_FROM` | Optional | Verified sender in Resend | Email sending will not send from a valid address |
 | `ORDER_EMAIL_ADMIN_TO` | Optional | Your receiving email address | Admin order emails will not send |

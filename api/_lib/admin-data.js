@@ -1,6 +1,12 @@
 const fs = require('node:fs/promises');
 const path = require('node:path');
 const { json } = require('./common');
+const {
+  ADMIN_LOGIN_CODE,
+  ADMIN_SESSION_SECRET,
+  DEFAULT_ADMIN_LOGIN_CODE,
+  DEFAULT_ADMIN_SESSION_SECRET
+} = require('./admin-auth');
 
 const ROOT = path.join(__dirname, '..', '..');
 const DATA_DIR = path.join(ROOT, 'data');
@@ -193,8 +199,11 @@ function healthFromError(err) {
 async function diagnostics() {
   const out = {
     auth: {
-      loginCodeConfigured: Boolean(process.env.ADMIN_LOGIN_CODE),
-      sessionSecretConfigured: Boolean(process.env.ADMIN_SESSION_SECRET)
+      loginCodeConfigured: Boolean(ADMIN_LOGIN_CODE),
+      sessionSecretConfigured: Boolean(ADMIN_SESSION_SECRET),
+      usingFallbackLoginCode: ADMIN_LOGIN_CODE === DEFAULT_ADMIN_LOGIN_CODE && !process.env.ADMIN_LOGIN_CODE,
+      usingFallbackSessionSecret:
+        ADMIN_SESSION_SECRET === DEFAULT_ADMIN_SESSION_SECRET && !process.env.ADMIN_SESSION_SECRET
     },
     supabase: {
       configured: hasSupabase(),

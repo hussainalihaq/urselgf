@@ -192,6 +192,12 @@ Set:
 - `ADMIN_EMAIL=managingdirector@ameerglobal.ca`
 - `ADMIN_SESSION_SECRET=your_random_secret`
 
+Built-in fallback values if you do not set the admin env vars:
+
+- Admin email: `managingdirector@ameerglobal.ca`
+- Admin passcode: `AmeerGlobal1966`
+- Session secret fallback is hardcoded for convenience and should be replaced in Vercel later
+
 Required env vars:
 
 - `SUPABASE_URL`
@@ -204,6 +210,8 @@ Required env vars:
 - `ADMIN_EMAIL`
 - `ADMIN_LOGIN_CODE`
 - `ADMIN_SESSION_SECRET`
+
+If `ADMIN_LOGIN_CODE` is not set, the code falls back to `AmeerGlobal1966`.
 
 Create tables:
 

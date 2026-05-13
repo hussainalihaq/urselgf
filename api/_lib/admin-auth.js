@@ -2,8 +2,10 @@ const crypto = require('node:crypto');
 const { json, readBody, normalizeText } = require('./common');
 
 const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'managingdirector@ameerglobal.ca').toLowerCase();
-const ADMIN_LOGIN_CODE = process.env.ADMIN_LOGIN_CODE || '';
-const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || '';
+const DEFAULT_ADMIN_LOGIN_CODE = 'AmeerGlobal1966';
+const DEFAULT_ADMIN_SESSION_SECRET = 'ameer-global-admin-session-v1';
+const ADMIN_LOGIN_CODE = process.env.ADMIN_LOGIN_CODE || DEFAULT_ADMIN_LOGIN_CODE;
+const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || DEFAULT_ADMIN_SESSION_SECRET;
 const COOKIE_NAME = 'ag_admin_session_v2';
 const MAX_AGE_SEC = 60 * 60 * 12;
 
@@ -83,15 +85,6 @@ function requireAdmin(req, res) {
 }
 
 async function login(req, res) {
-  if (!ADMIN_SESSION_SECRET) {
-    json(res, 500, { error: 'ADMIN_SESSION_SECRET is missing' });
-    return;
-  }
-  if (!ADMIN_LOGIN_CODE) {
-    json(res, 500, { error: 'ADMIN_LOGIN_CODE is missing' });
-    return;
-  }
-
   const body = await readBody(req);
   const email = normalizeText(body.email).toLowerCase();
   const code = normalizeText(body.code);
@@ -115,6 +108,8 @@ module.exports = {
   ADMIN_EMAIL,
   ADMIN_LOGIN_CODE,
   ADMIN_SESSION_SECRET,
+  DEFAULT_ADMIN_LOGIN_CODE,
+  DEFAULT_ADMIN_SESSION_SECRET,
   clearSessionCookie,
   getSession,
   login,
