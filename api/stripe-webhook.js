@@ -1,6 +1,6 @@
 const Stripe = require('stripe');
 const { json } = require('./_lib/common');
-const { decrementInventory, markOrderPaidBySessionId } = require('./_lib/orders');
+const { decrementInventory, upsertPaidOrderFromSession } = require('./_lib/orders');
 const { sendPaidOrderEmails } = require('./_lib/email');
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
@@ -49,11 +49,12 @@ module.exports = async function handler(req, res) {
 
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
-      const order = await markOrderPaidBySessionId(session.id, session.payment_intent || '');
-      if (order) {
-        await decrementInventory(order.product, order.quantity);
+      const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 10 });
+      const result = await upsertPaidOrderFromSession(session, lineItems.data || []);
+      if (result.order && result.changed) {
+        await decrementInventory(result.order.product, result.order.quantity);
         try {
-          await sendPaidOrderEmails(order);
+          await sendPaidOrderEmails(result.order);
         } catch (mailError) {
           console.error('[stripe-webhook] Email warning:', mailError?.message || mailError);
         }

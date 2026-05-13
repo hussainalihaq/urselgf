@@ -121,11 +121,28 @@ async function createPendingOrder(order) {
   return record;
 }
 
+async function getOrderBySessionId(sessionId) {
+  if (hasSupabase()) {
+    const response = await supabaseRequest(
+      `/rest/v1/${SUPABASE_ORDERS_TABLE}?select=*&stripe_session_id=eq.${encodeURIComponent(sessionId)}&limit=1`
+    );
+    if (!response.ok) {
+      const detail = await response.text();
+      throw new Error(`Supabase order lookup failed (${response.status}): ${detail}`);
+    }
+    const rows = await response.json();
+    return Array.isArray(rows) && rows.length ? rows[0] : null;
+  }
+
+  const rows = await readJsonArray(ORDERS_FILE);
+  return rows.find((row) => row.stripe_session_id === sessionId) || null;
+}
+
 async function markOrderPaidBySessionId(sessionId, paymentIntentId) {
   const now = new Date().toISOString();
   if (hasSupabase()) {
     const response = await supabaseRequest(
-      `/rest/v1/${SUPABASE_ORDERS_TABLE}?stripe_session_id=eq.${encodeURIComponent(sessionId)}`,
+      `/rest/v1/${SUPABASE_ORDERS_TABLE}?stripe_session_id=eq.${encodeURIComponent(sessionId)}&status=eq.pending_payment`,
       {
         method: 'PATCH',
         headers: { Prefer: 'return=representation' },
@@ -141,12 +158,19 @@ async function markOrderPaidBySessionId(sessionId, paymentIntentId) {
       throw new Error(`Supabase order update failed (${response.status}): ${detail}`);
     }
     const updated = await response.json();
-    return Array.isArray(updated) && updated.length ? updated[0] : null;
+    if (Array.isArray(updated) && updated.length) {
+      return { order: updated[0], changed: true };
+    }
+    const existing = await getOrderBySessionId(sessionId);
+    return { order: existing, changed: false };
   }
 
   const rows = await readJsonArray(ORDERS_FILE);
   const index = rows.findIndex((row) => row.stripe_session_id === sessionId);
-  if (index === -1) return null;
+  if (index === -1) return { order: null, changed: false };
+  if (rows[index].status === 'paid') {
+    return { order: rows[index], changed: false };
+  }
   rows[index] = {
     ...rows[index],
     status: 'paid',
@@ -154,7 +178,65 @@ async function markOrderPaidBySessionId(sessionId, paymentIntentId) {
     updated_at: now
   };
   await writeJsonArray(ORDERS_FILE, rows);
-  return rows[index];
+  return { order: rows[index], changed: true };
+}
+
+async function upsertPaidOrderFromSession(session, lineItems = []) {
+  const existing = await getOrderBySessionId(session.id);
+  if (existing) {
+    if (existing.status === 'paid') return { order: existing, changed: false };
+    return markOrderPaidBySessionId(session.id, session.payment_intent || '');
+  }
+
+  const metadata = session.metadata || {};
+  const primaryItem = Array.isArray(lineItems) ? lineItems[0] : null;
+  const quantity = Number.parseInt(String(metadata.quantity || primaryItem?.quantity || 1), 10) || 1;
+  const product =
+    metadata.product ||
+    primaryItem?.description ||
+    primaryItem?.price?.product_details?.name ||
+    'Ameer Global order';
+  const now = new Date().toISOString();
+  const record = {
+    order_number: metadata.orderNumber || (await generateOrderNumber()),
+    submission_id: metadata.submissionId || '',
+    stripe_session_id: session.id,
+    payment_intent_id: session.payment_intent || '',
+    customer_name: metadata.customerName || session.customer_details?.name || '',
+    customer_email: metadata.customerEmail || session.customer_details?.email || session.customer_email || '',
+    phone: metadata.phone || session.customer_details?.phone || '',
+    product,
+    quantity,
+    fulfillment: metadata.fulfillment || metadata.orderType || 'pickup',
+    city: metadata.city || '',
+    postal_code: metadata.postalCode || '',
+    address_line_1: metadata.addressLine1 || '',
+    address_line_2: metadata.addressLine2 || '',
+    amount_total: Number(session.amount_total || 0) / 100,
+    currency: String(session.currency || 'cad').toUpperCase(),
+    status: 'paid',
+    created_at: now,
+    updated_at: now
+  };
+
+  if (hasSupabase()) {
+    const response = await supabaseRequest(`/rest/v1/${SUPABASE_ORDERS_TABLE}`, {
+      method: 'POST',
+      headers: { Prefer: 'return=representation' },
+      body: JSON.stringify(record)
+    });
+    if (!response.ok) {
+      const detail = await response.text();
+      throw new Error(`Supabase paid order insert failed (${response.status}): ${detail}`);
+    }
+    const rows = await response.json();
+    return { order: Array.isArray(rows) && rows.length ? rows[0] : record, changed: true };
+  }
+
+  const rows = await readJsonArray(ORDERS_FILE);
+  rows.push(record);
+  await writeJsonArray(ORDERS_FILE, rows);
+  return { order: record, changed: true };
 }
 
 async function decrementInventory(product, quantity) {
@@ -245,6 +327,8 @@ module.exports = {
   createPendingOrder,
   decrementInventory,
   generateOrderNumber,
+  getOrderBySessionId,
   getStats,
-  markOrderPaidBySessionId
+  markOrderPaidBySessionId,
+  upsertPaidOrderFromSession
 };

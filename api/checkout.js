@@ -90,13 +90,34 @@ module.exports = async function handler(req, res) {
         metadata: {
           orderNumber,
           submissionId: checkout.contactRecord.id,
+          product: checkout.contactRecord.product,
+          quantity: String(checkout.billing.quantity),
+          customerEmail: checkout.contactRecord.email,
           customerName: body.name || '',
           phone: body.phone || '',
           fulfillment: body.fulfillment || '',
+          orderType: body.fulfillment || '',
           city: checkout.availability.city ? checkout.availability.city.label : '',
           postalCode: checkout.availability.postalCode || '',
           addressLine1: body.addressLine1 || '',
           addressLine2: body.addressLine2 || ''
+        },
+        payment_intent_data: {
+          metadata: {
+            orderNumber,
+            submissionId: checkout.contactRecord.id,
+            product: checkout.contactRecord.product,
+            quantity: String(checkout.billing.quantity),
+            customerEmail: checkout.contactRecord.email,
+            customerName: body.name || '',
+            phone: body.phone || '',
+            fulfillment: body.fulfillment || '',
+            orderType: body.fulfillment || '',
+            city: checkout.availability.city ? checkout.availability.city.label : '',
+            postalCode: checkout.availability.postalCode || '',
+            addressLine1: body.addressLine1 || '',
+            addressLine2: body.addressLine2 || ''
+          }
         }
       });
 
