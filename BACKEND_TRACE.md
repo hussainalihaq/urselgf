@@ -60,6 +60,7 @@ These `9` function entrypoints are the expected production target and fit the Ho
 | Method | Path | Purpose | Data destination | Main dependencies |
 | --- | --- | --- | --- | --- |
 | `GET` | `/api/health` | Basic runtime health check | None | Vercel runtime, optional Supabase env check |
+| `GET` | `/api/health?deep=1` | Authenticated keepalive + deep Supabase connectivity check | None | `KEEPALIVE_KEY`, Supabase tables |
 | `GET` | `/api/products` | Returns static product list | None | None |
 | `POST` | `/api/contact` | General inquiry form | Supabase `contacts` table when configured | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` |
 | `POST` | `/api/reserve` | Reserve form submissions | Supabase `contacts` table when configured | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` |
@@ -175,6 +176,8 @@ Default hardcoded fallback values:
 | `RESEND_API_KEY` | Optional | Resend Dashboard -> API Keys | Order notification emails will not send |
 | `ORDER_EMAIL_FROM` | Optional | Verified sender in Resend | Email sending will not send from a valid address |
 | `ORDER_EMAIL_ADMIN_TO` | Optional | Your receiving email address | Admin order emails will not send |
+| `KEEPALIVE_KEY` | Optional but recommended | Manually create a secret for manual deep keepalive checks | Deep keepalive endpoint falls back to a built-in key, which is convenient but weaker |
+| `CRON_SECRET` | Optional but recommended | Manually create a Vercel cron secret | Automatic daily keepalive cannot be authenticated cleanly |
 
 ## Supabase Pause / Downtime Guidance
 
@@ -202,6 +205,33 @@ This repo has JSON-file fallback code in some places for local runtime behavior,
 4. Keep email notifications enabled so paid orders also reach an inbox.
 5. If you need guaranteed lead capture during DB downtime, add a second backup destination such as email or a queue.
 
+## Automated Keepalive
+
+This repo now includes a low-cost keepalive path for Supabase Free:
+
+1. Vercel cron configured in `vercel.json`
+2. Authenticated endpoint: `GET /api/health?deep=1`
+3. Secrets: `CRON_SECRET` for automatic cron traffic and `KEEPALIVE_KEY` for manual deep checks
+
+What it does:
+
+- Runs once per day on Vercel Hobby
+- Calls the health endpoint
+- Performs light reads against `contacts`, `orders`, and `inventory`
+- Returns non-200 if Supabase connectivity fails
+
+Recommended setup:
+
+1. Add `CRON_SECRET` in Vercel env vars.
+2. Add `KEEPALIVE_KEY` in Vercel env vars.
+3. Redeploy so the cron job appears in the Vercel project settings.
+
+Fallback behavior:
+
+- If `KEEPALIVE_KEY` is not set, the code defaults to `AmeerKeepAlive1966`
+- The manual deep keepalive endpoint still works by calling `/api/health?deep=1` with the keepalive key
+- This is convenient, but you should replace the fallback with a private secret later
+
 ## Stripe Live Cutover Checklist
 
 The site should remain in Stripe `test` mode until admin, routing, and webhook flow are verified.
@@ -221,6 +251,32 @@ Before switching to live:
    - inventory is reduced exactly once
    - admin dashboard shows the order
    - customer/admin email behavior matches env configuration
+
+## Stripe Order Email Configuration
+
+Order emails are already implemented in `api/_lib/email.js` and are triggered from `api/stripe-webhook.js` after a successful `checkout.session.completed` event.
+
+Required env vars:
+
+- `RESEND_API_KEY`
+- `ORDER_EMAIL_FROM`
+- `ORDER_EMAIL_ADMIN_TO`
+- `STRIPE_WEBHOOK_SECRET`
+
+Flow:
+
+1. Stripe payment succeeds
+2. Stripe webhook hits `/api/stripe-webhook`
+3. Backend verifies signature
+4. Backend finalizes paid order
+5. Backend sends:
+   - customer confirmation email
+   - admin order notification email
+
+If email env vars are missing:
+
+- Orders can still be finalized
+- Emails will simply not send
 
 ## Vercel Deployment Checklist
 

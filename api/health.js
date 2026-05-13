@@ -1,5 +1,28 @@
 const { json } = require('./_lib/common');
 
+const DEFAULT_KEEPALIVE_KEY = 'AmeerKeepAlive1966';
+const KEEPALIVE_KEY = process.env.KEEPALIVE_KEY || DEFAULT_KEEPALIVE_KEY;
+const CRON_SECRET = process.env.CRON_SECRET || '';
+const CONTACTS_TABLE = process.env.SUPABASE_CONTACTS_TABLE || 'contacts';
+const ORDERS_TABLE = process.env.SUPABASE_ORDERS_TABLE || 'orders';
+const INVENTORY_TABLE = process.env.SUPABASE_INVENTORY_TABLE || 'inventory';
+
+async function pingTable(baseUrl, serviceRoleKey, table) {
+  const res = await fetch(`${baseUrl}/rest/v1/${table}?select=*&limit=1`, {
+    headers: {
+      apikey: serviceRoleKey,
+      Authorization: `Bearer ${serviceRoleKey}`,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!res.ok) {
+    throw new Error(await res.text());
+  }
+
+  await res.text();
+}
+
 module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') {
     res.statusCode = 204;
@@ -13,7 +36,61 @@ module.exports = async function handler(req, res) {
   }
 
   const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-  const supabaseActive = Boolean(supabaseUrl && process.env.SUPABASE_SERVICE_ROLE_KEY);
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+  const supabaseActive = Boolean(supabaseUrl && serviceRoleKey);
+  const url = new URL(req.url || '', 'http://localhost');
+  const authHeader = req.headers.authorization || '';
+  const isVercelCronRequest = Boolean(CRON_SECRET) && authHeader === `Bearer ${CRON_SECRET}`;
+  const wantsDeepPing = url.searchParams.get('deep') === '1' || isVercelCronRequest;
+
+  if (wantsDeepPing) {
+    const providedKey = req.headers['x-keepalive-key'] || url.searchParams.get('key') || '';
+    if (!isVercelCronRequest && providedKey !== KEEPALIVE_KEY) {
+      json(res, 401, { ok: false, error: 'Unauthorized keepalive request.' });
+      return;
+    }
+
+    if (!supabaseActive) {
+      json(res, 503, {
+        ok: false,
+        service: 'ameerglobal-api',
+        runtime: 'vercel-function',
+        supabaseActive: false,
+        keepalive: { ok: false, error: 'Supabase is not configured.' }
+      });
+      return;
+    }
+
+    const keepalive = {
+      ok: true,
+      contactsReachable: false,
+      ordersReachable: false,
+      inventoryReachable: false,
+      error: ''
+    };
+
+    try {
+      await pingTable(supabaseUrl, serviceRoleKey, CONTACTS_TABLE);
+      keepalive.contactsReachable = true;
+      await pingTable(supabaseUrl, serviceRoleKey, ORDERS_TABLE);
+      keepalive.ordersReachable = true;
+      await pingTable(supabaseUrl, serviceRoleKey, INVENTORY_TABLE);
+      keepalive.inventoryReachable = true;
+    } catch (error) {
+      keepalive.ok = false;
+      keepalive.error = String(error?.message || error || 'Keepalive failed');
+    }
+
+    json(res, keepalive.ok ? 200 : 503, {
+      ok: keepalive.ok,
+      service: 'ameerglobal-api',
+      runtime: 'vercel-function',
+      supabaseActive,
+      keepalive
+    });
+    return;
+  }
+
   json(res, 200, {
     ok: true,
     service: 'ameerglobal-api',

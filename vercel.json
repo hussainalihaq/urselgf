@@ -20,6 +20,12 @@
       "destination": "/api/$1"
     }
   ],
+  "crons": [
+    {
+      "path": "/api/health",
+      "schedule": "0 5 * * *"
+    }
+  ],
   "redirects": [
     { "source": "/home", "destination": "/", "permanent": false }
   ]

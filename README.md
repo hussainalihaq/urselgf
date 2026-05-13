@@ -8,6 +8,7 @@ This repo now includes:
 - Internal admin API router (`/api/admin/*`)
 - SEO keyword and execution files for GTA mango ranking (`/seo`)
 - Backend operations reference in [BACKEND_TRACE.md](./BACKEND_TRACE.md)
+- Daily Vercel cron keepalive through `vercel.json`
 
 ## Run locally
 
@@ -25,6 +26,7 @@ Server runs on `http://localhost:3000` by default.
 - `GET /about`
 - `GET /contact`
 - `GET /api/health`
+- `GET /api/health?deep=1` (keepalive + deep Supabase connectivity check, requires keepalive key)
 - `GET /api/products`
 - `POST /api/newsletter`
 - `POST /api/contact`
@@ -115,6 +117,8 @@ Set these environment variables in Vercel:
 - `RESEND_API_KEY` (for email automation)
 - `ORDER_EMAIL_FROM` (verified sender, e.g. `orders@yourdomain.com`)
 - `ORDER_EMAIL_ADMIN_TO` (your receiving email)
+- `KEEPALIVE_KEY` (optional but recommended, for manual deep keepalive checks)
+- `CRON_SECRET` (optional but recommended, for Vercel cron authentication)
 
 Optional Supabase table names:
 
@@ -212,6 +216,57 @@ Required env vars:
 - `ADMIN_SESSION_SECRET`
 
 If `ADMIN_LOGIN_CODE` is not set, the code falls back to `AmeerGlobal1966`.
+
+## Supabase Keepalive
+
+To reduce the chance of a paused free Supabase project, this repo includes:
+
+- Deep keepalive health endpoint: `GET /api/health?deep=1`
+- Daily Vercel cron configured in `vercel.json`
+
+How it works:
+
+1. Vercel cron calls `/api/health` once per day on production.
+2. The request is authenticated using `CRON_SECRET`.
+3. The endpoint performs light authenticated reads against Supabase tables to keep the project active and verify connectivity.
+
+Recommended Vercel env:
+
+- `CRON_SECRET`
+- `KEEPALIVE_KEY`
+
+Fallback values if you do not set them:
+
+- manual deep-check key defaults to `AmeerKeepAlive1966`
+
+Notes:
+
+- `CRON_SECRET` secures the automatic Vercel cron request.
+- `KEEPALIVE_KEY` secures manual `?deep=1` keepalive checks.
+- If `KEEPALIVE_KEY` is not set, the code falls back to `AmeerKeepAlive1966`.
+
+## Stripe Order Emails
+
+Paid order emails are already wired in the webhook code and send only after a successful Stripe webhook event.
+
+Required configuration:
+
+1. Create a [Resend](https://resend.com) account.
+2. Verify a sending domain or sender email in Resend.
+3. Set these Vercel env vars:
+   - `RESEND_API_KEY`
+   - `ORDER_EMAIL_FROM`
+   - `ORDER_EMAIL_ADMIN_TO`
+   - `STRIPE_WEBHOOK_SECRET`
+4. In Stripe Dashboard, set webhook endpoint:
+   - `https://ameerglobal.ca/api/stripe-webhook`
+5. Subscribe to `checkout.session.completed`
+
+Email behavior:
+
+- Customer receives an order confirmation email.
+- Admin receives a new paid order email if `ORDER_EMAIL_ADMIN_TO` is set.
+- Emails only send after the Stripe webhook completes successfully.
 
 Create tables:
 
