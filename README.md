@@ -171,3 +171,81 @@ curl -H "x-admin-key: YOUR_ADMIN_STATS_KEY" https://your-domain.com/api/admin-st
 - `seo/seo-gta-mango-execution.md`: practical execution checklist to improve rankings.
 - `seo/seo-roadmap-4-days.md`: short sprint plan for immediate SEO action.
 - `seo/easy-seo-framework.md`: simple weekly framework to maintain growth.
+
+## Admin Panel + Stripe Webhook (Current)
+
+Internal admin routes:
+
+- `/admin/login`
+- `/admin`
+- `/admin/orders`
+- `/admin/inventory`
+
+Only this email is allowed:
+
+- `managingdirector@ameerglobal.ca`
+
+Set:
+
+- `ADMIN_EMAIL=managingdirector@ameerglobal.ca`
+- `ADMIN_SESSION_SECRET=your_random_secret`
+
+Required env vars:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `STRIPE_SECRET_KEY`
+- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+- `STRIPE_WEBHOOK_SECRET`
+- `ADMIN_EMAIL`
+
+Create tables:
+
+```sql
+create table if not exists public.orders (
+  id text primary key,
+  stripe_session_id text unique not null,
+  stripe_payment_intent_id text,
+  customer_name text,
+  customer_email text,
+  customer_phone text,
+  mango_type text not null,
+  quantity integer not null default 1,
+  order_type text not null,
+  delivery_address text,
+  amount_total numeric(12,2) not null default 0,
+  currency text not null default 'CAD',
+  payment_status text not null default 'paid',
+  fulfillment_status text not null default 'pending',
+  admin_note text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.inventory (
+  id text primary key,
+  mango_type text unique not null,
+  fixed_size text not null,
+  fixed_price numeric(12,2) not null,
+  starting_stock integer not null default 0,
+  sold_quantity integer not null default 0,
+  remaining_stock integer not null default 0,
+  low_stock_threshold integer not null default 10,
+  updated_at timestamptz not null default now()
+);
+```
+
+Seeded mango rows (auto-seeded if missing):
+
+- `Sindhri Mangoes`
+- `Anwar Ratol Mangoes`
+- `Chaunsa Mangoes`
+
+Stripe webhook endpoint:
+
+- `/api/stripe/webhook`
+
+Subscribe event:
+
+- `checkout.session.completed`

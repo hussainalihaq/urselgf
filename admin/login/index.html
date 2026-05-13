@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login | Ameer Global</title>
+  <style>
+    body{margin:0;font-family:Arial,sans-serif;background:#f7f4ed;color:#1f2f2a}
+    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+    .card{width:100%;max-width:420px;background:#fff;border:1px solid #d9d5c8;border-radius:14px;padding:28px;box-shadow:0 16px 40px rgba(23,38,31,.12)}
+    h1{margin:0 0 8px;font-size:1.6rem;color:#1d4d3a}
+    p{margin:0 0 18px;color:#51675e;font-size:.95rem}
+    label{display:block;font-size:.78rem;font-weight:700;margin:0 0 8px;letter-spacing:.06em;text-transform:uppercase;color:#586d64}
+    input{width:100%;padding:12px;border:1px solid #cfd7d3;border-radius:10px;font-size:1rem}
+    button{margin-top:16px;width:100%;padding:12px;border:0;border-radius:10px;background:#1d4d3a;color:#fff;font-weight:700;cursor:pointer}
+    .msg{margin-top:12px;font-size:.9rem}
+    .err{color:#9f2b1f}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Admin Access</h1>
+      <p>Only the managing director email is allowed.</p>
+      <form id="login-form">
+        <label for="email">Admin Email</label>
+        <input id="email" type="email" required placeholder="managingdirector@ameerglobal.ca"/>
+        <button type="submit">Sign In</button>
+      </form>
+      <div id="msg" class="msg"></div>
+    </div>
+  </div>
+  <script>
+    const form = document.getElementById('login-form');
+    const msg = document.getElementById('msg');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.textContent = 'Signing in...';
+      msg.className = 'msg';
+      try {
+        const email = document.getElementById('email').value.trim();
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Login failed');
+        window.location.href = '/admin/';
+      } catch (err) {
+        msg.textContent = err.message || 'Unable to login.';
+        msg.className = 'msg err';
+      }
+    });
+  </script>
+</body>
+</html>
+

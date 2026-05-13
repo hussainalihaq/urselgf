@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Orders | Ameer Global</title>
+  <style>
+    body{margin:0;font-family:Arial,sans-serif;background:#faf7ef;color:#1f2f2a}
+    .top{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:#1f4f3b;color:#fff}
+    .top a{color:#fff;text-decoration:none;margin-right:12px}
+    .wrap{padding:16px;overflow:auto}
+    table{min-width:1200px;width:100%;border-collapse:collapse;background:#fff}
+    th,td{border:1px solid #ece6d9;padding:8px;font-size:.85rem;text-align:left;vertical-align:top}
+    select,input,button{font-size:.82rem}
+    .note{width:180px}
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div>
+      <a href="/admin/">Dashboard</a>
+      <a href="/admin/orders/">Orders</a>
+      <a href="/admin/inventory/">Inventory</a>
+    </div>
+    <button id="logout-btn">Logout</button>
+  </div>
+  <div class="wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Order ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Mango</th><th>Qty</th><th>Type</th><th>Address</th><th>Total</th><th>Session</th><th>Intent</th><th>Payment</th><th>Fulfillment</th><th>Created</th><th>Admin Note</th><th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="orders-body"></tbody>
+    </table>
+  </div>
+  <script>
+    async function ensureSession() {
+      const res = await fetch('/api/admin/session');
+      const data = await res.json();
+      if (!data.authenticated) window.location.href = '/admin/login/';
+    }
+
+    async function updateOrder(id) {
+      const status = document.getElementById(`status-${id}`).value;
+      const note = document.getElementById(`note-${id}`).value;
+      const res = await fetch('/api/admin/orders/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, fulfillment_status: status, admin_note: note })
+      });
+      const data = await res.json();
+      if (!res.ok) alert(data.error || 'Update failed');
+    }
+
+    async function loadOrders() {
+      const res = await fetch('/api/admin/orders');
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed loading orders');
+      const rows = data.orders || [];
+      document.getElementById('orders-body').innerHTML = rows.map((row) => `
+        <tr>
+          <td>${row.id || ''}</td>
+          <td>${row.customer_name || ''}</td>
+          <td>${row.customer_email || ''}</td>
+          <td>${row.customer_phone || ''}</td>
+          <td>${row.mango_type || ''}</td>
+          <td>${row.quantity || ''}</td>
+          <td>${row.order_type || ''}</td>
+          <td>${row.delivery_address || ''}</td>
+          <td>${row.amount_total || ''} ${row.currency || ''}</td>
+          <td>${row.stripe_session_id || ''}</td>
+          <td>${row.stripe_payment_intent_id || ''}</td>
+          <td>${row.payment_status || ''}</td>
+          <td>
+            <select id="status-${row.id}">
+              <option value="pending" ${row.fulfillment_status === 'pending' ? 'selected' : ''}>pending</option>
+              <option value="fulfilled" ${row.fulfillment_status === 'fulfilled' ? 'selected' : ''}>fulfilled</option>
+              <option value="cancelled" ${row.fulfillment_status === 'cancelled' ? 'selected' : ''}>cancelled</option>
+            </select>
+          </td>
+          <td>${new Date(row.created_at).toLocaleString()}</td>
+          <td><input id="note-${row.id}" class="note" value="${(row.admin_note || '').replace(/"/g, '&quot;')}"/></td>
+          <td><button onclick="updateOrder('${row.id}')">Save</button></td>
+        </tr>
+      `).join('');
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      await fetch('/api/admin/logout', { method: 'POST' });
+      window.location.href = '/admin/login/';
+    });
+
+    ensureSession().then(loadOrders).catch((err) => alert(err.message));
+  </script>
+</body>
+</html>
+

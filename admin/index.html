@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard | Ameer Global</title>
+  <style>
+    body{margin:0;font-family:Arial,sans-serif;background:#faf7ef;color:#1f2f2a}
+    .top{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:#1f4f3b;color:#fff}
+    .top a{color:#fff;text-decoration:none;margin-right:12px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;padding:16px}
+    .card{background:#fff;border:1px solid #e1dccf;border-radius:12px;padding:14px}
+    .label{font-size:.75rem;text-transform:uppercase;color:#718078}
+    .value{font-size:1.5rem;font-weight:700;color:#1f4f3b}
+    table{width:100%;border-collapse:collapse;background:#fff}
+    th,td{border:1px solid #ece6d9;padding:8px;font-size:.9rem;text-align:left}
+    .wrap{padding:0 16px 16px}
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div>
+      <a href="/admin/">Dashboard</a>
+      <a href="/admin/orders/">Orders</a>
+      <a href="/admin/inventory/">Inventory</a>
+    </div>
+    <button id="logout-btn">Logout</button>
+  </div>
+  <div class="grid" id="stats"></div>
+  <div class="wrap">
+    <h3>Recent Orders</h3>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Customer</th><th>Mango</th><th>Qty</th><th>Amount</th><th>Status</th><th>Date</th></tr>
+      </thead>
+      <tbody id="recent-body"></tbody>
+    </table>
+  </div>
+  <script>
+    async function ensureSession() {
+      const res = await fetch('/api/admin/session');
+      const data = await res.json();
+      if (!data.authenticated) window.location.href = '/admin/login/';
+    }
+
+    function statCard(label, value) {
+      return `<div class="card"><div class="label">${label}</div><div class="value">${value}</div></div>`;
+    }
+
+    async function loadDashboard() {
+      const res = await fetch('/api/admin/dashboard');
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed loading dashboard');
+      document.getElementById('stats').innerHTML = [
+        statCard('Total Orders', data.totalOrders),
+        statCard('Total Revenue (CAD)', Number(data.totalRevenue || 0).toFixed(2)),
+        statCard('Pending Orders', data.pendingOrders),
+        statCard('Fulfilled Orders', data.fulfilledOrders),
+        statCard('Total Inventory Left', data.totalInventoryRemaining)
+      ].join('');
+
+      const invCards = (data.inventory || []).map((item) =>
+        statCard(`Inventory: ${item.mango_type}`, item.remaining_stock)
+      ).join('');
+      document.getElementById('stats').insertAdjacentHTML('beforeend', invCards);
+
+      document.getElementById('recent-body').innerHTML = (data.recentOrders || []).map((row) => `
+        <tr>
+          <td>${row.id || ''}</td>
+          <td>${row.customer_name || ''}</td>
+          <td>${row.mango_type || ''}</td>
+          <td>${row.quantity || ''}</td>
+          <td>${row.amount_total || ''}</td>
+          <td>${row.fulfillment_status || ''}</td>
+          <td>${new Date(row.created_at).toLocaleString()}</td>
+        </tr>
+      `).join('');
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      await fetch('/api/admin/logout', { method: 'POST' });
+      window.location.href = '/admin/login/';
+    });
+
+    ensureSession().then(loadDashboard).catch((err) => {
+      alert(err.message);
+    });
+  </script>
+</body>
+</html>
+
