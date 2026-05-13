@@ -37,7 +37,7 @@
   </div>
   <div class="hero">
     <h1>Ameer Global Admin Dashboard</h1>
-    <p>Orders, revenue, fulfillment, inventory, and live backend connection health.</p>
+    <p id="session-line">Orders, revenue, fulfillment, inventory, and live backend connection health.</p>
   </div>
   <div class="grid" id="stats"></div>
   <div class="wrap">
@@ -55,11 +55,21 @@
       <tbody id="recent-body"></tbody>
     </table>
   </div>
+  <div class="wrap">
+    <h3>All Links</h3>
+    <table>
+      <tbody id="links-body"></tbody>
+    </table>
+  </div>
   <script>
     async function ensureSession() {
       const res = await fetch('/api/admin/session');
       const data = await res.json();
       if (!data.authenticated) window.location.href = '/admin/login/';
+      if (data.expiresAt) {
+        const dt = new Date(Number(data.expiresAt));
+        document.getElementById('session-line').textContent = `Authenticated as ${data.email}. Session expires: ${dt.toLocaleString()}`;
+      }
     }
 
     function statCard(label, value) {
@@ -120,6 +130,16 @@
       `).join('');
     }
 
+    async function loadLinks() {
+      const res = await fetch('/api/admin/links');
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed loading links');
+      const rows = [];
+      for (const p of (data.pages || [])) rows.push(['Page', p]);
+      for (const a of (data.apis || [])) rows.push(['API', a]);
+      document.getElementById('links-body').innerHTML = rows.map(([k,v]) => `<tr><th>${k}</th><td>${v}</td></tr>`).join('');
+    }
+
     document.getElementById('logout-btn').addEventListener('click', async () => {
       await fetch('/api/admin/logout', { method: 'POST' });
       window.location.href = '/admin/login/';
@@ -129,6 +149,7 @@
       .then(async () => {
         await loadDashboard();
         await loadDiagnostics();
+        await loadLinks();
       })
       .catch((err) => {
         setError(err.message || 'Unable to load admin dashboard.');

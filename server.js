@@ -23,7 +23,7 @@ const USE_SUPABASE = Boolean(SUPABASE_URL_VALID && SUPABASE_SERVICE_ROLE_KEY);
 const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'managingdirector@ameerglobal.ca').toLowerCase();
 const ADMIN_LOGIN_CODE = process.env.ADMIN_LOGIN_CODE || '';
 const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || SUPABASE_SERVICE_ROLE_KEY || 'ameer-admin-dev-secret';
-const ADMIN_SESSION_COOKIE = 'ag_admin_session';
+const ADMIN_SESSION_COOKIE = 'ag_admin_session_v2';
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY || '';
 const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || '';
 const BASE_URL = (process.env.PUBLIC_BASE_URL || process.env.BASE_URL || `http://localhost:${PORT}`).replace(/\/+$/, '');
@@ -243,7 +243,7 @@ function setAdminSessionCookie(req, res, email) {
   const secure = process.env.NODE_ENV === 'production' ? '; Secure' : '';
   res.setHeader(
     'Set-Cookie',
-    `${ADMIN_SESSION_COOKIE}=${encodeURIComponent(token)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=43200${secure}`
+    `${ADMIN_SESSION_COOKIE}=${encodeURIComponent(token)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=7200${secure}`
   );
 }
 
@@ -633,6 +633,29 @@ async function handleApi(req, res, pathname) {
       json(res, 500, { error: err.message || 'Unable to load diagnostics.' });
       return true;
     }
+  }
+
+  if (req.method === 'GET' && pathname === '/api/admin/links') {
+    const admin = readAdminFromRequest(req);
+    if (!admin) {
+      json(res, 401, { error: 'Unauthorized' });
+      return true;
+    }
+    json(res, 200, {
+      pages: ['/admin/login/', '/admin/', '/admin/orders/', '/admin/inventory/'],
+      apis: [
+        '/api/admin/session',
+        '/api/admin/dashboard',
+        '/api/admin/orders',
+        '/api/admin/orders/update',
+        '/api/admin/inventory',
+        '/api/admin/inventory/update',
+        '/api/admin/diagnostics',
+        '/api/admin/logout',
+        '/api/stripe/webhook'
+      ]
+    });
+    return true;
   }
 
   if (req.method === 'GET' && pathname === '/api/products') {
