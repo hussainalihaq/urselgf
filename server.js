@@ -647,9 +647,9 @@ async function handleApi(req, res, pathname) {
         '/api/admin/session',
         '/api/admin/dashboard',
         '/api/admin/orders',
-        '/api/admin/orders/update',
+        '/api/admin/orders-update',
         '/api/admin/inventory',
-        '/api/admin/inventory/update',
+        '/api/admin/inventory-update',
         '/api/admin/diagnostics',
         '/api/admin/logout',
         '/api/stripe/webhook'
@@ -1021,7 +1021,7 @@ async function handleApi(req, res, pathname) {
     }
   }
 
-  if (req.method === 'POST' && pathname === '/api/admin/orders/update') {
+  if (req.method === 'POST' && (pathname === '/api/admin/orders/update' || pathname === '/api/admin/orders-update')) {
     try {
       if (!USE_SUPABASE) {
         json(res, 400, { error: 'Supabase is required for admin orders.' });
@@ -1063,7 +1063,7 @@ async function handleApi(req, res, pathname) {
     }
   }
 
-  if (req.method === 'POST' && pathname === '/api/admin/inventory/update') {
+  if (req.method === 'POST' && (pathname === '/api/admin/inventory/update' || pathname === '/api/admin/inventory-update')) {
     try {
       if (!USE_SUPABASE) {
         json(res, 400, { error: 'Supabase is required for admin inventory.' });

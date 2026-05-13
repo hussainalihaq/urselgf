@@ -2,11 +2,12 @@
 
 This repo now includes:
 - Frontend pages based on your provided designs (`/home`, `/products`, `/about`, `/contact`)
-- Backend APIs (`/api/health`, `/api/products`, `/api/newsletter`, `/api/contact`)
+- Backend APIs (`/api/health`, `/api/products`, `/api/newsletter`, `/api/contact`, `/api/reserve`, `/api/availability`)
 - File-based data storage in `data/*.json`
 - Stripe checkout + webhook order pipeline (`/api/checkout`, `/api/stripe-webhook`)
-- Admin stats endpoint (`/api/admin-stats`)
+- Internal admin API router (`/api/admin/*`)
 - SEO keyword and execution files for GTA mango ranking (`/seo`)
+- Backend operations reference in [BACKEND_TRACE.md](./BACKEND_TRACE.md)
 
 ## Run locally
 
@@ -27,9 +28,19 @@ Server runs on `http://localhost:3000` by default.
 - `GET /api/products`
 - `POST /api/newsletter`
 - `POST /api/contact`
+- `POST /api/reserve`
+- `POST /api/availability`
 - `POST /api/checkout`
 - `POST /api/stripe-webhook`
-- `GET /api/admin-stats` (requires `x-admin-key` header)
+- `GET /api/admin/session`
+- `POST /api/admin/login`
+- `POST /api/admin/logout`
+- `GET /api/admin/dashboard`
+- `GET /api/admin/orders`
+- `POST /api/admin/orders-update`
+- `GET /api/admin/inventory`
+- `POST /api/admin/inventory-update`
+- `GET /api/admin/diagnostics`
 
 ## API payloads
 
@@ -101,7 +112,6 @@ Set these environment variables in Vercel:
 
 - `STRIPE_SECRET_KEY` (`sk_live_...` in production)
 - `STRIPE_WEBHOOK_SECRET` (from Stripe webhook endpoint)
-- `ADMIN_STATS_KEY` (your private key for `/api/admin-stats`)
 - `RESEND_API_KEY` (for email automation)
 - `ORDER_EMAIL_FROM` (verified sender, e.g. `orders@yourdomain.com`)
 - `ORDER_EMAIL_ADMIN_TO` (your receiving email)
@@ -156,14 +166,6 @@ Order numbers are generated automatically as:
 - `AMG-YYYYMMDD-0001`
 - `AMG-YYYYMMDD-0002`
 - etc.
-
-### Admin Stats API
-
-Example:
-
-```bash
-curl -H "x-admin-key: YOUR_ADMIN_STATS_KEY" https://your-domain.com/api/admin-stats
-```
 
 ## SEO Files
 
