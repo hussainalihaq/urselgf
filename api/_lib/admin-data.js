@@ -15,6 +15,7 @@ const INVENTORY_FILE = path.join(DATA_DIR, 'inventory.json');
 
 const SUPABASE_URL = (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || '').replace(/\/+$/, '');
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+const CONTACTS_TABLE = process.env.SUPABASE_CONTACTS_TABLE || 'contacts';
 const ORDERS_TABLE = process.env.SUPABASE_ORDERS_TABLE || 'orders';
 const INVENTORY_TABLE = process.env.SUPABASE_INVENTORY_TABLE || 'inventory';
 
@@ -88,6 +89,78 @@ function normalizeInventory(row) {
     low_stock_threshold: Number(row.low_stock_threshold || 10),
     updated_at: row.updated_at || ''
   };
+}
+
+function parseReserveMessage(message) {
+  const out = {
+    quantity: '',
+    phone: '',
+    company: '',
+    city: '',
+    country: '',
+    delivery_window: '',
+    notes: ''
+  };
+
+  for (const line of String(message || '').split('\n')) {
+    const idx = line.indexOf(':');
+    if (idx === -1) continue;
+    const label = line.slice(0, idx).trim().toLowerCase();
+    const value = line.slice(idx + 1).trim();
+
+    if (label === 'quantity') out.quantity = value;
+    if (label === 'phone') out.phone = value;
+    if (label === 'company') out.company = value;
+    if (label === 'city') out.city = value;
+    if (label === 'country') out.country = value;
+    if (label === 'delivery window') out.delivery_window = value;
+    if (label === 'notes') out.notes = value;
+  }
+
+  return out;
+}
+
+function normalizeReservation(row) {
+  const parsed = parseReserveMessage(row.message);
+  const product = row.product || '';
+  const cityCountry = [parsed.city, parsed.country].filter(Boolean).join(', ');
+
+  return {
+    id: row.id || '',
+    customer_name: row.name || '',
+    customer_email: row.email || '',
+    customer_phone: parsed.phone || '',
+    product,
+    quantity: parsed.quantity || '',
+    company: parsed.company || '',
+    market: cityCountry,
+    delivery_window: parsed.delivery_window || '',
+    notes: parsed.notes || '',
+    source: row.source || '',
+    created_at: row.created_at || ''
+  };
+}
+
+async function listReservations() {
+  let rows;
+  const reserveQuery =
+    `?select=*` +
+    `&or=(intent.eq.reserve,source.eq.reserve-page,subject.ilike.*Reserve%20Request*)` +
+    `&order=created_at.desc&limit=500`;
+
+  if (hasSupabase()) {
+    try {
+      const res = await sb(`/rest/v1/${CONTACTS_TABLE}${reserveQuery}`);
+      if (!res.ok) throw new Error(await res.text());
+      rows = await res.json();
+    } catch {
+      rows = [];
+    }
+  } else {
+    rows = [];
+  }
+
+  return rows.map(normalizeReservation).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 }
 
 async function listOrders() {
@@ -218,6 +291,8 @@ async function diagnostics() {
     supabase: {
       configured: hasSupabase(),
       urlValid: SUPABASE_URL.startsWith('https://') && SUPABASE_URL.includes('.supabase.co'),
+      contactsTableReachable: null,
+      contactsTableError: '',
       ordersTableReachable: null,
       ordersTableError: '',
       inventoryTableReachable: null,
@@ -230,6 +305,15 @@ async function diagnostics() {
   };
 
   if (hasSupabase()) {
+    try {
+      const res = await sb(`/rest/v1/${CONTACTS_TABLE}?select=id&limit=1`);
+      out.supabase.contactsTableReachable = res.ok;
+      if (!res.ok) out.supabase.contactsTableError = await res.text();
+    } catch (err) {
+      out.supabase.contactsTableReachable = false;
+      out.supabase.contactsTableError = healthFromError(err);
+    }
+
     try {
       const res = await sb(`/rest/v1/${ORDERS_TABLE}?select=id&limit=1`);
       out.supabase.ordersTableReachable = res.ok;
@@ -260,6 +344,7 @@ module.exports = {
   diagnostics,
   listInventory,
   listOrders,
+  listReservations,
   sendError,
   updateInventoryItem,
   updateOrderStatus

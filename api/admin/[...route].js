@@ -4,6 +4,7 @@ const {
   diagnostics,
   listInventory,
   listOrders,
+  listReservations,
   sendError,
   updateInventoryItem,
   updateOrderStatus
@@ -70,20 +71,21 @@ async function handleDashboard(req, res) {
   if (!requireAdmin(req, res)) return;
 
   try {
-    const orders = await listOrders();
-    const inventory = await listInventory();
-    const paidOrders = orders.filter((order) => String(order.payment_status).toLowerCase() === 'paid');
+    const reservations = await listReservations();
+    const today = new Date().toISOString().slice(0, 10);
+    const countsByProduct = {};
+
+    for (const item of reservations) {
+      const key = item.product || 'Unknown';
+      countsByProduct[key] = (countsByProduct[key] || 0) + 1;
+    }
 
     json(res, 200, {
-      totalOrders: paidOrders.length,
-      totalRevenue: Number(
-        paidOrders.reduce((sum, order) => sum + Number(order.amount_total || 0), 0).toFixed(2)
-      ),
-      pendingOrders: orders.filter((order) => String(order.fulfillment_status).toLowerCase() === 'pending').length,
-      fulfilledOrders: orders.filter((order) => String(order.fulfillment_status).toLowerCase() === 'fulfilled').length,
-      totalInventoryRemaining: inventory.reduce((sum, item) => sum + Number(item.remaining_stock || 0), 0),
-      inventory,
-      recentOrders: paidOrders.slice(0, 10)
+      totalReservations: reservations.length,
+      todayReservations: reservations.filter((row) => String(row.created_at || '').slice(0, 10) === today).length,
+      uniqueProducts: Object.keys(countsByProduct).length,
+      productCounts: Object.entries(countsByProduct).map(([product, count]) => ({ product, count })),
+      recentReservations: reservations.slice(0, 25)
     });
   } catch (error) {
     sendError(res, error);
@@ -203,16 +205,12 @@ function handleLinks(req, res) {
   if (!requireAdmin(req, res)) return;
 
   json(res, 200, {
-    pages: ['/admin/login/', '/admin/', '/admin/orders/', '/admin/inventory/'],
+    pages: ['/admin/login/', '/admin/'],
     apis: [
       '/api/admin/session',
       '/api/admin/login',
       '/api/admin/logout',
       '/api/admin/dashboard',
-      '/api/admin/orders',
-      '/api/admin/orders-update',
-      '/api/admin/inventory',
-      '/api/admin/inventory-update',
       '/api/admin/diagnostics'
     ]
   });

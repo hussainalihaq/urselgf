@@ -30,14 +30,12 @@
   <div class="top">
     <div>
       <a href="/admin/">Dashboard</a>
-      <a href="/admin/orders/">Orders</a>
-      <a href="/admin/inventory/">Inventory</a>
     </div>
     <button class="logout" id="logout-btn">Logout</button>
   </div>
   <div class="hero">
-    <h1>Ameer Global Admin Dashboard</h1>
-    <p id="session-line">Orders, revenue, fulfillment, inventory, and live backend connection health.</p>
+    <h1>Ameer Global Reservation Dashboard</h1>
+    <p id="session-line">Reserve submissions, customer details, and live backend connection health.</p>
   </div>
   <div class="grid" id="stats"></div>
   <div class="wrap">
@@ -47,10 +45,10 @@
     </table>
   </div>
   <div class="wrap">
-    <h3>Recent Orders</h3>
+    <h3>Recent Reservations</h3>
     <table>
       <thead>
-        <tr><th>ID</th><th>Customer</th><th>Mango</th><th>Qty</th><th>Amount</th><th>Status</th><th>Date</th></tr>
+        <tr><th>ID</th><th>Customer</th><th>Phone</th><th>Product</th><th>Qty</th><th>Market</th><th>Delivery Window</th><th>Notes</th><th>Date</th></tr>
       </thead>
       <tbody id="recent-body"></tbody>
     </table>
@@ -103,8 +101,7 @@
       rows.push(['Admin login code', statusPill(data.auth.loginCodeConfigured, data.auth.loginCodeConfigured ? 'Configured' : 'Missing')]);
       rows.push(['Supabase configured', statusPill(data.supabase.configured, data.supabase.configured ? 'Configured' : 'Missing')]);
       rows.push(['Supabase URL format', statusPill(data.supabase.urlValid, data.supabase.urlValid ? 'Valid' : 'Invalid URL')]);
-      rows.push(['Orders table', statusPill(data.supabase.ordersTableReachable, data.supabase.ordersTableReachable ? 'Reachable' : (data.supabase.ordersTableError || 'Error'))]);
-      rows.push(['Inventory table', statusPill(data.supabase.inventoryTableReachable, data.supabase.inventoryTableReachable ? 'Reachable' : (data.supabase.inventoryTableError || 'Error'))]);
+      rows.push(['Contacts table', statusPill(data.supabase.contactsTableReachable, data.supabase.contactsTableReachable ? 'Reachable' : (data.supabase.contactsTableError || 'Error'))]);
       rows.push(['Stripe secret key', statusPill(data.stripe.configured, data.stripe.configured ? 'Configured' : 'Missing')]);
       rows.push(['Stripe webhook secret', statusPill(data.stripe.webhookSecretConfigured, data.stripe.webhookSecretConfigured ? 'Configured' : 'Missing')]);
       document.getElementById('diag-body').innerHTML = rows.map(([k,v]) => `<tr><th>${k}</th><td>${v}</td></tr>`).join('');
@@ -113,26 +110,26 @@
     async function loadDashboard() {
       const data = await fetchJson('/api/admin/dashboard');
       document.getElementById('stats').innerHTML = [
-        statCard('Total Orders', data.totalOrders),
-        statCard('Total Revenue (CAD)', Number(data.totalRevenue || 0).toFixed(2)),
-        statCard('Pending Orders', data.pendingOrders),
-        statCard('Fulfilled Orders', data.fulfilledOrders),
-        statCard('Total Inventory Left', data.totalInventoryRemaining)
+        statCard('Total Reservations', data.totalReservations),
+        statCard('Today', data.todayReservations),
+        statCard('Products Reserved', data.uniqueProducts)
       ].join('');
 
-      const invCards = (data.inventory || []).map((item) =>
-        statCard(`Inventory: ${item.mango_type}`, item.remaining_stock)
+      const productCards = (data.productCounts || []).map((item) =>
+        statCard(item.product, item.count)
       ).join('');
-      document.getElementById('stats').insertAdjacentHTML('beforeend', invCards);
+      document.getElementById('stats').insertAdjacentHTML('beforeend', productCards);
 
-      document.getElementById('recent-body').innerHTML = (data.recentOrders || []).map((row) => `
+      document.getElementById('recent-body').innerHTML = (data.recentReservations || []).map((row) => `
         <tr>
           <td>${row.id || ''}</td>
-          <td>${row.customer_name || ''}</td>
-          <td>${row.mango_type || ''}</td>
+          <td>${row.customer_name || ''}<br><small>${row.customer_email || ''}</small></td>
+          <td>${row.customer_phone || ''}</td>
+          <td>${row.product || ''}</td>
           <td>${row.quantity || ''}</td>
-          <td>${row.amount_total || ''}</td>
-          <td>${row.fulfillment_status || ''}</td>
+          <td>${row.market || ''}</td>
+          <td>${row.delivery_window || ''}</td>
+          <td>${row.notes || ''}</td>
           <td>${new Date(row.created_at).toLocaleString()}</td>
         </tr>
       `).join('');
