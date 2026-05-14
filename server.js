@@ -66,29 +66,29 @@ const products = [
     id: 'mango-chaunsa',
     name: 'Chaunsa Mango Premium Box',
     origin: 'Multan, Pakistan',
-    unit: '1.8 kg (4 lb approx) box',
+    unit: '2 kg box',
     category: 'fresh-produce'
   },
   {
     id: 'mango-anwar-ratol',
     name: 'Anwar Ratol Mango Reserve',
     origin: 'Multan, Pakistan',
-    unit: '1.8 kg (4 lb approx) box',
+    unit: '2 kg box',
     category: 'fresh-produce'
   },
   {
     id: 'mango-sindhri',
     name: 'Sindhri Mango Estate Selection',
     origin: 'Multan, Pakistan',
-    unit: '1.8 kg (4 lb approx) box',
+    unit: '2 kg box',
     category: 'fresh-produce'
   }
 ];
 
 const MANGO_INVENTORY_SEED = [
-  { mango_type: 'Sindhri Mangoes', fixed_size: '1.8 kg (4 lb approx) box', fixed_price: 38 },
-  { mango_type: 'Anwar Ratol Mangoes', fixed_size: '1.8 kg (4 lb approx) box', fixed_price: 45 },
-  { mango_type: 'Chaunsa Mangoes', fixed_size: '1.8 kg (4 lb approx) box', fixed_price: 52 }
+  { mango_type: 'Sindhri Mangoes', fixed_size: '2 kg box', fixed_price: 38 },
+  { mango_type: 'Anwar Ratol Mangoes', fixed_size: '2 kg box', fixed_price: 45 },
+  { mango_type: 'Chaunsa Mangoes', fixed_size: '2 kg box', fixed_price: 52 }
 ];
 
 function json(res, statusCode, payload) {
