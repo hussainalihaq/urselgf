@@ -114,6 +114,9 @@ Set these environment variables in Vercel:
 
 - `STRIPE_SECRET_KEY` (`sk_live_...` in production)
 - `STRIPE_WEBHOOK_SECRET` (from Stripe webhook endpoint)
+- `STRIPE_PRICE_SINDHRI` (optional, Stripe Price ID for `Sindhri Mangoes`)
+- `STRIPE_PRICE_ANWAR_RATOL` (optional, Stripe Price ID for `Anwar Ratol Mangoes`)
+- `STRIPE_PRICE_CHAUNSA` (optional, Stripe Price ID for `Chaunsa Mangoes`)
 - `RESEND_API_KEY` (for email automation)
 - `ORDER_EMAIL_FROM` (verified sender, e.g. `orders@yourdomain.com`)
 - `ORDER_EMAIL_ADMIN_TO` (your receiving email)
@@ -131,7 +134,15 @@ Optional Supabase table names:
 2. Add endpoint: `https://your-domain.com/api/stripe-webhook`.
 3. Subscribe to event: `checkout.session.completed`.
 4. Copy webhook signing secret and set `STRIPE_WEBHOOK_SECRET`.
-5. Switch your API key from test to live when going live.
+5. Go to Product catalog and create:
+   - `Sindhri Mangoes`
+   - `Anwar Ratol Mangoes`
+   - `Chaunsa Mangoes`
+6. Copy the fixed price IDs into:
+   - `STRIPE_PRICE_SINDHRI`
+   - `STRIPE_PRICE_ANWAR_RATOL`
+   - `STRIPE_PRICE_CHAUNSA`
+7. Switch your API key from test to live when going live.
 
 ### Supabase Order Tables (Optional but recommended)
 

@@ -5,6 +5,33 @@ const Stripe = require('stripe');
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 const stripe = stripeKey ? new Stripe(stripeKey) : null;
+const STRIPE_PRICE_MAP = {
+  'Sindhri Mangoes': process.env.STRIPE_PRICE_SINDHRI || '',
+  'Anwar Ratol Mangoes': process.env.STRIPE_PRICE_ANWAR_RATOL || '',
+  'Chaunsa Mangoes': process.env.STRIPE_PRICE_CHAUNSA || ''
+};
+
+function buildPrimaryLineItem(checkout) {
+  const stripePriceId = STRIPE_PRICE_MAP[checkout.contactRecord.product];
+
+  if (stripePriceId) {
+    return {
+      price: stripePriceId,
+      quantity: checkout.billing.quantity,
+    };
+  }
+
+  return {
+    price_data: {
+      currency: checkout.billing.currency.toLowerCase(),
+      product_data: {
+        name: checkout.contactRecord.product,
+      },
+      unit_amount: Math.round(checkout.billing.unitPriceCad * 100),
+    },
+    quantity: checkout.billing.quantity,
+  };
+}
 
 module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') {
@@ -41,18 +68,7 @@ module.exports = async function handler(req, res) {
       const host = req.headers.host || 'ameerglobal.ca';
       const baseUrl = `${protocol}://${host}`;
 
-      const lineItems = [
-        {
-          price_data: {
-            currency: checkout.billing.currency.toLowerCase(),
-            product_data: {
-              name: checkout.contactRecord.product,
-            },
-            unit_amount: Math.round(checkout.billing.unitPriceCad * 100),
-          },
-          quantity: checkout.billing.quantity,
-        }
-      ];
+      const lineItems = [buildPrimaryLineItem(checkout)];
 
       if (checkout.billing.shippingCad > 0) {
         lineItems.push({

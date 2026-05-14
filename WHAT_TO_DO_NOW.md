@@ -74,6 +74,9 @@ From Stripe:
 - `STRIPE_SECRET_KEY`
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
 - `STRIPE_WEBHOOK_SECRET`
+- `STRIPE_PRICE_SINDHRI`
+- `STRIPE_PRICE_ANWAR_RATOL`
+- `STRIPE_PRICE_CHAUNSA`
 
 Where to get them:
 
@@ -85,6 +88,15 @@ Where to get them:
 4. Go to `Developers` -> `Webhooks`
 5. Open your webhook endpoint or create one
 6. Copy the signing secret -> `STRIPE_WEBHOOK_SECRET`
+7. Go to `Product catalog`
+8. Create these 3 products with one fixed price each:
+   - `Sindhri Mangoes`
+   - `Anwar Ratol Mangoes`
+   - `Chaunsa Mangoes`
+9. Copy each product's `price_...` ID:
+   - Sindhri -> `STRIPE_PRICE_SINDHRI`
+   - Anwar Ratol -> `STRIPE_PRICE_ANWAR_RATOL`
+   - Chaunsa -> `STRIPE_PRICE_CHAUNSA`
 
 ### Values for admin login
 
@@ -231,6 +243,9 @@ SUPABASE_SERVICE_ROLE_KEY=from-supabase
 STRIPE_SECRET_KEY=from-stripe
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=from-stripe
 STRIPE_WEBHOOK_SECRET=from-stripe-webhook
+STRIPE_PRICE_SINDHRI=price_xxxxx
+STRIPE_PRICE_ANWAR_RATOL=price_xxxxx
+STRIPE_PRICE_CHAUNSA=price_xxxxx
 ```
 
 Then later, if you want custom emails:
