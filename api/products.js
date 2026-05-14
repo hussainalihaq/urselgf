@@ -11,14 +11,14 @@ const products = [
   {
     id: 'mango-anwar-ratol',
     name: 'Anwar Ratol Mango Reserve',
-    origin: 'Punjab, Pakistan',
+    origin: 'Multan, Pakistan',
     unit: '1.8 kg (4 lb approx) box',
     category: 'fresh-produce'
   },
   {
     id: 'mango-sindhri',
     name: 'Sindhri Mango Estate Selection',
-    origin: 'Sindh, Pakistan',
+    origin: 'Multan, Pakistan',
     unit: '1.8 kg (4 lb approx) box',
     category: 'fresh-produce'
   }
