@@ -117,6 +117,9 @@ Set these environment variables in Vercel:
 - `STRIPE_PRICE_SINDHRI` (optional, Stripe Price ID for `Sindhri Mangoes`)
 - `STRIPE_PRICE_ANWAR_RATOL` (optional, Stripe Price ID for `Anwar Ratol Mangoes`)
 - `STRIPE_PRICE_CHAUNSA` (optional, Stripe Price ID for `Chaunsa Mangoes`)
+- `STRIPE_PRICE_SINDHRI_TEST` / `STRIPE_PRICE_SINDHRI_LIVE` (optional mode-specific override pair)
+- `STRIPE_PRICE_ANWAR_RATOL_TEST` / `STRIPE_PRICE_ANWAR_RATOL_LIVE` (optional mode-specific override pair)
+- `STRIPE_PRICE_CHAUNSA_TEST` / `STRIPE_PRICE_CHAUNSA_LIVE` (optional mode-specific override pair)
 - `RESEND_API_KEY` (for email automation)
 - `ORDER_EMAIL_FROM` (verified sender, e.g. `orders@yourdomain.com`)
 - `ORDER_EMAIL_ADMIN_TO` (your receiving email)
@@ -142,7 +145,13 @@ Optional Supabase table names:
    - `STRIPE_PRICE_SINDHRI`
    - `STRIPE_PRICE_ANWAR_RATOL`
    - `STRIPE_PRICE_CHAUNSA`
-7. Switch your API key from test to live when going live.
+7. If you want checkout to switch automatically between test/live when you only change `STRIPE_SECRET_KEY`, also add:
+   - `STRIPE_PRICE_SINDHRI_TEST`
+   - `STRIPE_PRICE_SINDHRI_LIVE`
+   - `STRIPE_PRICE_CHAUNSA_TEST`
+   - `STRIPE_PRICE_CHAUNSA_LIVE`
+   - and later `STRIPE_PRICE_ANWAR_RATOL_TEST` / `STRIPE_PRICE_ANWAR_RATOL_LIVE`
+8. Switch your API key from test to live when going live.
 
 ### Supabase Order Tables (Optional but recommended)
 

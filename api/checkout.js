@@ -5,14 +5,50 @@ const Stripe = require('stripe');
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 const stripe = stripeKey ? new Stripe(stripeKey) : null;
-const STRIPE_PRICE_MAP = {
-  'Sindhri Mangoes': process.env.STRIPE_PRICE_SINDHRI || '',
-  'Anwar Ratol Mangoes': process.env.STRIPE_PRICE_ANWAR_RATOL || '',
-  'Chaunsa Mangoes': process.env.STRIPE_PRICE_CHAUNSA || ''
-};
+
+function stripeMode() {
+  if (String(stripeKey || '').startsWith('sk_live_')) return 'live';
+  return 'test';
+}
+
+function productPriceVarNames(productName) {
+  if (productName === 'Sindhri Mangoes') {
+    return {
+      generic: 'STRIPE_PRICE_SINDHRI',
+      test: 'STRIPE_PRICE_SINDHRI_TEST',
+      live: 'STRIPE_PRICE_SINDHRI_LIVE'
+    };
+  }
+  if (productName === 'Anwar Ratol Mangoes') {
+    return {
+      generic: 'STRIPE_PRICE_ANWAR_RATOL',
+      test: 'STRIPE_PRICE_ANWAR_RATOL_TEST',
+      live: 'STRIPE_PRICE_ANWAR_RATOL_LIVE'
+    };
+  }
+  if (productName === 'Chaunsa Mangoes') {
+    return {
+      generic: 'STRIPE_PRICE_CHAUNSA',
+      test: 'STRIPE_PRICE_CHAUNSA_TEST',
+      live: 'STRIPE_PRICE_CHAUNSA_LIVE'
+    };
+  }
+  return null;
+}
+
+function getStripePriceId(productName) {
+  const vars = productPriceVarNames(productName);
+  if (!vars) return '';
+
+  const mode = stripeMode();
+  const modeSpecific = mode === 'live' ? process.env[vars.live] : process.env[vars.test];
+  const generic = process.env[vars.generic];
+
+  return modeSpecific || generic || '';
+}
 
 function buildPrimaryLineItem(checkout) {
-  const stripePriceId = STRIPE_PRICE_MAP[checkout.contactRecord.product];
+  const stripePriceId = getStripePriceId(checkout.contactRecord.product);
 
   if (stripePriceId) {
     return {
