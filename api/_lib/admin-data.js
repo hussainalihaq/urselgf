@@ -143,24 +143,28 @@ function normalizeReservation(row) {
 
 async function listReservations() {
   let rows;
-  const reserveQuery =
-    `?select=*` +
-    `&or=(intent.eq.reserve,source.eq.reserve-page,subject.ilike.*Reserve%20Request*)` +
-    `&order=created_at.desc&limit=500`;
+  const reserveQuery = `?select=*&order=created_at.desc&limit=500`;
 
   if (hasSupabase()) {
     try {
       const res = await sb(`/rest/v1/${CONTACTS_TABLE}${reserveQuery}`);
       if (!res.ok) throw new Error(await res.text());
       rows = await res.json();
-    } catch {
-      rows = [];
+    } catch (error) {
+      throw new Error(`Reservation lookup failed: ${String(error?.message || error)}`);
     }
   } else {
     rows = [];
   }
 
-  return rows.map(normalizeReservation).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const filtered = rows.filter((row) => {
+    const intent = String(row.intent || '').toLowerCase();
+    const source = String(row.source || '').toLowerCase();
+    const subject = String(row.subject || '').toLowerCase();
+    return intent === 'reserve' || source === 'reserve-page' || subject.includes('reserve request');
+  });
+
+  return filtered.map(normalizeReservation).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 }
 
 async function listOrders() {

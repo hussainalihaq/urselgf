@@ -78,11 +78,7 @@ All admin endpoints are served by one file: `api/admin/[...route].js`.
 | `GET` | `/api/admin/session` | No login required | Current admin session state | Returns `{ authenticated: false }` if cookie invalid or missing |
 | `POST` | `/api/admin/login` | No login required | Signed admin session cookie + session payload | `403` for wrong email/passcode, `500` if admin env missing |
 | `POST` | `/api/admin/logout` | No login required | Clears admin session cookie | Always logs out current browser |
-| `GET` | `/api/admin/dashboard` | Required | Dashboard metrics + recent paid orders + inventory summary | `401` if not logged in, `500` for data/storage errors |
-| `GET` | `/api/admin/orders` | Required | Paid orders table data | `401` if not logged in, `500` for data/storage errors |
-| `POST` | `/api/admin/orders-update` | Required | `{ ok: true }` after status/note save | `400` invalid payload, `404` order not found |
-| `GET` | `/api/admin/inventory` | Required | Inventory rows | `401` if not logged in, `500` for data/storage errors |
-| `POST` | `/api/admin/inventory-update` | Required | `{ ok: true }` after stock update | `400` invalid payload, `404` item not found |
+| `GET` | `/api/admin/dashboard` | Required | Reservation metrics + recent reserve submissions | `401` if not logged in, `500` for data/storage errors |
 | `GET` | `/api/admin/diagnostics` | Required | Backend config and connectivity diagnostics | `401` if not logged in |
 | `GET` | `/api/admin/links` | Required | Admin page/API link list | `401` if not logged in |
 
@@ -147,7 +143,8 @@ Card details do **not** go to your website or Supabase. Card data stays in Strip
 2. Login submits to `POST /api/admin/login`.
 3. Backend checks `ADMIN_EMAIL`, `ADMIN_LOGIN_CODE`, and signs a cookie using `ADMIN_SESSION_SECRET`.
 4. Admin pages call `/api/admin/session` to confirm the cookie.
-5. Dashboard, orders, inventory, and diagnostics load through `/api/admin/*`.
+5. Reservation dashboard and diagnostics load through `/api/admin/*`.
+6. `/admin/orders/` and `/admin/inventory/` redirect back to `/admin/`.
 
 Default hardcoded fallback values:
 
@@ -159,17 +156,20 @@ Default hardcoded fallback values:
 
 | Variable | Required | Where to get it | What breaks if missing |
 | --- | --- | --- | --- |
-| `SUPABASE_URL` | Yes for production storage | Supabase Dashboard -> Project Settings -> API -> Project URL | Contact, reserve, newsletter, order, inventory, and admin storage access |
+| `SUPABASE_URL` | Yes for production storage | Supabase Dashboard -> Project Settings -> API -> Project URL | Contact, reserve, newsletter, Stripe order sync, and reservation admin storage access |
 | `NEXT_PUBLIC_SUPABASE_URL` | Yes, set equal to `SUPABASE_URL` | Same Supabase Project URL | Frontend/client-side Supabase config and any code expecting the public URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Required for client-side Supabase usage and future extensions | Supabase Dashboard -> Project Settings -> API -> anon public key | Any browser-side Supabase integration |
 | `SUPABASE_SERVICE_ROLE_KEY` | Yes for server-side writes | Supabase Dashboard -> Project Settings -> API -> service_role key | Contact, reserve, newsletter, orders, inventory, admin diagnostics/data |
 | `SUPABASE_CONTACTS_TABLE` | Optional | Choose table name in Supabase | Defaults to `contacts` |
 | `SUPABASE_NEWSLETTER_TABLE` | Optional | Choose table name in Supabase | Defaults to `newsletter_subscribers` |
-| `SUPABASE_ORDERS_TABLE` | Optional | Choose table name in Supabase | Defaults to `orders` |
-| `SUPABASE_INVENTORY_TABLE` | Optional | Choose table name in Supabase | Defaults to `inventory` |
+| `SUPABASE_ORDERS_TABLE` | Optional | Choose table name in Supabase | Defaults to `orders`; only needed if you want local paid-order syncing beyond Stripe |
+| `SUPABASE_INVENTORY_TABLE` | Optional | Choose table name in Supabase | Defaults to `inventory`; only needed if you want local inventory syncing |
 | `STRIPE_SECRET_KEY` | Yes for checkout | Stripe Dashboard -> Developers -> API keys -> Secret key | `/api/checkout` and webhook order processing |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Required for clean production client setup | Stripe Dashboard -> Developers -> API keys -> Publishable key | Client-side Stripe integrations and future hosted flows |
 | `STRIPE_WEBHOOK_SECRET` | Yes for webhook | Stripe Dashboard -> Developers -> Webhooks -> endpoint signing secret | Paid orders cannot be securely finalized |
+| `STRIPE_PRICE_SINDHRI_TEST` / `STRIPE_PRICE_SINDHRI_LIVE` | Recommended | Stripe Product Catalog -> open each price -> copy `price_...` | Clean automatic test/live switching for Sindhri |
+| `STRIPE_PRICE_CHAUNSA_TEST` / `STRIPE_PRICE_CHAUNSA_LIVE` | Recommended | Stripe Product Catalog -> open each price -> copy `price_...` | Clean automatic test/live switching for Chaunsa |
+| `STRIPE_PRICE_ANWAR_RATOL_TEST` / `STRIPE_PRICE_ANWAR_RATOL_LIVE` | Optional until Anwar buy-now is enabled | Stripe Product Catalog -> open each price -> copy `price_...` | Clean automatic test/live switching for Anwar Ratol |
 | `ADMIN_EMAIL` | Yes | Manually set to `managingdirector@ameerglobal.ca` | Admin login access policy |
 | `ADMIN_LOGIN_CODE` | Optional but recommended in Vercel | Manually create a strong passcode | Falls back to `AmeerGlobal1966`, which is convenient but weaker |
 | `ADMIN_SESSION_SECRET` | Optional but recommended in Vercel | Manually create a long random secret | Falls back to a built-in secret, which is convenient but weaker |
@@ -191,7 +191,7 @@ Default hardcoded fallback values:
 - Contact, reserve, and newsletter submissions cannot be stored reliably.
 - Pending order creation during checkout can fail.
 - Webhook order finalization can be delayed or fail until Supabase recovers.
-- Admin dashboard, orders, inventory, and diagnostics lose live data access.
+- Reservation admin dashboard and diagnostics lose live data access.
 
 ### Important production note
 
@@ -217,7 +217,7 @@ What it does:
 
 - Runs once per day on Vercel Hobby
 - Calls the health endpoint
-- Performs light reads against `contacts`, `orders`, and `inventory`
+- Performs light reads against `contacts`, plus `orders` and `inventory` when those tables exist
 - Returns non-200 if Supabase connectivity fails
 
 Recommended setup:
@@ -240,16 +240,21 @@ Before switching to live:
 
 1. Replace `STRIPE_SECRET_KEY` with `sk_live_...`.
 2. Replace `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` with `pk_live_...`.
-3. Create or update the production webhook endpoint in Stripe:
+3. Add mode-specific live price IDs in Vercel:
+   - `STRIPE_PRICE_SINDHRI_LIVE`
+   - `STRIPE_PRICE_CHAUNSA_LIVE`
+   - later `STRIPE_PRICE_ANWAR_RATOL_LIVE`
+4. Create or update the production webhook endpoint in Stripe:
    - `https://ameerglobal.ca/api/stripe-webhook`
-4. Copy the live webhook signing secret into `STRIPE_WEBHOOK_SECRET`.
-5. Run one real low-value production payment test.
-6. Confirm:
+5. Copy the live webhook signing secret into `STRIPE_WEBHOOK_SECRET`.
+6. Run one real low-value production payment test.
+7. Confirm:
    - Stripe checkout succeeds
    - webhook is delivered successfully
-   - one paid order row appears in Supabase
-   - inventory is reduced exactly once
-   - admin dashboard shows the order
+   - Stripe metadata shows pickup vs delivery correctly
+   - if local order syncing is enabled, one paid order row appears in Supabase
+   - if local inventory syncing is enabled, inventory is reduced exactly once
+   - reservation dashboard still shows reserve submissions
    - customer/admin email behavior matches env configuration
 
 ## Stripe Order Email Configuration
