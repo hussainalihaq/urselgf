@@ -93,6 +93,7 @@ function normalizeInventory(row) {
 
 function parseReserveMessage(message) {
   const out = {
+    product: '',
     quantity: '',
     phone: '',
     company: '',
@@ -108,6 +109,7 @@ function parseReserveMessage(message) {
     const label = line.slice(0, idx).trim().toLowerCase();
     const value = line.slice(idx + 1).trim();
 
+    if (label === 'product') out.product = value;
     if (label === 'quantity') out.quantity = value;
     if (label === 'phone') out.phone = value;
     if (label === 'company') out.company = value;
@@ -122,7 +124,7 @@ function parseReserveMessage(message) {
 
 function normalizeReservation(row) {
   const parsed = parseReserveMessage(row.message);
-  const product = row.product || '';
+  const product = row.product || parsed.product || '';
   const cityCountry = [parsed.city, parsed.country].filter(Boolean).join(', ');
 
   return {
