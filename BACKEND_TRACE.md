@@ -8,6 +8,7 @@ This document is the operational map of the website backend. It explains what is
 - Production backend on Vercel is file-based serverless functions under `api/`.
 - Shared backend logic lives under `api/_lib/` and does **not** count toward the Vercel Hobby function limit.
 - `server.js` is the local Node server used by `npm start`. It mirrors most production behavior for local testing, but Vercel production uses the `api/` functions.
+- The current admin is intentionally reservation-only. Paid order and inventory operations are expected to be handled primarily in Stripe unless `orders` and `inventory` tables are later added back as active operational stores.
 
 ## Serverless Function Inventory
 
@@ -100,6 +101,23 @@ All admin endpoints are served by one file: `api/admin/[...route].js`.
 4. Record is written to Supabase `contacts` when Supabase env is configured.
 5. Response returns success/failure JSON to the page.
 
+Reserve submissions currently store structured data in two places:
+
+- Dedicated columns when available:
+  - `product`
+  - `intent`
+- Message body lines:
+  - `Product: ...`
+  - `Quantity: ...`
+  - `Phone: ...`
+  - `Company: ...`
+  - `City: ...`
+  - `Country: ...`
+  - `Delivery window: ...`
+  - `Notes: ...`
+
+The reservation dashboard parses those message lines back into fields, so older or partially structured records can still display correctly.
+
 ### Newsletter form
 
 1. User submits email.
@@ -116,6 +134,24 @@ All admin endpoints are served by one file: `api/admin/[...route].js`.
 5. Backend creates a Stripe Checkout Session with product, quantity, customer, and delivery metadata.
 6. Backend attempts to create a pending order row in Supabase `orders`.
 7. Frontend receives a Stripe Checkout URL and redirects the user to Stripe.
+
+The current Stripe metadata fields sent on both the Checkout Session and the PaymentIntent are:
+
+- `orderNumber`
+- `submissionId`
+- `product`
+- `quantity`
+- `customerEmail`
+- `customerName`
+- `phone`
+- `fulfillment`
+- `orderType`
+- `city`
+- `postalCode`
+- `addressLine1`
+- `addressLine2`
+
+This is the data your team should expect to inspect in Stripe Dashboard under the payment/session metadata.
 
 ### After Stripe payment
 
@@ -137,6 +173,25 @@ After a successful payment, the order data goes to:
 
 Card details do **not** go to your website or Supabase. Card data stays in Stripe.
 
+### How Stripe price selection works now
+
+Checkout now supports automatic Stripe test/live switching by key mode:
+
+1. If `STRIPE_SECRET_KEY` starts with `sk_test_`, checkout prefers:
+   - `STRIPE_PRICE_SINDHRI_TEST`
+   - `STRIPE_PRICE_CHAUNSA_TEST`
+   - `STRIPE_PRICE_ANWAR_RATOL_TEST`
+2. If `STRIPE_SECRET_KEY` starts with `sk_live_`, checkout prefers:
+   - `STRIPE_PRICE_SINDHRI_LIVE`
+   - `STRIPE_PRICE_CHAUNSA_LIVE`
+   - `STRIPE_PRICE_ANWAR_RATOL_LIVE`
+3. If mode-specific values are missing, checkout falls back to generic values:
+   - `STRIPE_PRICE_SINDHRI`
+   - `STRIPE_PRICE_CHAUNSA`
+   - `STRIPE_PRICE_ANWAR_RATOL`
+
+This allows the team to switch from test to live by changing Stripe keys and keeping the matching mode-specific price IDs in Vercel.
+
 ### Admin flow
 
 1. Admin opens `/admin/login/`.
@@ -145,6 +200,29 @@ Card details do **not** go to your website or Supabase. Card data stays in Strip
 4. Admin pages call `/api/admin/session` to confirm the cookie.
 5. Reservation dashboard and diagnostics load through `/api/admin/*`.
 6. `/admin/orders/` and `/admin/inventory/` redirect back to `/admin/`.
+
+Reservation dashboard data source:
+
+- Reads from Supabase `contacts`
+- Fetches the newest contact rows
+- Filters locally for reserve-like submissions using:
+  - `intent=reserve`
+  - or `source=reserve-page`
+  - or subjects containing `Reserve Request`
+
+Reservation dashboard field extraction:
+
+- `customer_name` <- `name`
+- `customer_email` <- `email`
+- `customer_phone` <- parsed from message line `Phone:`
+- `product` <- `product` column, or fallback parsed from message line `Product:`
+- `quantity` <- parsed from message line `Quantity:`
+- `company` <- parsed from message line `Company:`
+- `market` <- combined `City` + `Country`
+- `delivery_window` <- parsed from message line `Delivery window:`
+- `notes` <- parsed from message line `Notes:`
+
+This fallback behavior is important because some historical reserve rows may have blank `product` columns while still containing the full reserve details inside `message`.
 
 Default hardcoded fallback values:
 
@@ -167,6 +245,7 @@ Default hardcoded fallback values:
 | `STRIPE_SECRET_KEY` | Yes for checkout | Stripe Dashboard -> Developers -> API keys -> Secret key | `/api/checkout` and webhook order processing |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Required for clean production client setup | Stripe Dashboard -> Developers -> API keys -> Publishable key | Client-side Stripe integrations and future hosted flows |
 | `STRIPE_WEBHOOK_SECRET` | Yes for webhook | Stripe Dashboard -> Developers -> Webhooks -> endpoint signing secret | Paid orders cannot be securely finalized |
+| `STRIPE_PRICE_SINDHRI` / `STRIPE_PRICE_CHAUNSA` / `STRIPE_PRICE_ANWAR_RATOL` | Optional generic fallback | Stripe Product Catalog -> open each price -> copy `price_...` | Used only when mode-specific price IDs are not set |
 | `STRIPE_PRICE_SINDHRI_TEST` / `STRIPE_PRICE_SINDHRI_LIVE` | Recommended | Stripe Product Catalog -> open each price -> copy `price_...` | Clean automatic test/live switching for Sindhri |
 | `STRIPE_PRICE_CHAUNSA_TEST` / `STRIPE_PRICE_CHAUNSA_LIVE` | Recommended | Stripe Product Catalog -> open each price -> copy `price_...` | Clean automatic test/live switching for Chaunsa |
 | `STRIPE_PRICE_ANWAR_RATOL_TEST` / `STRIPE_PRICE_ANWAR_RATOL_LIVE` | Optional until Anwar buy-now is enabled | Stripe Product Catalog -> open each price -> copy `price_...` | Clean automatic test/live switching for Anwar Ratol |
