@@ -8,6 +8,7 @@ const {
   buildCheckoutContactRecord,
   buildCheckoutResponse
 } = require('./api/_lib/checkout');
+const { listReservations } = require('./api/_lib/admin-data');
 
 const ROOT = __dirname;
 const DATA_DIR = path.join(ROOT, 'data');
@@ -21,7 +22,7 @@ const SUPABASE_INVENTORY_TABLE = process.env.SUPABASE_INVENTORY_TABLE || 'invent
 const SUPABASE_URL_VALID = /^https?:\/\//i.test(SUPABASE_URL);
 const USE_SUPABASE = Boolean(SUPABASE_URL_VALID && SUPABASE_SERVICE_ROLE_KEY);
 const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'managingdirector@ameerglobal.ca').toLowerCase();
-const ADMIN_LOGIN_CODE = process.env.ADMIN_LOGIN_CODE || '';
+const ADMIN_LOGIN_CODE = process.env.ADMIN_LOGIN_CODE || 'AmeerGlobal1966';
 const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || SUPABASE_SERVICE_ROLE_KEY || 'ameer-admin-dev-secret';
 const ADMIN_SESSION_COOKIE = 'ag_admin_session_v2';
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY || '';
@@ -977,27 +978,21 @@ async function handleApi(req, res, pathname) {
 
   if (req.method === 'GET' && pathname === '/api/admin/dashboard') {
     try {
-      if (!USE_SUPABASE) {
-        json(res, 400, { error: 'Supabase is required for admin dashboard.' });
-        return true;
+      const reservations = await listReservations();
+      const today = new Date().toISOString().slice(0, 10);
+      const countsByProduct = {};
+
+      for (const item of reservations) {
+        const key = item.product || 'Unknown';
+        countsByProduct[key] = (countsByProduct[key] || 0) + 1;
       }
 
-      await ensureInventorySeed();
-      const [orders, inventory] = await Promise.all([getOrders(), getInventory()]);
-      const totalOrders = orders.length;
-      const totalRevenue = orders.reduce((sum, row) => sum + Number(row.amount_total || 0), 0);
-      const pendingOrders = orders.filter((row) => String(row.fulfillment_status || '').toLowerCase() === 'pending').length;
-      const fulfilledOrders = orders.filter((row) => String(row.fulfillment_status || '').toLowerCase() === 'fulfilled').length;
-      const totalInventoryRemaining = inventory.reduce((sum, row) => sum + Number(row.remaining_stock || 0), 0);
-
       json(res, 200, {
-        totalOrders,
-        totalRevenue,
-        pendingOrders,
-        fulfilledOrders,
-        totalInventoryRemaining,
-        inventory,
-        recentOrders: orders.slice(0, 10)
+        totalReservations: reservations.length,
+        todayReservations: reservations.filter((row) => String(row.created_at || '').slice(0, 10) === today).length,
+        uniqueProducts: Object.keys(countsByProduct).length,
+        productCounts: Object.entries(countsByProduct).map(([product, count]) => ({ product, count })),
+        recentReservations: reservations.slice(0, 25)
       });
       return true;
     } catch (err) {

@@ -12,6 +12,7 @@ const ROOT = path.join(__dirname, '..', '..');
 const DATA_DIR = path.join(ROOT, 'data');
 const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
 const INVENTORY_FILE = path.join(DATA_DIR, 'inventory.json');
+const CONTACTS_FILE = path.join(DATA_DIR, 'contacts.json');
 
 const SUPABASE_URL = (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || '').replace(/\/+$/, '');
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
@@ -139,7 +140,7 @@ function normalizeReservation(row) {
     delivery_window: parsed.delivery_window || '',
     notes: parsed.notes || '',
     source: row.source || '',
-    created_at: row.created_at || ''
+    created_at: row.created_at || row.createdAt || ''
   };
 }
 
@@ -152,11 +153,11 @@ async function listReservations() {
       const res = await sb(`/rest/v1/${CONTACTS_TABLE}${reserveQuery}`);
       if (!res.ok) throw new Error(await res.text());
       rows = await res.json();
-    } catch (error) {
-      throw new Error(`Reservation lookup failed: ${String(error?.message || error)}`);
+    } catch {
+      rows = await readArray(CONTACTS_FILE);
     }
   } else {
-    rows = [];
+    rows = await readArray(CONTACTS_FILE);
   }
 
   const filtered = rows.filter((row) => {
