@@ -124,7 +124,7 @@ function buildBilling(cart, fulfillment) {
     };
   });
 
-  const shippingCad = fulfillment === 'delivery' ? 15.00 : 0;
+  const shippingCad = fulfillment === 'delivery' ? 10.00 : 0;
   const preTaxCad = subtotalCad + shippingCad;
   const hstRate = 0.13;
   const hstCad = Number((preTaxCad * hstRate).toFixed(2));
