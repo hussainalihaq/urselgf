@@ -368,20 +368,18 @@
 
   <script>
     const productCatalog = {
-      'Sindhri Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 38 },
-      'Anwar Ratol Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 45 },
-      'Chaunsa Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 52 }
+      'Sindhri Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 35 },
+      'Chaunsa Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 35 }
     };
 
     // Map short IDs from cart URL to full product names
-    const idToName = { sindhri: 'Sindhri Mangoes', anwar: 'Anwar Ratol Mangoes', chaunsa: 'Chaunsa Mangoes' };
+    const idToName = { sindhri: 'Sindhri Mangoes', chaunsa: 'Chaunsa Mangoes' };
     const currencyFormatter = new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 2 });
     const params = new URLSearchParams(window.location.search);
 
     // Build cart from URL: ?cart=sindhri:2,chaunsa:1 or legacy ?product=...
     let cart = [
       { product: 'Sindhri Mangoes', quantity: 0 },
-      { product: 'Anwar Ratol Mangoes', quantity: 0 },
       { product: 'Chaunsa Mangoes', quantity: 0 }
     ];
 

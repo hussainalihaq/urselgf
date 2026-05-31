@@ -6,68 +6,7 @@ const Stripe = require('stripe');
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 const stripe = stripeKey ? new Stripe(stripeKey) : null;
 
-function stripeMode() {
-  if (String(stripeKey || '').startsWith('sk_live_')) return 'live';
-  return 'test';
-}
 
-function productPriceVarNames(productName) {
-  if (productName === 'Sindhri Mangoes') {
-    return {
-      generic: 'STRIPE_PRICE_SINDHRI',
-      test: 'STRIPE_PRICE_SINDHRI_TEST',
-      live: 'STRIPE_PRICE_SINDHRI_LIVE'
-    };
-  }
-  if (productName === 'Anwar Ratol Mangoes') {
-    return {
-      generic: 'STRIPE_PRICE_ANWAR_RATOL',
-      test: 'STRIPE_PRICE_ANWAR_RATOL_TEST',
-      live: 'STRIPE_PRICE_ANWAR_RATOL_LIVE'
-    };
-  }
-  if (productName === 'Chaunsa Mangoes') {
-    return {
-      generic: 'STRIPE_PRICE_CHAUNSA',
-      test: 'STRIPE_PRICE_CHAUNSA_TEST',
-      live: 'STRIPE_PRICE_CHAUNSA_LIVE'
-    };
-  }
-  return null;
-}
-
-function getStripePriceId(productName) {
-  const vars = productPriceVarNames(productName);
-  if (!vars) return '';
-
-  const mode = stripeMode();
-  const modeSpecific = mode === 'live' ? process.env[vars.live] : process.env[vars.test];
-  const generic = process.env[vars.generic];
-
-  return modeSpecific || generic || '';
-}
-
-function buildPrimaryLineItem(checkout) {
-  const stripePriceId = getStripePriceId(checkout.contactRecord.product);
-
-  if (stripePriceId) {
-    return {
-      price: stripePriceId,
-      quantity: checkout.billing.quantity,
-    };
-  }
-
-  return {
-    price_data: {
-      currency: checkout.billing.currency.toLowerCase(),
-      product_data: {
-        name: checkout.contactRecord.product,
-      },
-      unit_amount: Math.round(checkout.billing.unitPriceCad * 100),
-    },
-    quantity: checkout.billing.quantity,
-  };
-}
 
 module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') {
@@ -104,73 +43,67 @@ module.exports = async function handler(req, res) {
       const host = req.headers.host || 'ameerglobal.ca';
       const baseUrl = `${protocol}://${host}`;
 
-      const lineItems = [buildPrimaryLineItem(checkout)];
+      // Build line items from cart array with inline pricing (no Stripe Price IDs needed)
+      const lineItems = checkout.billing.items.map(item => ({
+        price_data: {
+          currency: 'cad',
+          product_data: { name: item.product },
+          unit_amount: Math.round(item.unitPriceCad * 100)
+        },
+        quantity: item.quantity
+      }));
 
       if (checkout.billing.shippingCad > 0) {
         lineItems.push({
           price_data: {
-            currency: checkout.billing.currency.toLowerCase(),
-            product_data: {
-              name: 'Delivery Fee',
-            },
-            unit_amount: Math.round(checkout.billing.shippingCad * 100),
+            currency: 'cad',
+            product_data: { name: 'Delivery Fee' },
+            unit_amount: Math.round(checkout.billing.shippingCad * 100)
           },
-          quantity: 1,
+          quantity: 1
         });
       }
 
       if (checkout.billing.hstCad > 0) {
         lineItems.push({
           price_data: {
-            currency: checkout.billing.currency.toLowerCase(),
-            product_data: {
-              name: 'HST (13%)',
-            },
-            unit_amount: Math.round(checkout.billing.hstCad * 100),
+            currency: 'cad',
+            product_data: { name: 'HST (13%)' },
+            unit_amount: Math.round(checkout.billing.hstCad * 100)
           },
-          quantity: 1,
+          quantity: 1
         });
       }
 
+      // Build readable mango_type and cart_json for metadata
+      const friendlyCart = checkout.billing.items.map(i => `${i.quantity}x ${i.product}`).join(', ');
+      const cartMini = checkout.billing.items.map(i => ({ p: i.product, q: i.quantity }));
+
+      const metadata = {
+        orderNumber,
+        submissionId: checkout.contactRecord.id,
+        mango_type: friendlyCart.substring(0, 500),
+        quantity: String(checkout.billing.quantity),
+        customerEmail: checkout.contactRecord.email,
+        customerName: body.name || '',
+        phone: body.phone || '',
+        fulfillment: body.fulfillment || '',
+        orderType: body.fulfillment || '',
+        city: checkout.availability.city ? checkout.availability.city.label : '',
+        postalCode: checkout.availability.postalCode || '',
+        addressLine1: body.addressLine1 || '',
+        addressLine2: body.addressLine2 || '',
+        cart_json: JSON.stringify(cartMini).substring(0, 500)
+      };
+
       const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
+        mode: 'payment',
+        success_url: `${baseUrl}/checkout/success.html?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${baseUrl}/checkout/`,
         customer_email: checkout.contactRecord.email,
         line_items: lineItems,
-        mode: 'payment',
-        success_url: `${baseUrl}/checkout/success.html`,
-        cancel_url: `${baseUrl}/checkout/`,
-        metadata: {
-          orderNumber,
-          submissionId: checkout.contactRecord.id,
-          product: checkout.contactRecord.product,
-          quantity: String(checkout.billing.quantity),
-          customerEmail: checkout.contactRecord.email,
-          customerName: body.name || '',
-          phone: body.phone || '',
-          fulfillment: body.fulfillment || '',
-          orderType: body.fulfillment || '',
-          city: checkout.availability.city ? checkout.availability.city.label : '',
-          postalCode: checkout.availability.postalCode || '',
-          addressLine1: body.addressLine1 || '',
-          addressLine2: body.addressLine2 || ''
-        },
-        payment_intent_data: {
-          metadata: {
-            orderNumber,
-            submissionId: checkout.contactRecord.id,
-            product: checkout.contactRecord.product,
-            quantity: String(checkout.billing.quantity),
-            customerEmail: checkout.contactRecord.email,
-            customerName: body.name || '',
-            phone: body.phone || '',
-            fulfillment: body.fulfillment || '',
-            orderType: body.fulfillment || '',
-            city: checkout.availability.city ? checkout.availability.city.label : '',
-            postalCode: checkout.availability.postalCode || '',
-            addressLine1: body.addressLine1 || '',
-            addressLine2: body.addressLine2 || ''
-          }
-        }
+        metadata,
+        payment_intent_data: { metadata }
       });
 
       paymentResponse = {
@@ -178,7 +111,7 @@ module.exports = async function handler(req, res) {
         label: paymentResponse.label,
         status: 'redirect',
         url: session.url,
-        message: `Redirecting to secure payment for ${checkout.contactRecord.product}.`
+        message: `Redirecting to secure payment.`
       };
 
       try {
@@ -189,7 +122,7 @@ module.exports = async function handler(req, res) {
           customerName: body.name || '',
           customerEmail: checkout.contactRecord.email,
           phone: body.phone || '',
-          product: checkout.contactRecord.product,
+          product: friendlyCart,
           quantity: checkout.billing.quantity,
           fulfillment: body.fulfillment || 'pickup',
           city: checkout.availability.city ? checkout.availability.city.label : '',

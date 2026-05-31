@@ -174,24 +174,22 @@ After a successful payment, the order data goes to:
 
 Card details do **not** go to your website or Supabase. Card data stays in Stripe.
 
-### How Stripe price selection works now
+### How Stripe pricing works now
 
-Checkout now supports automatic Stripe test/live switching by key mode:
+Checkout uses **inline `price_data`** — prices are set in the backend code (`PRODUCT_PRICES_CAD` in `api/_lib/checkout.js`), not pre-created Stripe Price IDs. This means:
 
-1. If `STRIPE_SECRET_KEY` starts with `sk_test_`, checkout prefers:
-   - `STRIPE_PRICE_SINDHRI_TEST`
-   - `STRIPE_PRICE_CHAUNSA_TEST`
-   - `STRIPE_PRICE_ANWAR_RATOL_TEST`
-2. If `STRIPE_SECRET_KEY` starts with `sk_live_`, checkout prefers:
-   - `STRIPE_PRICE_SINDHRI_LIVE`
-   - `STRIPE_PRICE_CHAUNSA_LIVE`
-   - `STRIPE_PRICE_ANWAR_RATOL_LIVE`
-3. If mode-specific values are missing, checkout falls back to generic values:
-   - `STRIPE_PRICE_SINDHRI`
-   - `STRIPE_PRICE_CHAUNSA`
-   - `STRIPE_PRICE_ANWAR_RATOL`
+- **No Stripe Price IDs are needed.** You only need `STRIPE_SECRET_KEY`.
+- All mango varieties are currently priced at **CAD $35 / box** (2 kg).
+- The backend dynamically generates Stripe line items for each product in the cart, plus Delivery Fee and HST.
+- To change prices, edit `PRODUCT_PRICES_CAD` in `api/_lib/checkout.js` and `server.js`.
 
-This allows the team to switch from test to live by changing Stripe keys and keeping the matching mode-specific price IDs in Vercel.
+### Product availability
+
+- **Sindhri Mangoes** — Available for purchase (Pay Now) and reserve
+- **Chaunsa Mangoes** — Available for purchase (Pay Now) and reserve
+- **Anwar Ratol Mangoes** — Reserve only (cannot be purchased through Pay Now; users can add to cart but the Pay Now button only sends payable items to checkout)
+
+This allows the team to switch from test to live by simply changing `STRIPE_SECRET_KEY` from `sk_test_...` to `sk_live_...` in Vercel.
 
 ### Admin flow
 
@@ -243,13 +241,9 @@ Default hardcoded fallback values:
 | `SUPABASE_NEWSLETTER_TABLE` | Optional | Choose table name in Supabase | Defaults to `newsletter_subscribers` |
 | `SUPABASE_ORDERS_TABLE` | Optional | Choose table name in Supabase | Defaults to `orders`; only needed if you want local paid-order syncing beyond Stripe |
 | `SUPABASE_INVENTORY_TABLE` | Optional | Choose table name in Supabase | Defaults to `inventory`; only needed if you want local inventory syncing |
-| `STRIPE_SECRET_KEY` | Yes for checkout | Stripe Dashboard -> Developers -> API keys -> Secret key | `/api/checkout` and webhook order processing |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Required for clean production client setup | Stripe Dashboard -> Developers -> API keys -> Publishable key | Client-side Stripe integrations and future hosted flows |
-| `STRIPE_WEBHOOK_SECRET` | Yes for webhook | Stripe Dashboard -> Developers -> Webhooks -> endpoint signing secret | Paid orders cannot be securely finalized |
-| `STRIPE_PRICE_SINDHRI` / `STRIPE_PRICE_CHAUNSA` / `STRIPE_PRICE_ANWAR_RATOL` | Optional generic fallback | Stripe Product Catalog -> open each price -> copy `price_...` | Used only when mode-specific price IDs are not set |
-| `STRIPE_PRICE_SINDHRI_TEST` / `STRIPE_PRICE_SINDHRI_LIVE` | Recommended | Stripe Product Catalog -> open each price -> copy `price_...` | Clean automatic test/live switching for Sindhri |
-| `STRIPE_PRICE_CHAUNSA_TEST` / `STRIPE_PRICE_CHAUNSA_LIVE` | Recommended | Stripe Product Catalog -> open each price -> copy `price_...` | Clean automatic test/live switching for Chaunsa |
-| `STRIPE_PRICE_ANWAR_RATOL_TEST` / `STRIPE_PRICE_ANWAR_RATOL_LIVE` | Optional until Anwar buy-now is enabled | Stripe Product Catalog -> open each price -> copy `price_...` | Clean automatic test/live switching for Anwar Ratol |
+| `STRIPE_SECRET_KEY` | **Yes** for checkout | Stripe Dashboard → Developers → API keys → Secret key | `/api/checkout` and webhook order processing. This is the ONLY Stripe key needed for payments to work. |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Optional for future client-side | Stripe Dashboard → Developers → API keys → Publishable key | Not currently used; kept for future client-side Stripe.js integration |
+| `STRIPE_WEBHOOK_SECRET` | Yes for webhook | Stripe Dashboard → Developers → Webhooks → endpoint signing secret | Paid orders cannot be securely finalized in Supabase |
 | `ADMIN_EMAIL` | Yes | Manually set to `managingdirector@ameerglobal.ca` | Admin login access policy |
 | `ADMIN_LOGIN_CODE` | Optional but recommended in Vercel | Manually create a strong passcode | Falls back to `AmeerGlobal1966`, which is convenient but weaker |
 | `ADMIN_SESSION_SECRET` | Optional but recommended in Vercel | Manually create a long random secret | Falls back to a built-in secret, which is convenient but weaker |
@@ -318,22 +312,17 @@ The site should remain in Stripe `test` mode until admin, routing, and webhook f
 
 Before switching to live:
 
-1. Replace `STRIPE_SECRET_KEY` with `sk_live_...`.
-2. Replace `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` with `pk_live_...`.
-3. Add mode-specific live price IDs in Vercel:
-   - `STRIPE_PRICE_SINDHRI_LIVE`
-   - `STRIPE_PRICE_CHAUNSA_LIVE`
-   - later `STRIPE_PRICE_ANWAR_RATOL_LIVE`
-4. Create or update the production webhook endpoint in Stripe:
+1. Replace `STRIPE_SECRET_KEY` with `sk_live_...` in Vercel env vars.
+2. Create the production webhook endpoint in Stripe:
    - `https://ameerglobal.ca/api/stripe-webhook`
-5. Copy the live webhook signing secret into `STRIPE_WEBHOOK_SECRET`.
-6. Run one real low-value production payment test.
-7. Confirm:
-   - Stripe checkout succeeds
+3. Copy the live webhook signing secret into `STRIPE_WEBHOOK_SECRET`.
+4. Run one real low-value production payment test.
+5. Confirm:
+   - Stripe checkout succeeds and shows correct products/prices ($35/box)
    - webhook is delivered successfully
-   - Stripe metadata shows pickup vs delivery correctly
+   - Stripe metadata shows `mango_type`, `cart_json`, pickup vs delivery correctly
    - if local order syncing is enabled, one paid order row appears in Supabase
-   - if local inventory syncing is enabled, inventory is reduced exactly once
+   - if local inventory syncing is enabled, inventory is reduced for each cart item
    - reservation dashboard still shows reserve submissions
    - customer/admin email behavior matches env configuration
 
