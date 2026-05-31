@@ -110,14 +110,23 @@ function parseReserveMessage(message) {
     const label = line.slice(0, idx).trim().toLowerCase();
     const value = line.slice(idx + 1).trim();
 
-    if (label === 'product') out.product = value;
-    if (label === 'quantity') out.quantity = value;
+    if (label === 'product' || label === 'products') out.product = value;
+    if (label === 'quantity' || label === 'total boxes') out.quantity = value;
     if (label === 'phone') out.phone = value;
     if (label === 'company') out.company = value;
     if (label === 'city') out.city = value;
     if (label === 'country') out.country = value;
     if (label === 'delivery window') out.delivery_window = value;
     if (label === 'notes') out.notes = value;
+  }
+
+  // Fallback: If product is empty or generic, try to find lines that look like " - 1x Mango"
+  if (!out.product || out.product === '') {
+    const items = [];
+    for (const line of String(message || '').split('\n')) {
+      if (line.trim().startsWith('-')) items.push(line.trim().replace(/^- /, ''));
+    }
+    if (items.length > 0) out.product = items.join(', ');
   }
 
   return out;
