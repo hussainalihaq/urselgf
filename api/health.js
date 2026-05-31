@@ -5,21 +5,35 @@ const CRON_SECRET = process.env.CRON_SECRET || '';
 const CONTACTS_TABLE = process.env.SUPABASE_CONTACTS_TABLE || 'contacts';
 const ORDERS_TABLE = process.env.SUPABASE_ORDERS_TABLE || 'orders';
 const INVENTORY_TABLE = process.env.SUPABASE_INVENTORY_TABLE || 'inventory';
+const CONTACTS_SELECTS = ['id'];
+const ORDERS_SELECTS = ['order_number', 'id', 'stripe_session_id'];
+const INVENTORY_SELECTS = ['product', 'mango_type', 'id'];
 
-async function pingTable(baseUrl, serviceRoleKey, table) {
-  const res = await fetch(`${baseUrl}/rest/v1/${table}?select=id&limit=1`, {
-    headers: {
-      apikey: serviceRoleKey,
-      Authorization: `Bearer ${serviceRoleKey}`,
-      'Content-Type': 'application/json'
+function authHeaders(serviceRoleKey) {
+  return {
+    apikey: serviceRoleKey,
+    Authorization: `Bearer ${serviceRoleKey}`,
+    'Content-Type': 'application/json'
+  };
+}
+
+async function pingTable(baseUrl, serviceRoleKey, table, selectCandidates) {
+  let lastError = '';
+
+  for (const column of selectCandidates) {
+    const res = await fetch(`${baseUrl}/rest/v1/${table}?select=${encodeURIComponent(column)}&limit=1`, {
+      headers: authHeaders(serviceRoleKey)
+    });
+
+    if (res.ok) {
+      await res.text();
+      return;
     }
-  });
 
-  if (!res.ok) {
-    throw new Error(await res.text());
+    lastError = await res.text();
   }
 
-  await res.text();
+  throw new Error(lastError || `Keepalive probe failed for ${table}`);
 }
 
 module.exports = async function handler(req, res) {
@@ -73,11 +87,11 @@ module.exports = async function handler(req, res) {
     };
 
     try {
-      await pingTable(supabaseUrl, serviceRoleKey, CONTACTS_TABLE);
+      await pingTable(supabaseUrl, serviceRoleKey, CONTACTS_TABLE, CONTACTS_SELECTS);
       keepalive.contactsReachable = true;
-      await pingTable(supabaseUrl, serviceRoleKey, ORDERS_TABLE);
+      await pingTable(supabaseUrl, serviceRoleKey, ORDERS_TABLE, ORDERS_SELECTS);
       keepalive.ordersReachable = true;
-      await pingTable(supabaseUrl, serviceRoleKey, INVENTORY_TABLE);
+      await pingTable(supabaseUrl, serviceRoleKey, INVENTORY_TABLE, INVENTORY_SELECTS);
       keepalive.inventoryReachable = true;
     } catch (error) {
       keepalive.ok = false;
