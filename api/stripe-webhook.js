@@ -52,12 +52,20 @@ module.exports = async function handler(req, res) {
       const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 10 });
       const result = await upsertPaidOrderFromSession(session, lineItems.data || []);
       if (result.order && result.changed) {
-        await decrementInventory(result.order.product, result.order.quantity);
+        if (Array.isArray(result.cartItems) && result.cartItems.length) {
+          for (const item of result.cartItems) {
+            await decrementInventory(item.product, item.quantity);
+          }
+        } else {
+          await decrementInventory(result.order.product, result.order.quantity);
+        }
         try {
           await sendPaidOrderEmails(result.order);
         } catch (mailError) {
           console.error('[stripe-webhook] Email warning:', mailError?.message || mailError);
         }
+      } else if (result.storageSkipped) {
+        console.warn('[stripe-webhook] Orders table missing in Supabase. Payment completed in Stripe, but local order sync was skipped.');
       }
     }
 
