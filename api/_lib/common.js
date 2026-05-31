@@ -4,6 +4,7 @@ const SUPABASE_URL = (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABA
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 const SUPABASE_CONTACTS_TABLE = process.env.SUPABASE_CONTACTS_TABLE || 'contacts';
 const SUPABASE_NEWSLETTER_TABLE = process.env.SUPABASE_NEWSLETTER_TABLE || 'newsletter_subscribers';
+const IS_VERCEL = Boolean(process.env.VERCEL);
 
 function json(res, statusCode, payload) {
   res.statusCode = statusCode;
@@ -30,6 +31,12 @@ function requireSupabase() {
     return false;
   }
   return true;
+}
+
+function ensureHostedWriteStore(feature) {
+  if (IS_VERCEL && !requireSupabase()) {
+    throw new Error(`${feature} requires Supabase to be configured on Vercel.`);
+  }
 }
 
 async function readBody(req) {
@@ -93,6 +100,8 @@ async function supabaseRequest(endpoint, options = {}) {
 }
 
 async function supabaseInsert(table, record) {
+  ensureHostedWriteStore('Write access');
+
   const response = await supabaseRequest(`/rest/v1/${table}`, {
     method: 'POST',
     headers: { Prefer: 'return=minimal' },
@@ -106,6 +115,8 @@ async function supabaseInsert(table, record) {
 }
 
 async function newsletterExists(email) {
+  ensureHostedWriteStore('Newsletter subscriptions');
+
   const query = `?select=id&email=eq.${encodeURIComponent(email)}&limit=1`;
   const response = await supabaseRequest(`/rest/v1/${SUPABASE_NEWSLETTER_TABLE}${query}`, {
     method: 'GET'
@@ -122,6 +133,7 @@ async function newsletterExists(email) {
 
 async function insertContact(record) {
   if (!requireSupabase()) {
+    ensureHostedWriteStore('Contact submissions');
     console.log('[insertContact] Supabase not configured, skipping DB insert. Record ID:', record.id);
     return;
   }

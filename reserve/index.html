@@ -141,23 +141,18 @@
   <!-- PRODUCT + FORM -->
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 fade-up fade-up-d2">
 
-    <!-- PRODUCT CARD -->
-    <div class="lg:col-span-5">
-      <div class="bg-white rounded-3xl overflow-hidden shadow-[0_16px_48px_rgba(20,42,88,.08)] border border-[#203a7b]/6 sticky top-[120px]">
-        <!-- Creative gradient header instead of image -->
-        <div class="relative bg-gradient-to-br from-[#1b2f6b] via-[#203a7b] to-[#2a5faf] p-8 pb-10 text-center overflow-hidden">
-          <div class="absolute inset-0 opacity-[0.07]" style="background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><circle cx=%2230%22 cy=%2230%22 r=%2228%22 fill=%22none%22 stroke=%22white%22 stroke-width=%220.5%22/></svg>');background-size:60px 60px"></div>
-          <div class="relative z-10">
-            <div class="w-24 h-24 mx-auto mb-5 overflow-hidden rounded-full">
-              <img src="/assets/ameer-farms-logo.png?v=2" alt="Ameer Farms Logo" class="h-full w-full scale-[1.22] object-cover">
-            </div>
-            <div class="flex items-center justify-center gap-2 mb-3">
-              <span class="inline-block px-3 py-1 rounded-full bg-[#f0c850]/20 text-[#f0c850] text-[.6rem] font-bold uppercase tracking-[.18em] border border-[#f0c850]/30">Premium Import</span>
-              <span id="summary-origin" class="inline-block px-3 py-1 rounded-full bg-white/10 text-white/80 text-[.6rem] font-bold uppercase tracking-[.18em] border border-white/15">Multan, Pakistan</span>
-            </div>
-            <h2 id="product-name" class="text-[1.8rem] text-white leading-tight" style="font-family:'DM Serif Display',serif">Product</h2>
+    <!-- CART -->
+      <div class="lg:col-span-5">
+        <div class="bg-white rounded-3xl shadow-[0_16px_48px_rgba(20,42,88,.08)] border border-[#203a7b]/6 sticky top-[120px] p-6">
+          <h2 class="text-[1.8rem] text-[#142a53] mb-4" style="font-family:'DM Serif Display',serif">Your Reservation</h2>
+          <div id="cart-items" class="space-y-4">
+            <!-- Rendered by JS -->
+          </div>
+          <div class="pt-5 border-t border-[#203a7b]/8 mt-5">
+            <p class="product-note !text-[0.85rem] !p-4">Tip: You can mix and match different mango varieties. No payment is required today.</p>
           </div>
         </div>
+      </div>
         <div class="p-6">
           <!-- Specs row -->
           <div class="grid grid-cols-2 gap-3 mb-5">
@@ -235,7 +230,7 @@
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div>
                 <div class="text-[.65rem] font-bold uppercase tracking-[.16em] text-[#6e7b97]">Reservation Summary</div>
-                <div class="text-[1rem] font-semibold text-[#182a59] mt-1" id="summary-line">1× Product</div>
+                <div class="text-[1rem] font-semibold text-[#182a59] mt-1" id="summary-line">0× Boxes Total</div>
               </div>
               <div class="flex items-center gap-2">
                 <span class="material-symbols-outlined text-green-600 text-lg">check_circle</span>
@@ -267,90 +262,108 @@
 
 <script>
   const productCatalog = {
-    'Sindhri Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', image: '/assets/sindhri-mangoes.jpg' },
-    'Anwar Ratol Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', image: '/assets/anwar-ratol-mangoes.jpg' },
-    'Chaunsa Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', image: '/assets/chaunsa-mangoes.jpg' },
-    'Chaunsa Mango Premium Box': { unit: '2 kg box', origin: 'Multan, Pakistan', image: '/assets/chaunsa-mangoes.jpg' },
-    'Anwar Ratol Mango Reserve': { unit: '2 kg box', origin: 'Multan, Pakistan', image: '/assets/anwar-ratol-mangoes.jpg' },
-    'Sindhri Mango Estate Selection': { unit: '2 kg box', origin: 'Multan, Pakistan', image: '/assets/sindhri-mangoes.jpg' },
-    'Himalayan Salt': { unit: 'Bulk or retail packs', origin: 'Khewra, Pakistan', image: '/assets/himalayan-salt.jpg' },
-    'EcoWare Naturals': { unit: 'Trade case', origin: 'Pakistan', image: '/assets/eco-utensils.jpg' },
-    'De-Icing Salt': { unit: 'Bulk pallet', origin: 'Pakistan', image: '/assets/deicing-salt.jpg' }
+    'Sindhri Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 38 },
+    'Anwar Ratol Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 45 },
+    'Chaunsa Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 52 },
+    'Chaunsa Mango Premium Box': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 52 },
+    'Anwar Ratol Mango Reserve': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 45 },
+    'Sindhri Mango Estate Selection': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 38 }
   };
 
   const params = new URLSearchParams(window.location.search);
-  const product = params.get('product') || 'Ameer Global Product';
+  const passedProduct = params.get('product');
   const intent = params.get('intent') || 'reserve';
-  const qtyField = document.getElementById('quantity');
+  
+  let cart = [
+    { product: 'Sindhri Mangoes', quantity: 0 },
+    { product: 'Anwar Ratol Mangoes', quantity: 0 },
+    { product: 'Chaunsa Mangoes', quantity: 0 }
+  ];
+
+  if (passedProduct) {
+    const match = cart.find(c => passedProduct.toLowerCase().includes(c.product.toLowerCase().split(' ')[0]));
+    if (match) match.quantity = 1;
+    else cart[0].quantity = 1;
+  } else {
+    cart[0].quantity = 1;
+  }
+
+  const cartItemsEl = document.getElementById('cart-items');
+  const summaryLine = document.getElementById('summary-line');
   const status = document.getElementById('reserve-status');
   const submitButton = document.getElementById('submit-reserve');
-  const summaryLine = document.getElementById('summary-line');
 
-  const profile = productCatalog[product] || { unit: 'Trade pack', origin: 'Global', image: '/assets/new-mango-photo.png' };
-
-  document.getElementById('product-name').textContent = product;
-  if (document.getElementById('hero-bg')) document.getElementById('hero-bg').src = profile.image;
-  if (document.getElementById('summary-unit')) document.getElementById('summary-unit').textContent = profile.unit;
-  if (document.getElementById('summary-origin')) document.getElementById('summary-origin').textContent = profile.origin;
-
-  // Inject catchphrase
-  const catchphraseEl = document.getElementById('product-catchphrase');
-  if (catchphraseEl) {
-    let catchphrase = '';
-    if (product.includes('Anwar Ratol')) {
-      catchphrase = 'MOST PEOPLE HEAR ABOUT IT. VERY FEW TASTE THE REAL ONE. YOU\'RE LUCKY IF YOU GET IT.';
-    } else if (product.includes('Sindhri')) {
-      catchphrase = 'BIGGER, SMOOTHER, RICHER, AND NATURALLY HONEYED. ONCE YOU TASTE PEAK-SEASON SINDHRI, THE EARLY ONES DON\'T COMPARE.';
-    } else if (product.includes('Chaunsa')) {
-      catchphrase = 'THE KING ARRIVES LATE. AND STEALS THE WHOLE SEASON.';
-    }
-    catchphraseEl.textContent = catchphrase;
-    catchphraseEl.classList.toggle('hidden', !catchphrase);
+  function renderCart() {
+    cartItemsEl.innerHTML = '';
+    let totalQty = 0;
+    cart.forEach((item, index) => {
+      totalQty += item.quantity;
+      const p = productCatalog[item.product];
+      const itemEl = document.createElement('div');
+      itemEl.className = 'flex items-center justify-between p-4 rounded-2xl border border-[#203a7b]/10 bg-[#f8f9fc] shadow-sm transition hover:shadow-md';
+      itemEl.innerHTML = `
+        <div>
+          <div class="font-bold text-[#182a59] text-[1.1rem]" style="font-family:'DM Serif Display',serif">${item.product}</div>
+          <div class="text-[.75rem] font-bold text-[#6e7b97] uppercase tracking-[0.1em] mt-1">${p.unit} &middot; CAD ${p.price.toFixed(2)}</div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="updateQty(${index}, -1)" class="w-[38px] h-[38px] flex items-center justify-center rounded-xl border-2 border-[#203a7b]/15 text-[#203a7b] font-bold bg-white hover:bg-[#edf3ff] hover:border-[#203a7b] transition-all">−</button>
+          <span class="w-[32px] text-center font-bold text-[#182a59] text-[1.1rem]">${item.quantity}</span>
+          <button type="button" onclick="updateQty(${index}, 1)" class="w-[38px] h-[38px] flex items-center justify-center rounded-xl border-2 border-[#203a7b]/15 text-[#203a7b] font-bold bg-white hover:bg-[#edf3ff] hover:border-[#203a7b] transition-all">+</button>
+        </div>
+      `;
+      cartItemsEl.appendChild(itemEl);
+    });
+    
+    summaryLine.textContent = `${totalQty}× Boxes Total`;
   }
 
-  function updateSummary() {
-    const qty = Math.max(1, parseInt(qtyField.value) || 1);
-    summaryLine.textContent = `${qty}× ${product}`;
-  }
-  updateSummary();
+  window.updateQty = function(index, delta) {
+    cart[index].quantity = Math.max(0, Math.min(100, cart[index].quantity + delta));
+    renderCart();
+  };
 
-  document.getElementById('qty-minus').addEventListener('click', () => {
-    const current = Math.max(1, Number.parseInt(qtyField.value || '1', 10) || 1);
-    qtyField.value = String(Math.max(1, current - 1));
-    updateSummary();
-  });
-
-  document.getElementById('qty-plus').addEventListener('click', () => {
-    const current = Math.min(1000, Number.parseInt(qtyField.value || '1', 10) || 1);
-    qtyField.value = String(Math.min(1000, current + 1));
-    updateSummary();
-  });
-
-  qtyField.addEventListener('input', updateSummary);
+  renderCart();
 
   document.getElementById('reserve-form').addEventListener('submit', async (event) => {
     event.preventDefault();
 
+    const activeCart = cart.filter(c => c.quantity > 0);
+    if (activeCart.length === 0) {
+      status.textContent = 'Please add at least one box to your reservation.';
+      status.style.color = '#a3392f';
+      return;
+    }
+
     submitButton.disabled = true;
     submitButton.innerHTML = '<span class="material-symbols-outlined animate-spin text-lg">progress_activity</span> Submitting...';
     status.textContent = 'Sending reserve request...';
+    status.style.color = '#6e7b97';
+
+    const itemLines = activeCart.map(i => ` - ${i.quantity}x ${i.product}`).join('
+');
+    const primaryProduct = activeCart.length === 1 ? activeCart[0].product : 'Multiple Products';
+    const totalQty = activeCart.reduce((sum, i) => sum + i.quantity, 0);
 
     const payload = {
       name: document.getElementById('name').value.trim(),
       email: document.getElementById('email').value.trim(),
-      subject: `Reserve Request: ${product}`,
+      subject: `Reserve Request: ${primaryProduct}`,
       message: [
-        `Product: ${product}`,
-        `Quantity: ${qtyField.value.trim()}`,
+        `Products:`,
+        itemLines,
+        `Total Boxes: ${totalQty}`,
+        '',
         `Phone: ${document.getElementById('phone').value.trim()}`,
         `Company: ${document.getElementById('company').value.trim() || 'N/A'}`,
         `City: ${document.getElementById('marketCity').value.trim()}`,
         `Country: ${document.getElementById('marketCountry').value.trim()}`,
         `Delivery window: ${document.getElementById('window').value.trim()}`,
         `Notes: ${document.getElementById('notes').value.trim()}`
-      ].join('\n'),
+      ].join('
+'),
       source: 'reserve-page',
-      product,
+      product: primaryProduct,
       intent
     };
 
@@ -361,19 +374,22 @@
         body: JSON.stringify(payload)
       });
       const result = await response.json();
+      
       if (!response.ok) {
         status.textContent = result.error || 'Unable to submit reserve request.';
+        status.style.color = '#a3392f';
         submitButton.disabled = false;
         submitButton.innerHTML = 'Reserve My Order <span class="material-symbols-outlined text-lg">arrow_forward</span>';
         return;
       }
 
       status.textContent = result.message || '✓ Reserve request sent successfully!';
-      status.classList.add('text-green-700', 'font-semibold');
+      status.style.color = '#1f7a52';
       submitButton.disabled = false;
       submitButton.innerHTML = 'Reserve My Order <span class="material-symbols-outlined text-lg">arrow_forward</span>';
     } catch (error) {
       status.textContent = 'Network error. Please try again.';
+      status.style.color = '#a3392f';
       submitButton.disabled = false;
       submitButton.innerHTML = 'Reserve My Order <span class="material-symbols-outlined text-lg">arrow_forward</span>';
     }

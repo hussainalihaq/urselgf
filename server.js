@@ -22,8 +22,8 @@ const SUPABASE_INVENTORY_TABLE = process.env.SUPABASE_INVENTORY_TABLE || 'invent
 const SUPABASE_URL_VALID = /^https?:\/\//i.test(SUPABASE_URL);
 const USE_SUPABASE = Boolean(SUPABASE_URL_VALID && SUPABASE_SERVICE_ROLE_KEY);
 const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'managingdirector@ameerglobal.ca').toLowerCase();
-const ADMIN_LOGIN_CODE = process.env.ADMIN_LOGIN_CODE || 'AmeerGlobal1966';
-const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || SUPABASE_SERVICE_ROLE_KEY || 'ameer-admin-dev-secret';
+const ADMIN_LOGIN_CODE = process.env.ADMIN_LOGIN_CODE || '';
+const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || '';
 const ADMIN_SESSION_COOKIE = 'ag_admin_session_v2';
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY || '';
 const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || '';
@@ -476,23 +476,36 @@ async function upsertOrderFromStripeSession(session) {
     updated_at: createdAt
   });
 
-  const invRows = await supabaseSelect(
-    SUPABASE_INVENTORY_TABLE,
-    `?select=*&mango_type=eq.${encodeFilter(mangoType)}&limit=1`
-  );
-  if (invRows.length > 0) {
-    const row = invRows[0];
-    const soldQuantity = Number(row.sold_quantity || 0) + quantity;
-    const remainingStock = Number(row.remaining_stock || 0) - quantity;
-    await supabaseUpdate(
+  let cart = [];
+  try {
+    if (metadata.cart_json) {
+      cart = JSON.parse(metadata.cart_json);
+    } else {
+      cart = [{ p: mangoType, q: quantity }];
+    }
+  } catch {
+    cart = [{ p: mangoType, q: quantity }];
+  }
+
+  for (const item of cart) {
+    const invRows = await supabaseSelect(
       SUPABASE_INVENTORY_TABLE,
-      `?id=eq.${encodeFilter(row.id)}`,
-      {
-        sold_quantity: soldQuantity,
-        remaining_stock: remainingStock,
-        updated_at: new Date().toISOString()
-      }
+      `?select=*&mango_type=eq.${encodeFilter(item.p)}&limit=1`
     );
+    if (invRows.length > 0) {
+      const row = invRows[0];
+      const soldQuantity = Number(row.sold_quantity || 0) + Number(item.q);
+      const remainingStock = Number(row.remaining_stock || 0) - Number(item.q);
+      await supabaseUpdate(
+        SUPABASE_INVENTORY_TABLE,
+        `?id=eq.${encodeFilter(row.id)}`,
+        {
+          sold_quantity: soldQuantity,
+          remaining_stock: remainingStock,
+          updated_at: new Date().toISOString()
+        }
+      );
+    }
   }
 
   return { duplicate: false };
@@ -685,6 +698,10 @@ async function handleApi(req, res, pathname) {
       }
       if (!ADMIN_LOGIN_CODE) {
         json(res, 500, { error: 'Admin login code is not configured on server.' });
+        return true;
+      }
+      if (!ADMIN_SESSION_SECRET) {
+        json(res, 500, { error: 'Admin session secret is not configured on server.' });
         return true;
       }
       if (code !== ADMIN_LOGIN_CODE) {
@@ -906,13 +923,17 @@ async function handleApi(req, res, pathname) {
       const body = await readBody(req);
       const checkout = buildCheckoutContactRecord(body);
       await insertContactRecord(checkout.contactRecord);
+      const cartMini = checkout.billing.items.map(i => ({ p: i.product, q: i.quantity }));
+      const friendlyCart = cartMini.map(i => `${i.q}x ${i.p}`).join(', ');
+      
       const metadata = {
-        mango_type: checkout.contactRecord.product,
+        mango_type: friendlyCart.substring(0, 500),
         quantity: String(checkout.quantity),
         order_type: normalizeText(body.fulfillment).toLowerCase() === 'delivery' ? 'Delivery' : 'Pickup',
         customer_name: checkout.contactRecord.name,
         customer_email: checkout.contactRecord.email,
-        customer_phone: normalizeText(body.phone)
+        customer_phone: normalizeText(body.phone),
+        cart_json: JSON.stringify(cartMini).substring(0, 500)
       };
 
       if (metadata.order_type === 'Delivery') {
@@ -926,23 +947,43 @@ async function handleApi(req, res, pathname) {
           .join(', ');
       }
 
+      const line_items = checkout.billing.items.map(item => ({
+        price_data: {
+          currency: 'cad',
+          product_data: { name: item.product },
+          unit_amount: Math.round(item.unitPriceCad * 100)
+        },
+        quantity: item.quantity
+      }));
+
+      if (checkout.billing.shippingCad > 0) {
+        line_items.push({
+          price_data: {
+            currency: 'cad',
+            product_data: { name: 'Delivery Fee' },
+            unit_amount: Math.round(checkout.billing.shippingCad * 100)
+          },
+          quantity: 1
+        });
+      }
+
+      if (checkout.billing.hstCad > 0) {
+        line_items.push({
+          price_data: {
+            currency: 'cad',
+            product_data: { name: 'HST (13%)' },
+            unit_amount: Math.round(checkout.billing.hstCad * 100)
+          },
+          quantity: 1
+        });
+      }
+
       const session = await stripe.checkout.sessions.create({
         mode: 'payment',
         success_url: `${BASE_URL}/checkout/success.html?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${BASE_URL}/checkout/`,
         customer_email: checkout.contactRecord.email,
-        line_items: [
-          {
-            price_data: {
-              currency: 'cad',
-              product_data: {
-                name: checkout.contactRecord.product
-              },
-              unit_amount: Math.round(checkout.billing.unitPriceCad * 100)
-            },
-            quantity: checkout.billing.quantity
-          }
-        ],
+        line_items,
         metadata,
         payment_intent_data: {
           metadata

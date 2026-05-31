@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "id": "dbe57a3a-6dfe-47cb-acce-94ff0741f979",
+    "name": "Test User",
+    "email": "test@example.com",
+    "subject": "Reserve Request: Sindhri Mangoes",
+    "message": "Product: Sindhri Mangoes\nQuantity: 2\nPhone: +1 555 111 2222\nCity: Toronto\nCountry: Canada\nDelivery window: June 2026",
+    "source": "reserve-page",
+    "product": "Sindhri Mangoes",
+    "intent": "reserve",
+    "createdAt": "2026-05-12T20:31:40.862Z"
+  },
+  {
+    "id": "b0f19c93-6af7-4032-a640-961c0ea433c2",
+    "name": "Test User",
+    "email": "test@example.com",
+    "subject": "Reserve Request: Sindhri Mangoes",
+    "message": "Product: Sindhri Mangoes\nQuantity: 2\nPhone: +1 555 111 2222\nCity: Toronto\nCountry: Canada\nDelivery window: June 2026",
+    "source": "reserve-page",
+    "product": "Sindhri Mangoes",
+    "intent": "reserve",
+    "createdAt": "2026-05-12T20:31:40.877Z"
+  }
+]

@@ -10,9 +10,16 @@ const SUPABASE_URL = (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABA
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 const SUPABASE_ORDERS_TABLE = process.env.SUPABASE_ORDERS_TABLE || 'orders';
 const SUPABASE_INVENTORY_TABLE = process.env.SUPABASE_INVENTORY_TABLE || 'inventory';
+const IS_VERCEL = Boolean(process.env.VERCEL);
 
 function hasSupabase() {
   return Boolean(SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY);
+}
+
+function ensurePersistentOrderStorage() {
+  if (IS_VERCEL && !hasSupabase()) {
+    throw new Error('Supabase must be configured on Vercel before accepting live orders.');
+  }
 }
 
 function todayStamp(date = new Date()) {
@@ -62,6 +69,7 @@ function nextOrderNumberFromRows(rows, stamp) {
 }
 
 async function generateOrderNumber() {
+  ensurePersistentOrderStorage();
   const stamp = todayStamp();
   if (hasSupabase()) {
     const response = await supabaseRequest(
@@ -79,6 +87,7 @@ async function generateOrderNumber() {
 }
 
 async function createPendingOrder(order) {
+  ensurePersistentOrderStorage();
   const now = new Date().toISOString();
   const record = {
     order_number: order.orderNumber,
@@ -122,6 +131,7 @@ async function createPendingOrder(order) {
 }
 
 async function getOrderBySessionId(sessionId) {
+  ensurePersistentOrderStorage();
   if (hasSupabase()) {
     const response = await supabaseRequest(
       `/rest/v1/${SUPABASE_ORDERS_TABLE}?select=*&stripe_session_id=eq.${encodeURIComponent(sessionId)}&limit=1`
@@ -139,6 +149,7 @@ async function getOrderBySessionId(sessionId) {
 }
 
 async function markOrderPaidBySessionId(sessionId, paymentIntentId) {
+  ensurePersistentOrderStorage();
   const now = new Date().toISOString();
   if (hasSupabase()) {
     const response = await supabaseRequest(
@@ -182,6 +193,7 @@ async function markOrderPaidBySessionId(sessionId, paymentIntentId) {
 }
 
 async function upsertPaidOrderFromSession(session, lineItems = []) {
+  ensurePersistentOrderStorage();
   const existing = await getOrderBySessionId(session.id);
   if (existing) {
     if (existing.status === 'paid') return { order: existing, changed: false };
@@ -240,6 +252,7 @@ async function upsertPaidOrderFromSession(session, lineItems = []) {
 }
 
 async function decrementInventory(product, quantity) {
+  ensurePersistentOrderStorage();
   const qty = Number(quantity || 0);
   if (!product || !Number.isFinite(qty) || qty <= 0) return;
 

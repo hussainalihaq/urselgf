@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUMS Voting Portal</title>
+  <link href="./assets/favicon.ico" rel="shortcut icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <link href="./assets/vendor/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="./assets/vendor/toastr.min.css" rel="stylesheet" type="text/css">
+  <style>
+    @font-face {
+      font-family: "myriadpro-regular";
+      src: url("./assets/fonts/myriadpro-regular.otf") format("opentype");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "myriadpro-semibold";
+      src: url("./assets/fonts/myriadpro-semibold.otf") format("opentype");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: myriadpro-regular, "Source Sans 3", "Source Sans Pro", "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: #333;
+      background: #ececec;
+      overflow-x: hidden;
+      letter-spacing: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .h1,
+    .h2,
+    .h3,
+    .h4,
+    .h5,
+    .h6 {
+      font-family: myriadpro-semibold, "Source Sans 3", "Source Sans Pro", "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 600;
+      color: #444;
+    }
+
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      min-height: 72px;
+    }
+
+    .navbar-default {
+      background-color: #fcfcfc;
+      border-color: #1ba39c;
+      border-width: 0 0 1px;
+      box-shadow: none;
+    }
+
+    .navbar-brand {
+      height: auto;
+      padding: 10px 15px 8px;
+    }
+
+    .navbar-brand img {
+      width: 176px;
+      height: auto;
+      display: block;
+    }
+
+    .navbar-toggle {
+      margin-top: 14px;
+      margin-right: 15px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      background: #f5f5f5;
+      border: 1px solid #d7d7d7;
+      padding: 10px 11px;
+    }
+
+    .navbar-default .navbar-toggle .icon-bar {
+      background-color: #8b8b8b;
+      width: 24px;
+      height: 3px;
+      border-radius: 2px;
+    }
+
+    .navbar-default .navbar-toggle:focus,
+    .navbar-default .navbar-toggle:hover {
+      background: #efefef;
+    }
+
+    .navbar-default .navbar-nav > li > a {
+      color: #676767;
+      font-family: myriadpro-semibold, "Source Sans 3", "Source Sans Pro", "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      padding-top: 25px;
+      padding-bottom: 24px;
+    }
+
+    .navbar-default .navbar-nav > li > a:hover,
+    .navbar-default .navbar-nav > li > a:focus {
+      color: #555;
+    }
+
+    .page-shell {
+      padding-top: 22px;
+      padding-bottom: 28px;
+    }
+
+    .well {
+      border-radius: 0;
+      padding: 15px;
+      margin-bottom: 22px;
+      background-color: #fcfcfc;
+      border: 1px solid #cecece;
+      box-shadow: none;
+    }
+
+    .well-header {
+      border-bottom: 1px solid #cecece;
+      padding-bottom: 12px;
+    }
+
+    .well-header h2 {
+      margin: 8px 0 0;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .well-content {
+      padding-top: 14px;
+    }
+
+    .ballot-section {
+      padding: 19px 20px 17px;
+      margin-bottom: 8px;
+    }
+
+    .ballot-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .ballot-section--soft {
+      background: #f0f6f3;
+    }
+
+    .ballot-section--cool {
+      background: #e2f6f2;
+    }
+
+    .ballot-section h3 {
+      margin: 0 0 20px;
+      font-size: 16px;
+      line-height: 1.35;
+      color: #444;
+    }
+
+    .ballot-layout {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 152px;
+    }
+
+    .ballot-options {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .ballot-actions {
+      flex: 0 0 74px;
+      text-align: right;
+      padding-bottom: 6px;
+    }
+
+    .ballot-option {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 0 0 12px;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1.28;
+      font-weight: normal;
+    }
+
+    .ballot-option:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .ballot-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .ballot-radio {
+      width: 20px;
+      height: 20px;
+      margin-top: 1px;
+      flex-shrink: 0;
+      border: 2px solid #b8b8b8;
+      border-radius: 50%;
+      background: #fff;
+      position: relative;
+    }
+
+    .ballot-option input:checked + .ballot-radio {
+      border-color: #0958a7;
+      background: #0958a7;
+    }
+
+    .ballot-option input:checked + .ballot-radio::after {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .ballot-option input:focus + .ballot-radio {
+      box-shadow: 0 0 0 2px rgba(8, 92, 171, 0.16);
+    }
+
+    .ballot-option input:disabled + .ballot-radio {
+      box-shadow: none;
+    }
+
+
+    .ballot-option__text {
+      display: inline-block;
+      word-break: break-word;
+    }
+
+    .btn {
+      border-radius: 0;
+      font-family: myriadpro-regular, "Source Sans 3", "Source Sans Pro", "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    .btn-primary {
+      background-color: #337ab7;
+      border-color: #2e6da4;
+      box-shadow: none;
+    }
+
+    .btn-primary:focus,
+    .btn-primary:hover,
+    .btn-primary:active,
+    .btn-primary.active {
+      background-color: #286090;
+      border-color: #204d74;
+    }
+
+    .btn-default {
+      color: #333;
+      background-color: #fff;
+      border-color: #ccc;
+      box-shadow: none;
+    }
+
+    .btn-default:focus,
+    .btn-default:hover,
+    .btn-default:active {
+      color: #333;
+      background-color: #e6e6e6;
+      border-color: #adadad;
+    }
+
+    .btn-success {
+      color: #fff;
+      background-color: #5cb85c;
+      border-color: #4cae4c;
+      box-shadow: none;
+    }
+
+    .btn-success:focus,
+    .btn-success:hover,
+    .btn-success:active {
+      color: #fff;
+      background-color: #449d44;
+      border-color: #398439;
+    }
+
+    .vote-btn {
+      min-width: 74px;
+      padding: 12px 16px;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .vote-confirmed {
+      display: none;
+      margin-top: 18px;
+      color: #008000;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .ballot-warning {
+      display: none;
+      margin-top: 14px;
+      color: #a94442;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .ballot-section.has-warning .ballot-warning {
+      display: block;
+    }
+
+    .ballot-section.is-confirmed .vote-confirmed {
+      display: block;
+    }
+
+    .ballot-section.is-confirmed .ballot-actions {
+      display: none;
+    }
+
+    .ballot-section.is-confirmed .vote-btn {
+      display: none;
+    }
+
+    .ballot-section.is-confirmed .ballot-option {
+      cursor: default;
+    }
+
+    /* confirmed layout: single column, vote-confirmed sits flush below candidates */
+    .ballot-section.is-confirmed .ballot-layout {
+      display: block;
+      min-height: 0;
+    }
+
+    .footer {
+      background-color: #222;
+      color: #f1f1f1;
+      padding: 6px 0;
+      opacity: 0.95;
+    }
+
+    .footer-fixed {
+      bottom: 0;
+      position: fixed;
+      width: 100%;
+      z-index: 1030;
+    }
+
+    .footer .row > div {
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .modal-content {
+      border-radius: 0;
+    }
+
+    .modal-header {
+      padding: 17px 28px 16px;
+    }
+
+    .modal-header .close {
+      margin-top: 0;
+      color: #bcbcbc;
+      opacity: 0.7;
+      font-size: 32px;
+      font-weight: normal;
+      line-height: 1;
+    }
+
+    .modal-title {
+      font-family: myriadpro-semibold, "Source Sans 3", "Source Sans Pro", "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #555;
+    }
+
+    .modal-body {
+      padding: 26px 28px 28px;
+      font-size: 16px;
+      line-height: 1.45;
+      color: #333;
+    }
+
+    .modal-footer {
+      padding: 14px 28px 20px;
+    }
+
+    .modal-footer .btn {
+      min-width: 115px;
+      padding: 10px 18px;
+      font-size: 16px;
+    }
+
+    .modal-footer .btn + .btn {
+      margin-left: 8px;
+    }
+
+    .btn-icon {
+      display: inline-block;
+      margin-right: 7px;
+      font-weight: bold;
+      font-size: 1.1em;
+      line-height: 1;
+      vertical-align: middle;
+      position: relative;
+      top: -1px;
+    }
+
+    #toast-container {
+      top: 66px;
+      right: 14px;
+      left: auto;
+      width: auto;
+      pointer-events: none;
+    }
+
+    #toast-container > div {
+      width: min(calc(100vw - 28px), 760px);
+      margin: 0 0 6px auto;
+      padding: 16px 54px 16px 64px;
+      border-radius: 5px;
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.22);
+      opacity: 0.95;
+      background-position: 18px center;
+      background-size: 28px 28px;
+      font-size: 17px;
+      line-height: 1.4;
+      pointer-events: auto;
+    }
+
+    #toast-container > .toast-success {
+      background-color: #74b96f;
+    }
+
+    .toast-close-button {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      float: none;
+      font-size: 32px;
+      line-height: 1;
+      color: #fff;
+      opacity: 0.75;
+      text-shadow: none;
+    }
+
+    .toast-close-button:hover,
+    .toast-close-button:focus {
+      color: #fff;
+      opacity: 1;
+    }
+
+    .toast-message {
+      font-family: myriadpro-regular, "Source Sans 3", "Source Sans Pro", "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 16px;
+    }
+
+    @media (max-width: 767px) {
+      #main-container.container {
+        width: auto;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      #main-container .row {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      #main-container .col-xs-12 {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .navbar {
+        min-height: 50px;
+      }
+
+      .navbar-brand {
+        padding: 7px 14px 6px;
+      }
+
+      .navbar-brand img {
+        width: 118px;
+      }
+
+      .navbar-toggle {
+        margin-top: 8px;
+        margin-right: 14px;
+        margin-bottom: 6px;
+        padding: 8px 9px;
+        border-radius: 6px;
+      }
+
+      .navbar-default .navbar-toggle .icon-bar {
+        width: 20px;
+        height: 4px;
+      }
+
+      .page-shell {
+        padding-top: 16px;
+        padding-bottom: 8px;
+      }
+
+      .well {
+        margin-bottom: 16px;
+        padding: 12px;
+      }
+
+      .well-header {
+        padding-bottom: 10px;
+      }
+
+      .well-header h2 {
+        font-size: 18px;
+        margin-top: 1px;
+        line-height: 1.16;
+      }
+
+      .well-content {
+        padding-top: 12px;
+      }
+
+      .ballot-section {
+        padding: 13px 14px 14px;
+        margin-bottom: 8px;
+      }
+
+      .ballot-section h3 {
+        font-size: 15px;
+        margin: 0 0 14px;
+      }
+
+      .ballot-layout {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 10px;
+        min-height: 0;
+      }
+
+      .ballot-options {
+        flex: 1 1 0;
+        min-width: 0;
+        padding-right: 0;
+        padding-bottom: 0;
+      }
+
+      .ballot-actions {
+        flex: 0 0 auto;
+        position: static;
+        width: auto;
+        padding-bottom: 4px;
+        text-align: right;
+      }
+
+      .ballot-option {
+        gap: 9px;
+        font-size: 14px;
+        margin-bottom: 10px;
+        line-height: 1.22;
+      }
+
+      .ballot-radio {
+        width: 18px;
+        height: 18px;
+        margin-top: 1px;
+        flex-shrink: 0;
+      }
+
+      .ballot-option input:checked + .ballot-radio::after {
+        top: 4px;
+        left: 4px;
+        width: 6px;
+        height: 6px;
+      }
+
+      .vote-btn {
+        min-width: 58px;
+        padding: 8px 12px;
+        font-size: 14px;
+        line-height: 1.2;
+        white-space: nowrap;
+      }
+
+      .vote-confirmed {
+        margin-top: 10px;
+        font-size: 14px;
+        line-height: 1.15;
+      }
+
+      .footer .row > div {
+        font-size: 14px;
+        line-height: 1.14;
+      }
+
+      .modal-dialog {
+        margin: 10px;
+      }
+
+      .modal-header {
+        padding: 14px 18px 13px;
+      }
+
+      .modal-header .close {
+        font-size: 30px;
+        font-weight: bold;
+        opacity: 0.55;
+      }
+
+      .modal-title {
+        font-size: 16px;
+      }
+
+      .modal-body {
+        padding: 18px 18px 20px;
+        font-size: 14px;
+        line-height: 1.42;
+      }
+
+      .modal-footer {
+        padding: 12px 18px 16px;
+      }
+
+      .modal-footer .btn {
+        min-width: 92px;
+        font-size: 13px;
+        padding: 9px 14px;
+      }
+
+      #toast-container {
+        top: 52px;
+        right: 12px;
+      }
+
+      #toast-container > div {
+        width: min(calc(100vw - 24px), 304px);
+        padding: 12px 42px 12px 52px;
+        background-position: 14px center;
+        background-size: 22px 22px;
+        font-size: 14px;
+        border-radius: 6px;
+      }
+
+      .toast-close-button {
+        right: 10px;
+        font-size: 24px;
+      }
+
+      .toast-message {
+        font-size: 14px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .ballot-section {
+        padding: 27px 30px 23px;
+      }
+
+      .ballot-section h3 {
+        font-size: 18px;
+        margin-bottom: 28px;
+      }
+
+      .ballot-layout {
+        min-height: 192px;
+        gap: 24px;
+      }
+
+      .ballot-actions {
+        flex-basis: 104px;
+      }
+
+      .ballot-option {
+        gap: 14px;
+        font-size: 18px;
+        margin-bottom: 16px;
+      }
+
+      .ballot-radio {
+        width: 23px;
+        height: 23px;
+      }
+
+      .ballot-option input:checked + .ballot-radio::after {
+        top: 5px;
+        left: 5px;
+        width: 9px;
+        height: 9px;
+      }
+
+      .vote-btn {
+        min-width: 104px;
+        padding: 16px 20px;
+        font-size: 18px;
+      }
+
+      .vote-confirmed {
+        margin-top: 22px;
+        font-size: 18px;
+      }
+
+      .modal-dialog {
+        width: 900px;
+        margin-top: 96px;
+      }
+
+      .modal-header {
+        padding: 24px 30px 22px;
+      }
+
+      .modal-title {
+        font-size: 32px;
+      }
+
+      .modal-header .close {
+        font-size: 48px;
+      }
+
+      .modal-body {
+        padding: 30px;
+        font-size: 20px;
+      }
+
+      .modal-footer {
+        padding: 18px 30px 24px;
+      }
+
+      .modal-footer .btn {
+        min-width: 176px;
+        padding: 12px 22px;
+        font-size: 18px;
+      }
+
+      #toast-container {
+        top: 82px;
+        right: 18px;
+      }
+
+      #toast-container > div {
+        width: 370px;
+        padding: 18px 56px 18px 66px;
+        font-size: 19px;
+      }
+
+      .toast-message {
+        font-size: 19px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav id="header" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" aria-label="Open navigation">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#" aria-label="LUMS home">
+          <img src="./assets/logo-lums-original.png" alt="LUMS">
+        </a>
+      </div>
+      <ul class="nav navbar-nav navbar-right hidden-xs">
+        <li><a href="#">Welcome! Hussain Ali Haq <span class="caret"></span></a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div id="main-container" class="container page-shell">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="well">
+          <div class="well-header">
+            <h2>Executive Council Seats</h2>
+          </div>
+          <div class="well-content">
+            <section class="ballot-section ballot-section--soft" data-ballot-id="president">
+              <h3>President</h3>
+              <div class="ballot-layout">
+                <div class="ballot-options">
+                  <label class="ballot-option">
+                    <input type="radio" name="president" value="28090046">
+                    <span class="ballot-radio"></span>
+                    <span class="ballot-option__text">Motasim Ahmad Dogar [28090046]</span>
+                  </label>
+                  <label class="ballot-option">
+                    <input type="radio" name="president" value="27020471">
+                    <span class="ballot-radio"></span>
+                    <span class="ballot-option__text">Rana Muhammad Umar Hussain [27020471]</span>
+                  </label>
+                  <label class="ballot-option">
+                    <input type="radio" name="president" value="27020539">
+                    <span class="ballot-radio"></span>
+                    <span class="ballot-option__text">Saleha Qasim Bashir [27020539]</span>
+                  </label>
+                  <div class="vote-confirmed">Vote Confirmed</div>
+                  <div class="ballot-warning">Please select one candidate before voting.</div>
+                </div>
+                <div class="ballot-actions">
+                  <button type="button" class="btn btn-primary vote-btn">Vote</button>
+                </div>
+              </div>
+            </section>
+
+            <section class="ballot-section ballot-section--cool" data-ballot-id="general-secretary">
+              <h3>General Secretary</h3>
+              <div class="ballot-layout">
+                <div class="ballot-options">
+                  <label class="ballot-option">
+                    <input type="radio" name="general-secretary" value="28110116">
+                    <span class="ballot-radio"></span>
+                    <span class="ballot-option__text">Fizza Fatima Nawaz [28110116]</span>
+                  </label>
+                  <label class="ballot-option">
+                    <input type="radio" name="general-secretary" value="28110143">
+                    <span class="ballot-radio"></span>
+                    <span class="ballot-option__text">Syed Abdullah Gilani [28110143]</span>
+                  </label>
+                  <div class="vote-confirmed">Vote Confirmed</div>
+                  <div class="ballot-warning">Please select one candidate before voting.</div>
+                </div>
+                <div class="ballot-actions">
+                  <button type="button" class="btn btn-primary vote-btn">Vote</button>
+                </div>
+              </div>
+            </section>
+
+            <section class="ballot-section ballot-section--soft" data-ballot-id="vice-president">
+              <h3>Vlice President</h3>
+              <div class="ballot-layout">
+                <div class="ballot-options">
+                  <label class="ballot-option">
+                    <input type="radio" name="vice-president" value="25200011">
+                    <span class="ballot-radio"></span>
+                    <span class="ballot-option__text">Faraz Latif [25200011]</span>
+                  </label>
+                  <label class="ballot-option">
+                    <input type="radio" name="vice-president" value="25260005">
+                    <span class="ballot-radio"></span>
+                    <span class="ballot-option__text">Ibraheem Qadir [25260005]</span>
+                  </label>
+                  <label class="ballot-option">
+                    <input type="radio" name="vice-president" value="26010007">
+                    <span class="ballot-radio"></span>
+                    <span class="ballot-option__text">Masroor Ali Ghazi [26010007]</span>
+                  </label>
+                  <label class="ballot-option">
+                    <input type="radio" name="vice-president" value="27010076">
+                    <span class="ballot-radio"></span>
+                    <span class="ballot-option__text">Sufi Muhammad Hamza Nadeem [27010076]</span>
+                  </label>
+                  <div class="vote-confirmed">Vote Confirmed</div>
+                  <div class="ballot-warning">Please select one candidate before voting.</div>
+                </div>
+                <div class="ballot-actions">
+                  <button type="button" class="btn btn-primary vote-btn">Vote</button>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <div class="well">
+          <div class="well-header">
+            <h2>Junior Batch Representative 2028 [SSE]</h2>
+          </div>
+          <div class="well-content">
+            <section class="ballot-section ballot-section--soft" data-ballot-id="jbr-sse-male">
+              <h3>SSE - 2028 MALE</h3>
+              <div class="ballot-layout">
+                <div class="ballot-options">
+                  <label class="ballot-option">
+                    <input type="radio" name="jbr-sse-male" value="28100341">
+                    <span class="ballot-radio"></span>
+                    <span class="ballot-option__text">Ali Hasnain [28100341]</span>
+                  </label>
+                  <label class="ballot-option">
+                    <input type="radio" name="jbr-sse-male" value="28100032">
+                    <span class="ballot-radio"></span>
+                    <span class="ballot-option__text">Hassan Adnan [28100032]</span>
+                  </label>
+                  <div class="vote-confirmed">Vote Confirmed</div>
+                  <div class="ballot-warning">Please select one candidate before voting.</div>
+                </div>
+                <div class="ballot-actions">
+                  <button type="button" class="btn btn-primary vote-btn">Vote</button>
+                </div>
+              </div>
+            </section>
+
+            <section class="ballot-section ballot-section--cool" data-ballot-id="jbr-sse-female">
+              <h3>SSE - 2028 FEMALE</h3>
+              <div class="ballot-layout">
+                <div class="ballot-options">
+                  <label class="ballot-option">
+                    <input type="radio" name="jbr-sse-female" value="28100006">
+                    <span class="ballot-radio"></span>
+                    <span class="ballot-option__text">Maiza Fayyaz [28100006]</span>
+                  </label>
+                  <label class="ballot-option">
+                    <input type="radio" name="jbr-sse-female" value="28100084">
+                    <span class="ballot-radio"></span>
+                    <span class="ballot-option__text">Maryam Shahbaz [28100084]</span>
+                  </label>
+                  <div class="vote-confirmed">Vote Confirmed</div>
+                  <div class="ballot-warning">Please select one candidate before voting.</div>
+                </div>
+                <div class="ballot-actions">
+                  <button type="button" class="btn btn-primary vote-btn">Vote</button>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer footer-fixed">
+    <div class="container">
+      <div class="row">
+        <div class="visible-xs col-xs-12">Copyright &copy; 2026 LUMS - All Rights Reserved.</div>
+        <div class="hidden-xs col-sm-12">Copyright &copy; 2026 Lahore University of Management Sciences - All Rights Reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalTitle">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="confirmModalTitle">Confirmation</h4>
+        </div>
+        <div class="modal-body">
+          Are you sure? Once you have confirmed you will not be able to change your selection.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal"><span class="btn-icon">&#10005;</span>Cancel</button>
+          <button type="button" class="btn btn-success" id="confirmVoteButton"><span class="btn-icon">&#10003;</span>Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./assets/vendor/jquery-3.1.1.min.js"></script>
+  <script src="./assets/vendor/bootstrap.min.js"></script>
+  <script src="./assets/vendor/toastr.min.js"></script>
+  <script>
+    (function ($) {
+      var storageKey = "lumsVotingCloneStateV4_sse28";
+      var state = {};
+      var pendingBallot = null;
+      var defaultState = {
+        "general-secretary": {
+          selected: "28110143",
+          confirmed: true
+        }
+      };
+
+      function loadState() {
+        var params = new URLSearchParams(window.location.search);
+
+        if (params.get("reset") === "1") {
+          window.localStorage.removeItem(storageKey);
+        }
+
+        try {
+          state = JSON.parse(window.localStorage.getItem(storageKey) || "{}");
+        } catch (error) {
+          state = {};
+        }
+
+        if (!Object.keys(state).length) {
+          state = $.extend(true, {}, defaultState);
+          saveState();
+        }
+      }
+
+      function saveState() {
+        window.localStorage.setItem(storageKey, JSON.stringify(state));
+      }
+
+      function syncBodyOffsets() {
+        $("body").css({
+          marginTop: $("#header").outerHeight(),
+          marginBottom: $("footer.footer-fixed").outerHeight()
+        });
+      }
+
+      function showToast() {
+        toastr.clear();
+        toastr.options = {
+          closeButton: true,
+          debug: false,
+          newestOnTop: true,
+          progressBar: false,
+          positionClass: "toast-top-right",
+          preventDuplicates: false,
+          onclick: null,
+          showDuration: "300",
+          hideDuration: "1000",
+          timeOut: "7000",
+          extendedTimeOut: "1000",
+          showEasing: "swing",
+          hideEasing: "linear",
+          showMethod: "fadeIn",
+          hideMethod: "fadeOut"
+        };
+        toastr.success("Vote Confirmed.");
+      }
+
+      function applyStateToSection($section) {
+        var ballotId = $section.data("ballotId");
+        var ballotState = state[ballotId] || {};
+        var selected = ballotState.selected || "";
+        var confirmed = Boolean(ballotState.confirmed);
+
+        $section.find('input[type="radio"]').each(function () {
+          var $input = $(this);
+          $input.prop("checked", $input.val() === selected);
+          $input.prop("disabled", confirmed);
+        });
+
+        $section.toggleClass("is-confirmed", confirmed);
+      }
+
+      function rememberSelection(ballotId, value) {
+        state[ballotId] = state[ballotId] || {};
+        state[ballotId].selected = value;
+        state[ballotId].confirmed = Boolean(state[ballotId].confirmed);
+        saveState();
+      }
+
+      function confirmSection($section) {
+        var ballotId = $section.data("ballotId");
+        var selected = $section.find('input[type="radio"]:checked').val();
+
+        if (!selected) {
+          $section.addClass("has-warning");
+          return;
+        }
+
+        state[ballotId] = {
+          selected: selected,
+          confirmed: true
+        };
+
+        saveState();
+        $section.removeClass("has-warning");
+        applyStateToSection($section);
+        showToast();
+      }
+
+      loadState();
+      syncBodyOffsets();
+
+      $(window).on("resize", syncBodyOffsets);
+
+      $(".ballot-section").each(function () {
+        var $section = $(this);
+        var ballotId = $section.data("ballotId");
+
+        applyStateToSection($section);
+
+        $section.find('input[type="radio"]').on("change", function () {
+          $section.removeClass("has-warning");
+          rememberSelection(ballotId, $(this).val());
+        });
+
+        $section.find(".vote-btn").on("click", function () {
+          if (!$section.find('input[type="radio"]:checked').length) {
+            $section.addClass("has-warning");
+            return;
+          }
+
+          pendingBallot = $section;
+          $("#confirmModal").modal("show");
+        });
+      });
+
+      $("#confirmVoteButton").on("click", function () {
+        if (pendingBallot) {
+          confirmSection(pendingBallot);
+        }
+        pendingBallot = null;
+        $("#confirmModal").modal("hide");
+      });
+
+      $("#confirmModal").on("hidden.bs.modal", function () {
+        pendingBallot = null;
+      });
+    }(jQuery));
+  </script>
+</body>
+</html>

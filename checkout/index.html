@@ -175,23 +175,18 @@
   <main class="max-w-[1280px] mx-auto px-6 md:px-10 -mt-8 relative z-10 pb-24">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 fade-up fade-up-d2">
 
-      <!-- PRODUCT CARD -->
+      <!-- CART -->
       <div class="lg:col-span-5">
-        <div class="bg-white rounded-3xl overflow-hidden shadow-[0_16px_48px_rgba(20,42,88,.08)] border border-[#203a7b]/6 sticky top-[120px]">
-          <!-- Creative gradient header instead of image -->
-          <div class="relative bg-gradient-to-br from-[#1b2f6b] via-[#203a7b] to-[#2a5faf] p-8 pb-10 text-center overflow-hidden">
-            <div class="absolute inset-0 opacity-[0.07]" style="background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><circle cx=%2230%22 cy=%2230%22 r=%2228%22 fill=%22none%22 stroke=%22white%22 stroke-width=%220.5%22/></svg>');background-size:60px 60px"></div>
-            <div class="relative z-10">
-              <div class="w-24 h-24 mx-auto mb-5 overflow-hidden rounded-full">
-                <img src="/assets/ameer-farms-logo.png?v=2" alt="Ameer Farms Logo" class="h-full w-full scale-[1.22] object-cover">
-              </div>
-              <div class="flex items-center justify-center gap-2 mb-3">
-                <span class="inline-block px-3 py-1 rounded-full bg-[#f0c850]/20 text-[#f0c850] text-[.6rem] font-bold uppercase tracking-[.18em] border border-[#f0c850]/30">Premium Import</span>
-                <span id="summary-origin-large" class="inline-block px-3 py-1 rounded-full bg-white/10 text-white/80 text-[.6rem] font-bold uppercase tracking-[.18em] border border-white/15">Multan, Pakistan</span>
-              </div>
-              <h2 id="summary-product-large" class="text-[1.8rem] text-white leading-tight" style="font-family:'DM Serif Display',serif">Ameer Global Product</h2>
-            </div>
+        <div class="bg-white rounded-3xl shadow-[0_16px_48px_rgba(20,42,88,.08)] border border-[#203a7b]/6 sticky top-[120px] p-6">
+          <h2 class="text-[1.8rem] text-[#142a53] mb-4" style="font-family:'DM Serif Display',serif">Your Cart</h2>
+          <div id="cart-items" class="space-y-4">
+            <!-- Rendered by JS -->
           </div>
+          <div class="pt-5 border-t border-[#203a7b]/8 mt-5">
+            <p class="product-note !text-[0.85rem] !p-4">Tip: You can mix and match different mango varieties. Shipping is flat rate across the GTA!</p>
+          </div>
+        </div>
+      </div>
           <div class="p-6">
             <!-- Specs row -->
             <div class="grid grid-cols-2 gap-3 mb-5">
@@ -345,9 +340,7 @@
                 <span class="rounded-full bg-white border border-[#19489f]/10 px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#305fbf]">CAD</span>
               </div>
               <div class="mt-4 space-y-3 text-[1rem] text-[#51668c]">
-                <div class="flex items-center justify-between"><span>Unit price</span><strong id="bill-unit" class="money text-[#17325f]">$0.00</strong></div>
-                <div class="flex items-center justify-between"><span>Quantity</span><strong id="bill-qty" class="money text-[#17325f]">1</strong></div>
-                <div class="flex items-center justify-between"><span>Subtotal</span><strong id="bill-subtotal" class="money text-[#17325f]">$0.00</strong></div>
+                <div class="flex items-center justify-between"><span>Subtotal (<span id="bill-qty">0</span> boxes)</span><strong id="bill-subtotal" class="money text-[#17325f]">$0.00</strong></div>
                 <div id="bill-shipping-row" class="flex items-center justify-between hidden"><span>Shipping (GTA)</span><strong id="bill-shipping" class="money text-[#17325f]">$15.00</strong></div>
                 <div class="flex items-center justify-between"><span>HST (13%)</span><strong id="bill-hst" class="money text-[#17325f]">$0.00</strong></div>
                 <div class="mt-4 border-t border-[#19489f]/12 pt-4 flex items-center justify-between"><span class="font-bold text-[#17325f]">Total</span><strong id="bill-total" class="money text-[1.4rem] text-[#1f4ea5]">$0.00</strong></div>
@@ -380,64 +373,83 @@
       'Chaunsa Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 52 },
       'Chaunsa Mango Premium Box': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 52 },
       'Anwar Ratol Mango Reserve': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 45 },
-      'Sindhri Mango Estate Selection': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 38 },
-      'Himalayan Salt': { unit: 'Bulk or retail packs', origin: 'Khewra, Pakistan', price: 29 },
-      'EcoWare Naturals': { unit: 'Trade case', origin: 'Pakistan', price: 24 },
-      'De-Icing Salt': { unit: 'Bulk pallet', origin: 'Pakistan', price: 32 }
+      'Sindhri Mango Estate Selection': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 38 }
     };
 
     const currencyFormatter = new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 2 });
     const params = new URLSearchParams(window.location.search);
-    const product = params.get('product') || 'Premium Mangoes';
-    const profile = productCatalog[product] || { unit: 'Trade pack', origin: 'Multan, Pakistan', price: 30 };
+    
+    // Default cart items
+    let cart = [
+      { product: 'Sindhri Mangoes', quantity: 0 },
+      { product: 'Anwar Ratol Mangoes', quantity: 0 },
+      { product: 'Chaunsa Mangoes', quantity: 0 }
+    ];
 
-    // Set product info in card
-    document.getElementById('summary-product-large').textContent = product;
-    document.getElementById('summary-unit-large').textContent = profile.unit;
-    document.getElementById('summary-origin-large').textContent = profile.origin;
-
-    // Inject catchphrase
-    const catchphraseEl = document.getElementById('product-catchphrase');
-    if (catchphraseEl) {
-      let catchphrase = '';
-      if (product.includes('Anwar Ratol')) {
-        catchphrase = 'MOST PEOPLE HEAR ABOUT IT. VERY FEW TASTE THE REAL ONE. YOU\'RE LUCKY IF YOU GET IT.';
-      } else if (product.includes('Sindhri')) {
-        catchphrase = 'BIGGER, SMOOTHER, RICHER, AND NATURALLY HONEYED. ONCE YOU TASTE PEAK-SEASON SINDHRI, THE EARLY ONES DON\'T COMPARE.';
-      } else if (product.includes('Chaunsa')) {
-        catchphrase = 'THE KING ARRIVES LATE. AND STEALS THE WHOLE SEASON.';
-      }
-      catchphraseEl.textContent = catchphrase;
-      catchphraseEl.classList.toggle('hidden', !catchphrase);
+    const passedProduct = params.get('product');
+    if (passedProduct) {
+      const match = cart.find(c => passedProduct.toLowerCase().includes(c.product.toLowerCase().split(' ')[0]));
+      if (match) match.quantity = 1;
+      else cart[0].quantity = 1;
+    } else {
+      cart[0].quantity = 1;
     }
 
-    // State
-    let fulfillment = 'pickup';
-    const quantityField = document.getElementById('quantity');
-    const billUnit = document.getElementById('bill-unit');
+    // DOM Elements
+    const cartItemsEl = document.getElementById('cart-items');
     const billQty = document.getElementById('bill-qty');
     const billSubtotal = document.getElementById('bill-subtotal');
     const billHst = document.getElementById('bill-hst');
     const billTotal = document.getElementById('bill-total');
     const checkoutStatus = document.getElementById('checkout-status');
+    const btnPickup = document.getElementById('btn-toggle-pickup');
+    const btnDelivery = document.getElementById('btn-toggle-delivery');
+    const pickupSection = document.getElementById('pickup-section');
+    const deliverySection = document.getElementById('delivery-section');
+    
+    let fulfillment = 'pickup';
 
-    function quantityValue() {
-      const parsed = Number.parseInt(quantityField.value || '1', 10);
-      if (!Number.isFinite(parsed)) return 1;
-      return Math.max(1, Math.min(500, parsed));
+    function renderCart() {
+      cartItemsEl.innerHTML = '';
+      cart.forEach((item, index) => {
+        const p = productCatalog[item.product];
+        const itemEl = document.createElement('div');
+        itemEl.className = 'flex items-center justify-between p-4 rounded-2xl border border-[#203a7b]/10 bg-[#f8f9fc] shadow-sm transition hover:shadow-md';
+        itemEl.innerHTML = `
+          <div>
+            <div class="font-bold text-[#182a59] text-[1.1rem]" style="font-family:'DM Serif Display',serif">${item.product}</div>
+            <div class="text-[.75rem] font-bold text-[#6e7b97] uppercase tracking-[0.1em] mt-1">${p.unit} &middot; CAD ${p.price.toFixed(2)}</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="updateQty(${index}, -1)" class="w-[38px] h-[38px] flex items-center justify-center rounded-xl border-2 border-[#203a7b]/15 text-[#203a7b] font-bold bg-white hover:bg-[#edf3ff] hover:border-[#203a7b] transition-all">−</button>
+            <span class="w-[32px] text-center font-bold text-[#182a59] text-[1.1rem]">${item.quantity}</span>
+            <button type="button" onclick="updateQty(${index}, 1)" class="w-[38px] h-[38px] flex items-center justify-center rounded-xl border-2 border-[#203a7b]/15 text-[#203a7b] font-bold bg-white hover:bg-[#edf3ff] hover:border-[#203a7b] transition-all">+</button>
+          </div>
+        `;
+        cartItemsEl.appendChild(itemEl);
+      });
+      renderBilling();
     }
 
+    window.updateQty = function(index, delta) {
+      cart[index].quantity = Math.max(0, Math.min(100, cart[index].quantity + delta));
+      renderCart();
+    };
+
     function renderBilling() {
-      const qty = quantityValue();
-      const unit = profile.price || 30;
-      const subtotal = Number((qty * unit).toFixed(2));
+      let totalQty = 0;
+      let subtotal = 0;
+      cart.forEach(item => {
+        totalQty += item.quantity;
+        subtotal += item.quantity * productCatalog[item.product].price;
+      });
+
       const shipping = fulfillment === 'delivery' ? 15.00 : 0;
       const preTax = subtotal + shipping;
       const hst = Number((preTax * 0.13).toFixed(2));
       const total = Number((preTax + hst).toFixed(2));
 
-      billUnit.textContent = currencyFormatter.format(unit);
-      billQty.textContent = String(qty);
+      billQty.textContent = String(totalQty);
       billSubtotal.textContent = currencyFormatter.format(subtotal);
 
       const billShippingRow = document.getElementById('bill-shipping-row');
@@ -451,12 +463,6 @@
       billHst.textContent = currencyFormatter.format(hst);
       billTotal.textContent = currencyFormatter.format(total);
     }
-
-    // Fulfillment Toggle
-    const btnPickup = document.getElementById('btn-toggle-pickup');
-    const btnDelivery = document.getElementById('btn-toggle-delivery');
-    const pickupSection = document.getElementById('pickup-section');
-    const deliverySection = document.getElementById('delivery-section');
 
     function setFulfillment(method) {
       fulfillment = method;
@@ -481,36 +487,18 @@
     btnPickup.addEventListener('click', () => setFulfillment('pickup'));
     btnDelivery.addEventListener('click', () => setFulfillment('delivery'));
 
-    // Init from URL
     const passedFulfillment = params.get('fulfillment');
     const passedCity = (params.get('city') || '').trim();
-    if (passedFulfillment === 'delivery') {
-      setFulfillment('delivery');
-    } else {
-      setFulfillment('pickup');
-    }
+    if (passedFulfillment === 'delivery') setFulfillment('delivery');
+    else setFulfillment('pickup');
+
     if (passedCity) {
       const citySelect = document.getElementById('city');
-      const options = Array.from(citySelect.options).map((o) => o.value.toLowerCase());
+      const options = Array.from(citySelect.options).map(o => o.value.toLowerCase());
       const idx = options.indexOf(passedCity.toLowerCase());
       if (idx >= 0) citySelect.selectedIndex = idx;
     }
 
-    // Quantity handlers
-    document.getElementById('qty-minus').addEventListener('click', () => {
-      quantityField.value = String(Math.max(1, quantityValue() - 1));
-      renderBilling();
-    });
-    document.getElementById('qty-plus').addEventListener('click', () => {
-      quantityField.value = String(Math.min(500, quantityValue() + 1));
-      renderBilling();
-    });
-    quantityField.addEventListener('input', () => {
-      quantityField.value = String(quantityValue());
-      renderBilling();
-    });
-
-    // FORM SUBMIT — validates, calls API, redirects to Stripe
     document.getElementById('checkout-form').addEventListener('submit', async (event) => {
       event.preventDefault();
 
@@ -536,6 +524,13 @@
           return;
         }
       }
+      
+      const activeCart = cart.filter(c => c.quantity > 0);
+      if (activeCart.length === 0) {
+        checkoutStatus.textContent = 'Please add at least one box to your cart.';
+        checkoutStatus.style.color = '#a3392f';
+        return;
+      }
 
       const btn = document.getElementById('complete-order');
       btn.disabled = true;
@@ -544,12 +539,11 @@
       checkoutStatus.style.color = '#1f4ea5';
 
       const payload = {
-        product,
+        cart: activeCart,
         fulfillment,
         name,
         email,
         phone,
-        quantity: String(quantityValue()),
         addressLine1: address1,
         addressLine2: address2,
         city,
@@ -562,29 +556,16 @@
         const endpoint = '/api/checkout';
         const response = await fetch(endpoint, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
           body: JSON.stringify(payload)
         });
         const raw = await response.text();
         let result = {};
-        try {
-          result = raw ? JSON.parse(raw) : {};
-        } catch {
-          result = {};
-        }
+        try { result = raw ? JSON.parse(raw) : {}; } catch { result = {}; }
 
         if (!response.ok) {
-          const fallback = `Checkout failed (${response.status}).`;
-          checkoutStatus.textContent = result.error || fallback;
+          checkoutStatus.textContent = result.error || `Checkout failed (${response.status}).`;
           checkoutStatus.style.color = '#a3392f';
-          console.error('[checkout] API error', {
-            endpoint,
-            status: response.status,
-            body: raw
-          });
           btn.disabled = false;
           btn.textContent = 'Pay via Stripe →';
           return;
@@ -596,22 +577,18 @@
           return;
         }
 
-        // Fallback if no redirect URL
-        checkoutStatus.textContent = result.payment ? result.payment.message : 'Order received. You will be contacted shortly.';
+        checkoutStatus.textContent = result.payment ? result.payment.message : 'Order received.';
         btn.disabled = false;
         btn.textContent = 'Pay via Stripe →';
       } catch (error) {
-        const protocol = window.location.protocol;
-        const hint = protocol === 'file:' ? ' Open checkout from your live site URL, not a local file.' : '';
-        checkoutStatus.textContent = `Network error: ${error.message || 'Request failed.'}${hint}`;
+        checkoutStatus.textContent = `Network error: ${error.message}`;
         checkoutStatus.style.color = '#a3392f';
-        console.error('[checkout] Network error', error);
         btn.disabled = false;
         btn.textContent = 'Pay via Stripe →';
       }
     });
 
-    renderBilling();
+    renderCart();
   </script>
 </body>
 </html>

@@ -139,8 +139,9 @@ The current Stripe metadata fields sent on both the Checkout Session and the Pay
 
 - `orderNumber`
 - `submissionId`
-- `product`
-- `quantity`
+- `mango_type` (Now formatted as a human-readable list of items, e.g. "2x Sindhri Mangoes, 1x Chaunsa Mangoes")
+- `quantity` (Total sum of all boxes)
+- `cart_json` (A JSON string representing the cart array, up to 500 characters, used by webhook for inventory deductions)
 - `customerEmail`
 - `customerName`
 - `phone`
@@ -159,8 +160,8 @@ This is the data your team should expect to inspect in Stripe Dashboard under th
 2. Stripe sends `checkout.session.completed` to `POST /api/stripe-webhook`.
 3. Backend verifies the Stripe signature using `STRIPE_WEBHOOK_SECRET`.
 4. Backend loads Checkout Session line items and metadata.
-5. Backend creates or finalizes the paid order in Supabase `orders`.
-6. Backend reduces `inventory` exactly once for that paid order.
+5. Backend creates or finalizes the paid order in Supabase `orders`, storing the `mango_type` string.
+6. Backend reads `cart_json` from metadata and reduces `inventory` iteratively for each distinct product in the paid order.
 7. Backend optionally sends customer/admin emails through Resend when email envs are configured.
 
 ### Where Stripe order info goes

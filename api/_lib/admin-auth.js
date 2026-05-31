@@ -2,8 +2,8 @@ const crypto = require('node:crypto');
 const { json, readBody, normalizeText } = require('./common');
 
 const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'managingdirector@ameerglobal.ca').toLowerCase();
-const DEFAULT_ADMIN_LOGIN_CODE = 'AmeerGlobal1966';
-const DEFAULT_ADMIN_SESSION_SECRET = 'ameer-global-admin-session-v1';
+const DEFAULT_ADMIN_LOGIN_CODE = '';
+const DEFAULT_ADMIN_SESSION_SECRET = '';
 const ADMIN_LOGIN_CODE = process.env.ADMIN_LOGIN_CODE || DEFAULT_ADMIN_LOGIN_CODE;
 const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || DEFAULT_ADMIN_SESSION_SECRET;
 const COOKIE_NAME = 'ag_admin_session_v2';
@@ -88,6 +88,11 @@ async function login(req, res) {
   const body = await readBody(req);
   const email = normalizeText(body.email).toLowerCase();
   const code = normalizeText(body.code);
+
+  if (!ADMIN_LOGIN_CODE || !ADMIN_SESSION_SECRET) {
+    json(res, 500, { error: 'Admin auth is not configured on server.' });
+    return;
+  }
 
   if (email !== ADMIN_EMAIL) {
     json(res, 403, { error: 'Only managingdirector@ameerglobal.ca is allowed.' });

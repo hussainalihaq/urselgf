@@ -216,12 +216,6 @@ Set:
 - `ADMIN_EMAIL=managingdirector@ameerglobal.ca`
 - `ADMIN_SESSION_SECRET=your_random_secret`
 
-Built-in fallback values if you do not set the admin env vars:
-
-- Admin email: `managingdirector@ameerglobal.ca`
-- Admin passcode: `AmeerGlobal1966`
-- Session secret fallback is hardcoded for convenience and should be replaced in Vercel later
-
 Required env vars:
 
 - `SUPABASE_URL`
@@ -234,8 +228,11 @@ Required env vars:
 - `ADMIN_EMAIL`
 - `ADMIN_LOGIN_CODE`
 - `ADMIN_SESSION_SECRET`
+- `KEEPALIVE_KEY` or `CRON_SECRET` for protected deep health checks
 
-If `ADMIN_LOGIN_CODE` is not set, the code falls back to `AmeerGlobal1966`.
+Go-live note:
+- `ADMIN_LOGIN_CODE` and `ADMIN_SESSION_SECRET` must now be explicitly set.
+- On Vercel, checkout/contact/reserve/newsletter flows require Supabase to be configured. Local JSON fallback is not safe for production serverless storage.
 
 ## Supabase Keepalive
 
@@ -255,15 +252,11 @@ Recommended Vercel env:
 - `CRON_SECRET`
 - `KEEPALIVE_KEY`
 
-Fallback values if you do not set them:
-
-- manual deep-check key defaults to `AmeerKeepAlive1966`
-
 Notes:
 
 - `CRON_SECRET` secures the automatic Vercel cron request.
 - `KEEPALIVE_KEY` secures manual `?deep=1` keepalive checks.
-- If `KEEPALIVE_KEY` is not set, the code falls back to `AmeerKeepAlive1966`.
+- If neither is set, deep keepalive checks are intentionally unavailable.
 
 ## Stripe Order Emails
 

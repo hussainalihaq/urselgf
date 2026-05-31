@@ -1,14 +1,13 @@
 const { json } = require('./_lib/common');
 
-const DEFAULT_KEEPALIVE_KEY = 'AmeerKeepAlive1966';
-const KEEPALIVE_KEY = process.env.KEEPALIVE_KEY || DEFAULT_KEEPALIVE_KEY;
+const KEEPALIVE_KEY = process.env.KEEPALIVE_KEY || '';
 const CRON_SECRET = process.env.CRON_SECRET || '';
 const CONTACTS_TABLE = process.env.SUPABASE_CONTACTS_TABLE || 'contacts';
 const ORDERS_TABLE = process.env.SUPABASE_ORDERS_TABLE || 'orders';
 const INVENTORY_TABLE = process.env.SUPABASE_INVENTORY_TABLE || 'inventory';
 
 async function pingTable(baseUrl, serviceRoleKey, table) {
-  const res = await fetch(`${baseUrl}/rest/v1/${table}?select=*&limit=1`, {
+  const res = await fetch(`${baseUrl}/rest/v1/${table}?select=id&limit=1`, {
     headers: {
       apikey: serviceRoleKey,
       Authorization: `Bearer ${serviceRoleKey}`,
@@ -45,6 +44,10 @@ module.exports = async function handler(req, res) {
 
   if (wantsDeepPing) {
     const providedKey = req.headers['x-keepalive-key'] || url.searchParams.get('key') || '';
+    if (!isVercelCronRequest && !KEEPALIVE_KEY) {
+      json(res, 503, { ok: false, error: 'KEEPALIVE_KEY is not configured.' });
+      return;
+    }
     if (!isVercelCronRequest && providedKey !== KEEPALIVE_KEY) {
       json(res, 401, { ok: false, error: 'Unauthorized keepalive request.' });
       return;
@@ -96,6 +99,7 @@ module.exports = async function handler(req, res) {
     service: 'ameerglobal-api',
     runtime: 'vercel-function',
     supabaseActive,
-    storageMode: supabaseActive ? 'supabase' : 'disabled'
+    storageMode: supabaseActive ? 'supabase' : 'disabled',
+    keepaliveConfigured: Boolean(KEEPALIVE_KEY || CRON_SECRET)
   });
 };

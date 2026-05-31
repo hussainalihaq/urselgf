@@ -103,10 +103,27 @@ function resolveUnitPrice(product) {
   return PRODUCT_PRICES_CAD[product] || 30;
 }
 
-function buildBilling(product, quantityValue, fulfillment) {
-  const quantity = normalizeQuantity(quantityValue) || 1;
-  const unitPriceCad = resolveUnitPrice(product);
-  const subtotalCad = Number((unitPriceCad * quantity).toFixed(2));
+function buildBilling(cart, fulfillment) {
+  let subtotalCad = 0;
+  let totalQuantity = 0;
+  
+  if (!Array.isArray(cart) || cart.length === 0) {
+    cart = [{ product: 'Ameer Global order', quantity: 1 }];
+  }
+
+  const items = cart.map(item => {
+    const q = normalizeQuantity(item.quantity) || 1;
+    const price = resolveUnitPrice(item.product);
+    subtotalCad += q * price;
+    totalQuantity += q;
+    return {
+      product: item.product,
+      quantity: q,
+      unitPriceCad: price,
+      lineTotalCad: q * price
+    };
+  });
+
   const shippingCad = fulfillment === 'delivery' ? 15.00 : 0;
   const preTaxCad = subtotalCad + shippingCad;
   const hstRate = 0.13;
@@ -115,8 +132,8 @@ function buildBilling(product, quantityValue, fulfillment) {
 
   return {
     currency: 'CAD',
-    unitPriceCad,
-    quantity,
+    items,
+    quantity: totalQuantity,
     subtotalCad,
     shippingCad,
     hstRate,
@@ -158,10 +175,16 @@ function getAvailability(cityValue, postalCodeValue, fulfillment) {
 function buildAvailabilityResponse(body) {
   const fulfillment = normalizeText(body.fulfillment) || 'pickup';
   const availability = getAvailability(body.city, body.postalCode, fulfillment);
-  const quantity = normalizeQuantity(body.quantity) || 1;
-  const product = normalizeText(body.product) || 'Ameer Global order';
-  const profile = getFulfillmentProfile(quantity);
-  const billing = buildBilling(product, quantity, fulfillment);
+  
+  let cart = [];
+  if (Array.isArray(body.cart) && body.cart.length > 0) {
+    cart = body.cart;
+  } else {
+    cart = [{ product: normalizeText(body.product) || 'Ameer Global order', quantity: body.quantity }];
+  }
+  
+  const billing = buildBilling(cart, fulfillment);
+  const profile = getFulfillmentProfile(billing.quantity);
 
   if (fulfillment === 'delivery') {
     if (!availability.city) {
@@ -203,16 +226,22 @@ function buildAvailabilityResponse(body) {
     cityKey: availability.city ? availability.city.key : 'mississauga',
     region: availability.region,
     postalCode: availability.postalCode,
-    quantity: quantity || 1,
-    product,
+    quantity: billing.quantity,
+    cart: billing.items,
+    product: billing.items.map(i => i.product).join(', '),
     profile,
     billing
   };
 }
 
 function buildCheckoutContactRecord(body) {
-  const product = normalizeText(body.product) || 'Ameer Global order';
-  const quantity = normalizeQuantity(body.quantity);
+  let cart = [];
+  if (Array.isArray(body.cart) && body.cart.length > 0) {
+    cart = body.cart;
+  } else {
+    cart = [{ product: normalizeText(body.product) || 'Ameer Global order', quantity: body.quantity }];
+  }
+
   const paymentMethod = resolvePaymentMethod(body.paymentMethod);
   const fulfillment = normalizeText(body.fulfillment) || 'pickup';
   const phone = normalizePhone(body.phone);
@@ -220,9 +249,9 @@ function buildCheckoutContactRecord(body) {
   const addressLine2 = normalizeText(body.addressLine2);
   const notes = normalizeText(body.notes);
   const availability = getAvailability(body.city, body.postalCode, fulfillment);
-  const billing = buildBilling(product, quantity, fulfillment);
+  const billing = buildBilling(cart, fulfillment);
 
-  if (!quantity) throw new Error('Quantity must be at least 1.');
+  if (!billing.quantity) throw new Error('Quantity must be at least 1.');
   if (!phone || phone.length < 7) throw new Error('Phone number is required.');
   if (!paymentMethod) throw new Error('Stripe payment is required for checkout.');
   
@@ -234,21 +263,24 @@ function buildCheckoutContactRecord(body) {
   }
 
   const paymentLabel = PAYMENT_METHOD_LABELS[paymentMethod];
-  const subject = `CHECKOUT REQUEST: ${product} (${fulfillment.toUpperCase()})`;
+  const primaryProduct = billing.items.length === 1 ? billing.items[0].product : 'Multiple Products';
+  const subject = `CHECKOUT REQUEST: ${primaryProduct} (${fulfillment.toUpperCase()})`;
   
   const fulfillmentDetails = fulfillment === 'pickup' 
     ? 'Fulfillment: LOCAL PICKUP\nLocation: Ameer Global Distribution Center, 5900 Dixie Rd, Mississauga, ON'
     : `Fulfillment: DELIVERY\nDelivery city: ${availability.city ? availability.city.label : 'Unknown'}\nRegion: ${availability.region}\nPostal code: ${availability.postalCode}\nAddress line 1: ${addressLine1}\nAddress line 2: ${addressLine2 || 'N/A'}`;
 
+  const itemLines = billing.items.map(i => ` - ${i.quantity}x ${i.product} (CAD ${i.unitPriceCad.toFixed(2)} ea)`);
+
   const messageLines = [
     'New checkout request from the GTA order page.',
     '',
-    `Product: ${product}`,
-    `Quantity: ${quantity}`,
+    `Products:`,
+    ...itemLines,
+    `Total Boxes: ${billing.quantity}`,
     fulfillmentDetails,
     '',
     `Currency: ${billing.currency}`,
-    `Unit price: CAD ${billing.unitPriceCad.toFixed(2)}`,
     `Subtotal: CAD ${billing.subtotalCad.toFixed(2)}`,
     `Shipping: CAD ${billing.shippingCad.toFixed(2)}`,
     `HST (13%): CAD ${billing.hstCad.toFixed(2)}`,
@@ -267,7 +299,7 @@ function buildCheckoutContactRecord(body) {
     subject,
     message: messageLines.join('\n'),
     source: 'checkout-page',
-    product,
+    product: primaryProduct,
     intent: 'buy'
   });
 
@@ -276,7 +308,7 @@ function buildCheckoutContactRecord(body) {
     billing,
     contactRecord,
     paymentMethod,
-    quantity
+    quantity: billing.quantity
   };
 }
 
