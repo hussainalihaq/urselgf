@@ -370,32 +370,43 @@
     const productCatalog = {
       'Sindhri Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 38 },
       'Anwar Ratol Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 45 },
-      'Chaunsa Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 52 },
-      'Chaunsa Mango Premium Box': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 52 },
-      'Anwar Ratol Mango Reserve': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 45 },
-      'Sindhri Mango Estate Selection': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 38 }
+      'Chaunsa Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 52 }
     };
 
+    // Map short IDs from cart URL to full product names
+    const idToName = { sindhri: 'Sindhri Mangoes', anwar: 'Anwar Ratol Mangoes', chaunsa: 'Chaunsa Mangoes' };
     const currencyFormatter = new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 2 });
     const params = new URLSearchParams(window.location.search);
-    
-    // Default cart items
+
+    // Build cart from URL: ?cart=sindhri:2,chaunsa:1 or legacy ?product=...
     let cart = [
       { product: 'Sindhri Mangoes', quantity: 0 },
       { product: 'Anwar Ratol Mangoes', quantity: 0 },
       { product: 'Chaunsa Mangoes', quantity: 0 }
     ];
 
-    const passedProduct = params.get('product');
-    if (passedProduct) {
-      const match = cart.find(c => passedProduct.toLowerCase().includes(c.product.toLowerCase().split(' ')[0]));
-      if (match) match.quantity = 1;
-      else cart[0].quantity = 1;
+    const cartParam = params.get('cart');
+    if (cartParam) {
+      cartParam.split(',').forEach(seg => {
+        const [id, qty] = seg.split(':');
+        const name = idToName[id];
+        if (name) {
+          const item = cart.find(c => c.product === name);
+          if (item) item.quantity = Math.max(1, parseInt(qty) || 1);
+        }
+      });
     } else {
-      cart[0].quantity = 1;
+      const passedProduct = params.get('product');
+      if (passedProduct) {
+        const match = cart.find(c => passedProduct.toLowerCase().includes(c.product.toLowerCase().split(' ')[0]));
+        if (match) match.quantity = 1;
+        else cart[0].quantity = 1;
+      } else {
+        cart[0].quantity = 1;
+      }
     }
 
-    // DOM Elements
+    // DOM
     const cartItemsEl = document.getElementById('cart-items');
     const billQty = document.getElementById('bill-qty');
     const billSubtotal = document.getElementById('bill-subtotal');
@@ -406,186 +417,101 @@
     const btnDelivery = document.getElementById('btn-toggle-delivery');
     const pickupSection = document.getElementById('pickup-section');
     const deliverySection = document.getElementById('delivery-section');
-    
     let fulfillment = 'pickup';
 
     function renderCart() {
       cartItemsEl.innerHTML = '';
-      cart.forEach((item, index) => {
+      cart.forEach((item, i) => {
         const p = productCatalog[item.product];
-        const itemEl = document.createElement('div');
-        itemEl.className = 'flex items-center justify-between p-4 rounded-2xl border border-[#203a7b]/10 bg-[#f8f9fc] shadow-sm transition hover:shadow-md';
-        itemEl.innerHTML = `
+        const el = document.createElement('div');
+        el.className = 'flex items-center justify-between p-4 rounded-2xl border border-[#203a7b]/10 bg-[#f8f9fc] shadow-sm transition hover:shadow-md';
+        el.innerHTML = `
           <div>
             <div class="font-bold text-[#182a59] text-[1.1rem]" style="font-family:'DM Serif Display',serif">${item.product}</div>
-            <div class="text-[.75rem] font-bold text-[#6e7b97] uppercase tracking-[0.1em] mt-1">${p.unit} &middot; CAD ${p.price.toFixed(2)}</div>
+            <div class="text-[.75rem] font-bold text-[#6e7b97] uppercase tracking-[0.1em] mt-1">${p.unit} · CAD ${p.price.toFixed(2)}</div>
           </div>
           <div class="flex items-center gap-2">
-            <button type="button" onclick="updateQty(${index}, -1)" class="w-[38px] h-[38px] flex items-center justify-center rounded-xl border-2 border-[#203a7b]/15 text-[#203a7b] font-bold bg-white hover:bg-[#edf3ff] hover:border-[#203a7b] transition-all">−</button>
+            <button type="button" onclick="updateQty(${i},-1)" class="w-[38px] h-[38px] flex items-center justify-center rounded-xl border-2 border-[#203a7b]/15 text-[#203a7b] font-bold bg-white hover:bg-[#edf3ff] hover:border-[#203a7b] transition-all">−</button>
             <span class="w-[32px] text-center font-bold text-[#182a59] text-[1.1rem]">${item.quantity}</span>
-            <button type="button" onclick="updateQty(${index}, 1)" class="w-[38px] h-[38px] flex items-center justify-center rounded-xl border-2 border-[#203a7b]/15 text-[#203a7b] font-bold bg-white hover:bg-[#edf3ff] hover:border-[#203a7b] transition-all">+</button>
-          </div>
-        `;
-        cartItemsEl.appendChild(itemEl);
+            <button type="button" onclick="updateQty(${i},1)" class="w-[38px] h-[38px] flex items-center justify-center rounded-xl border-2 border-[#203a7b]/15 text-[#203a7b] font-bold bg-white hover:bg-[#edf3ff] hover:border-[#203a7b] transition-all">+</button>
+          </div>`;
+        cartItemsEl.appendChild(el);
       });
       renderBilling();
     }
 
-    window.updateQty = function(index, delta) {
-      cart[index].quantity = Math.max(0, Math.min(100, cart[index].quantity + delta));
-      renderCart();
-    };
+    window.updateQty = (i, d) => { cart[i].quantity = Math.max(0, Math.min(100, cart[i].quantity + d)); renderCart(); };
 
     function renderBilling() {
-      let totalQty = 0;
-      let subtotal = 0;
-      cart.forEach(item => {
-        totalQty += item.quantity;
-        subtotal += item.quantity * productCatalog[item.product].price;
-      });
-
-      const shipping = fulfillment === 'delivery' ? 15.00 : 0;
-      const preTax = subtotal + shipping;
-      const hst = Number((preTax * 0.13).toFixed(2));
-      const total = Number((preTax + hst).toFixed(2));
-
-      billQty.textContent = String(totalQty);
-      billSubtotal.textContent = currencyFormatter.format(subtotal);
-
-      const billShippingRow = document.getElementById('bill-shipping-row');
-      if (shipping > 0) {
-        billShippingRow.classList.remove('hidden');
-        document.getElementById('bill-shipping').textContent = currencyFormatter.format(shipping);
-      } else {
-        billShippingRow.classList.add('hidden');
-      }
-
+      let qty = 0, sub = 0;
+      cart.forEach(item => { qty += item.quantity; sub += item.quantity * productCatalog[item.product].price; });
+      const ship = fulfillment === 'delivery' ? 15 : 0;
+      const hst = +((sub + ship) * 0.13).toFixed(2);
+      billQty.textContent = qty;
+      billSubtotal.textContent = currencyFormatter.format(sub);
+      const shipRow = document.getElementById('bill-shipping-row');
+      if (ship > 0) { shipRow.classList.remove('hidden'); document.getElementById('bill-shipping').textContent = currencyFormatter.format(ship); }
+      else { shipRow.classList.add('hidden'); }
       billHst.textContent = currencyFormatter.format(hst);
-      billTotal.textContent = currencyFormatter.format(total);
+      billTotal.textContent = currencyFormatter.format(sub + ship + hst);
     }
 
-    function setFulfillment(method) {
-      fulfillment = method;
-      if (method === 'pickup') {
-        pickupSection.classList.remove('hidden');
-        deliverySection.classList.add('hidden');
-        btnPickup.classList.add('border-[#203a7b]', 'bg-[#edf3ff]', 'text-[#203a7b]');
-        btnPickup.classList.remove('border-[#19489f]/15', 'bg-white', 'text-[#8b9cbd]');
-        btnDelivery.classList.remove('border-[#203a7b]', 'bg-[#edf3ff]', 'text-[#203a7b]');
-        btnDelivery.classList.add('border-[#19489f]/15', 'bg-white', 'text-[#8b9cbd]');
-      } else {
-        pickupSection.classList.add('hidden');
-        deliverySection.classList.remove('hidden');
-        btnDelivery.classList.add('border-[#203a7b]', 'bg-[#edf3ff]', 'text-[#203a7b]');
-        btnDelivery.classList.remove('border-[#19489f]/15', 'bg-white', 'text-[#8b9cbd]');
-        btnPickup.classList.remove('border-[#203a7b]', 'bg-[#edf3ff]', 'text-[#203a7b]');
-        btnPickup.classList.add('border-[#19489f]/15', 'bg-white', 'text-[#8b9cbd]');
-      }
+    function setFulfillment(m) {
+      fulfillment = m;
+      const [show, hide] = m === 'pickup' ? [pickupSection, deliverySection] : [deliverySection, pickupSection];
+      const [on, off] = m === 'pickup' ? [btnPickup, btnDelivery] : [btnDelivery, btnPickup];
+      show.classList.remove('hidden'); hide.classList.add('hidden');
+      on.classList.add('border-[#203a7b]','bg-[#edf3ff]','text-[#203a7b]');
+      on.classList.remove('border-[#19489f]/15','bg-white','text-[#8b9cbd]');
+      off.classList.remove('border-[#203a7b]','bg-[#edf3ff]','text-[#203a7b]');
+      off.classList.add('border-[#19489f]/15','bg-white','text-[#8b9cbd]');
       renderBilling();
     }
 
     btnPickup.addEventListener('click', () => setFulfillment('pickup'));
     btnDelivery.addEventListener('click', () => setFulfillment('delivery'));
+    setFulfillment(params.get('fulfillment') === 'delivery' ? 'delivery' : 'pickup');
 
-    const passedFulfillment = params.get('fulfillment');
     const passedCity = (params.get('city') || '').trim();
-    if (passedFulfillment === 'delivery') setFulfillment('delivery');
-    else setFulfillment('pickup');
-
     if (passedCity) {
-      const citySelect = document.getElementById('city');
-      const options = Array.from(citySelect.options).map(o => o.value.toLowerCase());
-      const idx = options.indexOf(passedCity.toLowerCase());
-      if (idx >= 0) citySelect.selectedIndex = idx;
+      const sel = document.getElementById('city');
+      const idx = [...sel.options].findIndex(o => o.value.toLowerCase() === passedCity.toLowerCase());
+      if (idx >= 0) sel.selectedIndex = idx;
     }
 
-    document.getElementById('checkout-form').addEventListener('submit', async (event) => {
-      event.preventDefault();
-
+    document.getElementById('checkout-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
       const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
       const phone = document.getElementById('phone').value.trim();
-
-      if (!name || !email || !phone) {
-        checkoutStatus.textContent = 'Please fill out your Name, Email, and Phone.';
-        checkoutStatus.style.color = '#a3392f';
-        return;
-      }
+      if (!name || !email || !phone) { checkoutStatus.textContent = 'Please fill out your Name, Email, and Phone.'; checkoutStatus.style.color = '#a3392f'; return; }
 
       const address1 = document.getElementById('address1').value.trim();
       const city = document.getElementById('city').value.trim();
       const postal = document.getElementById('postal').value.trim();
       const address2 = document.getElementById('address2').value.trim();
+      if (fulfillment === 'delivery' && (!address1 || !city || !postal)) { checkoutStatus.textContent = 'Please fill out your complete delivery address.'; checkoutStatus.style.color = '#a3392f'; return; }
 
-      if (fulfillment === 'delivery') {
-        if (!address1 || !city || !postal) {
-          checkoutStatus.textContent = 'Please fill out your complete delivery address.';
-          checkoutStatus.style.color = '#a3392f';
-          return;
-        }
-      }
-      
       const activeCart = cart.filter(c => c.quantity > 0);
-      if (activeCart.length === 0) {
-        checkoutStatus.textContent = 'Please add at least one box to your cart.';
-        checkoutStatus.style.color = '#a3392f';
-        return;
-      }
+      if (!activeCart.length) { checkoutStatus.textContent = 'Please add at least one box to your cart.'; checkoutStatus.style.color = '#a3392f'; return; }
 
       const btn = document.getElementById('complete-order');
-      btn.disabled = true;
-      btn.textContent = 'Processing...';
-      checkoutStatus.textContent = 'Submitting checkout securely...';
-      checkoutStatus.style.color = '#1f4ea5';
-
-      const payload = {
-        cart: activeCart,
-        fulfillment,
-        name,
-        email,
-        phone,
-        addressLine1: address1,
-        addressLine2: address2,
-        city,
-        postalCode: postal,
-        paymentMethod: 'stripe',
-        notes: ''
-      };
+      btn.disabled = true; btn.textContent = 'Processing...';
+      checkoutStatus.textContent = 'Submitting checkout securely...'; checkoutStatus.style.color = '#1f4ea5';
 
       try {
-        const endpoint = '/api/checkout';
-        const response = await fetch(endpoint, {
+        const res = await fetch('/api/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(payload)
+          body: JSON.stringify({ cart: activeCart, fulfillment, name, email, phone, addressLine1: address1, addressLine2: address2, city, postalCode: postal, paymentMethod: 'stripe', notes: '' })
         });
-        const raw = await response.text();
-        let result = {};
-        try { result = raw ? JSON.parse(raw) : {}; } catch { result = {}; }
+        const raw = await res.text();
+        let result = {}; try { result = raw ? JSON.parse(raw) : {}; } catch {}
 
-        if (!response.ok) {
-          checkoutStatus.textContent = result.error || `Checkout failed (${response.status}).`;
-          checkoutStatus.style.color = '#a3392f';
-          btn.disabled = false;
-          btn.textContent = 'Pay via Stripe →';
-          return;
-        }
-
-        if (result.payment && result.payment.status === 'redirect' && result.payment.url) {
-          checkoutStatus.textContent = 'Redirecting to Stripe...';
-          window.location.href = result.payment.url;
-          return;
-        }
-
-        checkoutStatus.textContent = result.payment ? result.payment.message : 'Order received.';
-        btn.disabled = false;
-        btn.textContent = 'Pay via Stripe →';
-      } catch (error) {
-        checkoutStatus.textContent = `Network error: ${error.message}`;
-        checkoutStatus.style.color = '#a3392f';
-        btn.disabled = false;
-        btn.textContent = 'Pay via Stripe →';
-      }
+        if (!res.ok) { checkoutStatus.textContent = result.error || `Checkout failed (${res.status}).`; checkoutStatus.style.color = '#a3392f'; btn.disabled = false; btn.textContent = 'Pay via Stripe →'; return; }
+        if (result.payment?.status === 'redirect' && result.payment.url) { checkoutStatus.textContent = 'Redirecting to Stripe...'; window.location.href = result.payment.url; return; }
+        checkoutStatus.textContent = result.payment?.message || 'Order received.'; btn.disabled = false; btn.textContent = 'Pay via Stripe →';
+      } catch (err) { checkoutStatus.textContent = `Network error: ${err.message}`; checkoutStatus.style.color = '#a3392f'; btn.disabled = false; btn.textContent = 'Pay via Stripe →'; }
     });
 
     renderCart();
