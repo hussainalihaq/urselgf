@@ -244,11 +244,7 @@
   const params = new URLSearchParams(window.location.search);
   const intent = params.get('intent') || 'reserve';
 
-  let cart = [
-    { product: 'Sindhri Mangoes', quantity: 0 },
-    { product: 'Anwar Ratol Mangoes', quantity: 0 },
-    { product: 'Chaunsa Mangoes', quantity: 0 }
-  ];
+  let cart = [];
 
   const cartParam = params.get('cart');
   if (cartParam) {
@@ -256,19 +252,23 @@
       const [id, qty] = seg.split(':');
       const name = idToName[id];
       if (name) {
-        const item = cart.find(c => c.product === name);
-        if (item) item.quantity = Math.max(1, parseInt(qty) || 1);
+        const q = parseInt(qty);
+        const quantity = isNaN(q) ? 1 : Math.max(0, q);
+        if (quantity > 0) {
+          cart.push({ product: name, quantity });
+        }
       }
     });
   } else {
     const passedProduct = params.get('product');
     if (passedProduct) {
-      const match = cart.find(c => passedProduct.toLowerCase().includes(c.product.toLowerCase().split(' ')[0]));
-      if (match) match.quantity = 1;
-      else cart[0].quantity = 1;
-    } else {
-      cart[0].quantity = 1;
+      const matchName = Object.values(idToName).find(n => passedProduct.toLowerCase().includes(n.toLowerCase().split(' ')[0]));
+      if (matchName) cart.push({ product: matchName, quantity: 1 });
     }
+  }
+
+  if (cart.length === 0) {
+    cart.push({ product: 'Anwar Ratol Mangoes', quantity: 1 });
   }
 
   const cartItemsEl = document.getElementById('cart-items');
@@ -280,7 +280,10 @@
   function renderCart() {
     cartItemsEl.innerHTML = '';
     let totalQty = 0;
+    let activeItems = 0;
     cart.forEach((item, i) => {
+      if (item.quantity <= 0) return;
+      activeItems++;
       totalQty += item.quantity;
       const p = productCatalog[item.product];
       const el = document.createElement('div');
@@ -297,6 +300,9 @@
         </div>`;
       cartItemsEl.appendChild(el);
     });
+    if (activeItems === 0) {
+      cartItemsEl.innerHTML = '<div class="text-center p-4 text-[#6e7b97] text-sm">Your reservation cart is empty.</div>';
+    }
     summaryLine.textContent = `${totalQty}× Boxes Total`;
   }
 
