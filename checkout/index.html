@@ -89,6 +89,20 @@
       font-weight:700;
       color:#1d4ca2;
     }
+    .product-note{
+      background:linear-gradient(135deg,rgba(240,200,80,.16),rgba(237,243,255,.95));
+      border:1px solid rgba(32,58,123,.12);
+      border-left:4px solid #f0c850;
+      border-radius:1rem;
+      color:#16305f;
+      font-size:1rem;
+      font-style:italic;
+      font-weight:700;
+      letter-spacing:.01em;
+      line-height:1.7;
+      padding:1rem 1.1rem;
+      box-shadow:0 12px 28px rgba(32,58,123,.08);
+    }
     .cta{
       background:linear-gradient(140deg,#203a7b,#2a4f9f);
       color:#fff;
@@ -191,15 +205,15 @@
               </div>
             </div>
             
-            <p id="product-catchphrase" class="text-[#203a7b] text-[.95rem] font-medium italic leading-relaxed border-l-[3px] border-[#f0c850] pl-4 py-1 mb-5"></p>
+            <p id="product-catchphrase" class="product-note mb-5"></p>
 
             <!-- QUANTITY -->
             <div class="pt-5 border-t border-[#203a7b]/8">
               <div class="text-[.7rem] font-bold uppercase tracking-[.15em] text-[#6e7b97] mb-3">How many boxes?</div>
               <div class="flex items-center gap-3">
-                <button id="qty-minus" type="button" class="w-[44px] h-[44px] border-[1.5px] border-[#203a7b]/15 bg-white rounded-xl text-[1.2rem] font-bold text-[#203a7b] hover:bg-[#edf3ff] hover:border-[#203a7b] transition-all" onclick="const q=document.getElementById('quantity');q.value=Math.max(1,(parseInt(q.value)||1)-1);q.dispatchEvent(new Event('input'))">−</button>
+                <button id="qty-minus" type="button" class="w-[44px] h-[44px] border-[1.5px] border-[#203a7b]/15 bg-white rounded-xl text-[1.2rem] font-bold text-[#203a7b] hover:bg-[#edf3ff] hover:border-[#203a7b] transition-all">−</button>
                 <input id="quantity" type="number" min="1" max="1000" value="1" required class="flex-1 h-[44px] rounded-xl border-[1.5px] border-[#203a7b]/12 bg-[#f8f9fc] px-4 text-center text-lg font-bold text-[#182a59] focus:outline-none focus:border-[#203a7b]"/>
-                <button id="qty-plus" type="button" class="w-[44px] h-[44px] border-[1.5px] border-[#203a7b]/15 bg-white rounded-xl text-[1.2rem] font-bold text-[#203a7b] hover:bg-[#edf3ff] hover:border-[#203a7b] transition-all" onclick="const q=document.getElementById('quantity');q.value=Math.min(1000,(parseInt(q.value)||1)+1);q.dispatchEvent(new Event('input'))">+</button>
+                <button id="qty-plus" type="button" class="w-[44px] h-[44px] border-[1.5px] border-[#203a7b]/15 bg-white rounded-xl text-[1.2rem] font-bold text-[#203a7b] hover:bg-[#edf3ff] hover:border-[#203a7b] transition-all">+</button>
               </div>
             </div>
           </div>
@@ -385,15 +399,16 @@
     // Inject catchphrase
     const catchphraseEl = document.getElementById('product-catchphrase');
     if (catchphraseEl) {
+      let catchphrase = '';
       if (product.includes('Anwar Ratol')) {
-        catchphraseEl.textContent = 'MOST PEOPLE HEAR ABOUT IT. VERY FEW TASTE THE REAL ONE. YOU\'RE LUCKY IF YOU GET IT.';
+        catchphrase = 'MOST PEOPLE HEAR ABOUT IT. VERY FEW TASTE THE REAL ONE. YOU\'RE LUCKY IF YOU GET IT.';
       } else if (product.includes('Sindhri')) {
-        catchphraseEl.textContent = 'BIGGER, SMOOTHER, RICHER, AND NATURALLY HONEYED. ONCE YOU TASTE PEAK-SEASON SINDHRI, THE EARLY ONES DON\'T COMPARE.';
+        catchphrase = 'BIGGER, SMOOTHER, RICHER, AND NATURALLY HONEYED. ONCE YOU TASTE PEAK-SEASON SINDHRI, THE EARLY ONES DON\'T COMPARE.';
       } else if (product.includes('Chaunsa')) {
-        catchphraseEl.textContent = 'THE KING ARRIVES LATE. AND STEALS THE WHOLE SEASON.';
-      } else {
-        catchphraseEl.textContent = '';
+        catchphrase = 'THE KING ARRIVES LATE. AND STEALS THE WHOLE SEASON.';
       }
+      catchphraseEl.textContent = catchphrase;
+      catchphraseEl.classList.toggle('hidden', !catchphrase);
     }
 
     // State

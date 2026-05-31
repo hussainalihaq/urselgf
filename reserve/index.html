@@ -30,6 +30,20 @@
     .fade-up-d3{animation-delay:.3s;opacity:0}
     .qty-btn{width:44px;height:44px;border:1.5px solid rgba(32,58,123,.15);background:#fff;border-radius:12px;font-size:1.2rem;font-weight:700;color:#203a7b;cursor:pointer;transition:all .2s}
     .qty-btn:hover{background:#edf3ff;border-color:#203a7b}
+    .product-note{
+      background:linear-gradient(135deg,rgba(240,200,80,.16),rgba(237,243,255,.95));
+      border:1px solid rgba(32,58,123,.12);
+      border-left:4px solid #f0c850;
+      border-radius:1rem;
+      color:#16305f;
+      font-size:1rem;
+      font-style:italic;
+      font-weight:700;
+      letter-spacing:.01em;
+      line-height:1.7;
+      padding:1rem 1.1rem;
+      box-shadow:0 12px 28px rgba(32,58,123,.08);
+    }
     .form-input{width:100%;border:1.5px solid rgba(32,58,123,.12);border-radius:14px;background:#fff;padding:14px 18px;font-size:15px;font-family:inherit;color:#1b2847;transition:border-color .2s,box-shadow .2s}
     .form-input:focus{outline:none;border-color:#203a7b;box-shadow:0 0 0 3px rgba(32,58,123,.08)}
     .form-input::placeholder{color:#9aa8c4}
@@ -157,7 +171,7 @@
             </div>
           </div>
           
-          <p id="product-catchphrase" class="text-[#203a7b] text-[.95rem] font-medium italic leading-relaxed border-l-[3px] border-[#f0c850] pl-4 py-1 mb-5"></p>
+          <p id="product-catchphrase" class="product-note mb-5"></p>
 
           <!-- QUANTITY -->
           <div class="pt-5 border-t border-[#203a7b]/8">
@@ -282,15 +296,16 @@
   // Inject catchphrase
   const catchphraseEl = document.getElementById('product-catchphrase');
   if (catchphraseEl) {
+    let catchphrase = '';
     if (product.includes('Anwar Ratol')) {
-      catchphraseEl.textContent = 'MOST PEOPLE HEAR ABOUT IT. VERY FEW TASTE THE REAL ONE. YOU\'RE LUCKY IF YOU GET IT.';
+      catchphrase = 'MOST PEOPLE HEAR ABOUT IT. VERY FEW TASTE THE REAL ONE. YOU\'RE LUCKY IF YOU GET IT.';
     } else if (product.includes('Sindhri')) {
-      catchphraseEl.textContent = 'BIGGER, SMOOTHER, RICHER, AND NATURALLY HONEYED. ONCE YOU TASTE PEAK-SEASON SINDHRI, THE EARLY ONES DON\'T COMPARE.';
+      catchphrase = 'BIGGER, SMOOTHER, RICHER, AND NATURALLY HONEYED. ONCE YOU TASTE PEAK-SEASON SINDHRI, THE EARLY ONES DON\'T COMPARE.';
     } else if (product.includes('Chaunsa')) {
-      catchphraseEl.textContent = 'THE KING ARRIVES LATE. AND STEALS THE WHOLE SEASON.';
-    } else {
-      catchphraseEl.textContent = '';
+      catchphrase = 'THE KING ARRIVES LATE. AND STEALS THE WHOLE SEASON.';
     }
+    catchphraseEl.textContent = catchphrase;
+    catchphraseEl.classList.toggle('hidden', !catchphrase);
   }
 
   function updateSummary() {
