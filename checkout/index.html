@@ -289,7 +289,7 @@
               </div>
               <div class="mt-4 space-y-3 text-[1rem] text-[#51668c]">
                 <div class="flex items-center justify-between"><span>Subtotal (<span id="bill-qty">0</span> boxes)</span><strong id="bill-subtotal" class="money text-[#17325f]">$0.00</strong></div>
-                <div id="bill-shipping-row" class="flex items-center justify-between hidden"><span>Shipping (GTA)</span><strong id="bill-shipping" class="money text-[#17325f]">$10.00</strong></div>
+                <div id="bill-shipping-row" class="flex items-center justify-between hidden"><span>Shipping (GTA)</span><strong id="bill-shipping" class="money text-[#17325f]">$6.99</strong></div>
                 <div class="flex items-center justify-between"><span>HST (13%)</span><strong id="bill-hst" class="money text-[#17325f]">$0.00</strong></div>
                 <div class="mt-4 border-t border-[#19489f]/12 pt-4 flex items-center justify-between"><span class="font-bold text-[#17325f]">Total</span><strong id="bill-total" class="money text-[1.4rem] text-[#1f4ea5]">$0.00</strong></div>
               </div>
@@ -399,7 +399,7 @@
     function renderBilling() {
       let qty = 0, sub = 0;
       cart.forEach(item => { qty += item.quantity; sub += item.quantity * productCatalog[item.product].price; });
-      const ship = fulfillment === 'delivery' ? 10 : 0;
+      const ship = fulfillment === 'delivery' ? 6.99 : 0;
       const hst = +((sub + ship) * 0.13).toFixed(2);
       billQty.textContent = qty;
       billSubtotal.textContent = currencyFormatter.format(sub);
