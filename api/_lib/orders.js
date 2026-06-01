@@ -184,21 +184,28 @@ async function generateOrderNumber() {
   ensurePersistentOrderStorage();
   const stamp = todayStamp();
   if (hasSupabase()) {
-    const response = await supabaseRequest(
-      `/rest/v1/${SUPABASE_ORDERS_TABLE}?select=order_number&order=created_at.desc&limit=500`
-    );
-    if (!response.ok) {
-      const detail = await response.text();
-      if (isMissingSupabaseTableError(detail, SUPABASE_ORDERS_TABLE)) {
+    try {
+      const response = await supabaseRequest(
+        `/rest/v1/${SUPABASE_ORDERS_TABLE}?select=order_number&order=created_at.desc&limit=500`
+      );
+      if (!response.ok) {
+        const detail = await response.text();
+        if (isMissingSupabaseTableError(detail, SUPABASE_ORDERS_TABLE)) {
+          return fallbackOrderNumber(stamp);
+        }
+        if (isSchemaMismatchError(detail, 'order_number')) {
+          return fallbackOrderNumber(stamp);
+        }
+        if (response.status >= 500) {
+          return fallbackOrderNumber(stamp);
+        }
         return fallbackOrderNumber(stamp);
       }
-      if (isSchemaMismatchError(detail, 'order_number')) {
-        return fallbackOrderNumber(stamp);
-      }
-      throw new Error(`Supabase order number lookup failed (${response.status}): ${detail}`);
+      const rows = await response.json();
+      return nextOrderNumberFromRows(rows, stamp);
+    } catch {
+      return fallbackOrderNumber(stamp);
     }
-    const rows = await response.json();
-    return nextOrderNumberFromRows(rows, stamp);
   }
   const rows = await readJsonArray(ORDERS_FILE);
   return nextOrderNumberFromRows(rows, stamp);
