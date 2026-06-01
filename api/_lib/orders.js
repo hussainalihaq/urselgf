@@ -355,10 +355,12 @@ async function markOrderPaidBySessionId(sessionId, paymentIntentId) {
 
 async function upsertPaidOrderFromSession(session, lineItems = []) {
   ensurePersistentOrderStorage();
+  const cartItems = parseCartItems(session?.metadata?.cart_json);
   const existing = await getOrderBySessionId(session.id);
   if (existing) {
-    if (existing.status === 'paid') return { order: existing, changed: false };
-    return markOrderPaidBySessionId(session.id, session.payment_intent || '');
+    if (existing.status === 'paid') return { order: existing, changed: false, cartItems };
+    const marked = await markOrderPaidBySessionId(session.id, session.payment_intent || '');
+    return { ...marked, cartItems };
   }
 
   const built = buildOrderRecordFromSession(session, lineItems);

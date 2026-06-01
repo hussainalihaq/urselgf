@@ -19,6 +19,9 @@ const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 const CONTACTS_TABLE = process.env.SUPABASE_CONTACTS_TABLE || 'contacts';
 const ORDERS_TABLE = process.env.SUPABASE_ORDERS_TABLE || 'orders';
 const INVENTORY_TABLE = process.env.SUPABASE_INVENTORY_TABLE || 'inventory';
+const CONTACTS_SELECTS = ['id'];
+const ORDERS_SELECTS = ['order_number', 'id', 'stripe_session_id'];
+const INVENTORY_SELECTS = ['product', 'mango_type', 'id'];
 
 function hasSupabase() {
   return Boolean(SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY);
@@ -35,6 +38,16 @@ async function sb(endpoint, options = {}) {
     }
   });
   return res;
+}
+
+async function probeTable(table, selectCandidates) {
+  let lastError = '';
+  for (const column of selectCandidates) {
+    const res = await sb(`/rest/v1/${table}?select=${encodeURIComponent(column)}&limit=1`);
+    if (res.ok) return { ok: true, error: '' };
+    lastError = await res.text();
+  }
+  return { ok: false, error: lastError };
 }
 
 async function readArray(filePath) {
@@ -322,27 +335,27 @@ async function diagnostics() {
 
   if (hasSupabase()) {
     try {
-      const res = await sb(`/rest/v1/${CONTACTS_TABLE}?select=id&limit=1`);
-      out.supabase.contactsTableReachable = res.ok;
-      if (!res.ok) out.supabase.contactsTableError = await res.text();
+      const result = await probeTable(CONTACTS_TABLE, CONTACTS_SELECTS);
+      out.supabase.contactsTableReachable = result.ok;
+      if (!result.ok) out.supabase.contactsTableError = result.error;
     } catch (err) {
       out.supabase.contactsTableReachable = false;
       out.supabase.contactsTableError = healthFromError(err);
     }
 
     try {
-      const res = await sb(`/rest/v1/${ORDERS_TABLE}?select=id&limit=1`);
-      out.supabase.ordersTableReachable = res.ok;
-      if (!res.ok) out.supabase.ordersTableError = await res.text();
+      const result = await probeTable(ORDERS_TABLE, ORDERS_SELECTS);
+      out.supabase.ordersTableReachable = result.ok;
+      if (!result.ok) out.supabase.ordersTableError = result.error;
     } catch (err) {
       out.supabase.ordersTableReachable = false;
       out.supabase.ordersTableError = healthFromError(err);
     }
 
     try {
-      const res = await sb(`/rest/v1/${INVENTORY_TABLE}?select=id&limit=1`);
-      out.supabase.inventoryTableReachable = res.ok;
-      if (!res.ok) out.supabase.inventoryTableError = await res.text();
+      const result = await probeTable(INVENTORY_TABLE, INVENTORY_SELECTS);
+      out.supabase.inventoryTableReachable = result.ok;
+      if (!result.ok) out.supabase.inventoryTableError = result.error;
     } catch (err) {
       out.supabase.inventoryTableReachable = false;
       out.supabase.inventoryTableError = healthFromError(err);
