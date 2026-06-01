@@ -290,7 +290,6 @@
               <div class="mt-4 space-y-3 text-[1rem] text-[#51668c]">
                 <div class="flex items-center justify-between"><span>Subtotal (<span id="bill-qty">0</span> boxes)</span><strong id="bill-subtotal" class="money text-[#17325f]">$0.00</strong></div>
                 <div id="bill-shipping-row" class="flex items-center justify-between hidden"><span>Shipping (GTA)</span><strong id="bill-shipping" class="money text-[#17325f]">$6.99</strong></div>
-                <div class="flex items-center justify-between"><span>HST (13%)</span><strong id="bill-hst" class="money text-[#17325f]">$0.00</strong></div>
                 <div class="mt-4 border-t border-[#19489f]/12 pt-4 flex items-center justify-between"><span class="font-bold text-[#17325f]">Total</span><strong id="bill-total" class="money text-[1.4rem] text-[#1f4ea5]">$0.00</strong></div>
               </div>
             </section>
@@ -358,7 +357,6 @@
     const cartItemsEl = document.getElementById('cart-items');
     const billQty = document.getElementById('bill-qty');
     const billSubtotal = document.getElementById('bill-subtotal');
-    const billHst = document.getElementById('bill-hst');
     const billTotal = document.getElementById('bill-total');
     const checkoutStatus = document.getElementById('checkout-status');
     const btnPickup = document.getElementById('btn-toggle-pickup');
@@ -400,14 +398,12 @@
       let qty = 0, sub = 0;
       cart.forEach(item => { qty += item.quantity; sub += item.quantity * productCatalog[item.product].price; });
       const ship = fulfillment === 'delivery' ? 6.99 : 0;
-      const hst = +((sub + ship) * 0.13).toFixed(2);
       billQty.textContent = qty;
       billSubtotal.textContent = currencyFormatter.format(sub);
       const shipRow = document.getElementById('bill-shipping-row');
       if (ship > 0) { shipRow.classList.remove('hidden'); document.getElementById('bill-shipping').textContent = currencyFormatter.format(ship); }
       else { shipRow.classList.add('hidden'); }
-      billHst.textContent = currencyFormatter.format(hst);
-      billTotal.textContent = currencyFormatter.format(sub + ship + hst);
+      billTotal.textContent = currencyFormatter.format(sub + ship);
     }
 
     function setFulfillment(m) {

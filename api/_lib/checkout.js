@@ -124,9 +124,9 @@ function buildBilling(cart, fulfillment) {
     };
   });
 
-  const shippingCad = fulfillment === 'delivery' ? 10.00 : 0;
+  const shippingCad = fulfillment === 'delivery' ? 6.99 : 0;
   const preTaxCad = subtotalCad + shippingCad;
-  const hstRate = 0.13;
+  const hstRate = 0;
   const hstCad = Number((preTaxCad * hstRate).toFixed(2));
   const totalCad = Number((preTaxCad + hstCad).toFixed(2));
 
@@ -283,7 +283,6 @@ function buildCheckoutContactRecord(body) {
     `Currency: ${billing.currency}`,
     `Subtotal: CAD ${billing.subtotalCad.toFixed(2)}`,
     `Shipping: CAD ${billing.shippingCad.toFixed(2)}`,
-    `HST (13%): CAD ${billing.hstCad.toFixed(2)}`,
     `Estimated total: CAD ${billing.totalCad.toFixed(2)}`,
     '',
     `Customer Name: ${normalizeText(body.name)}`,
