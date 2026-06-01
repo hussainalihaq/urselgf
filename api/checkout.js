@@ -98,6 +98,15 @@ module.exports = async function handler(req, res) {
 
       const session = await stripe.checkout.sessions.create({
         mode: 'payment',
+        billing_address_collection: 'required',
+        phone_number_collection: { enabled: true },
+        ...(String(body.fulfillment || '').toLowerCase() === 'delivery'
+          ? {
+              shipping_address_collection: {
+                allowed_countries: ['CA']
+              }
+            }
+          : {}),
         success_url: `${baseUrl}/checkout/success.html?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${baseUrl}/checkout/`,
         customer_email: checkout.contactRecord.email,
