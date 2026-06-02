@@ -54,6 +54,15 @@
     </table>
   </div>
   <div class="wrap">
+    <h3>Inventory</h3>
+    <table>
+      <thead>
+        <tr><th>Product</th><th>Starting</th><th>Sold</th><th>Remaining</th><th>Low Stock</th><th>Updated</th></tr>
+      </thead>
+      <tbody id="inventory-body"></tbody>
+    </table>
+  </div>
+  <div class="wrap">
     <h3>All Links</h3>
     <table>
       <tbody id="links-body"></tbody>
@@ -143,6 +152,21 @@
       document.getElementById('links-body').innerHTML = rows.map(([k,v]) => `<tr><th>${k}</th><td>${v}</td></tr>`).join('');
     }
 
+    async function loadInventory() {
+      const data = await fetchJson('/api/admin/inventory');
+      const rows = data.inventory || [];
+      document.getElementById('inventory-body').innerHTML = rows.map((row) => `
+        <tr>
+          <td>${row.mango_type || ''}</td>
+          <td>${Number(row.starting_stock || 0)}</td>
+          <td>${Number(row.sold_quantity || 0)}</td>
+          <td>${Number(row.remaining_stock || 0)}</td>
+          <td>${Number(row.low_stock_threshold || 0)}</td>
+          <td>${row.updated_at ? new Date(row.updated_at).toLocaleString() : ''}</td>
+        </tr>
+      `).join('') || `<tr><td colspan="6">No inventory rows found.</td></tr>`;
+    }
+
     document.getElementById('logout-btn').addEventListener('click', async () => {
       await fetch('/api/admin/logout', { method: 'POST' });
       window.location.href = '/admin/login/';
@@ -153,6 +177,7 @@
         document.body.style.visibility = 'visible';
         await loadDashboard();
         await loadDiagnostics();
+        await loadInventory();
         await loadLinks();
       })
       .catch((err) => {
