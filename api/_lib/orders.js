@@ -11,6 +11,14 @@ const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 const SUPABASE_ORDERS_TABLE = process.env.SUPABASE_ORDERS_TABLE || 'orders';
 const SUPABASE_INVENTORY_TABLE = process.env.SUPABASE_INVENTORY_TABLE || 'inventory';
 const IS_VERCEL = Boolean(process.env.VERCEL);
+const PRODUCT_ALIASES = {
+  sindhri: 'Sindhri Mangoes',
+  'sindhri mangoes': 'Sindhri Mangoes',
+  chaunsa: 'Chaunsa Mangoes',
+  'chaunsa mangoes': 'Chaunsa Mangoes',
+  'anwar ratol': 'Anwar Ratol Mangoes',
+  'anwar ratol mangoes': 'Anwar Ratol Mangoes'
+};
 const DEFAULT_INVENTORY_STOCK = {
   'Sindhri Mangoes': 50,
   'Chaunsa Mangoes': 230,
@@ -185,6 +193,11 @@ function nextOrderNumberFromRows(rows, stamp) {
   return `${prefix}${String(maxSeq + 1).padStart(4, '0')}`;
 }
 
+function canonicalProductName(product) {
+  const normalized = String(product || '').trim().toLowerCase();
+  return PRODUCT_ALIASES[normalized] || String(product || '').trim();
+}
+
 function buildLegacyInventoryRecord(product, stock) {
   return {
     id: product,
@@ -200,12 +213,13 @@ function buildLegacyInventoryRecord(product, stock) {
 }
 
 async function ensureInventoryRow(product) {
-  const defaultStock = DEFAULT_INVENTORY_STOCK[product];
-  if (!product || !Number.isFinite(defaultStock)) return null;
+  const canonical = canonicalProductName(product);
+  const defaultStock = DEFAULT_INVENTORY_STOCK[canonical];
+  if (!canonical || !Number.isFinite(defaultStock)) return null;
 
   if (hasSupabase()) {
     let response = await supabaseRequest(
-      `/rest/v1/${SUPABASE_INVENTORY_TABLE}?select=product,stock_on_hand&product=eq.${encodeURIComponent(product)}&limit=1`,
+      `/rest/v1/${SUPABASE_INVENTORY_TABLE}?select=product,stock_on_hand&product=eq.${encodeURIComponent(canonical)}&limit=1`,
       { method: 'GET' }
     );
     if (response.ok) {
@@ -217,7 +231,7 @@ async function ensureInventoryRow(product) {
     }
 
     response = await supabaseRequest(
-      `/rest/v1/${SUPABASE_INVENTORY_TABLE}?select=id,mango_type,remaining_stock,sold_quantity&mango_type=eq.${encodeURIComponent(product)}&limit=1`,
+      `/rest/v1/${SUPABASE_INVENTORY_TABLE}?select=id,mango_type,remaining_stock,sold_quantity&mango_type=eq.${encodeURIComponent(canonical)}&limit=1`,
       { method: 'GET' }
     );
     if (response.ok) {
@@ -229,7 +243,7 @@ async function ensureInventoryRow(product) {
       method: 'POST',
       headers: { Prefer: 'return=representation' },
       body: JSON.stringify({
-        product,
+        product: canonical,
         stock_on_hand: defaultStock,
         updated_at: new Date().toISOString()
       })
@@ -238,7 +252,7 @@ async function ensureInventoryRow(product) {
       insertRes = await supabaseRequest(`/rest/v1/${SUPABASE_INVENTORY_TABLE}`, {
         method: 'POST',
         headers: { Prefer: 'return=representation' },
-        body: JSON.stringify(buildLegacyInventoryRecord(product, defaultStock))
+        body: JSON.stringify(buildLegacyInventoryRecord(canonical, defaultStock))
       });
       if (!insertRes.ok) return null;
     }
@@ -247,10 +261,10 @@ async function ensureInventoryRow(product) {
   }
 
   const rows = await readJsonArray(INVENTORY_FILE);
-  const existing = rows.find((row) => String(row.product || row.mango_type) === String(product));
+  const existing = rows.find((row) => canonicalProductName(row.product || row.mango_type) === canonical);
   if (existing) return existing;
   const next = {
-    product,
+    product: canonical,
     stock_on_hand: defaultStock,
     updated_at: new Date().toISOString()
   };
@@ -260,11 +274,12 @@ async function ensureInventoryRow(product) {
 }
 
 async function getAvailableStock(product) {
-  if (!product) return 0;
+  const canonical = canonicalProductName(product);
+  if (!canonical) return 0;
 
   if (hasSupabase()) {
     let response = await supabaseRequest(
-      `/rest/v1/${SUPABASE_INVENTORY_TABLE}?select=product,stock_on_hand&product=eq.${encodeURIComponent(product)}&limit=1`,
+      `/rest/v1/${SUPABASE_INVENTORY_TABLE}?select=product,stock_on_hand&product=eq.${encodeURIComponent(canonical)}&limit=1`,
       { method: 'GET' }
     );
     if (response.ok) {
@@ -276,7 +291,7 @@ async function getAvailableStock(product) {
     }
 
     response = await supabaseRequest(
-      `/rest/v1/${SUPABASE_INVENTORY_TABLE}?select=id,mango_type,remaining_stock,sold_quantity&mango_type=eq.${encodeURIComponent(product)}&limit=1`,
+      `/rest/v1/${SUPABASE_INVENTORY_TABLE}?select=id,mango_type,remaining_stock,sold_quantity&mango_type=eq.${encodeURIComponent(canonical)}&limit=1`,
       { method: 'GET' }
     );
     if (response.ok) {
@@ -284,15 +299,15 @@ async function getAvailableStock(product) {
       if (Array.isArray(rows) && rows.length) return Math.max(0, Number(rows[0].remaining_stock || 0));
     }
 
-    const seeded = await ensureInventoryRow(product);
+    const seeded = await ensureInventoryRow(canonical);
     if (!seeded) return 0;
     return Math.max(0, Number(seeded.stock_on_hand ?? seeded.remaining_stock ?? 0));
   }
 
   const rows = await readJsonArray(INVENTORY_FILE);
-  let existing = rows.find((row) => String(row.product || row.mango_type) === String(product));
+  let existing = rows.find((row) => canonicalProductName(row.product || row.mango_type) === canonical);
   if (!existing) {
-    existing = await ensureInventoryRow(product);
+    existing = await ensureInventoryRow(canonical);
   }
   return Math.max(0, Number(existing?.stock_on_hand ?? existing?.remaining_stock ?? 0));
 }
@@ -300,7 +315,7 @@ async function getAvailableStock(product) {
 async function assertCartInventory(items) {
   const cartItems = Array.isArray(items) ? items : [];
   for (const item of cartItems) {
-    const product = String(item.product || '').trim();
+    const product = canonicalProductName(item.product);
     const qty = Number(item.quantity || 0);
     if (!product || qty <= 0) continue;
     const available = await getAvailableStock(product);
@@ -547,12 +562,13 @@ async function upsertPaidOrderFromSession(session, lineItems = []) {
 
 async function decrementInventory(product, quantity) {
   ensurePersistentOrderStorage();
+  const canonical = canonicalProductName(product);
   const qty = Number(quantity || 0);
-  if (!product || !Number.isFinite(qty) || qty <= 0) return;
+  if (!canonical || !Number.isFinite(qty) || qty <= 0) return;
 
   if (hasSupabase()) {
     let getRes = await supabaseRequest(
-      `/rest/v1/${SUPABASE_INVENTORY_TABLE}?select=product,stock_on_hand&product=eq.${encodeURIComponent(product)}&limit=1`,
+      `/rest/v1/${SUPABASE_INVENTORY_TABLE}?select=product,stock_on_hand&product=eq.${encodeURIComponent(canonical)}&limit=1`,
       { method: 'GET' }
     );
     if (!getRes.ok) {
@@ -560,7 +576,7 @@ async function decrementInventory(product, quantity) {
       if (isMissingSupabaseTableError(detail, SUPABASE_INVENTORY_TABLE)) return;
       if (!isSchemaMismatchError(detail, 'product') && !isSchemaMismatchError(detail, 'stock_on_hand')) return;
       getRes = await supabaseRequest(
-        `/rest/v1/${SUPABASE_INVENTORY_TABLE}?select=id,mango_type,remaining_stock,sold_quantity&mango_type=eq.${encodeURIComponent(product)}&limit=1`,
+        `/rest/v1/${SUPABASE_INVENTORY_TABLE}?select=id,mango_type,remaining_stock,sold_quantity&mango_type=eq.${encodeURIComponent(canonical)}&limit=1`,
         { method: 'GET' }
       );
       if (!getRes.ok) return;
@@ -571,7 +587,7 @@ async function decrementInventory(product, quantity) {
     if (Object.prototype.hasOwnProperty.call(existing, 'stock_on_hand')) {
       const next = Math.max(0, Number(existing.stock_on_hand || 0) - qty);
       await supabaseRequest(
-        `/rest/v1/${SUPABASE_INVENTORY_TABLE}?product=eq.${encodeURIComponent(product)}`,
+        `/rest/v1/${SUPABASE_INVENTORY_TABLE}?product=eq.${encodeURIComponent(canonical)}`,
         {
           method: 'PATCH',
           headers: { Prefer: 'return=minimal' },
@@ -582,7 +598,7 @@ async function decrementInventory(product, quantity) {
       const remaining = Math.max(0, Number(existing.remaining_stock || 0) - qty);
       const sold = Math.max(0, Number(existing.sold_quantity || 0) + qty);
       await supabaseRequest(
-        `/rest/v1/${SUPABASE_INVENTORY_TABLE}?mango_type=eq.${encodeURIComponent(product)}`,
+        `/rest/v1/${SUPABASE_INVENTORY_TABLE}?mango_type=eq.${encodeURIComponent(canonical)}`,
         {
           method: 'PATCH',
           headers: { Prefer: 'return=minimal' },
@@ -599,7 +615,7 @@ async function decrementInventory(product, quantity) {
   }
 
   const rows = await readJsonArray(INVENTORY_FILE);
-  const index = rows.findIndex((row) => row.product === product);
+  const index = rows.findIndex((row) => canonicalProductName(row.product || row.mango_type) === canonical);
   if (index === -1) return;
   const next = Math.max(0, Number(rows[index].stock_on_hand || 0) - qty);
   rows[index] = {
