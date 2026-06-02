@@ -11,6 +11,11 @@ const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 const SUPABASE_ORDERS_TABLE = process.env.SUPABASE_ORDERS_TABLE || 'orders';
 const SUPABASE_INVENTORY_TABLE = process.env.SUPABASE_INVENTORY_TABLE || 'inventory';
 const IS_VERCEL = Boolean(process.env.VERCEL);
+const DEFAULT_INVENTORY_STOCK = {
+  'Sindhri Mangoes': 50,
+  'Chaunsa Mangoes': 230,
+  'Anwar Ratol Mangoes': 0
+};
 
 function hasSupabase() {
   return Boolean(SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY);
@@ -178,6 +183,134 @@ function nextOrderNumberFromRows(rows, stamp) {
     .filter((n) => Number.isFinite(n) && n > 0);
   const maxSeq = todays.length ? Math.max(...todays) : 0;
   return `${prefix}${String(maxSeq + 1).padStart(4, '0')}`;
+}
+
+function buildLegacyInventoryRecord(product, stock) {
+  return {
+    id: product,
+    mango_type: product,
+    fixed_size: '2 kg box',
+    fixed_price: 0,
+    starting_stock: stock,
+    sold_quantity: 0,
+    remaining_stock: stock,
+    low_stock_threshold: 10,
+    updated_at: new Date().toISOString()
+  };
+}
+
+async function ensureInventoryRow(product) {
+  const defaultStock = DEFAULT_INVENTORY_STOCK[product];
+  if (!product || !Number.isFinite(defaultStock)) return null;
+
+  if (hasSupabase()) {
+    let response = await supabaseRequest(
+      `/rest/v1/${SUPABASE_INVENTORY_TABLE}?select=product,stock_on_hand&product=eq.${encodeURIComponent(product)}&limit=1`,
+      { method: 'GET' }
+    );
+    if (response.ok) {
+      const rows = await response.json();
+      if (Array.isArray(rows) && rows.length) return rows[0];
+    } else {
+      const detail = await response.text();
+      if (!isSchemaMismatchError(detail, 'product') && !isSchemaMismatchError(detail, 'stock_on_hand')) return null;
+    }
+
+    response = await supabaseRequest(
+      `/rest/v1/${SUPABASE_INVENTORY_TABLE}?select=id,mango_type,remaining_stock,sold_quantity&mango_type=eq.${encodeURIComponent(product)}&limit=1`,
+      { method: 'GET' }
+    );
+    if (response.ok) {
+      const rows = await response.json();
+      if (Array.isArray(rows) && rows.length) return rows[0];
+    }
+
+    let insertRes = await supabaseRequest(`/rest/v1/${SUPABASE_INVENTORY_TABLE}`, {
+      method: 'POST',
+      headers: { Prefer: 'return=representation' },
+      body: JSON.stringify({
+        product,
+        stock_on_hand: defaultStock,
+        updated_at: new Date().toISOString()
+      })
+    });
+    if (!insertRes.ok) {
+      insertRes = await supabaseRequest(`/rest/v1/${SUPABASE_INVENTORY_TABLE}`, {
+        method: 'POST',
+        headers: { Prefer: 'return=representation' },
+        body: JSON.stringify(buildLegacyInventoryRecord(product, defaultStock))
+      });
+      if (!insertRes.ok) return null;
+    }
+    const inserted = await insertRes.json();
+    return Array.isArray(inserted) && inserted.length ? inserted[0] : null;
+  }
+
+  const rows = await readJsonArray(INVENTORY_FILE);
+  const existing = rows.find((row) => String(row.product || row.mango_type) === String(product));
+  if (existing) return existing;
+  const next = {
+    product,
+    stock_on_hand: defaultStock,
+    updated_at: new Date().toISOString()
+  };
+  rows.push(next);
+  await writeJsonArray(INVENTORY_FILE, rows);
+  return next;
+}
+
+async function getAvailableStock(product) {
+  if (!product) return 0;
+
+  if (hasSupabase()) {
+    let response = await supabaseRequest(
+      `/rest/v1/${SUPABASE_INVENTORY_TABLE}?select=product,stock_on_hand&product=eq.${encodeURIComponent(product)}&limit=1`,
+      { method: 'GET' }
+    );
+    if (response.ok) {
+      const rows = await response.json();
+      if (Array.isArray(rows) && rows.length) return Math.max(0, Number(rows[0].stock_on_hand || 0));
+    } else {
+      const detail = await response.text();
+      if (!isSchemaMismatchError(detail, 'product') && !isSchemaMismatchError(detail, 'stock_on_hand')) return 0;
+    }
+
+    response = await supabaseRequest(
+      `/rest/v1/${SUPABASE_INVENTORY_TABLE}?select=id,mango_type,remaining_stock,sold_quantity&mango_type=eq.${encodeURIComponent(product)}&limit=1`,
+      { method: 'GET' }
+    );
+    if (response.ok) {
+      const rows = await response.json();
+      if (Array.isArray(rows) && rows.length) return Math.max(0, Number(rows[0].remaining_stock || 0));
+    }
+
+    const seeded = await ensureInventoryRow(product);
+    if (!seeded) return 0;
+    return Math.max(0, Number(seeded.stock_on_hand ?? seeded.remaining_stock ?? 0));
+  }
+
+  const rows = await readJsonArray(INVENTORY_FILE);
+  let existing = rows.find((row) => String(row.product || row.mango_type) === String(product));
+  if (!existing) {
+    existing = await ensureInventoryRow(product);
+  }
+  return Math.max(0, Number(existing?.stock_on_hand ?? existing?.remaining_stock ?? 0));
+}
+
+async function assertCartInventory(items) {
+  const cartItems = Array.isArray(items) ? items : [];
+  for (const item of cartItems) {
+    const product = String(item.product || '').trim();
+    const qty = Number(item.quantity || 0);
+    if (!product || qty <= 0) continue;
+    const available = await getAvailableStock(product);
+    if (available <= 0) {
+      throw new Error(`${product} is out of stock for online payment right now.`);
+    }
+    if (qty > available) {
+      throw new Error(`Only ${available} box${available === 1 ? '' : 'es'} of ${product} left for online payment.`);
+    }
+  }
 }
 
 async function generateOrderNumber() {
@@ -525,6 +658,7 @@ async function getStats() {
 }
 
 module.exports = {
+  assertCartInventory,
   createPendingOrder,
   decrementInventory,
   generateOrderNumber,

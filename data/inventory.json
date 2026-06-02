@@ -1,7 +1,7 @@
 [
   {
     "product": "Sindhri Mangoes",
-    "stock_on_hand": 0,
+    "stock_on_hand": 50,
     "updated_at": ""
   },
   {
@@ -11,7 +11,7 @@
   },
   {
     "product": "Chaunsa Mangoes",
-    "stock_on_hand": 0,
+    "stock_on_hand": 230,
     "updated_at": ""
   }
 ]

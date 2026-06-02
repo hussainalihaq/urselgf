@@ -1,6 +1,6 @@
 const { insertContact, json, readBody } = require('./_lib/common');
 const { buildCheckoutContactRecord, buildCheckoutResponse } = require('./_lib/checkout');
-const { createPendingOrder, generateOrderNumber } = require('./_lib/orders');
+const { assertCartInventory, createPendingOrder, generateOrderNumber } = require('./_lib/orders');
 const Stripe = require('stripe');
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
@@ -23,6 +23,7 @@ module.exports = async function handler(req, res) {
   try {
     const body = await readBody(req);
     const checkout = buildCheckoutContactRecord(body);
+    await assertCartInventory(checkout.billing.items);
     const orderNumber = await generateOrderNumber();
     let contactStored = true;
     try {
