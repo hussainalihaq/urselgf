@@ -260,7 +260,7 @@ async function repairUninitializedInventoryRow(row, product) {
     }
 
     const legacyId = row.id || canonical;
-    const res = await supabaseRequest(
+    let res = await supabaseRequest(
       `/rest/v1/${SUPABASE_INVENTORY_TABLE}?id=eq.${encodeURIComponent(legacyId)}`,
       {
         method: 'PATCH',
@@ -274,6 +274,22 @@ async function repairUninitializedInventoryRow(row, product) {
         })
       }
     );
+    if (!res.ok || row.id === undefined) {
+      res = await supabaseRequest(
+        `/rest/v1/${SUPABASE_INVENTORY_TABLE}?mango_type=eq.${encodeURIComponent(canonical)}`,
+        {
+          method: 'PATCH',
+          headers: { Prefer: 'return=representation' },
+          body: JSON.stringify({
+            starting_stock: defaultStock,
+            sold_quantity: 0,
+            remaining_stock: defaultStock,
+            stock_on_hand: defaultStock,
+            updated_at: now
+          })
+        }
+      );
+    }
     if (res.ok) {
       const rows = await res.json();
       return Array.isArray(rows) && rows.length ? rows[0] : { ...row, remaining_stock: defaultStock, stock_on_hand: defaultStock, updated_at: now };
@@ -371,7 +387,7 @@ async function getAvailableStock(product) {
       const rows = await response.json();
       if (Array.isArray(rows) && rows.length) {
         const repaired = await repairUninitializedInventoryRow(rows[0], canonical);
-        return Math.max(0, Number(repaired.stock_on_hand || 0));
+        return Math.max(0, Number(repaired.stock_on_hand || DEFAULT_INVENTORY_STOCK[canonical] || 0));
       }
     } else {
       const detail = await response.text();
@@ -386,7 +402,7 @@ async function getAvailableStock(product) {
       const rows = await response.json();
       if (Array.isArray(rows) && rows.length) {
         const repaired = await repairUninitializedInventoryRow(rows[0], canonical);
-        return Math.max(0, Number(repaired.remaining_stock ?? repaired.stock_on_hand ?? 0));
+        return Math.max(0, Number(repaired.remaining_stock ?? repaired.stock_on_hand ?? DEFAULT_INVENTORY_STOCK[canonical] ?? 0));
       }
     }
 
@@ -673,8 +689,9 @@ async function decrementInventory(product, quantity) {
       if (!getRes.ok) return;
     }
     const rows = await getRes.json();
-    const existing = rows[0];
+    let existing = rows[0];
     if (!existing) return;
+    existing = await repairUninitializedInventoryRow(existing, canonical);
     if (Object.prototype.hasOwnProperty.call(existing, 'stock_on_hand')) {
       const next = Math.max(0, Number(existing.stock_on_hand || 0) - qty);
       await supabaseRequest(
