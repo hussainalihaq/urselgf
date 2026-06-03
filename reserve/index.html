@@ -48,6 +48,10 @@
     .form-input:focus{outline:none;border-color:#203a7b;box-shadow:0 0 0 3px rgba(32,58,123,.08)}
     .form-input::placeholder{color:#9aa8c4}
     .form-label{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#6e7b97;margin-bottom:8px}
+    @media (max-width: 768px){
+      input,select,textarea,button{font-size:16px}
+      .summary-stack{align-items:flex-start}
+    }
   </style>
 </head>
 <body>
@@ -212,7 +216,7 @@
 
           <!-- SUMMARY BAR -->
           <div class="rounded-2xl bg-gradient-to-r from-[#f8f9fc] to-[#edf3ff] border border-[#203a7b]/8 p-5 mt-2">
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div class="summary-stack flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div>
                 <div class="text-[.65rem] font-bold uppercase tracking-[.16em] text-[#6e7b97]">Reservation Summary</div>
                 <div class="text-[1rem] font-semibold text-[#182a59] mt-1" id="summary-line">0× Boxes Total</div>

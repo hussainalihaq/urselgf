@@ -15,6 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <script src="/assets/tailwind.js"></script>
+  <script defer src="/assets/mobile-nav.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <style>
@@ -35,9 +36,10 @@
       font-family:'Plus Jakarta Sans',sans-serif;
       color:var(--ink-900);
       background:#f4f6fb;
+      overflow-x:hidden;
     }
     h1,h2,h3{font-family:'DM Serif Display',serif;font-weight:400;letter-spacing:-.01em;line-height:1.1}
-    .material-symbols-outlined{font-family:'Material Symbols Outlined'!important;font-weight:normal!important;font-style:normal!important;line-height:1!important;letter-spacing:normal!important;text-transform:none!important;display:inline-block;direction:ltr}
+    .material-symbols-outlined{font-family:'Material Symbols Outlined'!important;font-weight:normal!important;font-style:normal!important;line-height:1!important;letter-spacing:normal!important;text-transform:none!important;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr}
     .form-input{width:100%;border:1.5px solid rgba(32,58,123,.12);border-radius:14px;background:#fff;padding:14px 18px;font-size:15px;font-family:inherit;color:#1b2847;transition:border-color .2s,box-shadow .2s}
     .form-input:focus{outline:none;border-color:#203a7b;box-shadow:0 0 0 3px rgba(32,58,123,.08)}
     .form-input::placeholder{color:#9aa8c4}
@@ -131,8 +133,12 @@
       .qty-btn{width:46px;height:46px}
       .map-scroll svg{min-width:560px}
       .nav-links-mobile-hide{display:none}
-      .mobile-checkout-hint{display:block}
+      .mobile-checkout-hint{display:none}
       #checkout-form{gap:1.1rem}
+      .pickup-info-row{align-items:flex-start}
+      .pickup-info-row svg{flex:0 0 auto}
+      .delivery-toggle{flex-direction:column}
+      .summary-line{flex-direction:column;align-items:flex-start}
     }
     @media (prefers-reduced-motion: reduce){
       *,*::before,*::after{animation:none!important;transition:none!important}
@@ -145,6 +151,9 @@
   <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-[#203a7b]/10 shadow-[0_4px_24px_rgba(20,42,88,.06)]">
     <div class="max-w-[1280px] mx-auto px-6 md:px-10 flex items-center justify-between h-16 md:h-24">
       <a href="/"><img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png" class="h-10 md:h-[64px] w-auto object-contain" decoding="async"/></a>
+      <button id="mobile-nav-toggle" type="button" class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-xl border border-[#203a7b]/15 bg-white/70 backdrop-blur shadow-sm text-[#182a59]" aria-label="Open menu" aria-controls="mobile-nav-drawer" aria-expanded="false">
+        <span class="material-symbols-outlined text-[22px]">menu</span>
+      </button>
       <div class="nav-links-mobile-hide flex items-center gap-1 bg-[#edf3ff]/80 border border-[#203a7b]/12 rounded-full px-1 py-1 backdrop-blur-sm">
         <a href="/" class="px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[.65rem] sm:text-[.78rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Home</a>
         <a href="/products/" class="px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[.65rem] sm:text-[.78rem] font-semibold uppercase tracking-[.05em] sm:tracking-[.09em] text-[#4a5877] hover:text-[#203a7b] transition">Products</a>
@@ -153,6 +162,30 @@
       <a href="/mangoes/" class="mobile-checkout-hint hidden text-[.72rem] font-bold uppercase tracking-[.12em] text-[#203a7b]">Back to Mangoes</a>
     </div>
   </nav>
+
+  <div id="mobile-nav-overlay" class="hidden fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm opacity-0 transition-opacity duration-200 md:hidden" aria-hidden="true"></div>
+  <aside id="mobile-nav-drawer" class="fixed z-[70] inset-y-0 left-0 w-[86vw] max-w-[360px] -translate-x-full transition-transform duration-200 md:hidden bg-white shadow-[0_30px_80px_rgba(0,0,0,.35)] border-r border-[#203a7b]/10" aria-hidden="true">
+    <div class="h-full flex flex-col">
+      <div class="px-6 pt-6 pb-4 flex items-center justify-between border-b border-[#203a7b]/10">
+        <a href="/" class="inline-flex items-center gap-3">
+          <img alt="Ameer Global Logo" src="/assets/logo-transparent-final.png" class="h-10 w-auto object-contain" decoding="async"/>
+        </a>
+        <button id="mobile-nav-close" type="button" class="inline-flex items-center justify-center w-11 h-11 rounded-xl border border-[#203a7b]/12 bg-[#edf3ff]/60 text-[#182a59]" aria-label="Close menu">
+          <span class="material-symbols-outlined text-[22px]">close</span>
+        </button>
+      </div>
+      <nav class="px-6 py-6 flex-1" aria-label="Mobile Navigation">
+        <a href="/" class="block px-4 py-3 rounded-xl font-semibold text-[#182a59] hover:bg-[#edf3ff]/70 transition">Home</a>
+        <a href="/products/" class="mt-2 block px-4 py-3 rounded-xl font-semibold text-[#182a59] hover:bg-[#edf3ff]/70 transition">Products</a>
+        <a href="/mangoes/" class="mt-2 block px-4 py-3 rounded-xl font-semibold text-[#182a59] bg-[#edf3ff]/70">Mangoes</a>
+        <a href="/about/" class="mt-2 block px-4 py-3 rounded-xl font-semibold text-[#182a59] hover:bg-[#edf3ff]/70 transition">About</a>
+        <a href="/contact/" class="mt-2 block px-4 py-3 rounded-xl font-semibold text-[#182a59] hover:bg-[#edf3ff]/70 transition">Contact</a>
+      </nav>
+      <div class="px-6 pb-6">
+        <a href="/mangoes/" class="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white px-5 py-3 rounded-xl text-[.78rem] font-semibold uppercase tracking-[.1em] shadow-lg">Browse Mangoes</a>
+      </div>
+    </div>
+  </aside>
 
   <!-- HERO BANNER -->
   <section class="relative pt-[96px]">
@@ -216,7 +249,7 @@
             <!-- SECTION: Fulfillment Toggle -->
             <div class="pt-2 border-t border-[#19489f]/10">
               <label class="mb-3 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]">How do you want your order?</label>
-              <div class="flex gap-3">
+              <div class="delivery-toggle flex gap-3">
                 <button type="button" id="btn-toggle-pickup" class="flex-1 rounded-xl border-2 border-[#203a7b] bg-[#edf3ff] px-4 py-3 text-[.8rem] font-bold uppercase tracking-[.1em] text-[#203a7b] transition-all">🏬 Pickup</button>
                 <button type="button" id="btn-toggle-delivery" class="flex-1 rounded-xl border-2 border-[#19489f]/15 bg-white px-4 py-3 text-[.8rem] font-bold uppercase tracking-[.1em] text-[#8b9cbd] transition-all">🚚 Delivery</button>
               </div>
@@ -224,7 +257,7 @@
 
             <!-- PICKUP INFO -->
             <div id="pickup-section" class="rounded-2xl border border-[#19489f]/14 bg-[#f7faff] p-5">
-              <div class="flex items-center gap-3 mb-3">
+              <div class="pickup-info-row flex items-center gap-3 mb-3">
                 <div class="w-10 h-10 rounded-full bg-[#eef3fc] flex items-center justify-center text-[#1a386f]">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                 </div>
@@ -236,7 +269,7 @@
                   </a>
                 </div>
               </div>
-              <div class="flex items-center gap-3">
+              <div class="pickup-info-row flex items-center gap-3">
                 <div class="w-10 h-10 rounded-full bg-[#eef3fc] flex items-center justify-center text-[#1a386f]">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                 </div>
@@ -284,7 +317,7 @@
 
             <!-- ORDER SUMMARY -->
             <section class="rounded-3xl border border-[#19489f]/12 bg-[#f7faff] p-6 shadow-sm">
-              <div class="flex items-center justify-between gap-3 border-b border-[#19489f]/10 pb-4">
+              <div class="summary-line flex items-center justify-between gap-3 border-b border-[#19489f]/10 pb-4">
                 <h3 class="text-[1.2rem] font-semibold text-[#17325f]">Order Summary</h3>
                 <span class="rounded-full bg-white border border-[#19489f]/10 px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#305fbf]">CAD</span>
               </div>
