@@ -76,6 +76,33 @@ function parseCartItems(cartJson) {
   }
 }
 
+function orderQuantityForProduct(row, product) {
+  const canonical = canonicalProductName(product);
+  const label = String(row.product || row.mango_type || '').trim();
+  if (!canonical || !label) return 0;
+
+  const cartItems = parseCartItems(row.cart_json);
+  if (cartItems.length) {
+    return cartItems
+      .filter((item) => canonicalProductName(item.product) === canonical)
+      .reduce((sum, item) => sum + Number(item.quantity || 0), 0);
+  }
+
+  const escaped = canonical.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const itemMatch = label.match(new RegExp(`(^|[,;\\n]\\s*)(\\d+)\\s*x\\s*${escaped}\\b`, 'i'));
+  if (itemMatch) return Number.parseInt(itemMatch[2], 10) || 0;
+  if (canonicalProductName(label) === canonical || label.toLowerCase().includes(canonical.toLowerCase())) {
+    return Number(row.quantity || 0);
+  }
+
+  return 0;
+}
+
+function isInventoryHoldingOrder(row) {
+  const status = String(row.status || row.payment_status || '').toLowerCase();
+  return status === 'paid' || status === 'pending_payment';
+}
+
 function buildFriendlyCart(cartItems) {
   return cartItems.map((item) => `${item.quantity}x ${item.product}`).join(', ');
 }
@@ -398,6 +425,33 @@ async function ensureInventoryRow(product) {
   return next;
 }
 
+async function getAvailableStockFromOrders(product) {
+  const canonical = canonicalProductName(product);
+  const defaultStock = defaultStockFor(canonical);
+  if (!hasSupabase() || defaultStock <= 0) return 0;
+
+  const queries = [
+    `/rest/v1/${SUPABASE_ORDERS_TABLE}?select=product,quantity,status&limit=1000`,
+    `/rest/v1/${SUPABASE_ORDERS_TABLE}?select=mango_type,quantity,payment_status&limit=1000`
+  ];
+
+  for (const query of queries) {
+    const response = await supabaseRequest(query, { method: 'GET' });
+    if (!response.ok) continue;
+
+    const rows = await response.json();
+    if (!Array.isArray(rows)) continue;
+
+    const held = rows
+      .filter(isInventoryHoldingOrder)
+      .reduce((sum, row) => sum + orderQuantityForProduct(row, canonical), 0);
+
+    return Math.max(0, defaultStock - held);
+  }
+
+  return 0;
+}
+
 async function getAvailableStock(product) {
   const canonical = canonicalProductName(product);
   if (!canonical) return 0;
@@ -411,7 +465,8 @@ async function getAvailableStock(product) {
       const rows = await response.json();
       if (Array.isArray(rows) && rows.length) {
         const repaired = await repairUninitializedInventoryRow(rows[0], canonical);
-        return availableStockFromRow(repaired, canonical);
+        const available = availableStockFromRow(repaired, canonical);
+        return available > 0 ? available : getAvailableStockFromOrders(canonical);
       }
     } else {
       const detail = await response.text();
@@ -426,13 +481,14 @@ async function getAvailableStock(product) {
       const rows = await response.json();
       if (Array.isArray(rows) && rows.length) {
         const repaired = await repairUninitializedInventoryRow(rows[0], canonical);
-        return availableStockFromRow(repaired, canonical);
+        const available = availableStockFromRow(repaired, canonical);
+        return available > 0 ? available : getAvailableStockFromOrders(canonical);
       }
     }
 
     const seeded = await ensureInventoryRow(canonical);
-    if (!seeded) return 0;
-    return availableStockFromRow(seeded, canonical);
+    const seededAvailable = availableStockFromRow(seeded, canonical);
+    return seededAvailable > 0 ? seededAvailable : getAvailableStockFromOrders(canonical);
   }
 
   const rows = await readJsonArray(INVENTORY_FILE);
