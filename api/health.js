@@ -5,6 +5,7 @@ const CRON_SECRET = process.env.CRON_SECRET || '';
 const CONTACTS_TABLE = process.env.SUPABASE_CONTACTS_TABLE || 'contacts';
 const ORDERS_TABLE = process.env.SUPABASE_ORDERS_TABLE || 'orders';
 const INVENTORY_TABLE = process.env.SUPABASE_INVENTORY_TABLE || 'inventory';
+const SOURCE_VERSION = 'inventory-fallback-20260603';
 const CONTACTS_SELECTS = ['id'];
 const ORDERS_SELECTS = ['order_number', 'id', 'stripe_session_id'];
 const INVENTORY_SELECTS = ['product', 'mango_type', 'id'];
@@ -69,11 +70,12 @@ module.exports = async function handler(req, res) {
 
     if (!supabaseActive) {
       json(res, 503, {
-        ok: false,
-        service: 'ameerglobal-api',
-        runtime: 'vercel-function',
-        supabaseActive: false,
-        keepalive: { ok: false, error: 'Supabase is not configured.' }
+      ok: false,
+      service: 'ameerglobal-api',
+      runtime: 'vercel-function',
+      sourceVersion: SOURCE_VERSION,
+      supabaseActive: false,
+      keepalive: { ok: false, error: 'Supabase is not configured.' }
       });
       return;
     }
@@ -102,6 +104,7 @@ module.exports = async function handler(req, res) {
       ok: keepalive.ok,
       service: 'ameerglobal-api',
       runtime: 'vercel-function',
+      sourceVersion: SOURCE_VERSION,
       supabaseActive,
       keepalive
     });
@@ -112,6 +115,7 @@ module.exports = async function handler(req, res) {
     ok: true,
     service: 'ameerglobal-api',
     runtime: 'vercel-function',
+    sourceVersion: SOURCE_VERSION,
     supabaseActive,
     storageMode: supabaseActive ? 'supabase' : 'disabled',
     keepaliveConfigured: Boolean(KEEPALIVE_KEY || CRON_SECRET)
