@@ -428,7 +428,8 @@ async function ensureInventoryRow(product) {
 async function getAvailableStockFromOrders(product) {
   const canonical = canonicalProductName(product);
   const defaultStock = defaultStockFor(canonical);
-  if (!hasSupabase() || defaultStock <= 0) return 0;
+  if (defaultStock <= 0) return 0;
+  if (!hasSupabase()) return null;
 
   const queries = [
     `/rest/v1/${SUPABASE_ORDERS_TABLE}?select=product,quantity,status&limit=1000`,
@@ -449,7 +450,13 @@ async function getAvailableStockFromOrders(product) {
     return Math.max(0, defaultStock - held);
   }
 
-  return 0;
+  return null;
+}
+
+async function fallbackAvailableStock(product) {
+  const fromOrders = await getAvailableStockFromOrders(product);
+  if (Number.isFinite(fromOrders)) return fromOrders;
+  return defaultStockFor(product);
 }
 
 async function getAvailableStock(product) {
@@ -466,11 +473,13 @@ async function getAvailableStock(product) {
       if (Array.isArray(rows) && rows.length) {
         const repaired = await repairUninitializedInventoryRow(rows[0], canonical);
         const available = availableStockFromRow(repaired, canonical);
-        return available > 0 ? available : getAvailableStockFromOrders(canonical);
+        return available > 0 ? available : fallbackAvailableStock(canonical);
       }
     } else {
       const detail = await response.text();
-      if (!isSchemaMismatchError(detail, 'product') && !isSchemaMismatchError(detail, 'stock_on_hand')) return 0;
+      if (!isSchemaMismatchError(detail, 'product') && !isSchemaMismatchError(detail, 'stock_on_hand')) {
+        return fallbackAvailableStock(canonical);
+      }
     }
 
     response = await supabaseRequest(
@@ -482,13 +491,13 @@ async function getAvailableStock(product) {
       if (Array.isArray(rows) && rows.length) {
         const repaired = await repairUninitializedInventoryRow(rows[0], canonical);
         const available = availableStockFromRow(repaired, canonical);
-        return available > 0 ? available : getAvailableStockFromOrders(canonical);
+        return available > 0 ? available : fallbackAvailableStock(canonical);
       }
     }
 
     const seeded = await ensureInventoryRow(canonical);
     const seededAvailable = availableStockFromRow(seeded, canonical);
-    return seededAvailable > 0 ? seededAvailable : getAvailableStockFromOrders(canonical);
+    return seededAvailable > 0 ? seededAvailable : fallbackAvailableStock(canonical);
   }
 
   const rows = await readJsonArray(INVENTORY_FILE);
