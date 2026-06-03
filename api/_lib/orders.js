@@ -198,6 +198,30 @@ function canonicalProductName(product) {
   return PRODUCT_ALIASES[normalized] || String(product || '').trim();
 }
 
+function defaultStockFor(product) {
+  const stock = DEFAULT_INVENTORY_STOCK[canonicalProductName(product)];
+  return Number.isFinite(stock) && stock > 0 ? stock : 0;
+}
+
+function availableStockFromRow(row, product) {
+  if (!row) return 0;
+
+  const canonical = canonicalProductName(product || row.product || row.mango_type);
+  const stockOnHand = Number(row.stock_on_hand ?? 0);
+  const remaining = Number(row.remaining_stock ?? 0);
+  const sold = Number(row.sold_quantity ?? 0);
+  const defaultStock = defaultStockFor(canonical);
+  const hasLegacyRemaining = Object.prototype.hasOwnProperty.call(row, 'remaining_stock');
+
+  if (hasLegacyRemaining) {
+    if (remaining > 0) return remaining;
+    if (defaultStock > 0 && sold > 0) return Math.max(0, defaultStock - sold);
+    return 0;
+  }
+
+  return stockOnHand > 0 ? stockOnHand : 0;
+}
+
 function buildLegacyInventoryRecord(product, stock) {
   return {
     id: product,
@@ -387,7 +411,7 @@ async function getAvailableStock(product) {
       const rows = await response.json();
       if (Array.isArray(rows) && rows.length) {
         const repaired = await repairUninitializedInventoryRow(rows[0], canonical);
-        return Math.max(0, Number(repaired.stock_on_hand || DEFAULT_INVENTORY_STOCK[canonical] || 0));
+        return availableStockFromRow(repaired, canonical);
       }
     } else {
       const detail = await response.text();
@@ -402,13 +426,13 @@ async function getAvailableStock(product) {
       const rows = await response.json();
       if (Array.isArray(rows) && rows.length) {
         const repaired = await repairUninitializedInventoryRow(rows[0], canonical);
-        return Math.max(0, Number(repaired.remaining_stock ?? repaired.stock_on_hand ?? DEFAULT_INVENTORY_STOCK[canonical] ?? 0));
+        return availableStockFromRow(repaired, canonical);
       }
     }
 
     const seeded = await ensureInventoryRow(canonical);
     if (!seeded) return 0;
-    return Math.max(0, Number(seeded.stock_on_hand ?? seeded.remaining_stock ?? 0));
+    return availableStockFromRow(seeded, canonical);
   }
 
   const rows = await readJsonArray(INVENTORY_FILE);
@@ -416,7 +440,7 @@ async function getAvailableStock(product) {
   if (!existing) {
     existing = await ensureInventoryRow(canonical);
   }
-  return Math.max(0, Number(existing?.stock_on_hand ?? existing?.remaining_stock ?? 0));
+  return availableStockFromRow(existing, canonical);
 }
 
 async function assertCartInventory(items) {
@@ -688,12 +712,21 @@ async function decrementInventory(product, quantity) {
       );
       if (!getRes.ok) return;
     }
-    const rows = await getRes.json();
+    let rows = await getRes.json();
+    if ((!Array.isArray(rows) || rows.length === 0) && getRes.ok) {
+      getRes = await supabaseRequest(
+        `/rest/v1/${SUPABASE_INVENTORY_TABLE}?select=id,mango_type,remaining_stock,sold_quantity&mango_type=eq.${encodeURIComponent(canonical)}&limit=1`,
+        { method: 'GET' }
+      );
+      if (!getRes.ok) return;
+      rows = await getRes.json();
+    }
     let existing = rows[0];
     if (!existing) return;
     existing = await repairUninitializedInventoryRow(existing, canonical);
+    const currentAvailable = availableStockFromRow(existing, canonical);
     if (Object.prototype.hasOwnProperty.call(existing, 'stock_on_hand')) {
-      const next = Math.max(0, Number(existing.stock_on_hand || 0) - qty);
+      const next = Math.max(0, currentAvailable - qty);
       await supabaseRequest(
         `/rest/v1/${SUPABASE_INVENTORY_TABLE}?product=eq.${encodeURIComponent(canonical)}`,
         {
@@ -703,7 +736,7 @@ async function decrementInventory(product, quantity) {
         }
       );
     } else {
-      const remaining = Math.max(0, Number(existing.remaining_stock || 0) - qty);
+      const remaining = Math.max(0, currentAvailable - qty);
       const sold = Math.max(0, Number(existing.sold_quantity || 0) + qty);
       await supabaseRequest(
         `/rest/v1/${SUPABASE_INVENTORY_TABLE}?mango_type=eq.${encodeURIComponent(canonical)}`,
