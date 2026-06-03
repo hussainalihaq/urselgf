@@ -212,6 +212,91 @@ function buildLegacyInventoryRecord(product, stock) {
   };
 }
 
+function isUninitializedInventoryRow(row, product) {
+  const defaultStock = DEFAULT_INVENTORY_STOCK[product];
+  if (!Number.isFinite(defaultStock) || defaultStock <= 0 || !row) return false;
+
+  const stockOnHand = Number(row.stock_on_hand ?? 0);
+  const remaining = Number(row.remaining_stock ?? 0);
+  const sold = Number(row.sold_quantity ?? 0);
+  const starting = Number(row.starting_stock ?? 0);
+
+  const modernZeroRow =
+    Object.prototype.hasOwnProperty.call(row, 'stock_on_hand') &&
+    !Object.prototype.hasOwnProperty.call(row, 'remaining_stock') &&
+    !Object.prototype.hasOwnProperty.call(row, 'sold_quantity') &&
+    stockOnHand === 0;
+
+  const legacyZeroRow =
+    Object.prototype.hasOwnProperty.call(row, 'remaining_stock') &&
+    Object.prototype.hasOwnProperty.call(row, 'sold_quantity') &&
+    remaining === 0 &&
+    sold === 0 &&
+    starting === 0;
+
+  return modernZeroRow || legacyZeroRow;
+}
+
+async function repairUninitializedInventoryRow(row, product) {
+  const canonical = canonicalProductName(product);
+  const defaultStock = DEFAULT_INVENTORY_STOCK[canonical];
+  if (!isUninitializedInventoryRow(row, canonical)) return row;
+
+  const now = new Date().toISOString();
+  if (hasSupabase()) {
+    if (Object.prototype.hasOwnProperty.call(row, 'stock_on_hand')) {
+      const res = await supabaseRequest(
+        `/rest/v1/${SUPABASE_INVENTORY_TABLE}?product=eq.${encodeURIComponent(canonical)}`,
+        {
+          method: 'PATCH',
+          headers: { Prefer: 'return=representation' },
+          body: JSON.stringify({ stock_on_hand: defaultStock, updated_at: now })
+        }
+      );
+      if (res.ok) {
+        const rows = await res.json();
+        return Array.isArray(rows) && rows.length ? rows[0] : { ...row, stock_on_hand: defaultStock, updated_at: now };
+      }
+    }
+
+    const legacyId = row.id || canonical;
+    const res = await supabaseRequest(
+      `/rest/v1/${SUPABASE_INVENTORY_TABLE}?id=eq.${encodeURIComponent(legacyId)}`,
+      {
+        method: 'PATCH',
+        headers: { Prefer: 'return=representation' },
+        body: JSON.stringify({
+          starting_stock: defaultStock,
+          sold_quantity: 0,
+          remaining_stock: defaultStock,
+          stock_on_hand: defaultStock,
+          updated_at: now
+        })
+      }
+    );
+    if (res.ok) {
+      const rows = await res.json();
+      return Array.isArray(rows) && rows.length ? rows[0] : { ...row, remaining_stock: defaultStock, stock_on_hand: defaultStock, updated_at: now };
+    }
+    return row;
+  }
+
+  const rows = await readJsonArray(INVENTORY_FILE);
+  const idx = rows.findIndex((item) => canonicalProductName(item.product || item.mango_type) === canonical);
+  if (idx === -1) return row;
+  rows[idx] = {
+    ...rows[idx],
+    product: canonical,
+    stock_on_hand: defaultStock,
+    starting_stock: Number(rows[idx].starting_stock ?? defaultStock),
+    sold_quantity: Number(rows[idx].sold_quantity ?? 0),
+    remaining_stock: defaultStock,
+    updated_at: now
+  };
+  await writeJsonArray(INVENTORY_FILE, rows);
+  return rows[idx];
+}
+
 async function ensureInventoryRow(product) {
   const canonical = canonicalProductName(product);
   const defaultStock = DEFAULT_INVENTORY_STOCK[canonical];
@@ -224,7 +309,7 @@ async function ensureInventoryRow(product) {
     );
     if (response.ok) {
       const rows = await response.json();
-      if (Array.isArray(rows) && rows.length) return rows[0];
+      if (Array.isArray(rows) && rows.length) return repairUninitializedInventoryRow(rows[0], canonical);
     } else {
       const detail = await response.text();
       if (!isSchemaMismatchError(detail, 'product') && !isSchemaMismatchError(detail, 'stock_on_hand')) return null;
@@ -236,7 +321,7 @@ async function ensureInventoryRow(product) {
     );
     if (response.ok) {
       const rows = await response.json();
-      if (Array.isArray(rows) && rows.length) return rows[0];
+      if (Array.isArray(rows) && rows.length) return repairUninitializedInventoryRow(rows[0], canonical);
     }
 
     let insertRes = await supabaseRequest(`/rest/v1/${SUPABASE_INVENTORY_TABLE}`, {
@@ -284,7 +369,10 @@ async function getAvailableStock(product) {
     );
     if (response.ok) {
       const rows = await response.json();
-      if (Array.isArray(rows) && rows.length) return Math.max(0, Number(rows[0].stock_on_hand || 0));
+      if (Array.isArray(rows) && rows.length) {
+        const repaired = await repairUninitializedInventoryRow(rows[0], canonical);
+        return Math.max(0, Number(repaired.stock_on_hand || 0));
+      }
     } else {
       const detail = await response.text();
       if (!isSchemaMismatchError(detail, 'product') && !isSchemaMismatchError(detail, 'stock_on_hand')) return 0;
@@ -296,7 +384,10 @@ async function getAvailableStock(product) {
     );
     if (response.ok) {
       const rows = await response.json();
-      if (Array.isArray(rows) && rows.length) return Math.max(0, Number(rows[0].remaining_stock || 0));
+      if (Array.isArray(rows) && rows.length) {
+        const repaired = await repairUninitializedInventoryRow(rows[0], canonical);
+        return Math.max(0, Number(repaired.remaining_stock ?? repaired.stock_on_hand ?? 0));
+      }
     }
 
     const seeded = await ensureInventoryRow(canonical);
