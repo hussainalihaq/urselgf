@@ -5,6 +5,7 @@ const {
   listInventory,
   listOrders,
   listReservations,
+  listInquiries,
   sendError,
   updateInventoryItem,
   updateOrderStatus
@@ -72,6 +73,7 @@ async function handleDashboard(req, res) {
 
   try {
     const reservations = await listReservations();
+    const inquiries = await listInquiries();
     const today = new Date().toISOString().slice(0, 10);
     const countsByProduct = {};
 
@@ -83,9 +85,11 @@ async function handleDashboard(req, res) {
     json(res, 200, {
       totalReservations: reservations.length,
       todayReservations: reservations.filter((row) => String(row.created_at || '').slice(0, 10) === today).length,
+      totalInquiries: inquiries.length,
       uniqueProducts: Object.keys(countsByProduct).length,
       productCounts: Object.entries(countsByProduct).map(([product, count]) => ({ product, count })),
-      recentReservations: reservations.slice(0, 25)
+      recentReservations: reservations.slice(0, 25),
+      recentInquiries: inquiries.slice(0, 25)
     });
   } catch (error) {
     sendError(res, error);

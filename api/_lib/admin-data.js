@@ -192,6 +192,50 @@ async function listReservations() {
   return filtered.map(normalizeReservation).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 }
 
+function normalizeInquiry(row) {
+  const parsed = parseReserveMessage(row.message);
+  const product = row.product || parsed.product || '';
+  
+  return {
+    id: row.id || '',
+    customer_name: row.name || '',
+    customer_email: row.email || '',
+    customer_phone: parsed.phone || '',
+    subject: row.subject || '',
+    message: row.message || '',
+    product,
+    source: row.source || '',
+    created_at: row.created_at || row.createdAt || ''
+  };
+}
+
+async function listInquiries() {
+  let rows;
+  const reserveQuery = `?select=*&order=created_at.desc&limit=500`;
+
+  if (hasSupabase()) {
+    try {
+      const res = await sb(`/rest/v1/${CONTACTS_TABLE}${reserveQuery}`);
+      if (!res.ok) throw new Error(await res.text());
+      rows = await res.json();
+    } catch {
+      rows = await readArray(CONTACTS_FILE);
+    }
+  } else {
+    rows = await readArray(CONTACTS_FILE);
+  }
+
+  const filtered = rows.filter((row) => {
+    const intent = String(row.intent || '').toLowerCase();
+    const source = String(row.source || '').toLowerCase();
+    const subject = String(row.subject || '').toLowerCase();
+    const isReserve = intent === 'reserve' || source === 'reserve-page' || subject.includes('reserve request');
+    return !isReserve;
+  });
+
+  return filtered.map(normalizeInquiry).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+}
+
 async function listOrders() {
   let rows;
   if (hasSupabase()) {
@@ -374,6 +418,7 @@ module.exports = {
   listInventory,
   listOrders,
   listReservations,
+  listInquiries,
   sendError,
   updateInventoryItem,
   updateOrderStatus

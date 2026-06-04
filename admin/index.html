@@ -54,6 +54,15 @@
     </table>
   </div>
   <div class="wrap">
+    <h3>Recent Inquiries & Purchase Orders</h3>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Customer</th><th>Subject</th><th>Product</th><th>Message</th><th>Source</th><th>Date</th></tr>
+      </thead>
+      <tbody id="inquiries-body"></tbody>
+    </table>
+  </div>
+  <div class="wrap">
     <h3>Inventory</h3>
     <table>
       <thead>
@@ -120,6 +129,7 @@
       const data = await fetchJson('/api/admin/dashboard');
       document.getElementById('stats').innerHTML = [
         statCard('Total Reservations', data.totalReservations),
+        statCard('Total Inquiries', data.totalInquiries),
         statCard('Today', data.todayReservations),
         statCard('Products Reserved', data.uniqueProducts)
       ].join('');
@@ -139,6 +149,18 @@
           <td>${row.market || ''}</td>
           <td>${row.delivery_window || ''}</td>
           <td>${row.notes || ''}</td>
+          <td>${new Date(row.created_at).toLocaleString()}</td>
+        </tr>
+      `).join('');
+
+      document.getElementById('inquiries-body').innerHTML = (data.recentInquiries || []).map((row) => `
+        <tr>
+          <td>${row.id || ''}</td>
+          <td>${row.customer_name || ''}<br><small>${row.customer_email || ''}</small><br><small>${row.customer_phone || ''}</small></td>
+          <td>${row.subject || ''}</td>
+          <td>${row.product || ''}</td>
+          <td>${row.message ? row.message.replace(/\\n/g, '<br>') : ''}</td>
+          <td>${row.source || ''}</td>
           <td>${new Date(row.created_at).toLocaleString()}</td>
         </tr>
       `).join('');
