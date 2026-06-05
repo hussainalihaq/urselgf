@@ -75,3 +75,9 @@ module.exports = async function handler(req, res) {
     json(res, 400, { error: `Webhook error: ${error.message || 'invalid payload'}` });
   }
 };
+
+module.exports.config = {
+  api: {
+    bodyParser: false
+  }
+};
