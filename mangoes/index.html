@@ -257,6 +257,41 @@
 </head>
 <body>
 
+<!-- Booking Options Modal -->
+<div id="booking-modal-overlay" class="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+  <div class="fixed inset-0 flex items-center justify-center p-4">
+    <div id="booking-modal" class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 md:p-8 scale-95 opacity-0 transition-all duration-300 transform">
+      <div class="flex justify-between items-center mb-5">
+        <h3 class="text-xl md:text-2xl font-bold text-[#182a59] font-['DM_Serif_Display']">Choose Your Booking Option</h3>
+        <button onclick="closeBookingModal()" class="text-[#6e7b97] hover:text-[#182a59] transition">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      
+      <div class="space-y-4">
+        <!-- Option 1 -->
+        <button onclick="closeBookingModal()" class="w-full text-left p-4 rounded-xl border border-[#203a7b]/15 hover:border-[#203a7b] hover:bg-[#f4f6fb] transition-all group">
+          <div class="flex items-center gap-3 mb-1">
+            <span class="material-symbols-outlined text-[#203a7b] group-hover:scale-110 transition-transform">event_available</span>
+            <span class="font-bold text-[#182a59]">Reserve Now</span>
+          </div>
+          <p class="text-sm text-[#4a5877]">Join the priority waitlist with no upfront payment.</p>
+        </button>
+
+        <!-- Option 2 -->
+        <button onclick="closeBookingModal()" class="w-full text-left p-4 rounded-xl border-2 border-[#d4a017] bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white hover:shadow-lg hover:-translate-y-0.5 transition-all group relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-[#d4a017] text-[#182a59] text-[0.65rem] font-bold uppercase tracking-wider px-2 py-1 rounded-bl-lg">Recommended</div>
+          <div class="flex items-center gap-3 mb-1">
+            <span class="material-symbols-outlined text-[#d4a017] group-hover:scale-110 transition-transform">lock</span>
+            <span class="font-bold text-white">Pay Now & Save 10%</span>
+          </div>
+          <p class="text-sm text-white/80">Secure your order immediately. Use code <strong class="text-[#d4a017]">EARLY10</strong> at checkout.</p>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- NAV -->
 <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-[#203a7b]/10 shadow-[0_4px_24px_rgba(20,42,88,.06)]">
   <div class="max-w-[1280px] mx-auto px-6 md:px-10 flex items-center justify-between h-16 md:h-24">
@@ -814,6 +849,32 @@ function toggleCartDrawer() {
 // Scroll-reveal observer
 const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); }), { threshold: .08 });
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Modal Logic
+function openBookingModal() {
+  const overlay = document.getElementById('booking-modal-overlay');
+  const modal = document.getElementById('booking-modal');
+  overlay.classList.remove('opacity-0', 'pointer-events-none');
+  modal.classList.remove('scale-95', 'opacity-0');
+  modal.classList.add('scale-100', 'opacity-100');
+}
+
+function closeBookingModal() {
+  const overlay = document.getElementById('booking-modal-overlay');
+  const modal = document.getElementById('booking-modal');
+  overlay.classList.add('opacity-0', 'pointer-events-none');
+  modal.classList.remove('scale-100', 'opacity-100');
+  modal.classList.add('scale-95', 'opacity-0');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (!localStorage.getItem('bookingModalShown')) {
+    setTimeout(() => {
+      openBookingModal();
+      localStorage.setItem('bookingModalShown', 'true');
+    }, 800);
+  }
+});
 
 // Render product cards on load
 renderCards();
