@@ -698,15 +698,15 @@
         <span class="text-[#4a5877]">Estimated subtotal</span>
         <span id="cart-subtotal" class="font-bold text-[#182a59]">CAD $0</span>
       </div>
-      <a id="cart-pay-btn" href="/checkout/" class="w-full flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white rounded-xl text-[.85rem] font-bold uppercase tracking-[.12em] shadow-xl hover:-translate-y-0.5 hover:shadow-2xl transition-all mb-2">
-        Secure Order (Pay Now) <span class="material-symbols-outlined text-base">lock</span>
-      </a>
-      <p id="cart-pay-note" class="text-center text-[.7rem] text-[#6e7b97] mb-4">Fast, secure payment via Stripe. Pickup or GTA delivery.</p>
-      <div class="mt-4 text-center">
-        <a id="cart-reserve-btn" href="/reserve/" class="inline-block text-[.75rem] text-[#4a5877] font-medium underline hover:text-[#203a7b] transition-colors">
-          Not ready to pay? Join our Priority Waitlist.
+      <div class="flex flex-col gap-3 mb-3">
+        <a id="cart-reserve-btn" href="/reserve/" class="w-full flex items-center justify-center gap-2 px-6 py-4 bg-[#edf3ff] border border-[#203a7b]/15 text-[#203a7b] rounded-xl text-[.85rem] font-bold uppercase tracking-[.12em] shadow-sm hover:-translate-y-0.5 hover:shadow-md transition-all">
+          Reserve Now <span class="material-symbols-outlined text-base">event_available</span>
+        </a>
+        <a id="cart-pay-btn" href="/checkout/" class="w-full flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-[#203a7b] to-[#2a4f9f] text-white rounded-xl text-[.85rem] font-bold uppercase tracking-[.12em] shadow-xl hover:-translate-y-0.5 hover:shadow-2xl transition-all">
+          Pay Now <span class="material-symbols-outlined text-base">lock</span>
         </a>
       </div>
+      <p id="cart-pay-note" class="text-center text-[.7rem] text-[#6e7b97]">Reserve with no upfront payment, or pay now securely via Stripe.</p>
     </div>
   </div>
 </div>
@@ -812,18 +812,17 @@ function updateCart() {
   const hasWaitlist = entries.length > payable.length;
 
   if (hasPayable) {
-    payBtn.innerHTML = 'Secure Order (Pay Now) <span class="material-symbols-outlined text-base">lock</span>';
+    payBtn.style.display = 'flex';
+    reserveBtn.style.display = 'flex';
     payBtn.href = '/checkout/?cart=' + payCartStr;
-    payBtn.style.opacity = '1'; payBtn.style.pointerEvents = 'auto';
     if (hasWaitlist) {
       document.getElementById('cart-pay-note').textContent = 'Note: Pay now secures available items. We will contact you regarding waitlist items.';
     } else {
-      document.getElementById('cart-pay-note').textContent = 'Fast, secure payment via Stripe. Pickup or GTA delivery.';
+      document.getElementById('cart-pay-note').textContent = 'Reserve with no upfront payment, or pay now securely via Stripe.';
     }
   } else {
-    payBtn.innerHTML = 'Join Priority Waitlist <span class="material-symbols-outlined text-base">event_available</span>';
-    payBtn.href = '/reserve/?cart=' + allCartStr;
-    payBtn.style.opacity = '1'; payBtn.style.pointerEvents = 'auto';
+    payBtn.style.display = 'none';
+    reserveBtn.style.display = 'flex';
     document.getElementById('cart-pay-note').textContent = 'No upfront payment required for waitlist items.';
   }
   reserveBtn.href = '/reserve/?cart=' + allCartStr;
