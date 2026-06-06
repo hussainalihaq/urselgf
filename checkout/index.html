@@ -431,11 +431,11 @@
     function renderBilling() {
       let qty = 0, sub = 0;
       cart.forEach(item => { qty += item.quantity; sub += item.quantity * productCatalog[item.product].price; });
-      const ship = fulfillment === 'delivery' ? 6.99 : 0;
+      const ship = fulfillment === 'delivery' ? 0 : 0; // Temporarily free shipping
       billQty.textContent = qty;
       billSubtotal.textContent = currencyFormatter.format(sub);
       const shipRow = document.getElementById('bill-shipping-row');
-      if (ship > 0) { shipRow.classList.remove('hidden'); document.getElementById('bill-shipping').textContent = currencyFormatter.format(ship); }
+      if (fulfillment === 'delivery') { shipRow.classList.remove('hidden'); document.getElementById('bill-shipping').textContent = 'FREE'; }
       else { shipRow.classList.add('hidden'); }
       billTotal.textContent = currencyFormatter.format(sub + ship);
     }

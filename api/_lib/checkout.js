@@ -124,7 +124,7 @@ function buildBilling(cart, fulfillment) {
     };
   });
 
-  const shippingCad = fulfillment === 'delivery' ? 6.99 : 0;
+  const shippingCad = fulfillment === 'delivery' ? 0 : 0; // Temporarily free shipping
   const preTaxCad = subtotalCad + shippingCad;
   const hstRate = 0;
   const hstCad = Number((preTaxCad * hstRate).toFixed(2));
