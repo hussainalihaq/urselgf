@@ -8,7 +8,10 @@
     "api/stripe-webhook.js": {
       "maxDuration": 30
     },
-    "api/**/*.js": {
+    "api/*.js": {
+      "maxDuration": 15
+    },
+    "api/admin/*.js": {
       "maxDuration": 15
     }
   },
