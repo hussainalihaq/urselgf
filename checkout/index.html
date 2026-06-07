@@ -435,7 +435,7 @@
       billQty.textContent = qty;
       billSubtotal.textContent = currencyFormatter.format(sub);
       const shipRow = document.getElementById('bill-shipping-row');
-      if (fulfillment === 'delivery') { shipRow.classList.remove('hidden'); document.getElementById('bill-shipping').textContent = 'FREE'; }
+      if (fulfillment === 'delivery') { shipRow.classList.remove('hidden'); document.getElementById('bill-shipping').innerHTML = '<span class="text-sm line-through text-[#6e7b97] mr-2">$6.99</span><span class="text-[#22c55e]">FREE</span>'; }
       else { shipRow.classList.add('hidden'); }
       billTotal.textContent = currencyFormatter.format(sub + ship);
     }

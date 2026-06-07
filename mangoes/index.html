@@ -379,6 +379,10 @@
               Pay Securely Now
             </div>
           </div>
+          <div class="mt-4 inline-flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-[#d4a017] to-[#e6b735] text-[#182a59] text-[.85rem] font-bold rounded-xl shadow-xl">
+            <span class="material-symbols-outlined text-[20px]">local_shipping</span>
+            Free delivery on confirmed orders before June 25th!
+          </div>
         </div>
         </div>
     </div>
@@ -882,10 +886,10 @@ function closeBookingModal() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  if (!localStorage.getItem('bookingModalShown')) {
+  if (!sessionStorage.getItem('bookingModalShown')) {
     setTimeout(() => {
       openBookingModal();
-      localStorage.setItem('bookingModalShown', 'true');
+      sessionStorage.setItem('bookingModalShown', 'true');
     }, 800);
   }
 });
