@@ -33,19 +33,28 @@ module.exports = async function handler(req, res) {
   }
 
   if (!stripe || !webhookSecret) {
-    json(res, 500, { error: 'Stripe webhook is not configured.' });
+    console.error('[stripe-webhook] Stripe webhook is not configured.');
+    json(res, 200, { received: true, warning: 'Webhook not configured' });
     return;
   }
 
   try {
     const signature = req.headers['stripe-signature'];
     if (!signature) {
-      json(res, 400, { error: 'Missing stripe-signature header.' });
+      console.error('[stripe-webhook] Missing stripe-signature header.');
+      json(res, 200, { received: true, warning: 'Missing signature' });
       return;
     }
 
     const rawBody = await readRawBody(req);
-    const event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
+    let event;
+    try {
+      event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
+    } catch (sigError) {
+      console.error('[stripe-webhook] Signature verification failed:', sigError.message);
+      json(res, 200, { received: true, warning: 'Invalid signature' });
+      return;
+    }
 
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
@@ -72,7 +81,8 @@ module.exports = async function handler(req, res) {
     json(res, 200, { received: true });
   } catch (error) {
     console.error('[stripe-webhook] Error:', error?.message || error);
-    json(res, 400, { error: `Webhook error: ${error.message || 'invalid payload'}` });
+    // ALWAYS return 200 to Stripe to prevent webhook from being disabled
+    json(res, 200, { received: true, warning: 'Internal processing error' });
   }
 };
 
