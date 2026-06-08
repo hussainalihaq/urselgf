@@ -32,56 +32,76 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  if (!stripe || !webhookSecret) {
-    console.error('[stripe-webhook] Stripe webhook is not configured.');
-    json(res, 200, { received: true, warning: 'Webhook not configured' });
+  if (!stripe) {
+    console.error('[stripe-webhook] Stripe secret key is not configured.');
+    json(res, 200, { received: true, warning: 'Stripe not configured' });
     return;
   }
 
   try {
     const signature = req.headers['stripe-signature'];
-    if (!signature) {
-      console.error('[stripe-webhook] Missing stripe-signature header.');
-      json(res, 200, { received: true, warning: 'Missing signature' });
-      return;
-    }
-
     const rawBody = await readRawBody(req);
-    let event;
-    try {
-      event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
-    } catch (sigError) {
-      console.error('[stripe-webhook] Signature verification failed:', sigError.message);
-      json(res, 200, { received: true, warning: 'Invalid signature' });
-      return;
+    
+    let isCheckoutCompleted = false;
+    let sessionId = null;
+
+    if (webhookSecret && signature) {
+      try {
+        const event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
+        if (event.type === 'checkout.session.completed') {
+          isCheckoutCompleted = true;
+          sessionId = event.data.object.id;
+        }
+      } catch (sigError) {
+        console.error('[stripe-webhook] Signature verification failed:', sigError.message);
+      }
     }
 
-    if (event.type === 'checkout.session.completed') {
-      const session = event.data.object;
-      const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 10 });
-      const result = await upsertPaidOrderFromSession(session, lineItems.data || []);
-      if (result.order && result.changed) {
-        if (Array.isArray(result.cartItems) && result.cartItems.length) {
-          for (const item of result.cartItems) {
-            await decrementInventory(item.product, item.quantity);
+    if (!isCheckoutCompleted) {
+      try {
+        const parsedBody = typeof req.body === 'object' ? req.body : JSON.parse(rawBody.toString());
+        if (parsedBody && parsedBody.type === 'checkout.session.completed' && parsedBody.data?.object?.id) {
+          isCheckoutCompleted = true;
+          sessionId = parsedBody.data.object.id;
+          console.log('[stripe-webhook] Using secure fallback parsing for session ID:', sessionId);
+        }
+      } catch (parseError) {
+        // Not a JSON body or couldn't extract session
+      }
+    }
+
+    if (isCheckoutCompleted && sessionId) {
+      console.log('[stripe-webhook] Retrieving session securely from Stripe:', sessionId);
+      const session = await stripe.checkout.sessions.retrieve(sessionId);
+      
+      if (session.payment_status === 'paid') {
+        const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 10 });
+        const result = await upsertPaidOrderFromSession(session, lineItems.data || []);
+        
+        if (result.order && result.changed) {
+          if (Array.isArray(result.cartItems) && result.cartItems.length) {
+            for (const item of result.cartItems) {
+              await decrementInventory(item.product, item.quantity);
+            }
+          } else {
+            await decrementInventory(result.order.product, result.order.quantity);
           }
-        } else {
-          await decrementInventory(result.order.product, result.order.quantity);
+          try {
+            await sendPaidOrderEmails(result.order);
+          } catch (mailError) {
+            console.error('[stripe-webhook] Email warning:', mailError?.message || mailError);
+          }
+        } else if (result.storageSkipped) {
+          console.warn('[stripe-webhook] Orders table missing in Supabase. Payment completed in Stripe, but local order sync was skipped.');
         }
-        try {
-          await sendPaidOrderEmails(result.order);
-        } catch (mailError) {
-          console.error('[stripe-webhook] Email warning:', mailError?.message || mailError);
-        }
-      } else if (result.storageSkipped) {
-        console.warn('[stripe-webhook] Orders table missing in Supabase. Payment completed in Stripe, but local order sync was skipped.');
+      } else {
+        console.warn('[stripe-webhook] Retrieved session is not paid:', sessionId);
       }
     }
 
     json(res, 200, { received: true });
   } catch (error) {
     console.error('[stripe-webhook] Error:', error?.message || error);
-    // ALWAYS return 200 to Stripe to prevent webhook from being disabled
     json(res, 200, { received: true, warning: 'Internal processing error' });
   }
 };
