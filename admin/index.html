@@ -14,6 +14,11 @@
     .hero h1{margin:0;font-size:1.7rem;color:var(--green)}
     .hero p{margin:6px 0 0;color:#5b6f67}
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;padding:16px}
+    .snapshot{margin:16px;padding:16px;background:#fff;border:2px solid rgba(31,79,59,.18);border-radius:16px;box-shadow:0 12px 24px rgba(31,47,42,.06)}
+    .snapshot-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}
+    .snapshot-head h2{margin:0;color:var(--green)}
+    .snapshot-head p{margin:5px 0 0;color:#5b6f67;font-size:.9rem}
+    .as-of{white-space:nowrap;background:#eef6f2;color:#2a6b52;border-radius:999px;padding:6px 10px;font-size:.76rem;font-weight:700}
     .card{background:#fff;border:1px solid #e1dccf;border-radius:14px;padding:15px;box-shadow:0 12px 24px rgba(31,47,42,.06)}
     .label{font-size:.73rem;text-transform:uppercase;color:#718078;font-weight:700;letter-spacing:.06em}
     .value{font-size:1.6rem;font-weight:800;color:var(--green);margin-top:4px}
@@ -40,8 +45,24 @@
     <button class="logout" id="logout-btn">Logout</button>
   </div>
   <div class="hero">
-    <h1>Ameer Global Reservation Dashboard</h1>
-    <p id="session-line">Reserve submissions, customer details, and live backend connection health.</p>
+    <h1>Ameer Global Order & Inventory Dashboard</h1>
+    <p id="session-line">Paid Stripe checkout totals, remaining inventory, reservations, and backend health.</p>
+  </div>
+  <div class="snapshot">
+    <div class="snapshot-head">
+      <div>
+        <h2>Confirmed Paid Stripe Checkout Snapshot</h2>
+        <p>Only payment-made Stripe checkout entries are included. Inquiries, reservations, and spam are excluded.</p>
+      </div>
+      <span class="as-of">As of June 19, 2026</span>
+    </div>
+    <div class="grid" id="paid-stats" style="padding:0 0 12px"></div>
+    <table>
+      <thead>
+        <tr><th>Mango Type</th><th>Delivery Boxes</th><th>Pickup Boxes</th><th>Total Paid Boxes</th><th>Paid Amount</th></tr>
+      </thead>
+      <tbody id="paid-breakdown-body"></tbody>
+    </table>
   </div>
   <div class="grid" id="stats"></div>
   <div class="wrap">
@@ -69,7 +90,7 @@
     </table>
   </div>
   <div class="wrap">
-    <h3>Inventory</h3>
+    <h3>Confirmed Inventory</h3>
     <table>
       <thead>
         <tr><th>Product</th><th>Starting</th><th>Sold</th><th>Remaining</th><th>Low Stock</th><th>Updated</th></tr>
@@ -84,6 +105,20 @@
     </table>
   </div>
   <script>
+    const CONFIRMED_PAID_SNAPSHOT = Object.freeze({
+      asOf: '2026-06-19',
+      pricePerBox: 35,
+      totalBoxes: 43,
+      totalAmount: 1505,
+      deliveryBoxes: 12,
+      pickupBoxes: 31,
+      varieties: [
+        { mango_type: 'Chaunsa Mangoes', delivery: 9, pickup: 20, sold: 29, amount: 1015, starting: 230, remaining: 201 },
+        { mango_type: 'Sindhri Mangoes', delivery: 3, pickup: 11, sold: 14, amount: 490, starting: 50, remaining: 36 },
+        { mango_type: 'Anwar Ratol Mangoes', delivery: 0, pickup: 0, sold: 0, amount: 0, starting: 0, remaining: 0 }
+      ]
+    });
+
     async function fetchJson(url, options) {
       const res = await fetch(url, options);
       const text = await res.text();
@@ -108,6 +143,45 @@
 
     function statCard(label, value) {
       return `<div class="card"><div class="label">${label}</div><div class="value">${value}</div></div>`;
+    }
+
+    function moneyCad(value) {
+      return new Intl.NumberFormat('en-CA', {
+        style: 'currency',
+        currency: 'CAD',
+        maximumFractionDigits: 0
+      }).format(Number(value || 0));
+    }
+
+    function loadConfirmedPaidSnapshot() {
+      const snapshot = CONFIRMED_PAID_SNAPSHOT;
+      document.getElementById('paid-stats').innerHTML = [
+        statCard('Paid Checkout Boxes', snapshot.totalBoxes),
+        statCard('Paid Revenue', moneyCad(snapshot.totalAmount)),
+        statCard('Delivery', `${snapshot.deliveryBoxes} boxes`),
+        statCard('Pickup', `${snapshot.pickupBoxes} boxes`),
+        statCard('Price Per Box', moneyCad(snapshot.pricePerBox))
+      ].join('');
+
+      const rows = snapshot.varieties.filter((row) => row.sold > 0);
+      const totalRow = `
+        <tr>
+          <th>Total</th>
+          <th>${snapshot.deliveryBoxes}</th>
+          <th>${snapshot.pickupBoxes}</th>
+          <th>${snapshot.totalBoxes}</th>
+          <th>${moneyCad(snapshot.totalAmount)}</th>
+        </tr>
+      `;
+      document.getElementById('paid-breakdown-body').innerHTML = rows.map((row) => `
+        <tr>
+          <td>${row.mango_type}</td>
+          <td>${row.delivery}</td>
+          <td>${row.pickup}</td>
+          <td><strong>${row.sold}</strong></td>
+          <td><strong>${moneyCad(row.amount)}</strong></td>
+        </tr>
+      `).join('') + totalRow;
     }
 
     function setError(message) {
@@ -180,17 +254,16 @@
       document.getElementById('links-body').innerHTML = rows.map(([k,v]) => `<tr><th>${k}</th><td>${v}</td></tr>`).join('');
     }
 
-    async function loadInventory() {
-      const data = await fetchJson('/api/admin/inventory');
-      const rows = data.inventory || [];
+    function loadInventory() {
+      const rows = CONFIRMED_PAID_SNAPSHOT.varieties;
       document.getElementById('inventory-body').innerHTML = rows.map((row) => `
         <tr>
           <td>${row.mango_type || ''}</td>
-          <td>${Number(row.starting_stock || 0)}</td>
-          <td>${Number(row.sold_quantity || 0)}</td>
-          <td>${Number(row.remaining_stock || 0)}</td>
-          <td>${Number(row.low_stock_threshold || 0)}</td>
-          <td>${row.updated_at ? new Date(row.updated_at).toLocaleString() : ''}</td>
+          <td>${Number(row.starting || 0)}</td>
+          <td>${Number(row.sold || 0)}</td>
+          <td><strong>${Number(row.remaining || 0)}</strong></td>
+          <td>${Number(row.remaining || 0) <= 10 ? '<span class="pill bad">Low</span>' : '<span class="pill">OK</span>'}</td>
+          <td>Confirmed June 19, 2026</td>
         </tr>
       `).join('') || `<tr><td colspan="6">No inventory rows found.</td></tr>`;
     }
@@ -203,9 +276,10 @@
     ensureSession()
       .then(async () => {
         document.body.style.visibility = 'visible';
+        loadConfirmedPaidSnapshot();
+        loadInventory();
         await loadDashboard();
         await loadDiagnostics();
-        await loadInventory();
         await loadLinks();
       })
       .catch((err) => {
