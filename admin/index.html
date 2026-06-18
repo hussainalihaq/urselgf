@@ -46,20 +46,20 @@
   </div>
   <div class="hero">
     <h1>Ameer Global Order & Inventory Dashboard</h1>
-    <p id="session-line">Paid Stripe checkout totals, remaining inventory, reservations, and backend health.</p>
+    <p id="session-line">Stripe checkout-message totals, calculated inventory, reservations, and backend health.</p>
   </div>
   <div class="snapshot">
     <div class="snapshot-head">
       <div>
-        <h2>Confirmed Paid Stripe Checkout Snapshot</h2>
-        <p>Only payment-made Stripe checkout entries are included. Inquiries, reservations, and spam are excluded.</p>
+        <h2>Stripe Checkout Message Summary</h2>
+        <p>Automatically calculated from standard checkout-page inquiry messages. Reservations, general inquiries, and spam are excluded.</p>
       </div>
-      <span class="as-of">As of June 19, 2026</span>
+      <span class="as-of">Updates automatically</span>
     </div>
     <div class="grid" id="paid-stats" style="padding:0 0 12px"></div>
     <table>
       <thead>
-        <tr><th>Mango Type</th><th>Delivery Boxes</th><th>Pickup Boxes</th><th>Total Paid Boxes</th><th>Paid Amount</th></tr>
+        <tr><th>Mango Type</th><th>Delivery Boxes</th><th>Pickup Boxes</th><th>Total Boxes</th><th>Checkout Amount</th></tr>
       </thead>
       <tbody id="paid-breakdown-body"></tbody>
     </table>
@@ -90,7 +90,7 @@
     </table>
   </div>
   <div class="wrap">
-    <h3>Confirmed Inventory</h3>
+    <h3>Calculated Inventory</h3>
     <table>
       <thead>
         <tr><th>Product</th><th>Starting</th><th>Sold</th><th>Remaining</th><th>Low Stock</th><th>Updated</th></tr>
@@ -105,20 +105,6 @@
     </table>
   </div>
   <script>
-    const CONFIRMED_PAID_SNAPSHOT = Object.freeze({
-      asOf: '2026-06-19',
-      pricePerBox: 35,
-      totalBoxes: 43,
-      totalAmount: 1505,
-      deliveryBoxes: 12,
-      pickupBoxes: 31,
-      varieties: [
-        { mango_type: 'Chaunsa Mangoes', delivery: 9, pickup: 20, sold: 29, amount: 1015, starting: 230, remaining: 201 },
-        { mango_type: 'Sindhri Mangoes', delivery: 3, pickup: 11, sold: 14, amount: 490, starting: 50, remaining: 36 },
-        { mango_type: 'Anwar Ratol Mangoes', delivery: 0, pickup: 0, sold: 0, amount: 0, starting: 0, remaining: 0 }
-      ]
-    });
-
     async function fetchJson(url, options) {
       const res = await fetch(url, options);
       const text = await res.text();
@@ -153,23 +139,23 @@
       }).format(Number(value || 0));
     }
 
-    function loadConfirmedPaidSnapshot() {
-      const snapshot = CONFIRMED_PAID_SNAPSHOT;
+    function loadCheckoutSummary(snapshot) {
+      snapshot = snapshot || {};
       document.getElementById('paid-stats').innerHTML = [
-        statCard('Paid Checkout Boxes', snapshot.totalBoxes),
-        statCard('Paid Revenue', moneyCad(snapshot.totalAmount)),
-        statCard('Delivery', `${snapshot.deliveryBoxes} boxes`),
-        statCard('Pickup', `${snapshot.pickupBoxes} boxes`),
-        statCard('Price Per Box', moneyCad(snapshot.pricePerBox))
+        statCard('Stripe Checkout Boxes', Number(snapshot.totalBoxes || 0)),
+        statCard('Checkout Amount', moneyCad(snapshot.totalAmount)),
+        statCard('Delivery', `${Number(snapshot.deliveryBoxes || 0)} boxes`),
+        statCard('Pickup', `${Number(snapshot.pickupBoxes || 0)} boxes`),
+        statCard('Checkout Requests', Number(snapshot.checkoutRequests || 0))
       ].join('');
 
-      const rows = snapshot.varieties.filter((row) => row.sold > 0);
+      const rows = (snapshot.varieties || []).filter((row) => row.sold > 0);
       const totalRow = `
         <tr>
           <th>Total</th>
-          <th>${snapshot.deliveryBoxes}</th>
-          <th>${snapshot.pickupBoxes}</th>
-          <th>${snapshot.totalBoxes}</th>
+          <th>${Number(snapshot.deliveryBoxes || 0)}</th>
+          <th>${Number(snapshot.pickupBoxes || 0)}</th>
+          <th>${Number(snapshot.totalBoxes || 0)}</th>
           <th>${moneyCad(snapshot.totalAmount)}</th>
         </tr>
       `;
@@ -207,6 +193,8 @@
 
     async function loadDashboard() {
       const data = await fetchJson('/api/admin/dashboard');
+      loadCheckoutSummary(data.checkoutSummary);
+      loadInventory(data.checkoutSummary?.inventory || []);
       document.getElementById('stats').innerHTML = [
         statCard('Total Reservations', data.totalReservations),
         statCard('Total Inquiries', data.totalInquiries),
@@ -254,16 +242,15 @@
       document.getElementById('links-body').innerHTML = rows.map(([k,v]) => `<tr><th>${k}</th><td>${v}</td></tr>`).join('');
     }
 
-    function loadInventory() {
-      const rows = CONFIRMED_PAID_SNAPSHOT.varieties;
+    function loadInventory(rows) {
       document.getElementById('inventory-body').innerHTML = rows.map((row) => `
         <tr>
           <td>${row.mango_type || ''}</td>
-          <td>${Number(row.starting || 0)}</td>
-          <td>${Number(row.sold || 0)}</td>
-          <td><strong>${Number(row.remaining || 0)}</strong></td>
-          <td>${Number(row.remaining || 0) <= 10 ? '<span class="pill bad">Low</span>' : '<span class="pill">OK</span>'}</td>
-          <td>Confirmed June 19, 2026</td>
+          <td>${Number(row.starting_stock || 0)}</td>
+          <td>${Number(row.sold_quantity || 0)}</td>
+          <td><strong>${Number(row.remaining_stock || 0)}</strong></td>
+          <td>${Number(row.remaining_stock || 0) <= Number(row.low_stock_threshold || 10) ? '<span class="pill bad">Low</span>' : '<span class="pill">OK</span>'}</td>
+          <td>Calculated from checkout messages</td>
         </tr>
       `).join('') || `<tr><td colspan="6">No inventory rows found.</td></tr>`;
     }
@@ -276,8 +263,6 @@
     ensureSession()
       .then(async () => {
         document.body.style.visibility = 'visible';
-        loadConfirmedPaidSnapshot();
-        loadInventory();
         await loadDashboard();
         await loadDiagnostics();
         await loadLinks();

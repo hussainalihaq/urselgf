@@ -8,7 +8,12 @@ const {
   buildCheckoutContactRecord,
   buildCheckoutResponse
 } = require('./api/_lib/checkout');
-const { listReservations } = require('./api/_lib/admin-data');
+const {
+  listInventory,
+  listInquiries,
+  listReservations,
+  summarizeStripeCheckoutInquiries
+} = require('./api/_lib/admin-data');
 
 const ROOT = __dirname;
 const DATA_DIR = path.join(ROOT, 'data');
@@ -1019,7 +1024,11 @@ async function handleApi(req, res, pathname) {
 
   if (req.method === 'GET' && pathname === '/api/admin/dashboard') {
     try {
-      const reservations = await listReservations();
+      const [reservations, inquiries, inventory] = await Promise.all([
+        listReservations(),
+        listInquiries(),
+        listInventory()
+      ]);
       const today = new Date().toISOString().slice(0, 10);
       const countsByProduct = {};
 
@@ -1031,9 +1040,12 @@ async function handleApi(req, res, pathname) {
       json(res, 200, {
         totalReservations: reservations.length,
         todayReservations: reservations.filter((row) => String(row.created_at || '').slice(0, 10) === today).length,
+        totalInquiries: inquiries.length,
         uniqueProducts: Object.keys(countsByProduct).length,
         productCounts: Object.entries(countsByProduct).map(([product, count]) => ({ product, count })),
-        recentReservations: reservations.slice(0, 25)
+        checkoutSummary: summarizeStripeCheckoutInquiries(inquiries, inventory),
+        recentReservations: reservations.slice(0, 25),
+        recentInquiries: inquiries.slice(0, 25)
       });
       return true;
     } catch (err) {
