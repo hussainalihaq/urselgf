@@ -357,11 +357,12 @@
   <script>
     const productCatalog = {
       'Sindhri Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 35 },
+      'Anwar Ratol Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 35 },
       'Chaunsa Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 35 }
     };
 
     // Map short IDs from cart URL to full product names
-    const idToName = { sindhri: 'Sindhri Mangoes', chaunsa: 'Chaunsa Mangoes' };
+    const idToName = { sindhri: 'Sindhri Mangoes', anwar: 'Anwar Ratol Mangoes', chaunsa: 'Chaunsa Mangoes' };
     const currencyFormatter = new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 2 });
     const params = new URLSearchParams(window.location.search);
 
@@ -389,9 +390,11 @@
       }
     }
     
-    // Fallback if empty
+    // Do not default to a specific mango variety. A bad/missing URL should not create the wrong order.
     if (cart.length === 0) {
-      cart.push({ product: 'Sindhri Mangoes', quantity: 1 });
+      const emptyCheckoutStatus = document.getElementById('checkout-status');
+      emptyCheckoutStatus.textContent = 'Please choose a mango variety before checkout.';
+      emptyCheckoutStatus.style.color = '#a3392f';
     }
 
     // DOM
@@ -411,8 +414,9 @@
       let activeItems = 0;
       cart.forEach((item, i) => {
         if (item.quantity <= 0) return;
-        activeItems++;
         const p = productCatalog[item.product];
+        if (!p) return;
+        activeItems++;
         const el = document.createElement('div');
         el.className = 'flex items-center justify-between p-4 rounded-2xl border border-[#203a7b]/10 bg-[#f8f9fc] shadow-sm transition hover:shadow-md';
         el.innerHTML = `
@@ -437,7 +441,12 @@
 
     function renderBilling() {
       let qty = 0, sub = 0;
-      cart.forEach(item => { qty += item.quantity; sub += item.quantity * productCatalog[item.product].price; });
+      cart.forEach(item => {
+        const p = productCatalog[item.product];
+        if (!p) return;
+        qty += item.quantity;
+        sub += item.quantity * p.price;
+      });
       const ship = fulfillment === 'delivery' ? 0 : 0; // Temporarily free shipping
       billQty.textContent = qty;
       billSubtotal.textContent = currencyFormatter.format(sub);
