@@ -739,9 +739,9 @@
 
 <script>
 const products = [
-  { id: 'anwar', name: 'Anwar Ratol Mangoes', tag: 'The Crown Jewel', price: 35, season: 'June', brix: '22–26°', img: '/assets/anwar-ratol-mangoes.jpg', desc: 'Small in stature, immense in character. Intense floral aroma and remarkably sweet, fiberless flesh.', tagline: 'MOST PEOPLE HEAR ABOUT IT. VERY FEW TASTE THE REAL ONE.', available: false, reserveOnly: true, soldOutBadge: true },
-  { id: 'sindhri', name: 'Sindhri Mangoes', tag: 'The Honeyed Giant', price: 35, season: 'Mid June to Mid July', brix: '18–22°', img: '/assets/sindhri-mangoes.jpg', desc: 'Large, aromatic, with a perfect balance of tartness and honeyed sweetness. Prized by chefs worldwide.', tagline: 'BIGGER, SMOOTHER, RICHER, AND NATURALLY HONEYED.', available: false, reserveOnly: true, soldOutBadge: true },
-  { id: 'chaunsa', name: 'Chaunsa Mangoes', tag: 'The Nectar', price: 35, season: 'Mid June to Mid July', brix: '20–24°', img: '/assets/chaunsa-mangoes.jpg', desc: 'Exceptionally rich, syrupy sweetness with minimal fiber. A late-season delicacy — the connoisseur\'s favorite.', tagline: 'THE KING ARRIVES LATE. AND STEALS THE WHOLE SEASON.', available: false, reserveOnly: true, soldOutBadge: true }
+  { id: 'anwar', name: 'Anwar Ratol Mangoes', tag: 'The Crown Jewel', price: 35, season: 'June', brix: '22–26°', img: '/assets/anwar-ratol-mangoes.jpg', desc: 'Small in stature, immense in character. Intense floral aroma and remarkably sweet, fiberless flesh.', tagline: 'MOST PEOPLE HEAR ABOUT IT. VERY FEW TASTE THE REAL ONE.', available: true, reserveOnly: true, soldOutBadge: true },
+  { id: 'sindhri', name: 'Sindhri Mangoes', tag: 'The Honeyed Giant', price: 35, season: 'Mid June to Mid July', brix: '18–22°', img: '/assets/sindhri-mangoes.jpg', desc: 'Large, aromatic, with a perfect balance of tartness and honeyed sweetness. Prized by chefs worldwide.', tagline: 'BIGGER, SMOOTHER, RICHER, AND NATURALLY HONEYED.', available: true, reserveOnly: true, soldOutBadge: true },
+  { id: 'chaunsa', name: 'Chaunsa Mangoes', tag: 'The Nectar', price: 35, season: 'Mid June to Mid July', brix: '20–24°', img: '/assets/chaunsa-mangoes.jpg', desc: 'Exceptionally rich, syrupy sweetness with minimal fiber. A late-season delicacy — the connoisseur\'s favorite.', tagline: 'THE KING ARRIVES LATE. AND STEALS THE WHOLE SEASON.', available: true, reserveOnly: true, soldOutBadge: true }
 ];
 const cart = {};
 let drawerOpen = false;
@@ -764,7 +764,7 @@ function renderCards() {
           <div><span class="font-bold block mb-0.5">Season</span>${p.season}</div>
           <div><span class="font-bold block mb-0.5">Brix</span>${p.brix}</div>
         </div>
-        <p class="text-[.68rem] uppercase font-bold text-red-700 tracking-[.1em] mb-2">Sold out for online orders</p>
+        <p class="text-[.68rem] uppercase font-bold text-red-700 tracking-[.1em] mb-2">Pay now closed - reserve for restock</p>
         <div class="flex items-center gap-3">
           <button onclick="changeQty('${p.id}', -1)" class="w-10 h-10 rounded-xl border border-[#203a7b]/15 flex items-center justify-center text-[#203a7b] hover:bg-[#edf3ff] transition text-lg font-bold ${!p.available ? 'opacity-30 cursor-not-allowed' : ''}" ${!p.available ? 'disabled' : ''}>−</button>
           <span id="qty-${p.id}" class="w-8 text-center font-bold text-[#182a59] text-lg">${cart[p.id] || 0}</span>
@@ -780,7 +780,7 @@ function renderCards() {
 
 function changeQty(id, delta) {
   const p = products.find(x => x.id === id);
-  if (!p || !p.available) return; // reserveOnly items ARE available, just can't pay now
+  if (!p || !p.available) return;
   cart[id] = Math.max(0, (cart[id] || 0) + delta);
   document.getElementById('qty-' + id).textContent = cart[id];
   updateCart();
@@ -831,7 +831,7 @@ function updateCart() {
   totalBoxesEl.textContent = totalBoxes;
   subtotalEl.textContent = 'CAD $' + subtotal;
 
-  // Build URLs — Pay Now excludes reserve-only items, Reserve includes all
+  // Build URLs — Pay Now remains closed; Reserve includes all selected restock requests.
   const allCartStr = entries.map(p => p.id + ':' + cart[p.id]).join(',');
   const payCartStr = payable.map(p => p.id + ':' + cart[p.id]).join(',');
 
@@ -847,9 +847,9 @@ function updateCart() {
       document.getElementById('cart-pay-note').textContent = 'Reserve with no upfront payment, or pay now securely via Stripe.';
     }
   } else {
-    payBtn.style.display = 'none';
+    payBtn.style.display = 'flex';
     reserveBtn.style.display = 'flex';
-    document.getElementById('cart-pay-note').textContent = 'No upfront payment required for waitlist items.';
+    document.getElementById('cart-pay-note').textContent = 'Pay Now is temporarily closed. Reserve with no upfront payment and we will contact you when stock returns.';
   }
   reserveBtn.href = '/reserve/?cart=' + allCartStr;
 }
