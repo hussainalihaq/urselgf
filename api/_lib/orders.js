@@ -253,8 +253,8 @@ function buildLegacyInventoryRecord(product, stock) {
   return {
     id: product,
     mango_type: product,
-    fixed_size: '2 kg box',
-    fixed_price: 0,
+    fixed_size: '1.8 kg box',
+    fixed_price: 32,
     starting_stock: stock,
     sold_quantity: 0,
     remaining_stock: stock,

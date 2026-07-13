@@ -25,12 +25,12 @@ const PAYMENT_METHOD_LABELS = {
 };
 
 const PRODUCT_PRICES_CAD = {
-  'Sindhri Mangoes': 35,
-  'Anwar Ratol Mangoes': 35,
-  'Chaunsa Mangoes': 35,
-  'Chaunsa Mango Premium Box': 35,
-  'Anwar Ratol Mango Reserve': 35,
-  'Sindhri Mango Estate Selection': 35,
+  'Sindhri Mangoes': 32,
+  'Anwar Ratol Mangoes': 32,
+  'Chaunsa Mangoes': 32,
+  'Chaunsa Mango Premium Box': 32,
+  'Anwar Ratol Mango Reserve': 32,
+  'Sindhri Mango Estate Selection': 32,
   'Himalayan Salt': 29,
   'EcoWare Naturals': 24,
   'De-Icing Salt': 32
@@ -124,7 +124,7 @@ function buildBilling(cart, fulfillment) {
     };
   });
 
-  const shippingCad = fulfillment === 'delivery' ? 0 : 0; // Temporarily free shipping
+  const shippingCad = fulfillment === 'delivery' && totalQuantity > 0 && totalQuantity < 5 ? 6 : 0;
   const preTaxCad = subtotalCad + shippingCad;
   const hstRate = 0;
   const hstCad = Number((preTaxCad * hstRate).toFixed(2));

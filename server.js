@@ -72,29 +72,29 @@ const products = [
     id: 'mango-chaunsa',
     name: 'Chaunsa Mango Premium Box',
     origin: 'Multan, Pakistan',
-    unit: '2 kg box',
+    unit: '1.8 kg box',
     category: 'fresh-produce'
   },
   {
     id: 'mango-anwar-ratol',
     name: 'Anwar Ratol Mango Reserve',
     origin: 'Multan, Pakistan',
-    unit: '2 kg box',
+    unit: '1.8 kg box',
     category: 'fresh-produce'
   },
   {
     id: 'mango-sindhri',
     name: 'Sindhri Mango Estate Selection',
     origin: 'Multan, Pakistan',
-    unit: '2 kg box',
+    unit: '1.8 kg box',
     category: 'fresh-produce'
   }
 ];
 
 const MANGO_INVENTORY_SEED = [
-  { mango_type: 'Sindhri Mangoes', fixed_size: '2 kg box', fixed_price: 38 },
-  { mango_type: 'Anwar Ratol Mangoes', fixed_size: '2 kg box', fixed_price: 45 },
-  { mango_type: 'Chaunsa Mangoes', fixed_size: '2 kg box', fixed_price: 52 }
+  { mango_type: 'Sindhri Mangoes', fixed_size: '1.8 kg box', fixed_price: 32 },
+  { mango_type: 'Anwar Ratol Mangoes', fixed_size: '1.8 kg box', fixed_price: 32 },
+  { mango_type: 'Chaunsa Mangoes', fixed_size: '1.8 kg box', fixed_price: 32 }
 ];
 
 function json(res, statusCode, payload) {
@@ -920,7 +920,7 @@ async function handleApi(req, res, pathname) {
   }
 
   if (req.method === 'POST' && (pathname === '/api/checkout' || pathname === '/api/checkout/')) {
-    json(res, 409, { error: 'Online Pay Now checkout is currently closed because all mango varieties are sold out.' });
+    json(res, 409, { error: 'Online Pay Now checkout is temporarily closed for this restock. Reserve remains open with no upfront payment.' });
     return true;
 
     try {

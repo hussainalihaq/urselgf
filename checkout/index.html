@@ -223,7 +223,7 @@
             <!-- Rendered by JS -->
           </div>
           <div class="pt-5 border-t border-[#203a7b]/8 mt-5">
-            <p class="product-note !text-[0.85rem] !p-4">Tip: You can mix and match different mango varieties. Shipping is flat rate across the GTA!</p>
+            <p class="product-note !text-[0.85rem] !p-4">Tip: 1.8 kg boxes are CAD 32 each. Delivery is CAD 6 for 1-4 boxes and free on 5+ boxes. Pay Now remains temporarily closed.</p>
           </div>
         </div>
       </div>
@@ -330,7 +330,7 @@
               </div>
               <div class="mt-4 space-y-3 text-[1rem] text-[#51668c]">
                 <div class="flex items-center justify-between"><span>Subtotal (<span id="bill-qty">0</span> boxes)</span><strong id="bill-subtotal" class="money text-[#17325f]">$0.00</strong></div>
-                <div id="bill-shipping-row" class="flex items-center justify-between hidden"><span>Shipping (GTA)</span><strong id="bill-shipping" class="money text-[#17325f]">$6.99</strong></div>
+                <div id="bill-shipping-row" class="flex items-center justify-between hidden"><span>Delivery (GTA)</span><strong id="bill-shipping" class="money text-[#17325f]">$6.00</strong></div>
                 <div class="mt-4 border-t border-[#19489f]/12 pt-4 flex items-center justify-between"><span class="font-bold text-[#17325f]">Total</span><strong id="bill-total" class="money text-[1.4rem] text-[#1f4ea5]">$0.00</strong></div>
               </div>
             </section>
@@ -341,7 +341,7 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m4.9 4.9 14.2 14.2"></path></svg>
               </div>
               <h3 class="text-[1.2rem] font-semibold text-red-800">Pay Now Closed</h3>
-              <p class="mt-2 text-sm text-red-700">All mango varieties are currently sold out for online payment.</p>
+              <p class="mt-2 text-sm text-red-700">Online payment is temporarily closed for this restock. Reserve remains open with no upfront payment.</p>
             </section>
 
             <!-- PAY BUTTON -->
@@ -356,9 +356,9 @@
 
   <script>
     const productCatalog = {
-      'Sindhri Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 35 },
-      'Anwar Ratol Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 35 },
-      'Chaunsa Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 35 }
+      'Sindhri Mangoes': { unit: '1.8 kg box', origin: 'Multan, Pakistan', price: 32 },
+      'Anwar Ratol Mangoes': { unit: '1.8 kg box', origin: 'Multan, Pakistan', price: 32 },
+      'Chaunsa Mangoes': { unit: '1.8 kg box', origin: 'Multan, Pakistan', price: 32 }
     };
 
     // Map short IDs from cart URL to full product names
@@ -447,11 +447,14 @@
         qty += item.quantity;
         sub += item.quantity * p.price;
       });
-      const ship = fulfillment === 'delivery' ? 0 : 0; // Temporarily free shipping
+      const ship = fulfillment === 'delivery' && qty > 0 && qty < 5 ? 6 : 0;
       billQty.textContent = qty;
       billSubtotal.textContent = currencyFormatter.format(sub);
       const shipRow = document.getElementById('bill-shipping-row');
-      if (fulfillment === 'delivery') { shipRow.classList.remove('hidden'); document.getElementById('bill-shipping').innerHTML = '<span class="text-sm line-through text-[#6e7b97] mr-2">$6.99</span><span class="text-[#22c55e]">FREE</span>'; }
+      if (fulfillment === 'delivery') {
+        shipRow.classList.remove('hidden');
+        document.getElementById('bill-shipping').innerHTML = ship > 0 ? currencyFormatter.format(ship) : '<span class="text-[#22c55e]">FREE</span>';
+      }
       else { shipRow.classList.add('hidden'); }
       billTotal.textContent = currencyFormatter.format(sub + ship);
     }
@@ -481,7 +484,7 @@
 
     document.getElementById('checkout-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-      checkoutStatus.textContent = 'Online Pay Now checkout is currently closed because all mango varieties are sold out.';
+      checkoutStatus.textContent = 'Online Pay Now checkout is temporarily closed for this restock. Reserve remains open with no upfront payment.';
       checkoutStatus.style.color = '#a3392f';
       return;
 

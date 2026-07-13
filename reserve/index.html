@@ -115,7 +115,7 @@
           <span class="text-[.7rem] font-bold uppercase tracking-[.18em] text-[#fef3c0]">No Payment Required</span>
         </div>
         <h1 class="text-[clamp(2.2rem,5.5vw,4rem)] text-white mb-3">Reserve Your <span class="italic" style="color:#f0c850">Harvest</span></h1>
-        <p class="max-w-lg text-[1.15rem] font-medium leading-relaxed text-white drop-shadow-[0_2px_10px_rgba(0,0,0,.35)]">Secure your spot — pay nothing today. We'll contact you the moment your shipment arrives in Canada.</p>
+        <p class="max-w-lg text-[1.15rem] font-medium leading-relaxed text-white drop-shadow-[0_2px_10px_rgba(0,0,0,.35)]">Reserve the next shipment — pay nothing today. Pickup and delivery orders are expected to be ready from 22nd July.</p>
       </div>
     </div>
   </div>
@@ -145,7 +145,7 @@
         <span class="material-symbols-outlined text-white">local_shipping</span>
       </div>
       <div class="text-[.7rem] font-bold uppercase tracking-wider text-[#203a7b] mb-1">Step 3</div>
-      <p class="text-[.78rem] text-[#4a5877] leading-snug">We will contact you when shipment arrives</p>
+      <p class="text-[.78rem] text-[#4a5877] leading-snug">We will contact you before 22nd July</p>
     </div>
   </div>
 
@@ -160,7 +160,7 @@
             <!-- Rendered by JS -->
           </div>
           <div class="pt-5 border-t border-[#203a7b]/8 mt-5">
-            <p class="product-note !text-[0.85rem] !p-4">Tip: You can mix and match different mango varieties. No payment is required today.</p>
+            <p class="product-note !text-[0.85rem] !p-4">Tip: 1.8 kg boxes are CAD 32 each. Delivery is CAD 6 for 1-4 boxes and free on 5+ boxes. No payment is required today.</p>
           </div>
         </div>
       </div>
@@ -212,8 +212,8 @@
               <input id="marketCountry" required type="text" class="form-input" placeholder="Canada"/>
             </div>
             <div class="md:col-span-2">
-              <label class="form-label" for="window">Preferred Delivery Window</label>
-              <input id="window" required type="text" class="form-input" value="End of June"/>
+              <label class="form-label" for="window">Preferred Pickup or Delivery Date</label>
+              <input id="window" required type="text" class="form-input" value="22nd July"/>
             </div>
             <div class="md:col-span-2">
               <label class="form-label" for="notes">Notes <span class="font-normal text-[#9aa8c4]">(Optional)</span></label>
@@ -239,7 +239,7 @@
             Reserve My Order
             <span class="material-symbols-outlined text-lg">arrow_forward</span>
           </button>
-          <p id="reserve-status" class="text-center text-[.78rem] text-[#6e7b97]">No payment required. We'll follow up with availability and pricing.</p>
+          <p id="reserve-status" class="text-center text-[.78rem] text-[#6e7b97]">No payment required. We'll follow up before orders are ready from 22nd July.</p>
         </form>
       </div>
     </div>
@@ -258,9 +258,9 @@
 
 <script>
   const productCatalog = {
-    'Sindhri Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 35 },
-    'Anwar Ratol Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 35 },
-    'Chaunsa Mangoes': { unit: '2 kg box', origin: 'Multan, Pakistan', price: 35 }
+    'Sindhri Mangoes': { unit: '1.8 kg box', origin: 'Multan, Pakistan', price: 32 },
+    'Anwar Ratol Mangoes': { unit: '1.8 kg box', origin: 'Multan, Pakistan', price: 32 },
+    'Chaunsa Mangoes': { unit: '1.8 kg box', origin: 'Multan, Pakistan', price: 32 }
   };
 
   const idToName = { sindhri: 'Sindhri Mangoes', anwar: 'Anwar Ratol Mangoes', chaunsa: 'Chaunsa Mangoes' };
@@ -268,6 +268,7 @@
   const intent = params.get('intent') || 'reserve';
 
   let cart = [];
+  let statusMessageOnLoad = '';
 
   const cartParam = params.get('cart');
   if (cartParam) {
@@ -291,7 +292,7 @@
   }
 
   if (cart.length === 0) {
-    cart.push({ product: 'Anwar Ratol Mangoes', quantity: 1 });
+    statusMessageOnLoad = 'Please choose a mango variety from the mangoes page before reserving.';
   }
 
   const cartItemsEl = document.getElementById('cart-items');
@@ -331,6 +332,10 @@
 
   window.updateQty = (i, d) => { cart[i].quantity = Math.max(0, Math.min(100, cart[i].quantity + d)); renderCart(); };
   renderCart();
+  if (statusMessageOnLoad) {
+    status.textContent = statusMessageOnLoad;
+    status.style.color = '#a3392f';
+  }
 
   document.getElementById('reserve-form').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -354,7 +359,8 @@
         `Company: ${document.getElementById('company').value.trim() || 'N/A'}`,
         `City: ${document.getElementById('marketCity').value.trim()}`,
         `Country: ${document.getElementById('marketCountry').value.trim()}`,
-        `Delivery window: ${document.getElementById('window').value.trim()}`,
+        `Requested pickup/delivery date: ${document.getElementById('window').value.trim()}`,
+        `Delivery fee rule: CAD 6 for 1-4 boxes; free delivery on 5+ boxes`,
         `Notes: ${document.getElementById('notes').value.trim()}`
       ].join('\n'),
       source: 'reserve-page', product: primaryProduct, intent

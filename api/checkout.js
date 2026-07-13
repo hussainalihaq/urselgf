@@ -5,7 +5,7 @@ const Stripe = require('stripe');
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 const stripe = stripeKey ? new Stripe(stripeKey) : null;
-const SOLD_OUT_CHECKOUT_MESSAGE = 'Online Pay Now checkout is currently closed because all mango varieties are sold out.';
+const SOLD_OUT_CHECKOUT_MESSAGE = 'Online Pay Now checkout is temporarily closed for this restock. Reserve remains open with no upfront payment.';
 
 
 
