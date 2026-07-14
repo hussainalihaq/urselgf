@@ -22,7 +22,7 @@ const PRODUCT_ALIASES = {
 const DEFAULT_INVENTORY_STOCK = {
   'Sindhri Mangoes': 50,
   'Chaunsa Mangoes': 230,
-  'Anwar Ratol Mangoes': 0
+  'Anwar Ratol Mangoes': 230
 };
 
 function hasSupabase() {

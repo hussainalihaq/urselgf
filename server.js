@@ -920,9 +920,6 @@ async function handleApi(req, res, pathname) {
   }
 
   if (req.method === 'POST' && (pathname === '/api/checkout' || pathname === '/api/checkout/')) {
-    json(res, 409, { error: 'Online Pay Now checkout is temporarily closed for this restock. Reserve remains open with no upfront payment.' });
-    return true;
-
     try {
       if (!stripe) {
         json(res, 500, { error: 'Stripe is not configured on the server.' });

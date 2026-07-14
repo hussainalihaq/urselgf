@@ -5,7 +5,6 @@ const Stripe = require('stripe');
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 const stripe = stripeKey ? new Stripe(stripeKey) : null;
-const SOLD_OUT_CHECKOUT_MESSAGE = 'Online Pay Now checkout is temporarily closed for this restock. Reserve remains open with no upfront payment.';
 
 
 
@@ -20,9 +19,6 @@ module.exports = async function handler(req, res) {
     json(res, 405, { error: 'Method not allowed' });
     return;
   }
-
-  json(res, 409, { error: SOLD_OUT_CHECKOUT_MESSAGE });
-  return;
 
   try {
     const body = await readBody(req);

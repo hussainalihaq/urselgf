@@ -202,10 +202,10 @@
       <div class="absolute bottom-0 left-0 right-0 p-6 md:p-10 max-w-[1280px] mx-auto">
         <div class="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur-md border border-white/20 px-4 py-1.5 mb-4">
           <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-          <span class="text-[.7rem] font-bold uppercase tracking-[.18em] text-green-200">Season 2026 · Sold Out</span>
+          <span class="text-[.7rem] font-bold uppercase tracking-[.18em] text-green-200">Season 2026 · Pay Now Open</span>
         </div>
-        <h1 class="text-[clamp(2rem,5vw,3.6rem)] text-white mb-2">Mangoes <span class="italic" style="color:#f0c850">Sold Out</span></h1>
-        <p class="text-white/70 text-lg font-light max-w-lg">Online Pay Now checkout is currently closed for this season's mango stock.</p>
+        <h1 class="text-[clamp(2rem,5vw,3.6rem)] text-white mb-2">Mangoes <span class="italic" style="color:#f0c850">Pay Now</span></h1>
+        <p class="text-white/70 text-lg font-light max-w-lg">Secure checkout is live for the next shipment. Orders are expected to be ready from 22nd July.</p>
       </div>
     </div>
   </section>
@@ -223,7 +223,7 @@
             <!-- Rendered by JS -->
           </div>
           <div class="pt-5 border-t border-[#203a7b]/8 mt-5">
-            <p class="product-note !text-[0.85rem] !p-4">Tip: 1.8 kg boxes are CAD 32 each. Delivery is CAD 6 for 1-4 boxes and free on 5+ boxes. Pay Now remains temporarily closed.</p>
+            <p class="product-note !text-[0.85rem] !p-4">Tip: 1.8 kg boxes are CAD 32 each. Delivery is CAD 6 for 1-4 boxes and free on 5+ boxes.</p>
           </div>
         </div>
       </div>
@@ -336,16 +336,16 @@
             </section>
 
             <!-- SECURE CHECKOUT BADGE -->
-            <section class="rounded-2xl border border-red-200 bg-red-50 p-6 text-center">
+            <section class="rounded-2xl border border-green-200 bg-green-50 p-6 text-center">
               <div class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-[#19489f]/10 mb-4">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m4.9 4.9 14.2 14.2"></path></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
               </div>
-              <h3 class="text-[1.2rem] font-semibold text-red-800">Pay Now Closed</h3>
-              <p class="mt-2 text-sm text-red-700">Online payment is temporarily closed for this restock. Reserve remains open with no upfront payment.</p>
+              <h3 class="text-[1.2rem] font-semibold text-green-800">Secure Stripe Checkout</h3>
+              <p class="mt-2 text-sm text-green-700">Pay Now is live. You will be redirected to Stripe to complete payment.</p>
             </section>
 
             <!-- PAY BUTTON -->
-            <button id="complete-order" type="submit" disabled class="w-full rounded-xl px-6 py-4.5 text-[.85rem] font-bold uppercase tracking-[.14em] bg-red-100 text-red-700 cursor-not-allowed">Pay Now Closed</button>
+            <button id="complete-order" type="submit" class="w-full rounded-xl px-6 py-4.5 text-[.85rem] font-bold uppercase tracking-[.14em] cta">Pay via Stripe →</button>
             <p id="checkout-status" class="text-center text-sm font-semibold text-[#1f4ea5]"></p>
           </form>
         </div>
@@ -484,10 +484,6 @@
 
     document.getElementById('checkout-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-      checkoutStatus.textContent = 'Online Pay Now checkout is temporarily closed for this restock. Reserve remains open with no upfront payment.';
-      checkoutStatus.style.color = '#a3392f';
-      return;
-
       const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
       const phone = document.getElementById('phone').value.trim();

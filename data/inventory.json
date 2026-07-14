@@ -10,12 +10,12 @@
   },
   {
     "product": "Anwar Ratol Mangoes",
-    "starting_stock": 0,
+    "starting_stock": 230,
     "sold_quantity": 0,
-    "remaining_stock": 0,
-    "stock_on_hand": 0,
+    "remaining_stock": 230,
+    "stock_on_hand": 230,
     "low_stock_threshold": 10,
-    "updated_at": "2026-06-19T00:00:00.000Z"
+    "updated_at": "2026-07-14T00:00:00.000Z"
   },
   {
     "product": "Chaunsa Mangoes",
