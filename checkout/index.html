@@ -202,9 +202,9 @@
       <div class="absolute bottom-0 left-0 right-0 p-6 md:p-10 max-w-[1280px] mx-auto">
         <div class="inline-flex items-center gap-2 rounded-full bg-white/15 backdrop-blur-md border border-white/20 px-4 py-1.5 mb-4">
           <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-          <span class="text-[.7rem] font-bold uppercase tracking-[.18em] text-green-200">Season 2026 · Pay Now Open</span>
+          <span class="text-[.7rem] font-bold uppercase tracking-[.18em] text-green-200">Season 2026 · Orders Open</span>
         </div>
-        <h1 class="text-[clamp(2rem,5vw,3.6rem)] text-white mb-2">Mangoes <span class="italic" style="color:#f0c850">Pay Now</span></h1>
+        <h1 class="text-[clamp(2rem,5vw,3.6rem)] text-white mb-2">Mangoes <span class="italic" style="color:#f0c850">Confirm Order</span></h1>
         <p class="text-white/70 text-lg font-light max-w-lg">Secure checkout is live for the next shipment. Orders are expected to be ready from 22nd July.</p>
       </div>
     </div>
@@ -223,7 +223,7 @@
             <!-- Rendered by JS -->
           </div>
           <div class="pt-5 border-t border-[#203a7b]/8 mt-5">
-            <p class="product-note !text-[0.85rem] !p-4">Tip: 1.8 kg boxes are CAD 32 each. Delivery is CAD 6 for 1-4 boxes and free on 5+ boxes.</p>
+            <p class="product-note !text-[0.85rem] !p-4">Tip: 1.8 kg boxes are $32 each. Delivery is $6 for 1-4 boxes and free on 5+ boxes.</p>
           </div>
         </div>
       </div>
@@ -326,7 +326,7 @@
             <section class="rounded-3xl border border-[#19489f]/12 bg-[#f7faff] p-6 shadow-sm">
               <div class="summary-line flex items-center justify-between gap-3 border-b border-[#19489f]/10 pb-4">
                 <h3 class="text-[1.2rem] font-semibold text-[#17325f]">Order Summary</h3>
-                <span class="rounded-full bg-white border border-[#19489f]/10 px-3 py-1.5 text-[.66rem] font-bold uppercase tracking-[.14em] text-[#305fbf]">CAD</span>
+
               </div>
               <div class="mt-4 space-y-3 text-[1rem] text-[#51668c]">
                 <div class="flex items-center justify-between"><span>Subtotal (<span id="bill-qty">0</span> boxes)</span><strong id="bill-subtotal" class="money text-[#17325f]">$0.00</strong></div>
@@ -341,7 +341,7 @@
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
               </div>
               <h3 class="text-[1.2rem] font-semibold text-green-800">Secure Stripe Checkout</h3>
-              <p class="mt-2 text-sm text-green-700">Pay Now is live. You will be redirected to Stripe to complete payment.</p>
+              <p class="mt-2 text-sm text-green-700">Checkout is live. You will be redirected to Stripe to complete payment.</p>
             </section>
 
             <!-- PAY BUTTON -->
@@ -422,7 +422,7 @@
         el.innerHTML = `
           <div>
             <div class="font-bold text-[#182a59] text-[1.1rem]" style="font-family:'DM Serif Display',serif">${item.product}</div>
-            <div class="text-[.75rem] font-bold text-[#6e7b97] uppercase tracking-[0.1em] mt-1">${p.unit} · CAD ${p.price.toFixed(2)}</div>
+            <div class="text-[.75rem] font-bold text-[#6e7b97] uppercase tracking-[0.1em] mt-1">${p.unit} · $${p.price.toFixed(2)}</div>
           </div>
           <div class="flex items-center gap-2">
             <button type="button" onclick="updateQty(${i},-1)" class="w-[38px] h-[38px] flex items-center justify-center rounded-xl border-2 border-[#203a7b]/15 text-[#203a7b] font-bold bg-white hover:bg-[#edf3ff] hover:border-[#203a7b] transition-all">−</button>
