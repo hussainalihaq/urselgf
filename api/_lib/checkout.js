@@ -27,7 +27,7 @@ const PAYMENT_METHOD_LABELS = {
 const PRODUCT_PRICES_CAD = {
   'Sindhri Mangoes': 32,
   'Anwar Ratol Mangoes': 32,
-  'Chaunsa Mangoes': 32,
+  'Chaunsa Mangoes': 29.99,
   'Chaunsa Mango Premium Box': 32,
   'Anwar Ratol Mango Reserve': 32,
   'Sindhri Mango Estate Selection': 32,

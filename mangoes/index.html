@@ -49,7 +49,7 @@
     "@type": "CollectionPage",
     "name": "Pakistani Mangoes Toronto",
     "url": "https://ameerglobal.ca/mangoes/",
-    "description": "Order Pakistani mangoes in Toronto and the GTA including Sindhri, Chaunsa, and Anwar Ratol with pickup in Mississauga or local delivery.",
+    "description": "Order Pakistani mangoes in Toronto and the GTA including Sindhri, Chaunsa, and Anwar Ratol with pickup in North York.",
     "inLanguage": "en-CA",
     "isPartOf": {
       "@type": "WebSite",
@@ -472,6 +472,11 @@
         </div>
       </div>
 
+      <div class="max-w-4xl mx-auto mb-12 p-6 rounded-2xl bg-gradient-to-r from-[#d4a017]/20 to-[#d4a017]/5 border border-[#d4a017]/30 text-center">
+        <h3 class="text-[#d4a017] font-bold text-2xl mb-2" style="font-family:'DM Serif Display',serif">✨ Try it before you buy it!</h3>
+        <p class="text-[#4a5877] font-medium mb-3">Experience our premium quality firsthand before making a commitment.</p>
+        <p class="text-[#203a7b] font-bold text-sm bg-white/50 inline-block px-4 py-2 rounded-lg">For deals and wholesale price contact +17786838979</p>
+      </div>
       <div id="variety-cards" class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <!-- Cards rendered by JS -->
       </div>
@@ -573,7 +578,7 @@
             <span class="material-symbols-outlined text-2xl text-[#d4a017]">local_shipping</span>
           </div>
           <h4 class="text-lg mb-2" style="font-family:'DM Serif Display',serif">Farm to Table</h4>
-          <p class="text-[#4a5877] text-[.85rem] leading-relaxed">Sourced directly from our family orchards to your doorstep with no middlemen, ensuring unmatched freshness.</p>
+          <p class="text-[#4a5877] text-[.85rem] leading-relaxed">Sourced directly from our family orchards to our local distribution hub with no middlemen, ensuring unmatched freshness.</p>
         </div>
       </div>
     </div>
@@ -637,7 +642,7 @@
             <span class="material-symbols-outlined text-[#d4a017] group-open:rotate-180 transition-transform">expand_more</span>
           </summary>
           <div class="px-6 pb-6 text-[#4a5877] leading-relaxed">
-            <p>Yes. Ameer Global offers GTA delivery, including Toronto, Mississauga, Brampton, Scarborough, Markham, Richmond Hill, Vaughan, and Oakville. Delivery is <strong>free on 5 or more boxes</strong>; orders under 5 boxes have a <strong>$6 delivery fee</strong>. Pickup from our Mississauga Distribution Center remains free.</p>
+            <p>Yes. Ameer Global offers free pickup from our North York Distribution Center.</p>
           </div>
         </details>
         <details class="group rounded-2xl border border-[#203a7b]/8 bg-[#f8f9fc] overflow-hidden">
@@ -743,9 +748,9 @@
 
 <script>
 const products = [
-  { id: 'anwar', name: 'Anwar Ratol Mangoes', tag: 'The Crown Jewel', price: 32, unit: '1.8 kg box', season: 'June', brix: '22–26°', img: '/assets/anwar-ratol-mangoes.jpg', desc: 'Small in stature, immense in character. Intense floral aroma and remarkably sweet, fiberless flesh.', tagline: 'MOST PEOPLE HEAR ABOUT IT. VERY FEW TASTE THE REAL ONE.', available: false, reserveOnly: false, soldOutBadge: true },
-  { id: 'sindhri', name: 'Sindhri Mangoes', tag: 'The Honeyed Giant', price: 32, unit: '1.8 kg box', season: 'Mid June to Mid July', brix: '18–22°', img: '/assets/sindhri-mangoes.jpg', desc: 'Large, aromatic, with a perfect balance of tartness and honeyed sweetness. Prized by chefs worldwide.', tagline: 'BIGGER, SMOOTHER, RICHER, AND NATURALLY HONEYED.', available: false, reserveOnly: false, soldOutBadge: true },
-  { id: 'chaunsa', name: 'Chaunsa Mangoes', tag: 'The Nectar', price: 32, unit: '1.8 kg box', season: 'Mid June to Mid July', brix: '20–24°', img: '/assets/chaunsa-mangoes.jpg', desc: 'Exceptionally rich, syrupy sweetness with minimal fiber. A late-season delicacy — the connoisseur\'s favorite.', tagline: 'THE KING ARRIVES LATE. AND STEALS THE WHOLE SEASON.', available: true, reserveOnly: false, soldOutBadge: false }
+  { id: 'chaunsa', name: 'Chaunsa Mangoes', tag: 'The Nectar', price: 29.99, unit: '1.8 kg box', season: 'Mid June to Mid July', brix: '20–24°', img: '/assets/chaunsa-mangoes.jpg', desc: 'Exceptionally rich, syrupy sweetness with minimal fiber. A late-season delicacy — the connoisseur\\'s favorite.', tagline: 'THE KING ARRIVES LATE. AND STEALS THE WHOLE SEASON.', available: true, reserveOnly: false, soldOutBadge: false },
+  { id: 'sindhri', name: 'Sindhri Mangoes', tag: 'The Honeyed Giant', unit: '1.8 kg box', season: 'Mid June to Mid July', brix: '18–22°', img: '/assets/sindhri-mangoes.jpg', desc: 'Large, aromatic, with a perfect balance of tartness and honeyed sweetness. Prized by chefs worldwide.', tagline: 'BIGGER, SMOOTHER, RICHER, AND NATURALLY HONEYED.', available: false, reserveOnly: false, soldOutBadge: true },
+  { id: 'anwar', name: 'Anwar Ratol Mangoes', tag: 'The Crown Jewel', unit: '1.8 kg box', season: 'June', brix: '22–26°', img: '/assets/anwar-ratol-mangoes.jpg', desc: 'Small in stature, immense in character. Intense floral aroma and remarkably sweet, fiberless flesh.', tagline: 'MOST PEOPLE HEAR ABOUT IT. VERY FEW TASTE THE REAL ONE.', available: false, reserveOnly: false, soldOutBadge: true }
 ];
 const cart = {};
 let drawerOpen = false;
@@ -761,7 +766,174 @@ function renderCards() {
       </div>
       <div class="p-6 flex flex-col flex-1">
         <h3 class="text-[1.5rem] mb-1" style="font-family:'DM Serif Display',serif">${p.name}</h3>
-        <p class="text-[#d4a017] text-[.85rem] font-semibold mb-3">$${p.price} / box <span class="text-[#6e7b97] font-normal text-[.75rem]">· ${p.unit}</span></p>
+        <p class="text-[#d4a017] text-[.85rem] font-semibold mb-3">${p.price ? '$'+p.price+' / box' : 'Price TBA'} <span class="text-[#6e7b97] font-normal text-[.75rem]">· ${p.unit}</span></p>
+        <p class="text-[#203a7b] font-semibold text-[.8rem] leading-snug mb-2">${p.tagline}</p>
+        <p class="text-[#4a5877] text-[.85rem] leading-relaxed mb-5 flex-1">${p.desc}</p>
+        <div class="flex gap-4 text-[.7rem] uppercase tracking-wider text-[#6e7b97] mb-5 border-t border-[#203a7b]/5 pt-4">
+          <div><span class="font-bold block mb-0.5">Season</span>${p.season}</div>
+          <div><span class="font-bold block mb-0.5">Brix</span>${p.brix}</div>
+        </div>
+        <p class="text-[.68rem] uppercase font-bold text-[#203a7b] tracking-[.1em] mb-2">Pay now live - reserve also available</p>
+        <div class="flex items-center gap-3">
+          <button onclick="changeQty('${p.id}', -1)" class="w-10 h-10 rounded-xl border border-[#203a7b]/15 flex items-center justify-center text-[#203a7b] hover:bg-[#edf3ff] transition text-lg font-bold ${!p.available ? 'opacity-30 cursor-not-allowed' : ''}" ${!p.available ? 'disabled' : ''}>−</button>
+          <span id="qty-${p.id}" class="w-8 text-center font-bold text-[#182a59] text-lg">${cart[p.id] || 0}</span>
+          <button onclick="changeQty('${p.id}', 1)" class="w-10 h-10 rounded-xl border border-[#203a7b]/15 flex items-center justify-center text-[#203a7b] hover:bg-[#edf3ff] transition text-lg font-bold ${!p.available ? 'opacity-30 cursor-not-allowed' : ''}" ${!p.available ? 'disabled' : ''}>+</button>
+          <span class="text-[.7rem] text-[#6e7b97] ml-1">${!p.available ? 'sold out' : (p.reserveOnly ? 'waitlist only' : 'boxes')}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  // Re-observe new .reveal elements
+  container.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+}
+
+function changeQty(id, delta) {
+  const p = products.find(x => x.id === id);
+  if (!p || !p.available) return;
+  cart[id] = Math.max(0, (cart[id] || 0) + delta);
+  document.getElementById('qty-' + id).textContent = cart[id];
+  updateCart();
+}
+
+function updateCart() {
+  const badge = document.getElementById('cart-badge');
+  const badgeCount = document.getElementById('cart-badge-count');
+  const itemsEl = document.getElementById('cart-items');
+  const emptyEl = document.getElementById('cart-empty');
+  const summaryEl = document.getElementById('cart-summary');
+  const totalBoxesEl = document.getElementById('cart-total-boxes');
+  const subtotalEl = document.getElementById('cart-subtotal');
+  const payBtn = document.getElementById('cart-pay-btn');
+  const reserveBtn = document.getElementById('cart-reserve-btn');
+
+  const entries = products.filter(p => (cart[p.id] || 0) > 0);
+  const totalBoxes = entries.reduce((s, p) => s + cart[p.id], 0);
+  const subtotal = entries.reduce((s, p) => s + cart[p.id] * p.price, 0);
+
+  // Separate payable vs reserve-only items
+  const payable = entries.filter(p => !p.reserveOnly);
+  const hasPayable = payable.length > 0;
+
+  badge.style.display = totalBoxes > 0 ? 'flex' : 'none';
+  badgeCount.textContent = totalBoxes;
+
+  if (entries.length === 0) {
+    itemsEl.innerHTML = '';
+    emptyEl.style.display = 'block';
+    summaryEl.style.display = 'none';
+    return;
+  }
+  emptyEl.style.display = 'none';
+  summaryEl.style.display = 'block';
+
+  itemsEl.innerHTML = entries.map(p => `
+    <div class="flex items-center gap-3 p-3 rounded-xl bg-[#f8f9fc] border border-[#203a7b]/6">
+      <img src="${p.img}" alt="${p.name}" class="w-12 h-12 rounded-lg object-cover" />
+      <div class="flex-1 min-w-0">
+        <div class="font-semibold text-[#182a59] text-sm truncate">${p.name}</div>
+        <div class="text-[.72rem] text-[#6e7b97]">${cart[p.id]} × $${p.price}${p.reserveOnly ? ' · priority list' : ''}</div>
+      </div>
+      <span class="font-bold text-[#182a59] text-sm whitespace-nowrap">$${cart[p.id] * p.price}</span>
+    </div>
+  `).join('');
+
+  totalBoxesEl.textContent = totalBoxes;
+  subtotalEl.textContent = '$' + subtotal;
+
+  // Build URLs for both live Stripe checkout and no-payment reservation.
+  const allCartStr = entries.map(p => p.id + ':' + cart[p.id]).join(',');
+  const payCartStr = payable.map(p => p.id + ':' + cart[p.id]).join(',');
+
+  const hasWaitlist = entries.length > payable.length;
+
+  if (hasPayable) {
+    payBtn.style.display = 'flex';
+    reserveBtn.style.display = 'flex';
+    payBtn.href = '/checkout/?cart=' + payCartStr;
+    if (hasWaitlist) {
+      document.getElementById('cart-pay-note').textContent = 'Note: Confirm your purchase for available items. We will contact you regarding priority list items.';
+    } else {
+      document.getElementById('cart-pay-note').textContent = 'Confirm your purchase with Stripe, or join the priority list with no upfront payment.';
+    }
+  } else {
+    payBtn.style.display = 'flex';
+    reserveBtn.style.display = 'flex';
+    document.getElementById('cart-pay-note').textContent = 'Join the priority list with no upfront payment; pickup orders are expected from 22nd July.';
+  }
+  reserveBtn.href = '/reserve/?cart=' + allCartStr;
+}
+
+function toggleCartDrawer() {
+  drawerOpen = !drawerOpen;
+  const drawer = document.getElementById('cart-drawer');
+  const overlay = document.getElementById('cart-drawer-overlay');
+  if (drawerOpen) {
+    drawer.classList.remove('translate-y-full', 'md:translate-y-[calc(100%+24px)]');
+    drawer.classList.add('translate-y-0');
+    overlay.classList.remove('opacity-0', 'pointer-events-none');
+    overlay.classList.add('opacity-100', 'pointer-events-auto');
+  } else {
+    drawer.classList.add('translate-y-full', 'md:translate-y-[calc(100%+24px)]');
+    drawer.classList.remove('translate-y-0');
+    overlay.classList.add('opacity-0', 'pointer-events-none');
+    overlay.classList.remove('opacity-100', 'pointer-events-auto');
+  }
+}
+
+// Scroll-reveal observer
+const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); }), { threshold: .08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Modal Logic
+function openBookingModal() {
+  const overlay = document.getElementById('booking-modal-overlay');
+  const modal = document.getElementById('booking-modal');
+  overlay.classList.remove('opacity-0', 'pointer-events-none');
+  modal.classList.remove('scale-95', 'opacity-0');
+  modal.classList.add('scale-100', 'opacity-100');
+}
+
+function closeBookingModal() {
+  const overlay = document.getElementById('booking-modal-overlay');
+  const modal = document.getElementById('booking-modal');
+  overlay.classList.add('opacity-0', 'pointer-events-none');
+  modal.classList.remove('scale-100', 'opacity-100');
+  modal.classList.add('scale-95', 'opacity-0');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (!sessionStorage.getItem('bookingModalShown')) {
+    setTimeout(() => {
+      openBookingModal();
+      sessionStorage.setItem('bookingModalShown', 'true');
+    }, 800);
+  }
+});
+
+// Render product cards on load
+renderCards();
+</script>
+</body>
+</html>
+s favorite.', tagline: 'THE KING ARRIVES LATE. AND STEALS THE WHOLE SEASON.', available: true, reserveOnly: false, soldOutBadge: false },
+  { id: 'sindhri', name: 'Sindhri Mangoes', tag: 'The Honeyed Giant', unit: '1.8 kg box', season: 'Mid June to Mid July', brix: '18–22°', img: '/assets/sindhri-mangoes.jpg', desc: 'Large, aromatic, with a perfect balance of tartness and honeyed sweetness. Prized by chefs worldwide.', tagline: 'BIGGER, SMOOTHER, RICHER, AND NATURALLY HONEYED.', available: false, reserveOnly: false, soldOutBadge: true },
+  { id: 'anwar', name: 'Anwar Ratol Mangoes', tag: 'The Crown Jewel', unit: '1.8 kg box', season: 'June', brix: '22–26°', img: '/assets/anwar-ratol-mangoes.jpg', desc: 'Small in stature, immense in character. Intense floral aroma and remarkably sweet, fiberless flesh.', tagline: 'MOST PEOPLE HEAR ABOUT IT. VERY FEW TASTE THE REAL ONE.', available: false, reserveOnly: false, soldOutBadge: true }
+];
+const cart = {};
+let drawerOpen = false;
+
+function renderCards() {
+  const container = document.getElementById('variety-cards');
+  container.innerHTML = products.map((p, i) => `
+    <div class="variety-card reveal reveal-delay-${i + 1} flex flex-col">
+      <div class="relative aspect-[4/3] overflow-hidden">
+        <img alt="${p.name}" src="${p.img}" class="w-full h-full object-cover" decoding="async" loading="lazy" />
+        ${p.soldOutBadge ? '<span class="absolute top-4 right-4 px-3 py-1 rounded-full bg-red-600/90 text-white text-[.65rem] font-bold uppercase tracking-wider backdrop-blur shadow">Sold Out</span>' : (p.reserveOnly ? '<span class="absolute top-4 right-4 px-3 py-1 rounded-full bg-amber-500/90 text-white text-[.65rem] font-bold uppercase tracking-wider backdrop-blur shadow">Waitlist Only</span>' : (!p.available ? '<span class="absolute top-4 right-4 px-3 py-1 rounded-full bg-red-600/90 text-white text-[.65rem] font-bold uppercase tracking-wider backdrop-blur shadow">Sold Out</span>' : ''))}
+        <span class="absolute bottom-4 left-4 px-3 py-1.5 rounded-full bg-[#fef3c0]/90 text-[#9a7510] text-[.65rem] font-bold uppercase tracking-[.15em] backdrop-blur">${p.tag}</span>
+      </div>
+      <div class="p-6 flex flex-col flex-1">
+        <h3 class="text-[1.5rem] mb-1" style="font-family:'DM Serif Display',serif">${p.name}</h3>
+        <p class="text-[#d4a017] text-[.85rem] font-semibold mb-3">${p.price ? '$'+p.price+' / box' : 'Price TBA'} <span class="text-[#6e7b97] font-normal text-[.75rem]">· ${p.unit}</span></p>
         <p class="text-[#203a7b] font-semibold text-[.8rem] leading-snug mb-2">${p.tagline}</p>
         <p class="text-[#4a5877] text-[.85rem] leading-relaxed mb-5 flex-1">${p.desc}</p>
         <div class="flex gap-4 text-[.7rem] uppercase tracking-wider text-[#6e7b97] mb-5 border-t border-[#203a7b]/5 pt-4">
