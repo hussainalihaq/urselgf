@@ -24,10 +24,7 @@ const PAYMENT_METHOD_LABELS = {
   stripe: 'Stripe Checkout'
 };
 
-const PRODUCT_PRICES_CAD = {
-  'Sindhri Mangoes': 32,
-  'Anwar Ratol Mangoes': 32,
-  'Chaunsa Mangoes': 29.99,
+const PRODUCT_PRICES_CAD = {  'Chaunsa Mangoes': 29.99,
   'Chaunsa Mango Premium Box': 32,
   'Anwar Ratol Mango Reserve': 32,
   'Sindhri Mango Estate Selection': 32,
