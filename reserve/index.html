@@ -115,7 +115,7 @@
           <span class="text-[.7rem] font-bold uppercase tracking-[.18em] text-[#fef3c0]">No Payment Required</span>
         </div>
         <h1 class="text-[clamp(2.2rem,5.5vw,4rem)] text-white mb-3">Priority <span class="italic" style="color:#f0c850">List</span></h1>
-        <p class="max-w-lg text-[1.15rem] font-medium leading-relaxed text-white drop-shadow-[0_2px_10px_rgba(0,0,0,.35)]">Join the priority list for the next shipment — pay nothing today. Pickup and delivery orders are expected to be ready from 22nd July.</p>
+        <p class="max-w-lg text-[1.15rem] font-medium leading-relaxed text-white drop-shadow-[0_2px_10px_rgba(0,0,0,.35)]">Join the priority list for the next shipment — pay nothing today. Pickup orders are expected to be ready from 22nd July.</p>
       </div>
     </div>
   </div>
@@ -160,7 +160,7 @@
             <!-- Rendered by JS -->
           </div>
           <div class="pt-5 border-t border-[#203a7b]/8 mt-5">
-            <p class="product-note !text-[0.85rem] !p-4">Tip: 1.8 kg boxes are $32 each. Delivery is $6 for 1-4 boxes and free on 5+ boxes. No payment is required today.</p>
+            <p class="product-note !text-[0.85rem] !p-4">Tip: 1.8 kg boxes are $32 each. For deals and wholesale price contact +17786838979. No payment is required today.</p>
           </div>
         </div>
       </div>
@@ -212,7 +212,7 @@
               <input id="marketCountry" required type="text" class="form-input" placeholder="Canada"/>
             </div>
             <div class="md:col-span-2">
-              <label class="form-label" for="window">Preferred Pickup or Delivery Date</label>
+              <label class="form-label" for="window">Preferred Pickup Date</label>
               <input id="window" required type="text" class="form-input" value="22nd July"/>
             </div>
             <div class="md:col-span-2">
@@ -359,9 +359,7 @@
         `Company: ${document.getElementById('company').value.trim() || 'N/A'}`,
         `City: ${document.getElementById('marketCity').value.trim()}`,
         `Country: ${document.getElementById('marketCountry').value.trim()}`,
-        `Requested pickup/delivery date: ${document.getElementById('window').value.trim()}`,
-        `Delivery fee rule: $6 for 1-4 boxes; free delivery on 5+ boxes`,
-        `Notes: ${document.getElementById('notes').value.trim()}`
+        `Requested pickup date: ${document.getElementById('window').value.trim()}`,        `Notes: ${document.getElementById('notes').value.trim()}`
       ].join('\n'),
       source: 'reserve-page', product: primaryProduct, intent
     };

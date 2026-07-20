@@ -59,7 +59,7 @@
     <div class="grid" id="paid-stats" style="padding:0 0 12px"></div>
     <table>
       <thead>
-        <tr><th>Mango Type</th><th>Delivery Boxes</th><th>Pickup Boxes</th><th>Total Boxes</th><th>Checkout Amount</th></tr>
+        <tr><th>Mango Type</th><th style="display:none">Delivery Boxes</th><th>Pickup Boxes</th><th>Total Boxes</th><th>Checkout Amount</th></tr>
       </thead>
       <tbody id="paid-breakdown-body"></tbody>
     </table>
@@ -144,7 +144,7 @@
       document.getElementById('paid-stats').innerHTML = [
         statCard('Stripe Paid Boxes', Number(snapshot.totalBoxes || 0)),
         statCard('Paid Amount', moneyCad(snapshot.totalAmount)),
-        statCard('Delivery', `${Number(snapshot.deliveryBoxes || 0)} boxes`),
+        
         statCard('Pickup', `${Number(snapshot.pickupBoxes || 0)} boxes`),
         statCard('Paid Orders', Number(snapshot.checkoutRequests || 0))
       ].join('');
@@ -153,7 +153,7 @@
       const totalRow = `
         <tr>
           <th>Total</th>
-          <th>${Number(snapshot.deliveryBoxes || 0)}</th>
+          <th style="display:none">${Number(snapshot.deliveryBoxes || 0)}</th>
           <th>${Number(snapshot.pickupBoxes || 0)}</th>
           <th>${Number(snapshot.totalBoxes || 0)}</th>
           <th>${moneyCad(snapshot.totalAmount)}</th>
@@ -162,7 +162,7 @@
       document.getElementById('paid-breakdown-body').innerHTML = rows.map((row) => `
         <tr>
           <td>${row.mango_type}</td>
-          <td>${row.delivery}</td>
+          <td style="display:none">${row.delivery}</td>
           <td>${row.pickup}</td>
           <td><strong>${row.sold}</strong></td>
           <td><strong>${moneyCad(row.amount)}</strong></td>
