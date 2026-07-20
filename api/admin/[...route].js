@@ -7,7 +7,7 @@ const {
   listReservations,
   listInquiries,
   sendError,
-  summarizeStripeCheckoutInquiries,
+  summarizePaidOrders,
   updateInventoryItem,
   updateOrderStatus
 } = require('../_lib/admin-data');
@@ -73,10 +73,11 @@ async function handleDashboard(req, res) {
   if (!requireAdmin(req, res)) return;
 
   try {
-    const [reservations, inquiries, inventory] = await Promise.all([
+    const [reservations, inquiries, inventory, orders] = await Promise.all([
       listReservations(),
       listInquiries(),
-      listInventory()
+      listInventory(),
+      listOrders()
     ]);
     const today = new Date().toISOString().slice(0, 10);
     const countsByProduct = {};
@@ -92,7 +93,7 @@ async function handleDashboard(req, res) {
       totalInquiries: inquiries.length,
       uniqueProducts: Object.keys(countsByProduct).length,
       productCounts: Object.entries(countsByProduct).map(([product, count]) => ({ product, count })),
-      checkoutSummary: summarizeStripeCheckoutInquiries(inquiries, inventory),
+      checkoutSummary: summarizePaidOrders(orders, inventory),
       recentReservations: reservations.slice(0, 25),
       recentInquiries: inquiries.slice(0, 25)
     });

@@ -223,7 +223,7 @@ function canonicalMangoType(value) {
   return '';
 }
 
-function summarizeStripeCheckoutInquiries(inquiries, inventory = []) {
+function summarizePaidOrders(orders, inventory = []) {
   const varieties = Object.fromEntries(CHECKOUT_MANGO_TYPES.map((mangoType) => [
     mangoType,
     { mango_type: mangoType, delivery: 0, pickup: 0, sold: 0, amount: 0 }
@@ -235,70 +235,81 @@ function summarizeStripeCheckoutInquiries(inquiries, inventory = []) {
   let deliveryBoxes = 0;
   let pickupBoxes = 0;
 
-  for (const inquiry of inquiries || []) {
-    const source = String(inquiry.source || '').toLowerCase();
-    const subject = String(inquiry.subject || '');
-    const message = String(inquiry.message || '').replace(/\\n/g, '\n');
-    const isCheckoutMessage =
-      source === 'checkout-page' &&
-      /^CHECKOUT REQUEST:/i.test(subject) &&
-      /Payment method:\s*Stripe Checkout/i.test(message);
-    if (!isCheckoutMessage) continue;
-
+  for (const order of orders || []) {
+    if (String(order.payment_status).toLowerCase() !== 'paid') continue;
+    
     checkoutRequests += 1;
-    const fulfillmentMatch = message.match(/^Fulfillment:\s*(LOCAL PICKUP|PICKUP|DELIVERY)\s*$/im);
-    const fulfillment = fulfillmentMatch && /delivery/i.test(fulfillmentMatch[1]) ? 'delivery' : 'pickup';
-    const itemPattern = /^\s*-\s*(\d+)x\s+(.+?)\s+\(CAD\s+([\d.]+)\s+ea\)\s*$/gim;
+    const fulfillment = String(order.order_type).toLowerCase() === 'delivery' ? 'delivery' : 'pickup';
+    const message = String(order.mango_type || '');
+    const amount = Number(order.amount_total || 0);
+
+    const itemPattern = /(\d+)x\s+([^,]+)/gi;
     let itemMatch;
     let requestBoxes = 0;
-    let requestItemAmount = 0;
     let recognizedItems = 0;
 
+    const items = [];
     while ((itemMatch = itemPattern.exec(message)) !== null) {
-      const quantity = Number(itemMatch[1] || 0);
-      const mangoType = canonicalMangoType(itemMatch[2]);
-      const unitPrice = Number(itemMatch[3] || 0);
-      if (!mangoType || !quantity) continue;
-
-      recognizedItems += 1;
-      requestBoxes += quantity;
-      requestItemAmount += quantity * unitPrice;
-      varieties[mangoType].sold += quantity;
-      varieties[mangoType][fulfillment] += quantity;
-      varieties[mangoType].amount += quantity * unitPrice;
+      items.push({ quantity: Number(itemMatch[1]), type: canonicalMangoType(itemMatch[2]) });
+    }
+    
+    if (items.length > 0) {
+      for (const item of items) {
+        if (!item.type) continue;
+        recognizedItems += 1;
+        requestBoxes += item.quantity;
+        varieties[item.type].sold += item.quantity;
+        varieties[item.type][fulfillment] += item.quantity;
+      }
+      if (requestBoxes > 0) {
+        const avgPrice = amount / requestBoxes;
+        for (const item of items) {
+          if (item.type) varieties[item.type].amount += item.quantity * avgPrice;
+        }
+      }
+    } else {
+      const singleType = canonicalMangoType(message);
+      if (singleType) {
+        recognizedItems += 1;
+        const q = Number(order.quantity || 1);
+        requestBoxes += q;
+        varieties[singleType].sold += q;
+        varieties[singleType][fulfillment] += q;
+        varieties[singleType].amount += amount;
+      }
     }
 
     if (!recognizedItems) {
       malformedRequests += 1;
-      continue;
     }
 
-    const totalMatch = message.match(/^Estimated total:\s*CAD\s+([\d.]+)\s*$/im);
-    const requestAmount = totalMatch ? Number(totalMatch[1]) : requestItemAmount;
-    totalBoxes += requestBoxes;
-    totalAmount += Number.isFinite(requestAmount) ? requestAmount : requestItemAmount;
-    if (fulfillment === 'delivery') deliveryBoxes += requestBoxes;
-    else pickupBoxes += requestBoxes;
+    const orderQty = requestBoxes > 0 ? requestBoxes : Number(order.quantity || 1);
+    totalBoxes += orderQty;
+    totalAmount += amount;
+    if (fulfillment === 'delivery') deliveryBoxes += orderQty;
+    else pickupBoxes += orderQty;
   }
 
   const inventoryByType = new Map(
     (inventory || []).map((row) => [canonicalMangoType(row.mango_type), row])
   );
+  
   const inventoryRows = CHECKOUT_MANGO_TYPES.map((mangoType) => {
     const row = inventoryByType.get(mangoType) || {};
     const sold = varieties[mangoType].sold;
-    const starting = Number(row.starting_stock ?? row.stock_on_hand ?? 0);
+    const remaining = Number(row.remaining_stock ?? row.stock_on_hand ?? 0);
+    const starting = Number(row.starting_stock ?? (remaining + sold));
     return {
       mango_type: mangoType,
       starting_stock: starting,
       sold_quantity: sold,
-      remaining_stock: Math.max(0, starting - sold),
+      remaining_stock: remaining,
       low_stock_threshold: Number(row.low_stock_threshold || 10)
     };
   });
 
   return {
-    source: 'checkout inquiry messages',
+    source: 'paid stripe orders',
     checkoutRequests,
     malformedRequests,
     totalBoxes,
@@ -521,7 +532,7 @@ module.exports = {
   listReservations,
   listInquiries,
   sendError,
-  summarizeStripeCheckoutInquiries,
+  summarizePaidOrders,
   updateInventoryItem,
   updateOrderStatus
 };

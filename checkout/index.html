@@ -223,7 +223,7 @@
             <!-- Rendered by JS -->
           </div>
           <div class="pt-5 border-t border-[#203a7b]/8 mt-5">
-            <p class="product-note !text-[0.85rem] !p-4">Tip: 1.8 kg boxes are $32 each. Delivery is $6 for 1-4 boxes and free on 5+ boxes.</p>
+            <p class="product-note !text-[0.85rem] !p-4">Tip: 1.8 kg boxes are $32 each.<br/>For deals and wholesale price contact +17786838979.</p>
           </div>
         </div>
       </div>
@@ -253,13 +253,10 @@
               </div>
             </div>
 
-            <!-- SECTION: Fulfillment Toggle -->
+            <!-- SECTION: Fulfillment -->
             <div class="pt-2 border-t border-[#19489f]/10">
-              <label class="mb-3 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]">How do you want your order?</label>
-              <div class="delivery-toggle flex gap-3">
-                <button type="button" id="btn-toggle-pickup" class="flex-1 rounded-xl border-2 border-[#203a7b] bg-[#edf3ff] px-4 py-3 text-[.8rem] font-bold uppercase tracking-[.1em] text-[#203a7b] transition-all">🏬 Pickup</button>
-                <button type="button" id="btn-toggle-delivery" class="flex-1 rounded-xl border-2 border-[#19489f]/15 bg-white px-4 py-3 text-[.8rem] font-bold uppercase tracking-[.1em] text-[#8b9cbd] transition-all">🚚 Delivery</button>
-              </div>
+              <label class="mb-3 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]">Fulfillment</label>
+              <div class="text-sm font-semibold text-[#142a53] mb-3">Order is for Pickup Only</div>
             </div>
 
             <!-- PICKUP INFO -->
@@ -270,8 +267,8 @@
                 </div>
                 <div>
                   <div class="text-[.8rem] font-bold uppercase tracking-[.14em] text-[#1a386f]">Pickup Location</div>
-                  <div class="text-sm text-[#51668c]">5900 Dixie Rd, Mississauga, ON L5T 2Y2</div>
-                  <a href="https://maps.google.com/?q=5900+Dixie+Rd,+Mississauga,+ON+L5T+2Y2" target="_blank" rel="noopener" class="inline-flex items-center gap-1 mt-1 text-[.72rem] font-semibold text-[#1f4ea5] hover:underline">
+                  <div class="text-sm text-[#51668c]">103 Laura Rd, North York, ON M3N 1Z8</div>
+                  <a href="https://maps.google.com/?q=103+Laura+Rd,+North+York,+ON+M3N+1Z8" target="_blank" rel="noopener" class="inline-flex items-center gap-1 mt-1 text-[.72rem] font-semibold text-[#1f4ea5] hover:underline">
                     Open in Google Maps →
                   </a>
                 </div>
@@ -287,40 +284,7 @@
               </div>
             </div>
 
-            <!-- DELIVERY FIELDS -->
-            <div id="delivery-section" class="hidden">
-              <h3 class="text-[1.1rem] font-bold text-[#142a53] mb-4">Delivery Address (GTA Only)</h3>
-              <div class="grid gap-4 md:grid-cols-2">
-                <div class="md:col-span-2">
-                  <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address1">Street Address</label>
-                  <input id="address1" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
-                </div>
-                <div>
-                  <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="city">Delivery City</label>
-                  <select id="city" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base text-[#142a53]">
-                    <option value="" disabled selected>Select delivery city...</option>
-                    <option>Toronto</option>
-                    <option>Mississauga</option>
-                    <option>Brampton</option>
-                    <option>Markham</option>
-                    <option>Vaughan</option>
-                    <option>Oakville</option>
-                    <option>Burlington</option>
-                    <option>Scarborough</option>
-                    <option>York</option>
-                    <option>Richmond Hill</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="postal">Postal Code</label>
-                  <input id="postal" placeholder="M5V 2T6" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base uppercase"/>
-                </div>
-                <div class="md:col-span-2">
-                  <label class="mb-2 block text-[.68rem] font-bold uppercase tracking-[.14em] text-[#60779f]" for="address2">Unit / Suite (Optional)</label>
-                  <input id="address2" type="text" class="w-full rounded-xl border border-[#19489f]/14 bg-white px-4 py-3.5 text-base"/>
-                </div>
-              </div>
-            </div>
+
 
             <!-- ORDER SUMMARY -->
             <section class="rounded-3xl border border-[#19489f]/12 bg-[#f7faff] p-6 shadow-sm">
@@ -403,10 +367,7 @@
     const billSubtotal = document.getElementById('bill-subtotal');
     const billTotal = document.getElementById('bill-total');
     const checkoutStatus = document.getElementById('checkout-status');
-    const btnPickup = document.getElementById('btn-toggle-pickup');
-    const btnDelivery = document.getElementById('btn-toggle-delivery');
     const pickupSection = document.getElementById('pickup-section');
-    const deliverySection = document.getElementById('delivery-section');
     let fulfillment = 'pickup';
 
     function renderCart() {
@@ -447,40 +408,14 @@
         qty += item.quantity;
         sub += item.quantity * p.price;
       });
-      const ship = fulfillment === 'delivery' && qty > 0 && qty < 5 ? 6 : 0;
       billQty.textContent = qty;
       billSubtotal.textContent = currencyFormatter.format(sub);
       const shipRow = document.getElementById('bill-shipping-row');
-      if (fulfillment === 'delivery') {
-        shipRow.classList.remove('hidden');
-        document.getElementById('bill-shipping').innerHTML = ship > 0 ? currencyFormatter.format(ship) : '<span class="text-[#22c55e]">FREE</span>';
-      }
-      else { shipRow.classList.add('hidden'); }
-      billTotal.textContent = currencyFormatter.format(sub + ship);
+      if (shipRow) shipRow.classList.add('hidden');
+      billTotal.textContent = currencyFormatter.format(sub);
     }
 
-    function setFulfillment(m) {
-      fulfillment = m;
-      const [show, hide] = m === 'pickup' ? [pickupSection, deliverySection] : [deliverySection, pickupSection];
-      const [on, off] = m === 'pickup' ? [btnPickup, btnDelivery] : [btnDelivery, btnPickup];
-      show.classList.remove('hidden'); hide.classList.add('hidden');
-      on.classList.add('border-[#203a7b]','bg-[#edf3ff]','text-[#203a7b]');
-      on.classList.remove('border-[#19489f]/15','bg-white','text-[#8b9cbd]');
-      off.classList.remove('border-[#203a7b]','bg-[#edf3ff]','text-[#203a7b]');
-      off.classList.add('border-[#19489f]/15','bg-white','text-[#8b9cbd]');
-      renderBilling();
-    }
 
-    btnPickup.addEventListener('click', () => setFulfillment('pickup'));
-    btnDelivery.addEventListener('click', () => setFulfillment('delivery'));
-    setFulfillment(params.get('fulfillment') === 'delivery' ? 'delivery' : 'pickup');
-
-    const passedCity = (params.get('city') || '').trim();
-    if (passedCity) {
-      const sel = document.getElementById('city');
-      const idx = [...sel.options].findIndex(o => o.value.toLowerCase() === passedCity.toLowerCase());
-      if (idx >= 0) sel.selectedIndex = idx;
-    }
 
     document.getElementById('checkout-form').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -489,11 +424,7 @@
       const phone = document.getElementById('phone').value.trim();
       if (!name || !email || !phone) { checkoutStatus.textContent = 'Please fill out your Name, Email, and Phone.'; checkoutStatus.style.color = '#a3392f'; return; }
 
-      const address1 = document.getElementById('address1').value.trim();
-      const city = document.getElementById('city').value.trim();
-      const postal = document.getElementById('postal').value.trim();
-      const address2 = document.getElementById('address2').value.trim();
-      if (fulfillment === 'delivery' && (!address1 || !city || !postal)) { checkoutStatus.textContent = 'Please fill out your complete delivery address.'; checkoutStatus.style.color = '#a3392f'; return; }
+
 
       const activeCart = cart.filter(c => c.quantity > 0);
       if (!activeCart.length) { checkoutStatus.textContent = 'Please add at least one box to your cart.'; checkoutStatus.style.color = '#a3392f'; return; }
@@ -506,7 +437,14 @@
         const res = await fetch('/api/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({ cart: activeCart, fulfillment, name, email, phone, addressLine1: address1, addressLine2: address2, city, postalCode: postal, paymentMethod: 'stripe', notes: '' })
+          body: JSON.stringify({
+            cart: activeCart,
+            name,
+            email,
+            phone,
+            fulfillment: 'pickup',
+            paymentMethod: 'stripe'
+          })
         });
         const raw = await res.text();
         let result = {}; try { result = raw ? JSON.parse(raw) : {}; } catch {}

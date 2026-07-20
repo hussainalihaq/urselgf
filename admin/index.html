@@ -46,13 +46,13 @@
   </div>
   <div class="hero">
     <h1>Ameer Global Order & Inventory Dashboard</h1>
-    <p id="session-line">Stripe checkout-message totals, calculated inventory, reservations, and backend health.</p>
+    <p id="session-line">Stripe paid order totals, calculated inventory, reservations, and backend health.</p>
   </div>
   <div class="snapshot">
     <div class="snapshot-head">
       <div>
-        <h2>Stripe Checkout Message Summary</h2>
-        <p>Automatically calculated from standard checkout-page inquiry messages. Reservations, general inquiries, and spam are excluded.</p>
+        <h2>Stripe Paid Order Summary</h2>
+        <p>Automatically calculated from completed paid Stripe orders.</p>
       </div>
       <span class="as-of">Updates automatically</span>
     </div>
@@ -142,11 +142,11 @@
     function loadCheckoutSummary(snapshot) {
       snapshot = snapshot || {};
       document.getElementById('paid-stats').innerHTML = [
-        statCard('Stripe Checkout Boxes', Number(snapshot.totalBoxes || 0)),
-        statCard('Checkout Amount', moneyCad(snapshot.totalAmount)),
+        statCard('Stripe Paid Boxes', Number(snapshot.totalBoxes || 0)),
+        statCard('Paid Amount', moneyCad(snapshot.totalAmount)),
         statCard('Delivery', `${Number(snapshot.deliveryBoxes || 0)} boxes`),
         statCard('Pickup', `${Number(snapshot.pickupBoxes || 0)} boxes`),
-        statCard('Checkout Requests', Number(snapshot.checkoutRequests || 0))
+        statCard('Paid Orders', Number(snapshot.checkoutRequests || 0))
       ].join('');
 
       const rows = (snapshot.varieties || []).filter((row) => row.sold > 0);
@@ -250,7 +250,7 @@
           <td>${Number(row.sold_quantity || 0)}</td>
           <td><strong>${Number(row.remaining_stock || 0)}</strong></td>
           <td>${Number(row.remaining_stock || 0) <= Number(row.low_stock_threshold || 10) ? '<span class="pill bad">Low</span>' : '<span class="pill">OK</span>'}</td>
-          <td>Calculated from checkout messages</td>
+          <td>Calculated from paid orders</td>
         </tr>
       `).join('') || `<tr><td colspan="6">No inventory rows found.</td></tr>`;
     }

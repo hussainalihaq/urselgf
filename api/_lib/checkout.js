@@ -150,11 +150,11 @@ function getFulfillmentProfile(quantityValue) {
 function getAvailability(cityValue, postalCodeValue, fulfillment) {
   if (fulfillment === 'pickup') {
     return {
-      city: { label: 'Mississauga', key: 'mississauga', region: 'Peel' },
+      city: { label: 'North York', key: 'north-york', region: 'Toronto' },
       postalCode: 'N/A',
       eligible: true,
       hasValidPostal: true,
-      region: 'Peel'
+      region: 'Toronto'
     };
   }
 
@@ -222,8 +222,8 @@ function buildAvailabilityResponse(body) {
   return {
     ok: true,
     eligible: true,
-    city: availability.city ? availability.city.label : 'Mississauga',
-    cityKey: availability.city ? availability.city.key : 'mississauga',
+    city: availability.city ? availability.city.label : 'North York',
+    cityKey: availability.city ? availability.city.key : 'north-york',
     region: availability.region,
     postalCode: availability.postalCode,
     quantity: billing.quantity,
@@ -267,7 +267,7 @@ function buildCheckoutContactRecord(body) {
   const subject = `CHECKOUT REQUEST: ${primaryProduct} (${fulfillment.toUpperCase()})`;
   
   const fulfillmentDetails = fulfillment === 'pickup' 
-    ? 'Fulfillment: LOCAL PICKUP\nLocation: Ameer Global Distribution Center, 5900 Dixie Rd, Mississauga, ON'
+    ? 'Fulfillment: LOCAL PICKUP\nLocation: Ameer Global Distribution Center, 103 Laura Rd, North York, ON M3N 1Z8'
     : `Fulfillment: DELIVERY\nDelivery city: ${availability.city ? availability.city.label : 'Unknown'}\nRegion: ${availability.region}\nPostal code: ${availability.postalCode}\nAddress line 1: ${addressLine1}\nAddress line 2: ${addressLine2 || 'N/A'}`;
 
   const itemLines = billing.items.map(i => ` - ${i.quantity}x ${i.product} (CAD ${i.unitPriceCad.toFixed(2)} ea)`);
